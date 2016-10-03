@@ -1,0 +1,652 @@
+\section{Úvod do funkcionální analýzy}
+
+
+V této kapitole budeme studovat některé vlastnosti pojmů jako metrika, norma nebo skalární součin.
+Teorie těchto abstraktních pojmů je poměrně obsáhlá, pro zájemce o hlubší poznatky odkazuji na knihu \cite{rektorys1974variacni}.
+Než přistoupíme k zavedení obecných pojmů, objasníme je na příkladech prostorů funkcí.
+
+
+\subsection{Prostor spojitých funkcí}
+V dalším textu bude $\Omega$ symbol pro otevřenou souvislou množinu v $\R$, $\R^2$ nebo $\R^3$.
+Připomínáme, že otevřená souvislá množina se zkráceně nazývá oblast.
+Pro zjednodušení některých úvah také budeme předpokládat, že $\Omega$ je omezená.
+Hranici $\Omega$ budeme značit symbolem $\partial\Omega$ a uzávěr symbolem $\overline\Omega:=\Omega\cup\partial\Omega$.
+
+Nechť $C(\overline\Omega)$ značí vektorový prostor všech spojitých funkcí na $\overline\Omega$.
+Pro funkce $u,v\in C(\overline\Omega)$ definujeme následující operace:
+
+\begin{df}
+\label{df:scal_norm_met_C}
+Skalární součin funkcí $u,v\in C(\overline\Omega)$ je (reálné) číslo
+\[ (u,v):=\int_\Omega u(x) v(x)~dx. \]
+Norma funkce $u\in C(\overline\Omega)$ je číslo
+\[ \norm{u}_2 := \sqrt{(u,u)} = \sqrt{\int_\Omega u^2(x)~dx}. \]
+% Vzdálenost funkcí $u,v\in C(\overline\Omega)$ je číslo
+% \[ \varrho_2(u,v) := \norm{u-v}_2. \]
+\end{df}
+Vzdálenosti $\varrho_2$ také budeme říkat \emph{metrika}.
+Snadno lze odvodit tyto vlastnosti skalárního součinu:
+\begin{veta}
+Nechť $u,v,w\in C(\overline\Omega)$ a $\alpha,\beta\in\R$. Pak platí:
+\begin{itemize}
+\item[(i)] $(u,u)\ge 0$,
+\item[(ii)] $(u,v)=(v,u)$,
+\item[(iii)] $(\alpha u + \beta v,w) = \alpha(u,w) + \beta(v,w)$,
+\item[(iv)] $(u,u)=0\Leftrightarrow u\equiv0$ v $\overline\Omega$.
+\end{itemize}
+\end{veta}
+
+Podobně lze dokázat následující vlastnosti normy:
+\begin{veta}
+\label{th:vl_norm2}
+Nechť $u,v\in C(\overline\Omega)$ a $\alpha\in\R$. Pak platí:
+\begin{itemize}
+\item[(i)] $\norm{u}_2 = 0 \Leftrightarrow u\equiv 0$ v $\overline\Omega$,
+\item[(ii)] $\norm{\alpha u}_2 = |\alpha|\norm{u}_2$,
+\item[(iii)] $\norm{u+v}_2\le\norm{u}_2 + \norm{v}_2$.
+\end{itemize}
+\end{veta}
+
+% Nakonec uvedeme ještě vlastnosti metriky:
+% \begin{veta}
+% \label{th:vl_rho2}
+% Nechť $u,v,w\in C(\overline\Omega)$. Pak platí:
+% \begin{itemize}
+% \item[(i)] $\varrho_2(u,v)=0\Leftrightarrow u=v$ v $\overline\Omega$,
+% \item[(ii)] $\varrho_2(u,v)=\varrho_2(v,u)$,
+% \item[(iii)] $\varrho_2(u,w)\le\varrho_2(u,v)+\varrho_2(v,w)$.
+% \end{itemize}
+% \end{veta}
+
+Kromě výše uvedené normy a metriky lze na množině spojitých funkcí definovat také následující normu:
+\[ \norm{u}_\infty := \max_{x\in\overline\Omega}|u(x)| \]
+a z ní indukovanou metriku
+\[ \varrho_\infty(u,v) := \norm{u-v}_\infty. \]
+Lze ukázat, že pro $\norm{\cdot}_\infty$ a $\varrho_\infty$ také platí Věta \ref{th:vl_norm2}, resp. Věta \ref{th:vl_rho2}.
+
+\begin{ex}
+Uvažujme funkce
+\[ u(x):=\begin{cases}10\sin(1000\pi x) & \mbox{ pro }x\in[0,\frac1{1000}]\\0 & \mbox{ jinak}\end{cases} \quad\mbox{ a } \quad v(x)=0. \]
+Vzdálenost $u$ a $v$ lze snadno spočítat:
+\begin{multline*}
+\varrho_2(u,v) = \sqrt{\int_0^{1/1000}100\sin^2(1000\pi x)~dx}\\
+= \sqrt{100\left[\frac{x}2-\frac{\sin(2000\pi x)}{4000\pi}\right]_{x=0}^{1/1000}}
+= \frac1{2\sqrt{5}}\doteq 0,224.
+\end{multline*}
+\[ \varrho_\infty(u,v) = \max_{x\in[0,1/1000]}|10\sin(1000\pi x)| = 10. \]
+\end{ex}
+
+Metrika $\varrho_\infty$ se zdá být v jistém smyslu přirozenější, neboť měří maximální odchylku hodnot dvou spojitých funkcí.
+Přesto existují důvody, proč je vhodné používat metriku $\varrho_2$.
+Předně, metrika $\varrho_2$ byla zavedena pomocí skalárního součinu. Skalární součin hraje v některých úlohách důležitou roli.
+Lze ukázat, že na množině spojitých funkcí nelze zavést skalární součin s rozumnými vlastnostmi, který by indukoval normu $\norm{\cdot}_\infty$, resp. metriku $\varrho_\infty$.
+Dalším důvodem je, že v mnoha aplikacích nevystačíme se spojitými funkcemi. Není snadné rozšířit metriku $\varrho_\infty$ na obecnější třídu funkcí, zatímco rozšíření metriky $\varrho_2$ na dostatečně obecnou třídu funkcí je velmi jednoduché a vede přirozeně k vytvoření tzv. prostoru $L^2$.
+
+
+\subsection{Prostory $L^p(\Omega)$}
+
+\begin{df}
+\label{df:Lp}
+Nechť $p\in[1,\infty)$. Prostorem $L^p(\Omega)$ rozumíme množinu funkcí
+\[ L^p(\Omega):=\left\{u:\Omega\to\R;~\left|\int_\Omega u(x)~dx\right|<\infty,~\int_\Omega |u(x)|^p~dx<\infty \right\}. \]
+Norma v prostoru $L^p(\Omega)$ je definována výrazem
+\[ \norm{u}_{p,\Omega}:=\left(\int_\Omega|u(x)|^p~dx\right)^{1/p}. \]
+\end{df}
+
+Pokud je zřejmé, na jaké oblasti uvažujeme normu, pak budeme zkráceně psát $\norm{u}_p$.
+Z definice plyne, že každá spojitá funkce v $\overline\Omega$ patří do prostorů $L^p(\Omega)$ pro všechna $p\in[1,\infty)$.
+Do těchto prostorů ovšem patří i mnohem obecnější funkce, které mohou mít skoky nebo jsou neomezené.
+Poznamenejme, že pro správnost některých tvrzení je třeba uvažovat integrály v Definici \ref{df:Lp} v tzv. Lebesgueově smyslu.
+
+\begin{ex}
+Uvažujme funkci
+\[ u(x) := \frac1{\sqrt{x}} \]
+na intervalu $\Omega:=(0,1)$.
+Platí:
+\[ \norm{u}_1 = \int_0^1 \frac1{\sqrt{x}}~dx = \left[2\sqrt{x}\right]_{x=0}^1 = 2, \]
+a tedy $u\in L^1(0,1)$. Na druhou stranu
+\[ \norm{u}_2 = \sqrt{\int_0^1 \frac1x~dx} = +\infty, \]
+takže $u\notin L^2(0,1)$.
+Funkce
+\[ v(x) := \frac1{\sqrt[3]{x}} \]
+patří do $L^1(0,1)$ i $L^2(0,1)$, neboť
+\[ \int_0^1 v(x)~dx = \int_0^1 \frac1{\sqrt[3]{x}}~dx = \frac32,\quad \int_0^1 |v(x)|^2~dx = \int_0^1 \frac1{\sqrt[3]{x^2}}~dx = 3. \]
+Pokud je oblast $\Omega$ omezená, pak vždy $L^2(\Omega)\subset L^1(\Omega)$, resp. obecněji pro $1\le p\le q<\infty$ platí $L^q(\Omega)\subset L^p(\Omega)$.
+\end{ex}
+
+\begin{ex}
+Funkce
+\[ \sgn x:=\begin{cases}-1 & \mbox{ pro }x<0\\0 & \mbox{ pro }x=0\\1 & \mbox{ pro }x>0\end{cases} \]
+je prvkem prostoru $L^p(-1,1)$ pro libovolné $p\in[1,\infty)$, neboť
+\[ \int_{-1}^1 |\sgn x|^p~dx = \int_{-1}^0 |\sgn x|^p ~dx + \int_0^1 |\sgn x|^p~dx = \int_{-1}^0 1~dx + \int_0^1 1~dx = 2, \]
+a tedy $\norm{\sgn x}_p = \sqrt[p]{2}$.
+Podobně funkce
+\[ u(x) := \begin{cases}0 & \mbox{ pro }x\neq 0\\10 & \mbox{ pro }x=0\end{cases} \]
+patří do $L^p(-1,1)$, $p\in[1,\infty)$, a její norma je $\norm{u}_p=0$.
+Vidíme, že norma nezávisí na hodnotě funkce v bodě $x=0$. Dokonce není nutné, aby byla funkce v bodě 0 definována.
+\end{ex}
+
+Do prostorů $L^p(\Omega)$ tedy patří i některé nespojité a neomezené funkce.
+Funkce, která je rovna nule všude až na hodnotu v jednom bodě, má nulovou normu a je v jistém smyslu ekvivalentní s nulovou funkcí.
+Obecněji postačí, když je funkce nulová všude v $\Omega$ mimo \emph{množinu míry nula}.
+Mezi množiny s nulovou mírou patří např. všechny konečné a spočetné množiny.
+
+\begin{df}
+Nechť funkce $u,v\in L^p(\Omega)$, $p\in[1,\infty)$ jsou si v oblasti $\Omega$ \emph{rovny skoro všude}, tj. všude mimo množinu míry nula (kde se buď jejich hodnoty liší nebo některá z funkcí není definována).
+Pak řekneme, že $u$ a $v$ jsou v prostoru $L^p(\Omega)$ \emph{ekvivalentní}.
+Píšeme $u=v$ v $L^p(\Omega)$.
+\end{df}
+Funkce $u$ a $v$ jsou tedy v tomto prostoru pokládány za sobě rovné.
+Dvě funkce $u,v$ ekvivalentní v prostoru $L^p(\Omega)$ jsou charakterizovány vlastností
+\[ \int_\Omega|u(x)-v(x)|^p~dx = 0. \]
+
+Na prostoru $L^p(\Omega)$ je možné zavést metriku $\varrho_{p,\Omega}(u,v):=\norm{u-v}_{p,\Omega}$.
+V prostoru $L^2(\Omega)$ je navíc zaveden skalární součin stejným způsobem jako v Definici \ref{df:scal_norm_met_C}:
+\[ (u,v)_\Omega := \int_\Omega u(x)v(x)~dx,~u,v\in L^2(\Omega). \]
+To, že skalární součin je konečný pro libovolné $u,v\in L^2(\Omega)$, je důsledkem tzv. Schwarzovy nerovnosti:
+\[ \forall u,v\in L^2(\Omega):~|(u,v)_\Omega| \le \norm{u}_{2,\Omega} \norm{v}_{2,\Omega}, \]
+která je speciálním případem obecnějšího tvrzení:
+\begin{veta}[H\"olderova nerovnost]
+Nechť $p,q\in(1,\infty)$ splňují vztah
+\[ \frac1p + \frac1q = 1. \]
+Pak pro každé dvě funkce $u\in L^p(\Omega)$ a $v\in L^q(\Omega)$ platí:
+\[ \left|\int_\Omega u(x)v(x)~dx\right| \le \left(\int_\Omega|u(x)|^p~dx\right)^{1/p} \left(\int_\Omega|v(x)|^q~dx\right)^{1/q}. \]
+\end{veta}
+
+
+
+% \subsection{Metrické prostory}
+% 
+% V této části zavedeme metriku, zobecnění pojmu vzdálenost.
+% Uvedeme vlastnosti metrických prostorů a vše aplikujeme na konkrétní příklady.
+% 
+% \begin{df}
+% Nechť $X$ je neprázdná množina.
+% Funkce $\varrho:X\times X\to\R$ se nazývá metrika, jestliže pro všechny prvky $x,y,z\in X$ platí:
+% \begin{itemize}
+% \item[(i)] $\varrho(x,y)=0 \Leftrightarrow x=y$,
+% \item[(ii)] $\varrho(x,y)=\varrho(y,x)$,
+% \item[(iii)] $\varrho(x,z)\le\varrho(x,y)+\varrho(y,z)$.
+% \end{itemize}
+% Dvojici $(X,\varrho)$ pak říkáme \emph{metrický prostor}.
+% \end{df}
+% Z vlastností metriky vyplývá, že $\varrho$ nabývá pouze nezáporných hodnot (zkuste to ověřit!).
+% \begin{ex}
+% Nechť $X$ je množina všech měst v ČR.
+% Metriku na $X$ lze zavést např. jako přímou vzdálenost vzdušnou čarou, nejkratší vzdálenost po (obousměrné) silnici nebo dobu jízdy automobilem (za předpokladu, že cesta tam i zpět trvá stejně dlouho).
+% \end{ex}
+% 
+% \begin{ex}
+% Nechť $X=\R^n$, $n\in\N$.
+% Definujme funkce
+% \[ d_p(\xx,\yy):=\left(\sum_{i=1}^n|x_i-y_i|^p\right)^{1/p} \mbox{ pro }p\in[1,\infty), \]
+% \[ d_\infty(\xx,\yy):=\max_{i=1,\ldots,n}|x_i-y_i|. \]
+% Lze ukázat, že tyto funkce jsou metrikami na $\R^n$.
+% Metriku $d_1$ nazýváme sčítací, $d_2$ euklidovská a $d_\infty$ maximová metrika.
+% \end{ex}
+% 
+% \begin{ex}
+% Levenshteinova metrika měří podobnost dvou textových řetězců.
+% Je definována jako nejmenší počet nahrazení, vložení nebo smazání znaku nutný ke konverzi řetězce na druhý.
+% Např. $lev($prvek$,$pravěk$)=2$, neboť k přeměně stačí operace:
+% \[ \mbox{prvek} \to \mbox{pr\underline{a}vek} \to \mbox{prav\underline{ě}k}. \]
+% Lze ukázat, že funkce $lev$ splňuje axiómy metriky.
+% \end{ex}
+% 
+% \begin{ex}
+% Funkce $\varrho_2$ a $\varrho_\infty$ jsou metrikami na prostoru $C(I)$ spojitých funkcí na uzavřeném intervalu $I$.
+% Totéž platí na prostoru $C(K)$, kde $K$ je kompaktní (tj. uzavřená a omezená) množina v $\R^n$, $n\in\N$.
+% \end{ex}
+% 
+% \begin{ex}
+% Dvojice $(L^p(\Omega),\varrho_{p})$ je metrický prostor.
+% Jelikož funkce spojité na $\overline\Omega$ patří do $L^2(\Omega)$, je $(C(\overline\Omega),\varrho_2)$ podprostorem metrického prostoru $(L^2(\Omega),\varrho_2)$.
+% \end{ex}
+% 
+% 
+
+
+
+
+
+
+% \subsubsection{Úplný metrický prostor}
+% % 
+% Skutečnost, že daná posloupnost v metrickém prostoru je konvergentní, závisí nejen na zvolené metrice, ale také na prostoru samotném.
+% Existují například posloupnosti racionálních čísel, které mají za limitu iracionální číslo, tzn., že jsou konvergentní v prostoru $\R$, ale nejsou konvergentní v $\Q$.
+% Takové posloupnosti se nazývají cauchyovské.
+% % 
+% \begin{df}
+% Posloupnost $\{x_n\}$ v metrickém prostoru $(X,\varrho)$ se nazývá \mbox{cauchyovská}, jestliže
+% \[ \forall\varepsilon>0~\exists N\in\N~\forall m,n\in\N:~m,n>N\Rightarrow \varrho(x_m,x_n)<\varepsilon. \]
+% \end{df}
+% % 
+% Vzdálenost prvků cauchyovské posloupnosti tedy může být libovolně malá, jsou-li indexy těchto prvků dostatečně velké.
+% Každá konvergentní posloupnost je cauchyovská, opačné tvrzení však obecně neplatí.
+% % 
+% \begin{df}
+% Metrický prostor $(X,\varrho)$ se nazývá \emph{úplný}, jestliže každá cauchyovská posloupnost má v tomto prostoru limitu.
+% \end{df}
+% % 
+% \begin{ex}
+% Prostory $(\R^n,d_p)$, $n\in\N$, $p\in[1,\infty]$ jsou úplné (díky Bolzanově-Cauchyově podmínce).
+% Prostor $(\Q,d_2)$ není úplný (např. posloupnost $\{(1+\frac1n)^n\}$ je v něm cauchyovská, ale její limita $e\notin\Q$).
+% \end{ex}
+% % 
+% % \begin{ex}
+% % Uvažujme interval $(0,1)$ s metrikou $d_2$ a posloupnost $\{\frac1n\}$.
+% % Tato posloupnost je cauchyovská, neboť má limitu $0$. Protože ale tato limita nepatří do intervalu $(0,1)$, není posloupnost v prostoru $((0,1),d_2)$ konvergentní, a tento prostor tedy není úplný.
+% % \end{ex}
+% % 
+% \begin{ex}
+% Uvažujme posloupnost $\{u_n\}$, kde
+% \[ u_n(x) := \sqrt[2n+1]{x}, \]
+% na prostoru $(C([-1,1]),\varrho_2)$.
+% Bodová limita posloupnosti je $\sgn x$, což je nespojitá funkce.
+% Platí ale
+% \[ \varrho_2(u_n,\sgn) = \sqrt{\frac2{(n+1)(2n+3)}}, \]
+% takže $\varrho_2(u_n,\sgn)\to 0$, a tedy $\{u_n\}$ konverguje k $\sgn$ v prostoru $(L^2(-1,1),\varrho_2)$.
+% Našli jsme posloupnost, která je cauchyovská, ale není konvergentní v $(C([-1,1]),\varrho_2)$.
+% Tím jsme dokázali, že prostor $(C([-1,1]),\varrho_2)$ není úplný.
+% Podobně lze ukázat, že prostor $(C(\overline\Omega),\varrho_p)$ není úplný pro žádné $p\in[1,\infty)$.
+% \end{ex}
+% 
+% \begin{veta}
+% Prostor $(C(\overline\Omega),\varrho_\infty)$ je úplný.
+% \end{veta}
+% 
+% \begin{veta}
+% Prostor $(L^p(\Omega),\varrho_p)$, $p\in[1,\infty)$, je úplný.
+% \end{veta}
+
+
+% \subsubsection{Banachova věta o pevném bodě}
+% 
+% V úplném metrickém prostoru lze řešit abstraktní nelineární rovnice.
+% Je-li $f:X\to X$ zobrazení na metrickém prostoru $X$, pak můžeme definovat rovnici
+% \[ x = f(x). \]
+% Prvek $x\in X$, který ji řeší, se nazývá pevný bod zobrazení $f$.
+% Existuje poměrně elegantní tvrzení, které dává návod k nalezení pevného bodu pro zobrazení s následující vlastností.
+% \begin{df}
+% Řekneme, že zobrazení $f:X\to X$ na metrickém prostoru $(X,\varrho)$ je \emph{kontrakce}, pokud existuje $\alpha\in(0,1)$ takové, že
+% \[ \forall x,y\in X:~\varrho(f(x),f(y))\le\alpha\varrho(x,y). \]
+% \end{df}
+% Následující věta zaručuje existenci a jednoznačnost pevného bodu a také dává návod k jeho nalezení. Je pojmenována po polském matematikovi Stefanu Banachovi.
+% \begin{veta}[Banachova věta o pevném bodě]
+% Nechť $(X,\varrho)$ je úplný metrický prostor a $f:X\to X$ je kontrakce.
+% Pak existuje právě jeden pevný bod $x\in X$ zobrazení $f$.
+% Je-li $x_0\in X$ libovolný prvek, pak posloupnost $\{x_k\}$, $x_k:=f(x_{k-1})$, je konvergentní a platí:
+% \[ \lim_{k\to\infty} x_k=x,\quad \varrho(x_k,x) \le \alpha^k\varrho(x_0,x), \]
+% kde $\alpha\in(0,1)$ je konstanta z definice kontrakce.
+% \end{veta}
+% Poznamenejme, že věta má dva důležité předpoklady --- úplnost metrického prostoru $(X,\varrho)$ a kontraktivnost zobrazení $f$.
+% \begin{ex}
+% Pomocí Banachovy věty lze ukázat, že rovnice $x=\cos x$ má na intervalu $[0,1]$ právě jedno řešení. Stačí zvolit $X=[0,1]$, $f(x):=\cos x$ a ukázat, že $f(X)\subset X$ a $|f'(x)|\le\alpha<1$ pro $x\in[0,1]$.
+% \end{ex}
+% \begin{ex}
+% Obyčejnou diferenciální rovnici, resp. systém rovnic, lze formulovat jako úlohu hledání pevného bodu.
+% Uvažujme počáteční úlohu
+% \begin{equation}
+% \label{eq:poc_uloha}
+%  y'(x)=f(x,y(x))\mbox{ na intervalu }I,~y(x_0)=y_0.
+% \end{equation}
+% Její řešení lze charakterizovat rovnicí
+% \[ y(x) = y_0 + \int_{x_0}^x f(t,y(t))~dt. \]
+% Zavedeme-li zobrazení $F:C(I)\to C(I)$ vztahem
+% \[ F(w)(x):=y_0+\int_{x_0}^x f(t,w(t))~dt, \]
+% pak počáteční úloha \eqref{eq:poc_uloha} je ekvivalentní s úlohou
+% \[ y = F(y). \]
+% Za jistých předpokladů na pravou stranu $f$ a počáteční podmínku $(x_0,y_0)$ lze použít Banachovu větu a dokázat, že $F$ má jediný pevný bod. Tyto předpoklady jsou předmětem tzv. Picardovy věty.
+% \end{ex}
+% 
+% 
+% \subsubsection{Hustá množina, separabilní prostor}
+% 
+% Metrické prostory obecně nemají lineární strukturu jako vektorové prostory.
+% Nelze v nich proto definovat bázi.
+% Každý metrický prostor ale obsahuje podmnožinu, jejímiž prvky lze aproximovat libovolný prvek.
+% \begin{df}
+% Řekneme, že množina $M\subset X$ je \emph{hustá} v metrickém prostoru $(X,\varrho)$, pokud $\overline M=X$.
+% \end{df}
+% Je-li $M$ hustá množina, pak pro každý prvek $x\in X$ existuje posloupnost $\{x_n\}$ prvků $M$ taková, že
+% \[ x_n\to x. \]
+% \begin{veta}
+% Množina všech polynomů je hustá v $L^p(\Omega)$, $p\in[1,\infty)$.
+% \end{veta}
+% Důsledkem předchozí věty je, že ke každé funkci $f\in L^p(\Omega)$ a pro libovolné $\varepsilon>0$ existuje polynom $f_\varepsilon$, který je vzdálen od $f$ o méně než $\varepsilon$:
+% \[ \norm{f-f_\varepsilon}_p < \varepsilon. \]
+% Množina všech polynomů je ovšem poměrně velká (obsahuje nespočetně mnoho funkcí).
+% \begin{df}
+% Řekneme, že metrický prostor je \emph{separabilní}, jestliže v něm existuje hustá množina, která je nanejvýš spočetná.
+% \end{df}
+% Jestliže je prostor separabilní, pak lze najít posloupnost jeho prvků, které tvoří hustou množinu.
+% \begin{veta}
+% Prostor $(L^p(\Omega),\varrho_p)$, $p\in[1,\infty)$, a prostoru $(C(\overline\Omega),\varrho_\infty)$ je separabilní.
+% \end{veta}
+% Příkladem spočetné husté množiny v $L^p(\Omega)$, resp. v $C(\overline\Omega)$, je množina všech polynomů s racionálními koeficienty.
+
+
+
+
+\subsection{Normované lineární prostory}
+
+Některé množiny sdílejí vlastnosti metrických a vektorových prostorů.
+Konkrétně, v $L^p(\Omega)$ umíme násobit skalárem i sčítat funkce, měřit vzdálenost a počítat normu.
+V takovém případě mluvíme o normovaném lineárním prostoru.
+\begin{df}
+Nechť $X$ je vektorový prostor. Funkce $\norm{\cdot}:X\to\R$ se nazývá \emph{norma} na $X$, pokud $\forall x,y\in X,~\alpha\in\R$:
+\begin{itemize}
+\item[(i)] $\norm{x}=0 ~\Leftrightarrow~x=\vec 0$,
+\item[(ii)] $\norm{\alpha x}=|\alpha|\norm{x}$,
+\item[(iii)] $\norm{x+y}\le\norm{x}+\norm{y}$.
+\end{itemize}
+Je-li na vektorovém prostoru $X$ definována norma, nazývá se $X$ \emph{normovaný lineární prostor}.
+\end{df}
+% Pomocí normy lze vždy definovat metriku:
+% \[ \varrho(x,y):=\norm{x-y}, \]
+% každý normovaný lineární prostor je tedy zároveň metrickým prostorem.
+
+\begin{ex}
+Příklady normovaných lineárních prostorů:
+\begin{itemize}
+\item Množina $\R$ s absolutní hodnotou $\norm{x}:=|x|$;
+\item $\R^n$, $n\in\N$, s normou $\norm{(x_1,\ldots,x_n)}_p:=\left(\sum_{i=1}^n|x_i|^p\right)^{1/p}$, $p\in[1,\infty)$, nebo s normou $\norm{(x_1,\ldots,x_n)}_\infty:=\max_{i=1,\ldots,n}|x_i|$;
+\item $C(\overline\Omega)$ s normou $\norm{\cdot}_p$, $p\in[1,\infty]$;
+\item $L^p(\Omega)$ s normou $\norm{\cdot}_p$, $p\in[1,\infty)$;
+\item $C^1(\overline\Omega):=\{f\in C(\overline\Omega);~\forall i=1,\ldots,n~\frac{\partial f}{\partial x_i}\in C(\overline\Omega)\}$ s normou $\norm{f}_{C^1(\overline\Omega)} := \norm{f}_{\infty,\overline\Omega} + \sum_{i=1}^n\norm{\frac{\partial f}{\partial x_i}}_{\infty,\overline\Omega}$.
+\end{itemize}
+\end{ex}
+
+Speciálně zde zmíníme ještě normy na prostoru matic.
+\begin{df}
+Nechť $\norm{\cdot}_X$ značí normu na $R^n$ a $\norm{\cdot}_Y$ normu na $\R^m$.
+Generovaná norma na prostoru matic $\R^{m\times n}$  je definována vztahem
+\[ \norm{\A}_{XY} := \max_{\xx\in\R^n\setminus\{\vec 0\}}\frac{\norm{\A\xx}_Y}{\norm{\xx}_X} = \max_{\xx\in\R^n,\norm{\xx}_X=1}\norm{\A\xx}_Y. \]
+\end{df}
+Generované normy mají následující vlastnosti:
+\[ \norm{\A\B}_{XY} \le \norm{\A}_{XY}\norm{\B}_{XY},\quad \rho(\A)\le\norm{\A}_{XY},\quad \norm{\mat I}_{XY}=1. \]
+\begin{ex}
+Příklady generovaných maticových norem:
+\begin{itemize}
+\item $\norm{\A}_1:=\max_{\norm{\xx}_1=1}\norm{\A\xx}_1 = \max_{j=1,\ldots,n}\sum_{i=1}^m|a_{ij}|$;
+\item $\norm{\A}_2:=\max_{\norm{\xx}_2=1}\norm{\A\xx}_2 = \sqrt{\rho(\A^\top\A)}$;
+\item $\norm{\A}_\infty:=\max_{\norm{\xx}_\infty=1}\norm{\A\xx}_\infty = \max_{i=1,\ldots,m}\sum_{j=1}^n|a_{ij}|$.
+\end{itemize}
+\end{ex}
+Kromě generovaných norem existuje řada dalších maticových norem.
+Často používaná je tzv. Frobeniova norma
+\[ \norm{\A}_F:=\sqrt{\sum_{i=1}^m\sum_{j=1}^n|a_{ij}|^2}. \]
+Dá se ukázat, že Frobeniova norma není generovaná, přesto však je multiplikativní:
+\[ \norm{\A\B}_F \le \norm{\A}_F\norm{\B}_F. \]
+
+
+
+\subsubsection{Množiny v normovaném lineárním prostoru}
+% 
+Podobně jako u euklidovské vzdálenosti v $\R^n$, lze definovat pojmy jako koule, okolí nebo otevřená množina pomocí normy.
+\begin{df}
+Nechť $(X,\norm{\ })$ je normovaný lineární prostor.
+\begin{itemize}
+\item \emph{Koule} se středem $x\in X$ a poloměrem $r>0$ je množina
+\[ B_r(x) := \{y\in X;~\norm{x-y}<r\}. \]
+\item Množinu $O\subset X$ nazveme \emph{okolím} bodu $x$, jestliže existuje poloměr $r>0$, takže $O$ obsahuje kouli $B_r(x)$.
+\item Je-li $O$ okolí bodu $x$, pak množinu $O\setminus\{x\}$ nazýváme \emph{prstencové okolí} bodu $x$.
+\item Množina $M$ se nazývá \emph{otevřená}, pokud pro každý bod $x\in M$ existuje koule se středem $x$, která leží v $M$.
+\item Množina se nazývá \emph{uzavřená}, pokud její doplněk v $X$ je otevřený.
+\end{itemize}
+\end{df}
+
+\begin{ex}
+Koule v prostoru $\R^2$ se středem v počátku souřadné soustavy má tvar
+\begin{itemize}
+\item[a)] čtverce, jehož vrcholy leží na souřadných osách a těžiště v počátku, uvažujeme-li normu $\norm{\ }_1$;
+\item[b)] kruhu se středem v počátku, uvažujeme-li euklidovskou normu $\norm{\ }_2$;
+\item[c)] čtverce, jehož strany jsou rovnoběžné se souřadnými osami a těžiště leží v počátku, uvažujeme-li maximovou normu $\norm{\ }_\infty$.
+\end{itemize}
+\end{ex}
+
+\begin{df}
+Nechť $(X,\norm{\ })$ je normovaný lineární prostor, $x\in X$ a $M\subset M$.
+\begin{itemize}
+\item Bod $x$ je \emph{vnitřním bodem množiny} $M$, pokud existuje poloměr $r>0$ takový, že $B_r(x)\subset M$.
+Množinu všech vnitřních bodů $M$ budeme značit $\Int M$.
+\item Bod $x$ je \emph{hraničním bodem množiny} $M$, pokud každé okolí $x$ obsahuje alespoň jeden bod z $M$ a alespoň jeden bod z $X\setminus M$.
+Množina všech hraničních bodů $M$ se nazývá \emph{hranice} $M$ a značí se $\partial M$.
+\item Uzávěr množiny $M$ je množina $\overline M:=M\cup\partial M$.
+\item Bod $x$ je \emph{hromadným bodem množiny} $M$, pokud každé jeho prstencové okolí obsahuje nějaký bod $M$.
+Množinu všech hromadných bodů $M$ budeme značit $\Hr M$.
+\item Bod $x$ je \emph{izolovaný bod množiny} $M$, pokud $x\in M$, ale $x$ není hromadným bodem $M$.
+Množinu všech izolovaných bodů $M$ budeme značit $\Iz M$.
+\end{itemize}
+\end{df}
+
+Mezi právě definovanými množinami platí mnoho vztahů. Např.:
+\[ \Int M\subset M \subset \overline M, \quad \Int M\cap \partial M = \emptyset, \]
+\[ \overline M = \Hr M \cup \Iz M, \quad \Hr M \cap \Iz M = \emptyset, \]
+\[ \Iz M \subset \partial M, \quad \Int M \subset \Hr M. \]
+
+
+
+\subsubsection{Konvergence}
+% 
+\begin{df}
+Posloupnost $\{x_n\}_{n\in\N}$ v normovaném lineárním prostoru $(X,\norm{\ })$ se nazývá \emph{konvergentní}, jestliže existuje prvek $x\in X$ takový, že
+\[ \lim_{n\to\infty} \norm{x_n,x} = 0. \]
+Říkáme, že $x$ je limita posloupnosti $\{x_n\}$ a píšeme
+\[ x=\lim_{n\to\infty} x_n \mbox{ v }(X,\norm{\ }), \mbox{ nebo }x_n\to x \mbox{ v }(X,\norm{\ }). \]
+\end{df}
+% 
+Pro limitu v normovaném lineárním prostoru platí obdobná tvrzení jako pro limitu v $\R^n$ známá ze základních kurzů matematiky.
+Např. každá posloupnost má nejvýše jednu limitu.
+Má-li posloupnost funkcí $\{u_n\}$ limitu v $(L^p(\Omega),\norm{\ }_p)$, $p\in[1,\infty)$, tj. $u_n\to u$ v $(L^p(\Omega),\norm{\ }_p)$, pak prvek $u$ se skoro všude shoduje s bodovou limitou, tj.
+\[ (\lim_{n\to\infty} u_n)(x) = \lim_{n\to\infty} (u_n(x)). \]
+Pro zjišťování konvergence posloupnosti funkcí je tedy vhodné nejprve zjistit, zda existuje bodová limita.
+
+\begin{ex}
+Uvažujme posloupnost funkcí $\{u_n\}$,
+\[ u_n(x) := \begin{cases}10\sin(n\pi x) & \mbox{ pro }x\in[0,\frac1n]\\0 & \mbox{ jinak}\end{cases} \]
+v prostoru $C([0,1])$.
+Pro ověření, zda má daná posloupnost limitu, nejprve potřebujeme vhodného ``kandidáta''.
+Spočteme proto nejprve bodovou limitu.
+Zřejmě $\lim u_n(0)=0$.
+Je-li $x\in(0,1]$, pak lze najít číslo $n_0\in\N$ takové, že $x>\frac1{n_0}$, takže pro $n\ge n_0$ platí $u_n(x)=0$, a proto musí být $\lim u_n(x) = 0$.
+Bodová limita posloupnosti je tedy nulová funkce.
+Lze ukázat, že
+\[ \varrho_2(u_n,0) = \sqrt{\frac{50}n}, \mbox{ takže }\lim \norm{u_n-0}_2=0, \]
+a tedy
+\[ \lim u_n = 0 \mbox{ v }(C([0,1]),\norm{\ }_2), \mbox{ resp. v }(L^2(0,1),\norm{\ }_2). \]
+Dále platí
+\[ \norm{u_n-0}_\infty = 10, \]
+z čehož plyne, že v prostoru $(C([0,1]),\norm{\ }_\infty)$ není nulová funkce limitou posloupnosti $\{u_n\}$ (ve skutečnosti posloupnost není v tomto prostoru konvergentní).
+\end{ex}
+% 
+Uvedený příklad poukazuje na to, že existence limity v metrickém prostoru závisí na tom, jakou uvažujeme metriku.
+% Obecně tedy ta samá posloupnost může být v jedné metrice konvergentní a v jiné ne.
+Na omezené oblasti $\Omega$ platí následující vztah mezi limitami.
+\begin{veta}
+Nechť $\Omega$ je omezená oblast v $\R^d$, $d\in\{1,2,3\}$, a $\{u_n\}$ je posloupnost funkcí.
+Pak platí:
+\begin{itemize}
+\item[(i)] Jestliže $u_n\to u$ v $(C(\overline\Omega),\norm{\ }_\infty)$, pak $u_n\to u$ také v $(L^p(\Omega),\norm{\ }_p)$, $p\in[1,\infty)$.
+\item[(ii)] Jestliže $u_n\to u$ v $(L^p(\Omega),\norm{\ }_p)$, pak $u_n(x)\to u(x)$ pro skoro všechna $x\in\Omega$.
+\end{itemize}
+\end{veta}
+
+\begin{df}
+Nechť $\norm{\ }_A$ a $\norm{\ }_B$ jsou normy ve vektorovém prostoru $X$.
+Jestliže existují konstanty $\alpha,\beta>0$ takové, že pro každé $x\in X$ platí
+\[ \alpha\norm{x}_A \le \norm{x}_B \le \beta\norm{x}_A, \]
+pak říkáme, že $\norm{\ }_A$ a $\norm{\ }_B$ jsou na $X$ \emph{ekvivalentní}.
+\end{df}
+% 
+Jsou-li normy $\norm{\ }_A$ a $\norm{\ }_B$ ekvivalentní, pak platí
+\[ x_n\to x \mbox{ v }(X,\norm{\ }_A) \quad \Leftrightarrow \quad x_n\to x \mbox{ v }(X,\norm{\ }_B). \]
+Ekvivalentní normy také generují stejné otevřené a uzavřené množiny.
+Normy $\norm{\ }_p$ a $\norm{\ }_\infty$ obecně nejsou ekvivalentní.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% \begin{df}
+% Úplný normovaný lineární prostor se nazývá \emph{Banachův prostor}.
+% \end{df}
+
+
+
+
+
+\subsection{Prostory $H^1(\Omega)$}
+
+Pro funkce z prostorů $L^p(\Omega)$ lze zavést pojem derivace.
+Uvažujme nejprve funkci $u\in C^1([0,1])$.
+Je-li $v\in C^1([0,1])$, $v(0)=v(1)=0$, pak díky pravidlu per partes platí
+\[ \int_0^1 u'(x)v(x)~dx = [u(x)v(x)]_{x=0}^1 - \int_0^1u(x)v'(x)~dx = - \int_0^1u(x)v'(x)~dx. \]
+Zde vidíme, že zatímco pro integrál nalevo je třeba, aby existovala $u'$, výraz na pravé straně je definován i pro $u\in L^1(0,1)$. To vede k pojmu \emph{zobecněná derivace}.
+\begin{df}
+Nechť $u\in L^p(\Omega)$. Funkce $g\in L^p(\Omega)$ se nazývá \emph{zobecněná parciální derivace} funkce $u$ podle $i$-té proměnné, pokud pro každé $v\in C^1(\overline\Omega)$, $v_{\partial\Omega}=0$, platí:
+\[ \int_\Omega g(x)v(x)~dx = -\int_{\Omega} u(x)\frac{\partial v}{\partial x_i}(x)~dx. \]
+Píšeme $g=\frac{\partial u}{\partial x_i}$ v $L^p(\Omega)$.
+\end{df}
+\begin{ex}
+Spočtěme zobecněnou derivaci funkce $u(x):=|x|$ na intervalu $(-1,1)$.
+Pro $v\in C^1([-1,1])$, $v(-1)=v(1)=0$ platí:
+\begin{multline*}
+-\int_{-1}^1|x|v'(x)~dx = -\int_{-1}^0(-x)v'(x)~dx - \int_0^1xv'(x)~dx\\
+= [xv(x)]_{x=-1}^0 - \int_{-1}^0v(x)~dx - [xv(x)]_{x=0}^1 + \int_0^1v(x)~dx
+= \int_{-1}^1\sgn x v(x)~dx.
+\end{multline*}
+Je tedy $u'=\sgn$ v $L^p(-1,1)$ pro libovolné $p\in[1,\infty)$.
+\end{ex}
+\begin{ex}
+Uvažujme funkci $u(x) = \sgn x$. Pro $v\in C^1([-1,1])$, $v(-1)=v(1)=0$ platí:
+\begin{multline*}
+ -\int_{-1}^1u(x)v'(x)~dx = -\int_{-1}^0 (-v'(x))~dx - \int_0^1 v'(x)~dx\\
+ = [v(x)]_{x=-1}^0 - [v(x)]_{x=0}^1 = 2v(0) = 2\int_{-1}^1\delta_0(x)v(x)~dx,
+\end{multline*}
+kde $\delta_0$ se nazývá Diracova $\delta$-funkce (ve skutečnosti to není funkce, ale tzv. \emph{distribuce}). V jistém smyslu tedy platí $\sgn'=2\delta_0$, nicméně $\delta_0\notin L^p(\Omega)$.
+\end{ex}
+Ne každá funkce z $L^p(\Omega)$ tedy má zobecněnou derivaci v $L^p(\Omega)$.
+\begin{df}
+Prostor $H^1(\Omega)$ je množina
+\[ H^1(\Omega):=\{u\in L^2(\Omega);~\forall i=1,\ldots,n:\frac{\partial u}{\partial x_i}\in L^2(\Omega)\}. \]
+Norma na tomto prostoru je definována výrazem
+\[ \norm{u}_{H^1(\Omega)} := \left(\norm{u}_2^2 + \sum_{i=1}^n\norm{\frac{\partial u}{\partial x_i}}_2^2\right)^{1/2} \]
+a skalární součin výrazem
+\[ ((u,v)):=(u,v) + \sum_{i=1}^n(\frac{\partial u}{\partial x_i},\frac{\partial v}{\partial x_i}). \]
+\end{df}
+\begin{veta}
+Prostor $H^1(\Omega)$ je separabilní Banachův prostor.
+\end{veta}
+
+
+\subsection{Prostory se skalárním součinem}
+
+Skalární součin hraje významnou roli v řadě fyzikálních a inženýrských úloh.
+Víme, jak je zaveden a jaké má vlastnosti skalární součin v Euklidovských prostorech $\R^n$, v $L^2(\Omega)$ nebo v $H^1(\Omega)$.
+Nyní uvedeme obecnou definici a vlastnosti prostorů se skalárním součinem.
+\begin{df}
+Nechť $X$ je (reálný) vektorový prostor. Zobrazení $(\cdot,\cdot):X\times X\to\R$ se nazývá skalární součin, pokud pro každé $x,y,z\in X$ a $\alpha\in\R$ platí
+\begin{itemize}
+\item[(i)] $(x,x)\ge 0$, $(x,x)=0\Leftrightarrow x=\vec 0$,
+\item[(ii)] $(x,y)=(y,x)$,
+\item[(iii)] $(\alpha x,y)=\alpha(x,y)$,
+\item[(iv)] $(x+y,z)=(x,z)+(y,z)$.
+\end{itemize}
+Je-li na vektorovém prostoru definován skalární součin, nazývá se $X$ \emph{prostor se skalárním součinem}.
+\end{df}
+Skalární součin indukuje normu $|||x|||:=\sqrt{(x,x)}$.
+Je-li prostor $X$ s touto normou úplný, nazývá se $X$ \emph{Hilbertův prostor}.
+Platí tzv. \emph{Cauchyova-Schwarzova nerovnost}:
+\[ \forall x,y\in X: ~|(x,y)| \le |||x|||\cdot|||y|||. \]
+\begin{df}
+Množina $M\subset X$ v Hilbertově prostoru $X$ se nazývá \emph{ortogonální}, jsou-li všechny její prvky navzájem ortogonální, tj.
+\[ \forall x,y\in M,x\neq y:~(x,y)=0. \]
+Platí-li navíc
+\[ \forall x\in M:~|||x|||=1, \]
+pak se $M$ nazývá \emph{ortonormální systém}.
+\end{df}
+Příkladem ortonormálního systému je kanonická báze v $\R^n$ nebo množina
+\[ \left\{\frac1{\sqrt{2\pi}}\right\}\cup\left\{\frac1{\sqrt\pi}\sin nx;~n\in\N\right\}\cup\left\{\frac1{\sqrt\pi}\cos nx;~n\in\N\right\} \mbox{ v }L^2(-\pi,\pi). \]
+
+
+
+\subsection{Slabé řešení okrajové úlohy a Galerkinova aproximace}
+
+Na závěr ještě uvedeme příklad, jak lze formulovat okrajovou úlohu s nespojitou pravou stranou a její aproximaci.
+
+Je dána okrajová úloha
+\[ -u''+u=f \mbox{ v }(0,1),\quad u(0)=u(1)=0. \]
+Je-li $f\in C[0,1]$, pak má smysl hledat klasické řešení, tj. funkci $u\in C^2(0,1)\cap C[0,1]$ takovou, že uvedené rovnosti platí v celém intervalu $(0,1)$.
+Pro méně regulární pravou stranu ale klasické řešení nemusí existovat.
+Ukážeme odvození definice tzv. slabého (zobecněného) řešení.
+
+Předpokládejme, že $u$ je klasické řešení.
+Pak pro každé $v\in V:=\{v\in C^1[0,1];~v(0)=v(1)=0\}$ platí
+\[ (-u''+u,v)=(f,v). \]
+Integrací per partes dostaneme
+\begin{multline*}
+ (-u''+u,v) = \int_0^1(-u''(x)+u(x))v(x)~dx\\
+=[-u'(x)v(x)]_{x=0}^1 + \int_0^1 u'(x)v'(x) + u(x)v(x)~dx = ((u,v)).
+\end{multline*}
+Místo klasického řešení můžeme tedy hledat funkci $u$ takovou, aby
+\[ ((u,v))=(f,v) \]
+pro všechna $v\in V$.
+Protože ale $V$ není úplný prostor v normě $H^1(0,1)$, nehodí se pro definici zobecněného řešení $u$. Zúplněním $V$ v normě $H^1(0,1)$ dostaneme prostor
+\[ H^1_0(0,1):=\{v\in H^1(0,1);~v(0)=v(1)=0\footnote{Výraz $v(0)$, resp. $v(1)$ zde značí tzv. stopu funkce $v$.}\}. \]
+\underline{Slabé (zobecněné) řešení} okrajové úlohy tedy lze definovat jako funkci $u\in H^1_0(0,1)$, která splňuje
+\[ \forall v\in H^1_0(0,1):~((u,v))=(f,v). \]
+Všimněme si, že tato formulace okrajové úlohy má smysl pro $f\in L^2(0,1)$.
+
+Nechť $\{v_i\}_{i=1}^\infty$ je nějaká báze prostoru $H^1_0(0,1)$.
+\underline{Galerkinova aproximace} slabého řešení je definována jako funkce
+\[ u^n(x):=\sum_{i=1}^n\alpha_i^n v_i(x), \]
+která splňuje
+\[ \forall j=1,\ldots,n:~ ((u^n,v_j)) = (f,v_j). \]
+Dosazením za $u^n$ dostaneme soustavu lineárních algebraických rovnic
+\[ \sum_{i=1}^n\alpha_i^n((v_i,v_j)) = (f,v_j),~j=1,\ldots,n, \]
+pro koeficienty $\uu:=(\alpha_1^n,\ldots,\alpha_n^n)^\top$.
+Definujeme-li matici $\A=(a_{ij})_{i,j=1}^n$, kde $a_{ij}:=((v_j,v_i))$, a vektor $\bb=(b_i)_{i=1}^n$, kde $b_i:=(f,v_i)$, pak lze tuto soustavu zapsat zkráceně
+\[ \A\uu=\bb. \]
+Díky vlastnostem skalárního součinu je matice $\A$ symetrická pozitivně definitní, soustava má proto pro libovolné $\bb\in\R^n$ právě jedno řešení.
+
+Lze také ukázat, že posloupnost $\{u^n\}$ je v jistém smyslu konvergentní a její limita je slabé řešení $u$.
+
+
+
+
+% \section{Značení}
+% 
+% Níže jsou uvedeny a vysvětleny v textu často používané symboly.
+% 
+% \begin{tabular}{ll}
+% \bf symbol & \bf význam\\
+% \hline
+% $\N$ & množina přirozených čísel (1, 2, 3, \ldots)\\
+% $\Z$ & množina celých čísel\\
+% $\Q$ & množina racionálních čísel\\
+% $\R$ & množina reálných čísel\\
+% $\C$ & množina komplexních čísel\\
+% $A\subset B$ & $A$ je částí (podmnožinou) $B$\\
+% $A\cap B$ & průnik\\
+% $A\cup B$ & sjednocení\\
+% $A\setminus B$ & rozdíl množin\\
+% $A\times B$ & kartézský součin\\
+% $(a_1,\ldots,a_n)$ & uspořádaná $n$-tice\\
+% $(a,b)$ & otevřený interval\\
+% $[a,b]$ & uzavřený interval
+% \end{tabular}
+
+
+
+
+
