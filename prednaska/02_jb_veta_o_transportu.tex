@@ -1,0 +1,83 @@
+\section{Opakování plošných a křivkových integrálů}
+\subsection{Integrace po křivce a po ploše. Kelvin-Stokesova, Greenova, Gaussova věta.}
+Pomocí vektorového zápisu je integrál (1. druhu) ze skalárního pole $f$ podél křivky $k$ dané parametricky funkcí $\vc \phi(t),\ t\in[\alpha,\beta]$:
+\[
+   \int_k f \abs{\d \vc \phi} = \int_{\alpha}^\beta f\big(\vc \phi(t)\big)\, \abs{\vc \phi'(t)} \dt=
+   \int_\alpha^\beta f(\phi_x,\phi_y,\phi_z) \sqrt{ (\phi_x')^2+(\phi_y')^2+(\phi_z')^2} \dt
+\]
+kde $\vc \phi'(t)$ je tečný vektor, tj. vektor derivace funkce $\phi$, \cite{CVUT} str. 135.
+
+Podobně pro integrál (1. druhu) ze skalárního pole $f$ podél plochy $S$ dané parametricky funkcí
+$\vc \phi(u,v), [u,v]\in M\subset \Real^2$:
+\[
+   \int_S f \abs{\d \vc n} = \int_M f(\vc \phi(u,v)) \abs{\vc n(u,v)} \d u\d v=
+   \int_M f(\phi_x,\phi_y,\phi_z) \sqrt{ (n_x)^2 + (n_y)^2 + (n_z)^2} \d u\d v,
+\]
+kde $\vc n$ je normála plochy (vektor kolmý k ploše jehož velikost je daná "velikostí elementární plošky"). Normála je rovna vektorovému součinu tečných vektorů:
+\[
+   \vc n= \vc t_u \times \vc t_v,\quad \vc t_u = \frac{\prtl \vc \phi}{\prtl u},\quad \vc t_v=\frac{\prtl \vc \phi}{\prtl v}.
+\]
+Pozor, pokud plocha není rovina, tak normála a tudíž i její velikost závisí na parametrech $u, v$, \cite{CVUT} str. 151.
+
+Ve vektorovém zápisu je integrál (2. druhu) z vektorového pole $\vc F$ podél křivky $k$:
+\[
+ \int_k \vc F \cdot \d \vc s = \int_\alpha^\beta \vc F( \vc \phi(s) ) \cdot \vc \phi'(s) \d s
+\]
+Integrál vyjadřuje práci pole podél křivky, \cite{CVUT} str. 169.
+Podobně lze integrál (2. druhu) vektorového pole $\vc F$ skrze plochu $S$ napsat:
+\[
+  \int_S \vc F\cdot \d \vc n = \int_M \vc F( \vc \phi(u,v) ) \cdot \big( \prtl_u \vc \phi \times \prtl_v \vc \phi\big) \d u\d v
+\]
+Tento integrál má význam celkového toku pole skrz plochu, \cite{CVUT} str. 192.
+
+Stokesova věta: Pro plochu $S$ ohraničenou uzavřenou křivkou $k$ platí
+\[
+        \int_S \rot \vc F \cdot \d \vc n = \int_k \vc F\cdot \d \vc k.
+\]
+Gaussova věta: Pro objem $V$ ohraničený plochou $S$ platí
+\[
+        \int_V \div \vc F \d V = \int_S \vc F\cdot \d \vc n.
+\]
+
+Greenova věta (integrace per partes):
+\[
+        \int_V  \prtl_x u  v \d V = \int_S u v  \d n_x - \int_V u \prtl_x v \d V
+\]
+\[
+        \int_V (\grad u) \cdot \vc v \d V = \int_S u v \cdot \d n - \int_V u \div v \d V
+\]
+
+
+\subsection{Aplikace v geometrii a fyzice}
+Rektorys I., 520 - 551
+
+{\bf Délka křivky, plocha plochy} je integrál (1. druhu) ze skalárního pole $f(x,y,z)=1$, tj.
+\[
+   l=\int_\alpha^\beta \abs{\vc \phi'(t)} \dt,\quad 
+   P=\int_M \abs{\vc n(u,v)} \d u\d v
+\]
+
+{\bf Hmota křivky nebo plochy} je integrál (1. druhu) ze skalárního pole hustoty $\rho(x,y,z)$.
+\[
+        M=\int_k \rho(x,y,z) \abs{\d \phi},\quad M=\int_S \rho(x,y,z) \abs{\d \vc n}
+\]
+
+{\bf Souřadnice těžiště křivky nebo plochy} je vektor $(T_x,T_y,T_z)$ integrálů (1. druhu !!) z vektoru skalárních funkcí $ x \rho(x,y,z)$, $ y \rho(x,y,z)$, $z\rho(x,y,z)$ dělený celkovou hmotou $M$. Např. pro plochu $S$:
+\[
+        T_x=\frac{1}{M}\int_S x\rho(x,y,z) \abs{\d \vc n},\quad
+        T_y=\frac{1}{M}\int_S y\rho(x,y,z) \abs{\d \vc n},\quad
+        T_z=\frac{1}{M}\int_S z\rho(x,y,z) \abs{\d \vc n}.
+\]
+
+{\bf Moment setrvačnosti vzhledem k ose $o$} je integrál (1. druhu) ze skalární funkce
+$f(x,y,z)=r^2\rho(x,y,z)$, kde $r$ je vzdálenost bodu $[x,y,z]$ od osy $o$. Bývá vhodné 
+použít cylindrické souřadnice okolo osy $o$. 
+
+{\bf Práce síly po křivce.} Integrál 2. druhu z vektorové funkce síly.
+{\bf Tok kapaliny skrze plochu za jednotkový čas.} Integrál 2. druhu z vektorového pole rychlosti.
+
+\section{Integrační věty}
+
+\section{Věta o transportu}
+
+\section{Odvození rovnice vedení tepla}

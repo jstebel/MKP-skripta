@@ -1,0 +1,84 @@
+\documentclass[a4paper,10pt]{report}
+\usepackage{amsfonts,amsmath,amssymb,cancel,graphicx,hyperref,mathabx}
+\usepackage[utf8]{inputenc}
+\usepackage[czech]{babel}
+\usepackage[numbers]{natbib}
+
+\newtheorem{df}{Definice}
+\newtheorem{ex}{Příklad}
+\newtheorem{veta}{Věta}
+
+\newcommand{\0}{\vec{0}}
+\newcommand{\A}{\mat A}
+\newcommand{\algoritmus}[2]{\vspace{2mm}\begin{tabular}{l}
+\hline
+{\bf Algoritmus A\arabic{algocntr}} #1\\
+\hline
+#2\\
+\hline
+\end{tabular}\vspace{2mm}
+\addtocounter{algocntr}{1}}
+\newcommand{\B}{\mat B}
+\newcommand{\bb}{\vec{b}}
+\newcommand{\C}{\mathbb C}
+\newcommand{\CC}{\mat C}
+\newcommand{\cc}{\vec{c}}
+\newcommand{\ee}{\vec{e}}
+\newcommand{\Hr}{\operatorname{Hr}}
+\newcommand{\I}{\mat I}
+\newcommand{\Int}{\operatorname{Int}}
+\newcommand{\Iz}{\operatorname{Iz}}
+\newcommand{\lo}[1]{\langle #1\rangle}
+\newcommand{\mat}[1]{\mathbf{#1}}
+\newcommand{\N}{\mathbb N}
+\newcommand{\norm}[1]{\|#1\|}
+\newcommand{\pp}{\vec{p}}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\qq}{\vec{q}}
+\newcommand{\R}{\mathbb R}
+\newcommand{\range}[1]{\mathcal R(#1)}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\rr}{\vec{r}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\renewcommand{\ss}{\vec{s}}
+\newcommand{\uu}{\vec{u}}
+\newcommand{\vv}{\vec{v}}
+\newcommand{\ww}{\vec{w}}
+\newcommand{\xx}{\vec{x}}
+\newcommand{\yy}{\vec{y}}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\zz}{\vec{z}}
+
+\newcounter{algocntr}
+\setcounter{algocntr}{1}
+
+\title{Metoda konečných prvků -- učební text}
+\author{Jan Březina \and Jan Stebel}
+
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+
+\input 01_jb_opakovani.tex
+\input 02_jb_veta_o_transportu.tex
+\input 03_jb_fyzikalni_priklady_klasifikace.tex
+\input 04_jb_slabe_reseni.tex
+
+% tady neco od JB
+
+% \input fa
+
+% tady neco od JB
+
+% \input iteracni_metody
+
+
+
+\bibliographystyle{abbrvnat}
+\bibliography{ref}
+
+\end{document}          
