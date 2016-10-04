@@ -2,4 +2,12 @@
 *.bbl
 *.blg
 *.log
+*.backup
+*.synctex.gz
+*.toc
+
+prednaska/mkp_prednaska.pdf
+
+cviceni/mkp_cvika.pdf
+
 *~
