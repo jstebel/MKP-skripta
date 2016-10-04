@@ -1,4 +1,4 @@
-% typesetting TODO
+    % typesetting TODO
 %
 % - bibliography
 % - METAFONT def of := ... \eqdef
@@ -131,7 +131,7 @@
 \def\vrb#1{\verb"#1"}
 
 \def\prednaska{\pagebreak \item přednáška \hrule}
-\def\cviceni{\item cvičení \hrule}
+\def\cviceni{\pagebreak \item cvičení \hrule}
 \def\priklady{{\bf Další vhodné příklady:}}
 
 
@@ -150,12 +150,13 @@
 {\LARGE MKP - Metoda konečných prvků, cvičení}
 \end{center}
 
-\begin{enumerate}
-\cviceni
+\pagebreak
+\section{Opakování}
 {\bf Témata:} Vektorový prostor, lineární zobrazení, matice, inverzní matice, hodnost, soustava lin. rovnic, vlastní čísla a vektory.
 Vektorový prostor funkcí. Skalární a vektorové funkce více promenných. Derivace složených funkcí.
 Diferenciální operátory: gradient, divergence, rotace. 
 
+{\bf Příklady k řešení:}
 \begin{enumerate}
   \item Vektorový prostor funkcí.
   \item Tvoří množina $\{t^2+1, (t+1)^2, (t-1)^2\}$ bázi prostoru $P_2$? Jakou hodnost má příslušná matice? 
@@ -199,112 +200,22 @@ Plyne z posledních dvou výsledků porušení Helmholtzovy dekompozice?
 \item Spočtěte $\div(\rot(\vc \omega))$ pro obecné vektorové pole $\omega$.
 \end{enumerate}
 
-\priklady
+{\bf Příklady doplňující}
 \begin{enumerate}
-\item Derivace ve směru - \cite{CVUT} str. 22; 1,2,3
 \item Derivace složené funkce - \cite{CVUT} str. 29; 1,2,3,4 
 \item První derivace, 2 nezávisle proměnné - \cite{CVUT} str. 50; 2,3
 \item Polarní souřadnice - \cite{CVUT} str. 52; 8, 10*
-\end{enumerate}
-
-
-
-\prednaska
-\subsection{Vektorový počet. Diferenciální operátory.}
-Rektorys I., 219 - 229\\
-Feynman II., kapitola 2, str. 27 - 44\\
-
-Vektorová algebra: Eukleidovský prostor $R^3$, skalarní a vektorový součin\\
-Vektorový počet: gradient, nabla, divergence, rotace (i ve 2d), Laplaceův operátor, skalární a vektorový potenciál
-
-\cviceni
-\begin{enumerate}
-\item Pro vektorové pole $\vc v(x,y,z) = \vc \omega \times \vc r$ rychlostí tuhého tělesa rotujícího okolo osy 
-      dané vektorem úhlové rychlosti $\vc \omega$
-      spočítejte $\nabla\cdot \vc v$ a $\nabla\times\vc v$. První výsledek odpovídá nestlačitelnosti, druhý ukazuje na geometrický význam 
-      rotace --- vířivosti.
-\end{enumerate}
-
-\priklady
-\begin{enumerate}
+\item Diferenciální operátory, vektorový počet: \cite{CVUT} str. 221,
 \item Gradient - \cite{CVUT} str. 223; 1-4,6,8*,13,17a,
 \item Divergence - \cite{CVUT} str. 232; 25, 27, 28-36
 \item Rotace - \cite{CVUT} str. 237;  38-42 
 \end{enumerate}
 
-\prednaska
-\subsection{Extrémy, Vázané extrémy, Lagrangeovy multiplikátory.}
-Rektorys I., 388 - 395
-příklady: 65/1, 58/1,2,3
 
-\cviceni
-\begin{enumerate}
-\item Nalezněte všechny lokální extrémy funkce
-\[
- f(x,y)=x^3+\frac{y^3}{8}+3x^2-\frac32xy+3x-\frac32y+1
-\]
-\item Nalezněte lokální extrémy funkce $f(x,y,z)=x^2+y^2+z^2$ na množině
-$M=\{x+2y+3z=1\}$.
-\item Do polokoule vepište kvádr s maximálním objemem.
-\end{enumerate}
 
-\priklady
-\begin{enumerate}
-\item Extrémy funkcí 2 proměnných - str. 58; 1-9,10*
-\item Extrémy funkcí 3 proměnných - str. 61; 11-14
-\item Vázané extrémy - str. 66; 1,3,5,7,9,11
-\end{enumerate}
 
-\prednaska
-\section{Integrální počet na $\Real^N$}
-\subsection{Míra a Lebesgueův integrál}
-\subsection{Oblasti, křivky, plochy, integrovatelné funkce}
-\subsection{Integrace ve 2D a 3D. Fubiniova věta. Substituce.}
-Rektorys I., 500 - 516
-
-\cviceni
-Pro každý příklad nejprve namalujte oblast, přes kterou se integruje.
-\begin{enumerate}
-\item 
-Vypočítejte 
-\[
-        \int_\Omega x^2+y^2\d x\d y,
-\]
-kde $\Omega$ je omezena přímkami:
-\[
-        2x=y,\ y=2x+1,\ y=-1,\ y=1.
-\]
-\item Vypočtěte
-\[
-        \int_\Omega\sqrt{1-\frac{x^2}{a^2}-\frac{y^2}{b^2}}\d x\d y,
-\]
-kde $\Omega$ je elipsa 
-\[
-  \frac{x^2}{a^2}+\frac{y^2}{b^2}<1.
-\]
-Použijte eliptické souřadnice, určete jakobián.
-
-\item 
-\[
- \int_V xyz \d x\d y\d z,
-\]
-kde $V$ je oblast ohraničená plochami
-\[
- x^2+y^2+z^2<1,\quad x>0,\ y>0,\ z>0.
-\]
-Výpočet proveďte jednak přímo pomocí Fubiniovy věty a dále pomocí
-substituce do cylindrických, nebo sférických souřadnic. 
-\end{enumerate}
-
-\priklady
-\begin{enumerate}
-\item Fubiniho věta: \cite{CVUT} str. 89; 1-7,9,11
-\item Substituce:  \cite{CVUT} str. 97; 1-3, 7
-\end{enumerate}
-
-\prednaska
-\subsection{Integrace po křivce a po ploše. Kelvin-Stokesova, Greenova, Gaussova věta.}
-Rektorys 520 - 531 (bohužel pouze ve složkovém zápisu)
+\pagebreak
+\section{Integrace po křivce a po ploše. Kelvin-Stokesova, Greenova, Gaussova věta.}
 Pomocí vektorového zápisu je integrál (1. druhu) ze skalárního pole $f$ podél křivky $k$ dané parametricky funkcí $\vc \phi(t),\ t\in[\alpha,\beta]$:
 \[
    \int_k f \abs{\d \vc \phi} = \int_{\alpha}^\beta f\big(\vc \phi(t)\big)\, \abs{\vc \phi'(t)} \dt=
@@ -351,74 +262,74 @@ Greenova věta (integrace per partes):
 \[
         \int_V (\grad u) \cdot \vc v \d V = \int_S u v \cdot \d n - \int_V u \div v \d V
 \]
-(\cite{CVUT} str. 208)
 
-\cviceni
+
+{\bf Příklady k řešení:}
 \begin{enumerate}
-\item
-Spočítejte tok vektorového pole
-\[
-        \vc F=(x^3,y^3,z^3) 
-\]
-plochou danou rovnicí
-\[
-        x^2+y^2+z^2=x.
-\]
-{\it Návod: }Použijte Gaussovu větu a  substituci do sférických souřadnic. $[\pi/5]$
-\item
-Spočítejte tok pole $\vc F=(y,x,-z)$ trojúhelníkem $A=(1,0,0)$, $B=(0,2,0)$, $C=(0,0,3)$ orientovaným 
-směrem od počátku. [3/2]
+    \item Spočítejte tok vektorového pole
+        \[
+                \vc F=(x^3,y^3,z^3) 
+        \]
+        plochou danou rovnicí
+        \[
+                x^2+y^2+z^2=x.
+        \]
+        {\it Návod: }Použijte Gaussovu větu a  substituci do sférických souřadnic. $[\pi/5]$
+    \item
+        Spočítejte tok pole $\vc F=(y,x,-z)$ trojúhelníkem $A=(1,0,0)$, $B=(0,2,0)$, $C=(0,0,3)$ orientovaným 
+        směrem od počátku. [3/2]
+    \item    
+    \item
+    Spočítejte moment setrvačnosti kuželolvé plochy $x^2+y^2-4z^2=0$, $0<z<\frac12$ s hustotou $\rho(x,y,z)=z$ vzhledem k přímce $\{y=0,\ z=\frac12\}$.
+    Návod: Použijte cylindrické souřadnice pro parametrické vyjádření plochy. $[\pi\sqrt{5}13/(20*12)]$
+
+    \item
+    Spočítejte práci elastické síly směřující do počátku o velikosti dvojnásobku vzdálenosti do počátku
+    podél šroubovice $\{3\cos 2t, 3 \sin 2t, t\}$, $0<t<2\pi$. Vysvětlete proč je výsledek záporný.
+    $[-4\pi^2]$
+
 \end{enumerate}
 
-\priklady
-\cite{CVUT} str. 244;
 
-\prednaska
-\subsection{Aplikace v geometrii a fyzice}
-Rektorys I., 520 - 551
-
-{\bf Délka křivky, plocha plochy} je integrál (1. druhu) ze skalárního pole $f(x,y,z)=1$, tj.
-\[
-   l=\int_\alpha^\beta \abs{\vc \phi'(t)} \dt,\quad 
-   P=\int_M \abs{\vc n(u,v)} \d u\d v
-\]
-
-{\bf Hmota křivky nebo plochy} je integrál (1. druhu) ze skalárního pole hustoty $\rho(x,y,z)$.
-\[
-        M=\int_k \rho(x,y,z) \abs{\d \phi},\quad M=\int_S \rho(x,y,z) \abs{\d \vc n}
-\]
-
-{\bf Souřadnice těžiště křivky nebo plochy} je vektor $(T_x,T_y,T_z)$ integrálů (1. druhu !!) z vektoru skalárních funkcí $ x \rho(x,y,z)$, $ y \rho(x,y,z)$, $z\rho(x,y,z)$ dělený celkovou hmotou $M$. Např. pro plochu $S$:
-\[
-        T_x=\frac{1}{M}\int_S x\rho(x,y,z) \abs{\d \vc n},\quad
-        T_y=\frac{1}{M}\int_S y\rho(x,y,z) \abs{\d \vc n},\quad
-        T_z=\frac{1}{M}\int_S z\rho(x,y,z) \abs{\d \vc n}.
-\]
-
-{\bf Moment setrvačnosti vzhledem k ose $o$} je integrál (1. druhu) ze skalární funkce
-$f(x,y,z)=r^2\rho(x,y,z)$, kde $r$ je vzdálenost bodu $[x,y,z]$ od osy $o$. Bývá vhodné 
-použít cylindrické souřadnice okolo osy $o$. 
-
-{\bf Práce síly po křivce.} Integrál 2. druhu z vektorové funkce síly.
-{\bf Tok kapaliny skrze plochu za jednotkový čas.} 
-Integrál 2. druhu z vektorového pole rychlosti.
-
-
-
-\cviceni
+{\bf Příklady doplňující:}
 \begin{enumerate}
-\item
-Spočítejte moment setrvačnosti kuželolvé plochy $x^2+y^2-4z^2=0$, $0<z<\frac12$ s hustotou $\rho(x,y,z)=z$ vzhledem k přímce $\{y=0,\ z=\frac12\}$.
-Návod: Použijte cylindrické souřadnice pro parametrické vyjádření plochy. $[\pi\sqrt{5}13/(20*12)]$
-
-\item
-Spočítejte práci elastické síly směřující do počátku o velikosti dvojnásobku vzdálenosti do počátku
-podél šroubovice $\{3\cos 2t, 3 \sin 2t, t\}$, $0<t<2\pi$. Vysvětlete proč je výsledek záporný.
-$[-4\pi^2]$
+\item Fubiniho věta: \cite{CVUT} str. 89 (př: 1-7,9,11)
+\item Substituce:  \cite{CVUT} str. 97 (př: 1-3, 7)
+\item Aplikace integrálů: \cite{CVUT} str. 112 ()
+\item Křivkové integrály: \cite{CVUT} str. 135 (); str. 169 ()
+\item Plošné integrály: \cite{CVUT} str. 150 (); str. 192 ()
+str. 248; 199/12 (hmotnost), 249/58 (hmotnost), 122/20 \dots (3D momenty), 159/11 (skořepina), 
+\item Greenova věta: \cite{CVUT} str. 197; 
+\item Gaussova, Stokesova věta: \cite{CVUT} str. 208; 244/48, 245/51, 246/52, 247/54, \dots
 \end{enumerate}
+\pagebreak
 
-\priklady
-\cite{CVUT} str. 112, str. 248; 199/12 (hmotnost), 249/58 (hmotnost), 122/20 \dots (3D momenty), 159/11 (skořepina), 
+
+
+
+
+\begin{thebibliography}{99}
+\bibitem{Rektorys} K. Rektorys a spol. : 
+{\it Přehled užité matematiky.} Prometheus, Praha, 1995.
+\bibitem{CVUT} \verb http://euler.fd.cvut.cz/predmety/ml2/files/MA2_CV.pdf (originál),\\
+   \verb http://morf.matfyz.cz/vyuka/mft/MA2_CV.pdf (kopie)
+\bibitem{Veit} J. Veit: {\it Integrální transformace.} SNTL, Praha, 1979.
+\bibitem{FeynmanII} R. Feynman: {\it Přednášky z fyziky II.}, Fragment, 2001
+\bibitem{SedlakStoll} B. Sedlák,I. Štoll :{\it Eletřina a magnetismus.} Academia, Praha, 2002.. 
+\end{thebibliography}
+
+%        * MEZNÍK, I, KARÁSEK, J., MIKLÍČEK, J. Matematika I pro strojní fakulty. SNTL, Praha, 1992.
+%        * [1] Brabec, J., Hrůza, B.: Matematická analýza II. Praha, SNTL, 1986.
+%        * [5] Horský, J., Novotný, J., Štefaník, M.: Mechanika ve fyzice, Academia, Praha, 2001.
+
+\end{document}
+
+
+
+
+
+
+
 
 \prednaska
 \section{Všehochuť}
@@ -472,22 +383,3 @@ celkem tři témata. Po jednom z okruhů \ref{x1}, \ref{x2}, \ref{x3}. Zkouška 
         \item Elektřina a magnetismus: náboj $q$ a proudová hustota $\vc J$, stavové veličiny elektro magnetického pole: $\vc E,\ \vc H, \vc D, \vc B$, parametry $\mu$, $\eps$; pohyb náboje v elektromagnetiském poli, Lorentzova síla, umět zjednodušit úplný systém Maxwell rovnic v případech elektrostatického a stacionárního proudového pole; Ohmův zákon, odpor, vodivost
    \end{enumerate}
 \end{enumerate}
-
-
-
-
-\begin{thebibliography}{99}
-\bibitem{Rektorys} K. Rektorys a spol. : 
-{\it Přehled užité matematiky.} Prometheus, Praha, 1995.
-\bibitem{CVUT} \verb http://euler.fd.cvut.cz/predmety/ml2/files/MA2_CV.pdf (originál),\\
-   \verb http://morf.matfyz.cz/vyuka/mft/MA2_CV.pdf (kopie)
-\bibitem{Veit} J. Veit: {\it Integrální transformace.} SNTL, Praha, 1979.
-\bibitem{FeynmanII} R. Feynman: {\it Přednášky z fyziky II.}, Fragment, 2001
-\bibitem{SedlakStoll} B. Sedlák,I. Štoll :{\it Eletřina a magnetismus.} Academia, Praha, 2002.. 
-\end{thebibliography}
-
-%        * MEZNÍK, I, KARÁSEK, J., MIKLÍČEK, J. Matematika I pro strojní fakulty. SNTL, Praha, 1992.
-%        * [1] Brabec, J., Hrůza, B.: Matematická analýza II. Praha, SNTL, 1986.
-%        * [5] Horský, J., Novotný, J., Štefaník, M.: Mechanika ve fyzice, Academia, Praha, 2001.
-
-\end{document}
