@@ -35,3 +35,20 @@
         background:#ddc;
         padding: 10px 10px;
 }
+
+#lecture_list ol
+{
+    margin:0px 0;
+    padding:0;
+    list-style: decimal-leading-zero inside none;
+}
+
+#lecture_list ol li 
+{
+    margin: 0px;
+    padding: 0px;
+    text-indent: -2.2em;
+    margin-left: 3.4em;
+}
+
+    
