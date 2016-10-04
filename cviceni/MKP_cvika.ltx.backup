@@ -1,0 +1,497 @@
+% typesetting TODO
+%
+% - bibliography
+% - METAFONT def of := ... \eqdef
+% - tecky nad bold symbol se spatne umistuji
+%
+% conventions:
+% crossrefs - typechap:name (type: [s]ection,[e]quation,[d]efinition,[t]heorem(lemma,..))
+%                           (chap: [p]hysical background, [m]ath tools, [f]luid, [b]odies, [s]teady)
+\documentclass[a4paper]{article}
+% ***************************************** PACKAGES
+%\usepackage[active]{srcltx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{fancyhdr}
+\usepackage[utf8]{inputenc}
+\usepackage[czech]{babel}
+%\usepackage{mathbbol}
+%\usepackage{bbm}
+% ***************************************** THEOREMS
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{proposition}[thm]{Proposition}
+\newtheorem{definition}[thm]{Definition}
+\newtheorem{remark}[thm]{Remark}
+\newtheorem{lemma}[thm]{Lemma}
+\newtheorem{corollary}[thm]{Corollary}
+\numberwithin{equation}{section}
+% ***************************************** SYMBOLS
+\def\div{{\rm div}}
+\def\rot{{\rm rot}}
+\def\Lapl{\Delta}
+\def\grad{\nabla}
+\def\supp{{\rm supp}}
+\def\dist{{\rm dist}}
+%\def\chset{\mathbbm{1}}
+\def\chset{1}
+
+\def\Tr{{\rm Tr}}
+\def\sgn{{\rm sgn}}
+\def\to{\rightarrow}
+\def\weakto{\rightharpoonup}
+\def\imbed{\hookrightarrow}
+\def\cimbed{\subset\subset}
+\def\range{{\mathcal R}}
+\def\leprox{\lesssim}
+\def\argdot{{\hspace{0.18em}\cdot\hspace{0.18em}}}
+\def\Distr{{\mathcal D}}
+\def\calK{{\mathcal K}}
+\def\FromTo{|\rightarrow}
+\def\convol{\star}
+\def\impl{\Rightarrow}
+\DeclareMathOperator*{\esslim}{esslim}
+\DeclareMathOperator*{\esssup}{ess\,sup}
+\DeclareMathOperator{\ess}{ess}
+\DeclareMathOperator{\osc}{osc}
+\DeclareMathOperator{\curl}{curl}
+
+%\def\Ess{{\rm ess}}
+%\def\Exp{{\rm exp}}
+%\def\Implies{\Longrightarrow}
+%\def\Equiv{\Longleftrightarrow}
+% ****************************************** GENERAL MATH NOTATION
+\def\Real{{\rm\bf R}}
+\def\Rd{{{\rm\bf R}^{\rm 3}}}
+\def\RN{{{\rm\bf R}^N}}
+\def\D{{\mathbb D}}
+\def\Nnum{{\mathbb N}}
+\def\Measures{{\mathcal M}}
+\def\d{\,{\rm d}}               % differential
+\def\sdodt{\genfrac{}{}{}{1}{\rm d}{{\rm d}t}}
+\def\dodt{\genfrac{}{}{}{}{\rm d}{{\rm d}t}}
+
+\def\vc#1{\mathbf{\boldsymbol{#1}}}     % vector
+\def\tn#1{{\mathbb{#1}}}    % tensor
+\def\abs#1{\lvert#1\rvert}
+\def\Abs#1{\bigl\lvert#1\bigr\rvert}
+\def\bigabs#1{\bigl\lvert#1\bigr\rvert}
+\def\Bigabs#1{\Big\lvert#1\Big\rvert}
+\def\ABS#1{\left\lvert#1\right\rvert}
+\def\norm#1{\bigl\Vert#1\bigr\Vert} %norm
+\def\close#1{\overline{#1}}
+\def\inter#1{#1^\circ}
+\def\ol#1{\overline{#1}}
+\def\ul#1{\underline{#1}}
+\def\eqdef{\mathrel{\mathop:}=}     % defining equivalence
+\def\where{\,|\,}                    % "where" separator in set's defs
+\def\timeD#1{\dot{\overline{{#1}}}}
+
+% ******************************************* USEFULL MACROS
+\def\RomanEnum{\renewcommand{\labelenumi}{\rm (\roman{enumi})}}   % enumerate by roman numbers
+\def\rf#1{(\ref{#1})}                                             % ref. shortcut
+\def\prtl{\partial}                                        % partial deriv.
+\def\Names#1{{\scshape #1}}
+\def\rem#1{{\parskip=0cm\par!! {\sl\small #1} !!}}
+
+\def\Xint#1{\mathchoice
+{\XXint\displaystyle\textstyle{#1}}%
+{\XXint\textstyle\scriptstyle{#1}}%
+{\XXint\scriptstyle\scriptscriptstyle{#1}}%
+{\XXint\scriptscriptstyle\scriptscriptstyle{#1}}%
+\!\int}
+\def\XXint#1#2#3{{\setbox0=\hbox{$#1{#2#3}{\int}$}
+\vcenter{\hbox{$#2#3$}}\kern-.5\wd0}}
+\def\ddashint{\Xint=}
+\def\dashint{\Xint-}
+
+% ******************************************* DOCUMENT NOTATIONS
+% document specific
+\def\rh{\varrho}
+\def\vl{{\vc{u}}}
+\def\th{\vartheta}
+\def\vx{\vc{x}}
+\def\vX{\vc{X}}
+\def\vr{\vc{r}}
+\def\veta{\vc{\eta}}
+\def\dx{\,\d\vx}
+\def\dt{\,\d t}
+\def\bulk{\zeta}
+\def\cS{\close{S}}
+\def\eps{\varepsilon}
+\def\phi{\varphi}
+\def\Bog{{\mathcal B}}
+\def\Riesz{{\mathcal R}}
+\def\distr{\mathcal D}
+\def\Item{$\bullet$}
+
+\def\MEtst{\mathcal T}
+%***************************************************************************
+\def\vrb#1{\verb"#1"}
+
+\def\prednaska{\pagebreak \item přednáška \hrule}
+\def\cviceni{\item cvičení \hrule}
+\def\priklady{{\bf Další vhodné příklady:}}
+
+
+
+
+\addtolength{\textwidth}{5cm}
+\addtolength{\hoffset}{-2.5cm}
+\addtolength{\textheight}{4cm}
+\addtolength{\voffset}{-3cm}
+%\addtolength{\oddsidemargin}{1cm}
+%\addtolength{\evensidemargin}{-1cm}
+\begin{document}
+\parindent=0pt
+\parskip=0.3cm
+\begin{center}
+{\LARGE MKP - Metoda konečných prvků, cvičení}
+\end{center}
+
+\begin{enumerate}
+\cviceni
+{\bf Témata:} Vektorový prostor, lineární zobrazení, matice, inverzní matice, hodnost, soustava lin. rovnic, vlastní čísla a vektory.
+Vektorový prostor funkcí. Skalární a vektorové funkce více promenných. Derivace složených funkcí.
+Diferenciální operátory: gradient, divergence, rotace. 
+
+\begin{enumerate}
+  \item Vektorový prostor funkcí.
+  \item Tvoří množina $\{t^2+1, (t+1)^2, (t-1)^2\}$ bázi prostoru $P_2$? Jakou hodnost má příslušná matice? 
+  \item Najděte matici přechodu z  báze $A:(3\sin(t+\alpha), 2\cos(t+\alpha))$ do báze $B:(\sin(t), \cos(t))$ a její inverzní matici.
+  Najděte matici přechodu z báze $B$ do báze $A$. 
+  určete její vlastní čísla, vlastní vektory a inverzní matici.
+       Najděte matici přechodu v opačném směru.
+  \item 
+Nechť $f(x,y,z)$, $g(x,y,z)$ jsou dané funkce tří proměnných. Transformujte výraz:
+\[
+  V=\frac{\prtl f}{\prtl x} \frac{\prtl g}{\prtl y} - \frac{\prtl g}{\prtl x} \frac{\prtl f}{\prtl y}
+    +\frac{\prtl f}{\prtl z} \frac{\prtl g}{\prtl z}
+\]
+do "cylindrických" souřadnic:
+\[
+   x=r \cos \phi,\quad y=r\sin \phi,\quad h=2z+1.
+\]
+
+výsledek: 
+\[
+  \frac{1}{r}\Big(\frac{\prtl f}{\prtl r} \frac{\prtl g}{\prtl \phi}
+        -\frac{\prtl f}{\prtl \phi} \frac{\prtl g}{\prtl r}\Big)
+        +4\frac{\prtl f}{\prtl h}\frac{\prtl g}{\prtl h}
+\]
+ \item Je dáno:
+ \[
+    \prtl_a u = b^2,\ \prtl_b u = 2ab,\ a(x) = 1+x^2,\ b(y)=y^2  
+ \]
+ Vypočtěne Jacobiho matici funkce $\vc f(x,y) = [u, -2u+y, u^2]$
+\item Pro polohový vektor (rádius vektor)
+\[
+   \vc r =(x,y,z),\quad r=\abs{\vc r}=\sqrt{r_1^2+ r_2^2 + r_3^2}.
+\]
+spočtěte:
+\[
+ \text{a) } \nabla \cdot \vc r\qquad
+ \text{b) } \nabla \times \vc r\qquad
+ \text{c) } \nabla \cdot \frac{\vc r}{r^3}\qquad
+ \text{d) } \nabla \times \frac{\vc r}{r^3}\qquad
+\]
+Plyne z posledních dvou výsledků porušení Helmholtzovy dekompozice?
+\item Spočtěte $\div(\rot(\vc \omega))$ pro obecné vektorové pole $\omega$.
+
+  \item Vypočtěte gradient funkcí: a) $x^y$ b) $\arctan\frac{y}{x}$
+ \item Vypočtěte všechny druhé derivace funkce: $x\ln(xy)$ 
+\end{enumerate}
+
+\priklady
+\begin{enumerate}
+\item Derivace ve směru - \cite{CVUT} str. 22; 1,2,3
+\item Derivace složené funkce - \cite{CVUT} str. 29; 1,2,3,4 
+\item První derivace, 2 nezávisle proměnné - \cite{CVUT} str. 50; 2,3
+\item Polarní souřadnice - \cite{CVUT} str. 52; 8, 10*
+\end{enumerate}
+
+
+
+\prednaska
+\subsection{Vektorový počet. Diferenciální operátory.}
+Rektorys I., 219 - 229\\
+Feynman II., kapitola 2, str. 27 - 44\\
+
+Vektorová algebra: Eukleidovský prostor $R^3$, skalarní a vektorový součin\\
+Vektorový počet: gradient, nabla, divergence, rotace (i ve 2d), Laplaceův operátor, skalární a vektorový potenciál
+
+\cviceni
+\begin{enumerate}
+\item Pro vektorové pole $\vc v(x,y,z) = \vc \omega \times \vc r$ rychlostí tuhého tělesa rotujícího okolo osy 
+      dané vektorem úhlové rychlosti $\vc \omega$
+      spočítejte $\nabla\cdot \vc v$ a $\nabla\times\vc v$. První výsledek odpovídá nestlačitelnosti, druhý ukazuje na geometrický význam 
+      rotace --- vířivosti.
+\end{enumerate}
+
+\priklady
+\begin{enumerate}
+\item Gradient - \cite{CVUT} str. 223; 1-4,6,8*,13,17a,
+\item Divergence - \cite{CVUT} str. 232; 25, 27, 28-36
+\item Rotace - \cite{CVUT} str. 237;  38-42 
+\end{enumerate}
+
+\prednaska
+\subsection{Extrémy, Vázané extrémy, Lagrangeovy multiplikátory.}
+Rektorys I., 388 - 395
+příklady: 65/1, 58/1,2,3
+
+\cviceni
+\begin{enumerate}
+\item Nalezněte všechny lokální extrémy funkce
+\[
+ f(x,y)=x^3+\frac{y^3}{8}+3x^2-\frac32xy+3x-\frac32y+1
+\]
+\item Nalezněte lokální extrémy funkce $f(x,y,z)=x^2+y^2+z^2$ na množině
+$M=\{x+2y+3z=1\}$.
+\item Do polokoule vepište kvádr s maximálním objemem.
+\end{enumerate}
+
+\priklady
+\begin{enumerate}
+\item Extrémy funkcí 2 proměnných - str. 58; 1-9,10*
+\item Extrémy funkcí 3 proměnných - str. 61; 11-14
+\item Vázané extrémy - str. 66; 1,3,5,7,9,11
+\end{enumerate}
+
+\prednaska
+\section{Integrální počet na $\Real^N$}
+\subsection{Míra a Lebesgueův integrál}
+\subsection{Oblasti, křivky, plochy, integrovatelné funkce}
+\subsection{Integrace ve 2D a 3D. Fubiniova věta. Substituce.}
+Rektorys I., 500 - 516
+
+\cviceni
+Pro každý příklad nejprve namalujte oblast, přes kterou se integruje.
+\begin{enumerate}
+\item 
+Vypočítejte 
+\[
+        \int_\Omega x^2+y^2\d x\d y,
+\]
+kde $\Omega$ je omezena přímkami:
+\[
+        2x=y,\ y=2x+1,\ y=-1,\ y=1.
+\]
+\item Vypočtěte
+\[
+        \int_\Omega\sqrt{1-\frac{x^2}{a^2}-\frac{y^2}{b^2}}\d x\d y,
+\]
+kde $\Omega$ je elipsa 
+\[
+  \frac{x^2}{a^2}+\frac{y^2}{b^2}<1.
+\]
+Použijte eliptické souřadnice, určete jakobián.
+
+\item 
+\[
+ \int_V xyz \d x\d y\d z,
+\]
+kde $V$ je oblast ohraničená plochami
+\[
+ x^2+y^2+z^2<1,\quad x>0,\ y>0,\ z>0.
+\]
+Výpočet proveďte jednak přímo pomocí Fubiniovy věty a dále pomocí
+substituce do cylindrických, nebo sférických souřadnic. 
+\end{enumerate}
+
+\priklady
+\begin{enumerate}
+\item Fubiniho věta: \cite{CVUT} str. 89; 1-7,9,11
+\item Substituce:  \cite{CVUT} str. 97; 1-3, 7
+\end{enumerate}
+
+\prednaska
+\subsection{Integrace po křivce a po ploše. Kelvin-Stokesova, Greenova, Gaussova věta.}
+Rektorys 520 - 531 (bohužel pouze ve složkovém zápisu)
+Pomocí vektorového zápisu je integrál (1. druhu) ze skalárního pole $f$ podél křivky $k$ dané parametricky funkcí $\vc \phi(t),\ t\in[\alpha,\beta]$:
+\[
+   \int_k f \abs{\d \vc \phi} = \int_{\alpha}^\beta f\big(\vc \phi(t)\big)\, \abs{\vc \phi'(t)} \dt=
+   \int_\alpha^\beta f(\phi_x,\phi_y,\phi_z) \sqrt{ (\phi_x')^2+(\phi_y')^2+(\phi_z')^2} \dt
+\]
+kde $\vc \phi'(t)$ je tečný vektor, tj. vektor derivace funkce $\phi$, \cite{CVUT} str. 135.
+
+Podobně pro integrál (1. druhu) ze skalárního pole $f$ podél plochy $S$ dané parametricky funkcí
+$\vc \phi(u,v), [u,v]\in M\subset \Real^2$:
+\[
+   \int_S f \abs{\d \vc n} = \int_M f(\vc \phi(u,v)) \abs{\vc n(u,v)} \d u\d v=
+   \int_M f(\phi_x,\phi_y,\phi_z) \sqrt{ (n_x)^2 + (n_y)^2 + (n_z)^2} \d u\d v,
+\]
+kde $\vc n$ je normála plochy (vektor kolmý k ploše jehož velikost je daná "velikostí elementární plošky"). Normála je rovna vektorovému součinu tečných vektorů:
+\[
+   \vc n= \vc t_u \times \vc t_v,\quad \vc t_u = \frac{\prtl \vc \phi}{\prtl u},\quad \vc t_v=\frac{\prtl \vc \phi}{\prtl v}.
+\]
+Pozor, pokud plocha není rovina, tak normála a tudíž i její velikost závisí na parametrech $u, v$, \cite{CVUT} str. 151.
+
+Ve vektorovém zápisu je integrál (2. druhu) z vektorového pole $\vc F$ podél křivky $k$:
+\[
+ \int_k \vc F \cdot \d \vc s = \int_\alpha^\beta \vc F( \vc \phi(s) ) \cdot \vc \phi'(s) \d s
+\]
+Integrál vyjadřuje práci pole podél křivky, \cite{CVUT} str. 169.
+Podobně lze integrál (2. druhu) vektorového pole $\vc F$ skrze plochu $S$ napsat:
+\[
+  \int_S \vc F\cdot \d \vc n = \int_M \vc F( \vc \phi(u,v) ) \cdot \big( \prtl_u \vc \phi \times \prtl_v \vc \phi\big) \d u\d v
+\]
+Tento integrál má význam celkového toku pole skrz plochu, \cite{CVUT} str. 192.
+
+Stokesova věta: Pro plochu $S$ ohraničenou uzavřenou křivkou $k$ platí
+\[
+        \int_S \rot \vc F \cdot \d \vc n = \int_k \vc F\cdot \d \vc k.
+\]
+Gaussova věta: Pro objem $V$ ohraničený plochou $S$ platí
+\[
+        \int_V \div \vc F \d V = \int_S \vc F\cdot \d \vc n.
+\]
+
+Greenova věta (integrace per partes):
+\[
+        \int_V  \prtl_x u  v \d V = \int_S u v  \d n_x - \int_V u \prtl_x v \d V
+\]
+\[
+        \int_V (\grad u) \cdot \vc v \d V = \int_S u v \cdot \d n - \int_V u \div v \d V
+\]
+(\cite{CVUT} str. 208)
+
+\cviceni
+\begin{enumerate}
+\item
+Spočítejte tok vektorového pole
+\[
+        \vc F=(x^3,y^3,z^3) 
+\]
+plochou danou rovnicí
+\[
+        x^2+y^2+z^2=x.
+\]
+{\it Návod: }Použijte Gaussovu větu a  substituci do sférických souřadnic. $[\pi/5]$
+\item
+Spočítejte tok pole $\vc F=(y,x,-z)$ trojúhelníkem $A=(1,0,0)$, $B=(0,2,0)$, $C=(0,0,3)$ orientovaným 
+směrem od počátku. [3/2]
+\end{enumerate}
+
+\priklady
+\cite{CVUT} str. 244;
+
+\prednaska
+\subsection{Aplikace v geometrii a fyzice}
+Rektorys I., 520 - 551
+
+{\bf Délka křivky, plocha plochy} je integrál (1. druhu) ze skalárního pole $f(x,y,z)=1$, tj.
+\[
+   l=\int_\alpha^\beta \abs{\vc \phi'(t)} \dt,\quad 
+   P=\int_M \abs{\vc n(u,v)} \d u\d v
+\]
+
+{\bf Hmota křivky nebo plochy} je integrál (1. druhu) ze skalárního pole hustoty $\rho(x,y,z)$.
+\[
+        M=\int_k \rho(x,y,z) \abs{\d \phi},\quad M=\int_S \rho(x,y,z) \abs{\d \vc n}
+\]
+
+{\bf Souřadnice těžiště křivky nebo plochy} je vektor $(T_x,T_y,T_z)$ integrálů (1. druhu !!) z vektoru skalárních funkcí $ x \rho(x,y,z)$, $ y \rho(x,y,z)$, $z\rho(x,y,z)$ dělený celkovou hmotou $M$. Např. pro plochu $S$:
+\[
+        T_x=\frac{1}{M}\int_S x\rho(x,y,z) \abs{\d \vc n},\quad
+        T_y=\frac{1}{M}\int_S y\rho(x,y,z) \abs{\d \vc n},\quad
+        T_z=\frac{1}{M}\int_S z\rho(x,y,z) \abs{\d \vc n}.
+\]
+
+{\bf Moment setrvačnosti vzhledem k ose $o$} je integrál (1. druhu) ze skalární funkce
+$f(x,y,z)=r^2\rho(x,y,z)$, kde $r$ je vzdálenost bodu $[x,y,z]$ od osy $o$. Bývá vhodné 
+použít cylindrické souřadnice okolo osy $o$. 
+
+{\bf Práce síly po křivce.} Integrál 2. druhu z vektorové funkce síly.
+{\bf Tok kapaliny skrze plochu za jednotkový čas.} 
+Integrál 2. druhu z vektorového pole rychlosti.
+
+
+
+\cviceni
+\begin{enumerate}
+\item
+Spočítejte moment setrvačnosti kuželolvé plochy $x^2+y^2-4z^2=0$, $0<z<\frac12$ s hustotou $\rho(x,y,z)=z$ vzhledem k přímce $\{y=0,\ z=\frac12\}$.
+Návod: Použijte cylindrické souřadnice pro parametrické vyjádření plochy. $[\pi\sqrt{5}13/(20*12)]$
+
+\item
+Spočítejte práci elastické síly směřující do počátku o velikosti dvojnásobku vzdálenosti do počátku
+podél šroubovice $\{3\cos 2t, 3 \sin 2t, t\}$, $0<t<2\pi$. Vysvětlete proč je výsledek záporný.
+$[-4\pi^2]$
+\end{enumerate}
+
+\priklady
+\cite{CVUT} str. 112, str. 248; 199/12 (hmotnost), 249/58 (hmotnost), 122/20 \dots (3D momenty), 159/11 (skořepina), 
+
+\prednaska
+\section{Všehochuť}
+\subsection{Laplaceova transformace, Fourierovy řady.}
+\subsection{Rovnice vedení tepla, rovnice kontinuity.}
+\priklady
+\cite{Veit} - Laplaceova transformace\\
+\cite{Rektorys} 574 - 584 - Fourierovy řady\\
+\cite{CVUT} str. 249, 58 - rovnice vedení tepla; 59 - rovnice kontinuity\\
+
+
+\prednaska
+
+\section{Mechanika tekutin}
+\subsection{Stavové proměnné, rovnice kontinuity, Eulerovy a Navier-Stokesovy rovnice}
+\subsection{Zjednodušené modely: Bernuliho rovnice, porézní prostředí}
+
+* [5] Horský, J., Novotný, J., Štefaník, M.: Mechanika ve fyzice, Academia, Praha, 2001.
+Feynman I.
+
+\item přednáška \hrule
+\section{Elektromagnetismus}
+Elektromagnetická indukce, Faradayův zákon,  Magnetické pole, Maxwellovy rovnice
+Kapitoly z Feynmana: 1 (základní zákony bez formalismu), 2 a 3 - vektorový, diferenciální a integrální počet prakticky, 4 - Maxwellovy rovnice
+12 - aplikace Laplaceovy rovnice, 13 a 14 - pouze vybrane, 18 finalni Maxwelovy rovnice
+\cite{FeynmanII}, \cite{SedlakStoll}
+
+
+\end{enumerate}
+
+\section{Požadavky ke zkoušce}
+Vypracovanáa odevzdaná (nejpozději při zkoušce) zadaná cvičení z přednášek 1-7 (viz. výše). Dále si připravit
+celkem tři témata. Po jednom z okruhů \ref{x1}, \ref{x2}, \ref{x3}. Zkouška bude probíhat ústně.
+\begin{enumerate}
+ \item \label{x1}
+ \begin{enumerate}
+    \item Funkce více proměnných: limita, spojitost, parciální derivace, totální diferenciál
+    \item Derivace složených funkcí. Transformace diferenciálních výrazů při změně souřadnic. Cylindrické a sférické souřadnice.
+    \item Extrémy funkcí více proměnných: nevázané a vázané extrémy, extrémy na omezené oblasti, rozpoznání             minima, maxima, sedla
+  \end{enumerate}
+  \item \label{x2}
+  \begin{enumerate}
+        \item Vektorový počet: součiny, vektorové pole, operátory $\grad$, $\div$, $\rot$
+        \item Lesgueova míra a integrál (základní idea), Fubiniho věta, věta o substituci
+        \item Integrace podél křivky a podél plochy, integrály I. a II. druhu, "Stokesovy věty"
+  \end{enumerate}
+  \item \label{x3}
+  \begin{enumerate}
+        \item Aplikace integrálů ve fyzice: hmota, těžiště, momenty, tok pole skrze plochu, práce pole podél křivky, rovnice vedení tepla, rovnice kontinuity
+        \item Laplaceova transformace. Fourierovy řady.
+        \item Elektřina a magnetismus: náboj $q$ a proudová hustota $\vc J$, stavové veličiny elektro magnetického pole: $\vc E,\ \vc H, \vc D, \vc B$, parametry $\mu$, $\eps$; pohyb náboje v elektromagnetiském poli, Lorentzova síla, umět zjednodušit úplný systém Maxwell rovnic v případech elektrostatického a stacionárního proudového pole; Ohmův zákon, odpor, vodivost
+   \end{enumerate}
+\end{enumerate}
+
+
+
+
+\begin{thebibliography}{99}
+\bibitem{Rektorys} K. Rektorys a spol. : 
+{\it Přehled užité matematiky.} Prometheus, Praha, 1995.
+\bibitem{CVUT} \verb http://euler.fd.cvut.cz/predmety/ml2/files/MA2_CV.pdf (originál),\\
+   \verb http://morf.matfyz.cz/vyuka/mft/MA2_CV.pdf (kopie)
+\bibitem{Veit} J. Veit: {\it Integrální transformace.} SNTL, Praha, 1979.
+\bibitem{FeynmanII} R. Feynman: {\it Přednášky z fyziky II.}, Fragment, 2001
+\bibitem{SedlakStoll} B. Sedlák,I. Štoll :{\it Eletřina a magnetismus.} Academia, Praha, 2002.. 
+\end{thebibliography}
+
+%        * MEZNÍK, I, KARÁSEK, J., MIKLÍČEK, J. Matematika I pro strojní fakulty. SNTL, Praha, 1992.
+%        * [1] Brabec, J., Hrůza, B.: Matematická analýza II. Praha, SNTL, 1986.
+%        * [5] Horský, J., Novotný, J., Štefaník, M.: Mechanika ve fyzice, Academia, Praha, 2001.
+
+\end{document}

@@ -1,0 +1,89 @@
+Spojeny sylabus prednasek AMA, MKP (cast FA + MKP)
+
+1. Opakování základů z bak. studia: vektorový prostor, lineární zobrazení, matice, inverzní matice, hodnost, soustava lin. rovnic, vlastní čísla a vektory
+   Diferenciální operátory: gradient, divergence, rotace. Skalární a vektorové funkce více promenných. Derivace složených funkcí.
+   Vektorový prostor funkcí.
+2. Plošné a objemové integrály. Gaussova a Greenova věta.  Věta o transportu. Odvození rovnice nestacionárního vedení tepla 
+3. Rovnice elektrostatiky a stacionárního filtračního proudění. Vlnová rovnice. Klasifikace parciálních diferenciálních rovnic.
+4. Greenova věta. Slabé řešení, zavedení přirozených okrajových podmínek (Dirichletových, Neumannových a Newtonových). Ze slabého klasické.
+
+JS  5. Norma. Konvergence, úplnost, uzavřené a otevřené množiny. Prostory s normou.
+JS  6. Prostory se skalárním součinem. L^2
+JS  7. Slabá derivace, Sobolevovy prostory (H^k), jejich vlastnosti, operátory stop.
+JS  8. Variační forma slabého řešení (abstraktní pomocí forem). Lax-Milgramova věta.  Friedrichsova/Poincareho nerovnost.
+?JS 9. Galerkinova metoda. Příklad lineárních prvků v 1D, rovnice vedení tepla.
+
+10. Konečný prvek obecně. Referenční prvek, transformace.
+11. Odhad chyby diskretizace v normách Sobolevova prostoru. 
+12. Algoritmus sestavení stavové matice a vektoru pravé strany. Sítě. Kvadraturní formule.
+
+JS   13. Iterační metody Krylovovských podprostorů
+JS   14. Metody předpodmínění iteračních metod.
+
+Cvika (mimo diferencialnich rovnic):
+
+JB 1. Diferenciální operátory: gradient, divergence, rotace. Skalární a vektorové funkce více promenných. Derivace složených funkcí.
+   Vektorový prostor funkcí.
+2. Plošné a objemové integrály. Gaussova a Greenova věta. Aplikace věty o transportu na jiné zákony zachování (..).
+3. ?? Fyzikální příklady a jejich popis pomocí PDR, klasifikace. Ověření speciálních řešení jednoduchých PDR (představa co je řešení).
+4. Odvození slabého řešení pro různé rovnice a okrajové podmínky.
+5. Norma. Příklady prostorů funkcí a jejich norem. 
+6. Příklady na konvergenci posloupností funkcí. (L^p, C)
+7. Příklady nediferencovatelných funkcí majících slabou derivaci. Příklady funkcí z a mimo Sobolevovy prostory (H^k)
+8. Aplikace LM věty na různé rovnice (různé okrajové podmínky). Ověřování vlastností forem. Odhady, nerovnosti !!
+9. Aplikace Galerkinovy metody na různé rovnice. Příklad lineárních prvků v 1D.
+10. Konečný prvek obecně. Příklady dalších konečných prvků??
+11. Praktické aspekty.    ?? Odhad chyby diskretizace v normách Sobolevova prostoru. 
+12. Praktické aspekty.    Algoritmus sestavení stavové matice a vektoru pravé strany. Sítě. Kvadraturní formule.
+13. Iterační metody Krylovovských podprostorů
+14. Metody předpodmínění iteračních metod.
+
+Uloziste: http://mkp.nti.tul.cz
+
+Literatura:
+
+An Introduction to Computer Simulation - Woolfson and Pert.pdf
+    Overrview of methods" ODE, FD, MC, praticle, FEM, CFD; some interesting physical problems, no math
+    
+Applied Finite Element Analysis - Larry J. Segerlind.pdf
+    Textbook, engineering, mechanics, overview of methods on examples, 
+
+    
+Finite Element Method - The Basis - Zienkiewicz and Taylor.pdf
+
+Fundamentals of Finite Element Analysis - David V. Hutton.pdf
+    Mechanics aproach
+       
+Numerical Methods for Elliptic and Parabolic PDEs - P. Knabner & L. Angermann.pdf
+    Quite good, no phys. examples
+       
+Numerical PDEs for Environmental Scientists and Engineers - D.R.Lynch.pdf
+    Engineering, some examples and +d tutorial problems
+    
+Numerical Solutions of PDEs by the Finite Element Method - Johnson.djvu
+    Textbook, classical introduction. Application of the theory to examples.
+
+
+    (Too fuzzy and advanced)    
+    Finite Element Analysis - Flaherty J.E.pdf
+        Textbook, starts with 1d problem, then extends, no FA; various polynomial bases; no physical examples
+        basic elements and their properties, mesh generation, quadrature (adaptivity, parabolic hyperbolic problems)
+
+
+===========
+    
+Numerical Treatment of Partial Differential Equations - Grossmann and Roos.pdf
+    Advanced.
+    
+Partial Differential Equations and the Finite Element Method - P. Solin.pdf
+    Algorithms and technical details.
+
+
+
+
+
+Literatura:
+Axelsson, O., Barker, V.A.: Finite Element Solution of Boundary Value Problems, Academic Press, INC., London, 1984. 
+Ciarlet, P.G.: The Finite Element Method for Elliptic Problem, North Holland Publishing Company, Amsterdam, 1978.. 
+Haslinger, J.:. Řešení variačních rovnic a nerovnic, skriptum.. MF UK, Praha, 1983. 
+Zienkiewicz, O.C.; Taylor R.L.; Zhu J.Z.: The Finite Element Method: Its basis and fundamentals. Elsevier, Oxford, 2005

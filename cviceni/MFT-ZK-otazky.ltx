@@ -1,0 +1,225 @@
+% typesetting TODO
+%
+% - bibliography
+% - METAFONT def of := ... \eqdef
+% - tecky nad bold symbol se spatne umistuji
+%
+% conventions:
+% crossrefs - typechap:name (type: [s]ection,[e]quation,[d]efinition,[t]heorem(lemma,..))
+%                           (chap: [p]hysical background, [m]ath tools, [f]luid, [b]odies, [s]teady)
+\documentclass[a4paper]{article}
+% ***************************************** PACKAGES
+%\usepackage[active]{srcltx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{fancyhdr}
+\usepackage[utf8]{inputenc}
+\usepackage[czech]{babel}
+%\usepackage{mathbbol}
+%\usepackage{bbm}
+% ***************************************** THEOREMS
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{proposition}[thm]{Proposition}
+\newtheorem{definition}[thm]{Definition}
+\newtheorem{remark}[thm]{Remark}
+\newtheorem{lemma}[thm]{Lemma}
+\newtheorem{corollary}[thm]{Corollary}
+\numberwithin{equation}{section}
+% ***************************************** SYMBOLS
+\def\div{{\rm div}}
+\def\rot{{\rm rot}}
+\def\Lapl{\Delta}
+\def\grad{\nabla}
+\def\supp{{\rm supp}}
+\def\dist{{\rm dist}}
+%\def\chset{\mathbbm{1}}
+\def\chset{1}
+
+\def\Tr{{\rm Tr}}
+\def\sgn{{\rm sgn}}
+\def\to{\rightarrow}
+\def\weakto{\rightharpoonup}
+\def\imbed{\hookrightarrow}
+\def\cimbed{\subset\subset}
+\def\range{{\mathcal R}}
+\def\leprox{\lesssim}
+\def\argdot{{\hspace{0.18em}\cdot\hspace{0.18em}}}
+\def\Distr{{\mathcal D}}
+\def\calK{{\mathcal K}}
+\def\FromTo{|\rightarrow}
+\def\convol{\star}
+\def\impl{\Rightarrow}
+\DeclareMathOperator*{\esslim}{esslim}
+\DeclareMathOperator*{\esssup}{ess\,sup}
+\DeclareMathOperator{\ess}{ess}
+\DeclareMathOperator{\osc}{osc}
+\DeclareMathOperator{\curl}{curl}
+
+%\def\Ess{{\rm ess}}
+%\def\Exp{{\rm exp}}
+%\def\Implies{\Longrightarrow}
+%\def\Equiv{\Longleftrightarrow}
+% ****************************************** GENERAL MATH NOTATION
+\def\Real{{\rm\bf R}}
+\def\Rd{{{\rm\bf R}^{\rm 3}}}
+\def\RN{{{\rm\bf R}^N}}
+\def\D{{\mathbb D}}
+\def\Nnum{{\mathbb N}}
+\def\Measures{{\mathcal M}}
+\def\d{\,{\rm d}}               % differential
+\def\sdodt{\genfrac{}{}{}{1}{\rm d}{{\rm d}t}}
+\def\dodt{\genfrac{}{}{}{}{\rm d}{{\rm d}t}}
+
+\def\vc#1{\mathbf{\boldsymbol{#1}}}     % vector
+\def\tn#1{{\mathbb{#1}}}    % tensor
+\def\abs#1{\lvert#1\rvert}
+\def\Abs#1{\bigl\lvert#1\bigr\rvert}
+\def\bigabs#1{\bigl\lvert#1\bigr\rvert}
+\def\Bigabs#1{\Big\lvert#1\Big\rvert}
+\def\ABS#1{\left\lvert#1\right\rvert}
+\def\norm#1{\bigl\Vert#1\bigr\Vert} %norm
+\def\close#1{\overline{#1}}
+\def\inter#1{#1^\circ}
+\def\ol#1{\overline{#1}}
+\def\ul#1{\underline{#1}}
+\def\eqdef{\mathrel{\mathop:}=}     % defining equivalence
+\def\where{\,|\,}                    % "where" separator in set's defs
+\def\timeD#1{\dot{\overline{{#1}}}}
+
+% ******************************************* USEFULL MACROS
+\def\RomanEnum{\renewcommand{\labelenumi}{\rm (\roman{enumi})}}   % enumerate by roman numbers
+\def\rf#1{(\ref{#1})}                                             % ref. shortcut
+\def\prtl{\partial}                                        % partial deriv.
+\def\Names#1{{\scshape #1}}
+\def\rem#1{{\parskip=0cm\par!! {\sl\small #1} !!}}
+
+\def\Xint#1{\mathchoice
+{\XXint\displaystyle\textstyle{#1}}%
+{\XXint\textstyle\scriptstyle{#1}}%
+{\XXint\scriptstyle\scriptscriptstyle{#1}}%
+{\XXint\scriptscriptstyle\scriptscriptstyle{#1}}%
+\!\int}
+\def\XXint#1#2#3{{\setbox0=\hbox{$#1{#2#3}{\int}$}
+\vcenter{\hbox{$#2#3$}}\kern-.5\wd0}}
+\def\ddashint{\Xint=}
+\def\dashint{\Xint-}
+
+% ******************************************* DOCUMENT NOTATIONS
+% document specific
+\def\rh{\varrho}
+\def\vl{{\vc{u}}}
+\def\th{\vartheta}
+\def\vx{\vc{x}}
+\def\vX{\vc{X}}
+\def\vr{\vc{r}}
+\def\veta{\vc{\eta}}
+\def\dx{\,\d\vx}
+\def\dt{\,\d t}
+\def\bulk{\zeta}
+\def\cS{\close{S}}
+\def\eps{\varepsilon}
+\def\phi{\varphi}
+\def\Bog{{\mathcal B}}
+\def\Riesz{{\mathcal R}}
+\def\distr{\mathcal D}
+\def\Item{$\bullet$}
+
+\def\MEtst{\mathcal T}
+%***************************************************************************
+\def\vrb#1{\verb"#1"}
+
+\def\prednaska{\pagebreak \item přednáška \hrule}
+\def\cviceni{{\bf Příklad k řešení:\\}}
+\def\priklady{{\bf Další vhodné příklady:}}
+
+
+
+
+\addtolength{\textwidth}{5cm}
+\addtolength{\hoffset}{-2.5cm}
+\addtolength{\textheight}{4cm}
+\addtolength{\voffset}{-3cm}
+%\addtolength{\oddsidemargin}{1cm}
+%\addtolength{\evensidemargin}{-1cm}
+\begin{document}
+\parindent=0pt
+\parskip=0.3cm
+\begin{center}
+{\LARGE MFT - Matamatika a fyzika pro techniky, otazky}
+\end{center}
+\section{Požadavky ke zkoušce}
+Vypracovanáa odevzdaná (nejpozději při zkoušce) zadaná cvičení z přednášek 1-7 (viz. výše). Dále si připravit
+celkem tři témata. Po jednom z okruhů \ref{x1}, \ref{x2}, \ref{x3}. Zkouška bude probíhat ústně.
+\begin{enumerate}
+ \item \label{x1}
+ \begin{enumerate}
+    \item Funkce více proměnných: limita, spojitost, parciální derivace, totální diferenciál\\
+        Definujete limitu a spojitost pro funkce dvou proměnných. \\
+        Stačí pro spojitost v bodě, že je funkce spojitá na každé přímce procházející bodem?\\
+        Uveďte definici totálního diferenciálu. \\
+        Uveďte postačující podmínku existence tot. dif. \\
+        Uveďte příklad spojité funkce na $\Real^2$, která nemá v bodě $[1,1]$ totální diferenciál.\\
+    \item Derivace složených funkcí. Transformace diferenciálních výrazů při změně souřadnic. Cylindrické a     sférické souřadnice.\\
+        Formulujte řetízkové pravidlo.\\
+        Uveďte vzorce pro kartézsské souřadnice při transformaci do cylindrických a sférických souřadnic.\\
+        Transformujte derivace $\frac{\prtl f}{\prtl x}$, $\frac{\prtl f}{\prtl y}$ do cylindrickych.\\
+    \item Extrémy funkcí více proměnných: nevázané a vázané extrémy, extrémy na omezené oblasti, rozpoznání             minima, maxima, sedla\\
+        Popiste metodu hledani vazaneho extremu metodou Lagr. multiplikatoru.\\
+        Jak postupujeme pri hledani globalniho max./min.\\
+        Jak rozpozname max./min./sedlo pro funkci 2 promennych.\\
+  \end{enumerate}
+  \item \label{x2}
+  \begin{enumerate}
+        \item Vektorový počet: součiny, vektorové pole, operátory $\grad$, $\div$, $\rot$\\
+                Skalarni a vektorovy soucin, geometricke interpretace.\\
+                fyzikalni priklady vektoroveho pole.\\
+                Definice a interpretace operatoru.\\
+        \item Lesgueova míra a integrál (základní idea), Fubiniho věta, věta o substituci\\
+                Popiste zhruba co je to mira a jak je pomoci ni definovan Lebesgueuv integral.\\
+                Formulujte Fubiniovu vetu.\\
+                Vetu o subst.               \\ 
+        \item Integrace podél křivky a podél plochy, integrály I. a II. druhu, "Stokesovy věty"\\
+                Rozdil integralu I. a II. druhu.\\
+                Gausova veta.\\
+                Greenova veta (1. nebo 2.)\\
+  \end{enumerate}
+  \item \label{x3}
+  \begin{enumerate}
+        \item Aplikace integrálů ve fyzice: hmota, těžiště, momenty, tok pole skrze plochu, práce pole podél křivky, rovnice vedení tepla, rovnice kontinuity\\
+                Vzorce pro těžiště a momenty. \\
+                Tok plochou, prace po krivce.\\
+                Rovnice vedeni tepla, princip odvozeni, Fourier zakon.\\
+                Rovnice kont. odvozeni, co popisuje.\\
+        \item Laplaceova transformace. Fourierovy řady.\\
+                Princip Lapl. metody.\\
+                Definice Lapl transf. \\
+                Co je úsečka konvergence.\\
+                Co nam rekne four. transformace o funkci.\\
+        \item Elektřina a magnetismus: náboj $q$ a proudová hustota $\vc J$, stavové veličiny elektro magnetického pole: $\vc E,\ \vc H, \vc D, \vc B$, parametry $\mu$, $\eps$; pohyb náboje v elektromagnetiském poli, Lorentzova síla, umět zjednodušit úplný systém Maxwell rovnic v případech elektrostatického a stacionárního proudového pole; Ohmův zákon, odpor, vodivost\\
+                Co je naboj a proudova hustota.\\
+                Co jsou veliciny E,H,D,B\\
+                Kdy a na co pusobi Lorentz. sila\\
+                Ohmuv zakon v diff. (vektorovem ) tvaru\\
+   \end{enumerate}
+\end{enumerate}
+
+
+
+
+\begin{thebibliography}{99}
+\bibitem{Rektorys} K. Rektorys a spol. : 
+{\it Přehled užité matematiky.} Prometheus, Praha, 1995.
+\bibitem{CVUT} \verb http://euler.fd.cvut.cz/predmety/ml2/files/MA2_CV.pdf (originál),\\
+   \verb http://morf.matfyz.cz/vyuka/mft/MA2_CV.pdf (kopie)
+\bibitem{Veit} J. Veit: {\it Integrální transformace.} SNTL, Praha, 1979.
+\bibitem{FeynmanII} R. Feynman: {\it Přednášky z fyziky II.}, Fragment, 2001
+\bibitem{SedlakStoll} B. Sedlák,I. Štoll :{\it Eletřina a magnetismus.} Academia, Praha, 2002.. 
+\end{thebibliography}
+
+%        * MEZNÍK, I, KARÁSEK, J., MIKLÍČEK, J. Matematika I pro strojní fakulty. SNTL, Praha, 1992.
+%        * [1] Brabec, J., Hrůza, B.: Matematická analýza II. Praha, SNTL, 1986.
+%        * [5] Horský, J., Novotný, J., Štefaník, M.: Mechanika ve fyzice, Academia, Praha, 2001.
+
+\end{document}
