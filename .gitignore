@@ -5,9 +5,8 @@
 *.backup
 *.synctex.gz
 *.toc
-
+*.out
+*~
 prednaska/mkp_prednaska.pdf
-
 cviceni/mkp_cvika.pdf
 
-*~
