@@ -1,16 +1,103 @@
 \section{Opakování plošných a křivkových integrálů}
-\subsection{Integrace po křivce a po ploše. Kelvin-Stokesova, Greenova, Gaussova věta.}
-Pomocí vektorového zápisu je integrál (1. druhu) ze skalárního pole $f$ podél křivky $k$ dané parametricky funkcí $\vc \phi(t),\ t\in[\alpha,\beta]$:
+
+\subsection{Křivkový integrál 1. druhu}
+Jaká je hmotnost vlasu? Představme si natažený vlas a předpokládejme, že takto natažený má konstantní hustotu. 
+Na vlasu si zavedeme souřednici $t$, $t=0$ je začátek vlasu $t=1$ je konec vlasu.
+V konkrétním bodě $t$ na vlasu má vlas průřez $S(t)$. Pro malý přírůstek $\d t$ je hmotnost kousku vlasu $\d m = \rho S(t)\d t$.
+Celková hmotnost pak je:
+\begin{equation}
+    \label{eq:hmotnost_vlasu}    
+    m=\int_0^1 \rho S(t) \d t = \int_0^1 \rho_t(t) \d t,\quad \rho_t(t) = \frac{\d m}{\d t}= \rho S(t)
+\end{equation}
+
+
+kde $\rho_t$ je délková hustota. Když vlas pustíme, tak se trochu zkrátí a zkroutí do nějaké křivky v prostoru. Původní bod $t$ má nyní v prostoru polohu 
+$\vc \phi(t)$. Tím zkroucením se změní průřezy $S$, ale nezmění se délková hustota, takže hmotnost opět spočteme podle \ref{eq:hmotnost_vlasu}.
+Nyní si představme, že vlas je v tíhovém poli $f(\vc x)$, pro jednoduchost si představujeme, že tíha působí pouze v směru $z$ a má skalární velikost $f$,
+která se ovšem mění ve všech směrech. Jaká na vlas působí celková síla? Pro natažený vlas podél osy $x$ máme, $\d F = f(\vc x) \d m$, a tedy:
 \[
-   \int_k f \abs{\d \vc \phi} = \int_{\alpha}^\beta f\big(\vc \phi(t)\big)\, \abs{\vc \phi'(t)} \dt=
-   \int_\alpha^\beta f(\phi_x,\phi_y,\phi_z) \sqrt{ (\phi_x')^2+(\phi_y')^2+(\phi_z')^2} \dt
+  F = \int_0^1 \rho_t(t) f[(t,0,0)] \d t
 \]
-kde $\vc \phi'(t)$ je tečný vektor, tj. vektor derivace funkce $\phi$, \cite{CVUT} str. 135.
+a pro zkroucený vlas:
+\[
+   \int_k f \rho_t \d k = \int_0^1 f\big(\vc \phi(t)\big)\rho_t \abs{\vc \phi'(t)} \dt=
+   \int_0^1 f(\vc x) \sqrt{ (\phi_x')^2+(\phi_y')^2+(\phi_z')^2} \dt.
+\]
+Derivace $\vc \phi'(t)$ je tečný vektor ke křivce $k$ a jeho velikost je skutečný přírůstek v prostoru pro přírůstek $\d t$.
+Tento typ integrálu nazýváme křivkový integrál 1. druhu ze skalárního pole $f$ podél křivky $k$, která je dána parametricky:
+\[
+   k:\ \{ \vc \phi(t);\ t\in (0,1)\}
+\]
+Integrál je vlastně definován pomocí substituce $\vc x = \vec \phi(t)$:
+\begin{equation}
+   \label{eq:curve_1_int}
+   \int_k f(\vc x) \d k = \int_0^1 f\big(\vc \phi(t)\big)\, \abs{\vc \phi'(t)} \dt=
+   \int_0^1 f(\phi_x,\phi_y,\phi_z) \sqrt{ (\phi_x')^2+(\phi_y')^2+(\phi_z')^2} \dt.
+\end{equation}
+Integrál 1. druhu můžeme aplikovat i na vektorové pole, ale výsledkem pak bude vektor. 
+
+Další (fyzikální) příklady použití křivkového integrálu prvního druhu.
+\begin{itemize}
+ \item {\bf Moment síly} (vůči počátku), $M(\vc x) = \vc F(\vc x) \times \vc x$. Celkový moment na ohnutém drátu:
+ \[
+    M = \int_k F(\vc x)\times \vc x \d k = \int_0^1 F(\phi(t))\times \phi(t) \abs{\vc \phi'(t)} \d t
+ \]
+ \item \label{item:delka} {\bf Délka křivky} je integrál (1. druhu) ze skalárního pole $f(x,y,z)=1$, tj.
+\[
+   L=\int_\alpha^\beta \abs{\vc \phi'(t)} \dt,\quad 
+\]
+ \item {\bf Průměrná teplota} na poledníku $k$. Poledník je myšlená křivka na povrchu země a tiše předpokládáme, že je hladká.
+ \[
+    T = \frac{1}{L}\int_k T(\vc x) \d k = \frac{1}{L}\int_0^1 T(\phi(t)) \abs{\vc \phi'(t)} \d t,
+ \]
+ kde $L$ je (skutečná) délka poledníku (viz. bod \ref{item:delka}).
+ \item {\bf Hmota křivky nebo plochy} je integrál (1. druhu) ze skalárního pole hustoty $\rho(x,y,z)$.
+\[
+        M=\int_k \rho(x,y,z) \abs{\d \phi},\quad M=\int_S \rho(x,y,z) \abs{\d \vc n}
+\]
+\item {\bf Souřadnice těžiště} křivky je vektor $(T_x,T_y,T_z)$ integrálů (1. druhu) z vektoru skalárních funkcí 
+       $x\rho(x,y,z)$, $ y \rho(x,y,z)$, $z\rho(x,y,z)$ dělený celkovou hmotou $M$. Např. pro plochu $S$:
+\[
+        \vc T=\frac{1}{M} \int_k \vc x \rho(\vc x) \d k
+\]
+
+\item {\bf Moment setrvačnosti} vzhledem k ose $o$ je integrál (1. druhu) ze skalární funkce
+$f(\vc x)=r^2\rho(\vc x)$, kde $r$ je vzdálenost bodu $\vc x]$ od osy $o$. Ideální je transformovat křivku i osu tak aby osa 
+byla jedna ze souředných os, např. pro $o$ totožnou s osou $z$ je
+\[
+    I_z = \frac{1}{M} \int_k (x_x^2 + x_y^2) \rho(\vc x) \d k
+\]
+
+
+
+
+\end{itemize}
+
+
+\subsection{Křivkový integrál 2. druhu}
+Ve vektorovém zápisu je integrál (2. druhu) z vektorového pole $\vc F$ podél křivky $k$:
+\begin{equation}
+\label{eq:cureve_2_int}
+ \int_k \vc F \cdot \vc t_k \d k = \int_\alpha^\beta \vc F( \vc \phi(s) ) \cdot \vc \phi'(s) \d k
+\end{equation}
+Zde je $\vc t_k$ tečný vektor. Přesněji pokud $\d k$ je velikost tečného vektoru jako pro integrál 1. druhu, tak $\vc t_k$, je vlastně jednotkový tečný vektor.
+Ovšem stále je třeba výrazy vlevo v \eqref{eq:curve_1_int}, \eqref{eq:curve_2_int}, \eqref{eq:surf_1_int}, \eqref{eq:surf_2_int} jsou pouze symboly (zkratky), 
+pro to co stojí vpravo. Pro některé druhy operací stačí manipulovat se zkratkami, ale někdy je potřeba se ponořit do definice.
+
+Příklady:
+\begin{itemize}
+ \item {\bf Práce síly po křivce.} Integrál 2. druhu z vektorové funkce síly.
+\end{itemize}
+
+
+
+
+\subsection{Plošný integrál 1. druhu}
 
 Podobně pro integrál (1. druhu) ze skalárního pole $f$ podél plochy $S$ dané parametricky funkcí
 $\vc \phi(u,v), [u,v]\in M\subset \Real^2$:
 \[
-   \int_S f \abs{\d \vc n} = \int_M f(\vc \phi(u,v)) \abs{\vc n(u,v)} \d u\d v=
+   \int_S f \d S = \int_M f(\vc \phi(u,v)) \abs{\vc n(u,v)} \d u\d v=
    \int_M f(\phi_x,\phi_y,\phi_z) \sqrt{ (n_x)^2 + (n_y)^2 + (n_z)^2} \d u\d v,
 \]
 kde $\vc n$ je normála plochy (vektor kolmý k ploše jehož velikost je daná "velikostí elementární plošky"). Normála je rovna vektorovému součinu tečných vektorů:
@@ -19,65 +106,185 @@ kde $\vc n$ je normála plochy (vektor kolmý k ploše jehož velikost je daná 
 \]
 Pozor, pokud plocha není rovina, tak normála a tudíž i její velikost závisí na parametrech $u, v$, \cite{CVUT} str. 151.
 
-Ve vektorovém zápisu je integrál (2. druhu) z vektorového pole $\vc F$ podél křivky $k$:
-\[
- \int_k \vc F \cdot \d \vc s = \int_\alpha^\beta \vc F( \vc \phi(s) ) \cdot \vc \phi'(s) \d s
+\begin{itemize}
+ \item Velikost povrchu $P$  plochy $M$ je integrál (1. druhu) ze skalárního pole $f(x,y,z)=1$, tj.
+\[   
+   P=\int_M 1 \d S = \int_M \abs{\vc n(u,v)} \d u\d v.
 \]
-Integrál vyjadřuje práci pole podél křivky, \cite{CVUT} str. 169.
-Podobně lze integrál (2. druhu) vektorového pole $\vc F$ skrze plochu $S$ napsat:
+\item {\bf Hmota plochy} je integrál (1. druhu) ze skalárního pole hustoty $\rho(x,y,z)$.
 \[
-  \int_S \vc F\cdot \d \vc n = \int_M \vc F( \vc \phi(u,v) ) \cdot \big( \prtl_u \vc \phi \times \prtl_v \vc \phi\big) \d u\d v
+        M=\int_S \rho(x,y,z) \d S
 \]
-Tento integrál má význam celkového toku pole skrz plochu, \cite{CVUT} str. 192.
-
-Stokesova věta: Pro plochu $S$ ohraničenou uzavřenou křivkou $k$ platí
+{\bf Souřadnice těžiště plochy} je vektor $\vc T$ integrálů (1. druhu) z vektoru skalárních funkcí 
+$ \vc x \rho( \vc x)$ dělený celkovou hmotou $M$. Např. pro plochu $S$:
 \[
-        \int_S \rot \vc F \cdot \d \vc n = \int_k \vc F\cdot \d \vc k.
-\]
-Gaussova věta: Pro objem $V$ ohraničený plochou $S$ platí
-\[
-        \int_V \div \vc F \d V = \int_S \vc F\cdot \d \vc n.
+        \vc T=\frac{1}{M}\int_S \vc x\rho(\vc x) \d S
 \]
 
-Greenova věta (integrace per partes):
+{\bf Moment setrvačnosti} vzhledem k ose $o$ je integrál (1. druhu) ze skalární funkce $f(\vc x)=r^2\rho(\vc x)$, 
+kde $r$ je vzdálenost bodu $[x,y,z]$ od osy $o$. Pro osu $z$:
 \[
-        \int_V  \prtl_x u  v \d V = \int_S u v  \d n_x - \int_V u \prtl_x v \d V
+    I_z = \frac{1}{M} \int_S (x_x^2 + x_y^2) \rho(\vc x) \d S
 \]
-\[
-        \int_V (\grad u) \cdot \vc v \d V = \int_S u v \cdot \d n - \int_V u \div v \d V
-\]
-
-
-\subsection{Aplikace v geometrii a fyzice}
-Rektorys I., 520 - 551
-
-{\bf Délka křivky, plocha plochy} je integrál (1. druhu) ze skalárního pole $f(x,y,z)=1$, tj.
-\[
-   l=\int_\alpha^\beta \abs{\vc \phi'(t)} \dt,\quad 
-   P=\int_M \abs{\vc n(u,v)} \d u\d v
-\]
-
-{\bf Hmota křivky nebo plochy} je integrál (1. druhu) ze skalárního pole hustoty $\rho(x,y,z)$.
-\[
-        M=\int_k \rho(x,y,z) \abs{\d \phi},\quad M=\int_S \rho(x,y,z) \abs{\d \vc n}
-\]
-
-{\bf Souřadnice těžiště křivky nebo plochy} je vektor $(T_x,T_y,T_z)$ integrálů (1. druhu !!) z vektoru skalárních funkcí $ x \rho(x,y,z)$, $ y \rho(x,y,z)$, $z\rho(x,y,z)$ dělený celkovou hmotou $M$. Např. pro plochu $S$:
-\[
-        T_x=\frac{1}{M}\int_S x\rho(x,y,z) \abs{\d \vc n},\quad
-        T_y=\frac{1}{M}\int_S y\rho(x,y,z) \abs{\d \vc n},\quad
-        T_z=\frac{1}{M}\int_S z\rho(x,y,z) \abs{\d \vc n}.
-\]
-
-{\bf Moment setrvačnosti vzhledem k ose $o$} je integrál (1. druhu) ze skalární funkce
-$f(x,y,z)=r^2\rho(x,y,z)$, kde $r$ je vzdálenost bodu $[x,y,z]$ od osy $o$. Bývá vhodné 
-použít cylindrické souřadnice okolo osy $o$. 
 
 {\bf Práce síly po křivce.} Integrál 2. druhu z vektorové funkce síly.
 {\bf Tok kapaliny skrze plochu za jednotkový čas.} Integrál 2. druhu z vektorového pole rychlosti.
 
-\section{Integrační věty}
+\end{itemize}
 
-\section{Věta o transportu}
+
+\subsection{Plošný integrál 2. druhu}
+Podobně lze integrál (2. druhu) vektorového pole $\vc F$ skrze plochu $S$ napsat:
+\[
+  \int_S \vc F\cdot \vc n \d S = \int_M \vc F( \vc \phi(u,v) ) \cdot \big( \prtl_u \vc \phi \times \prtl_v \vc \phi\big) \d u\d v
+\]
+\begin{itemize}
+ \item Tento integrál má význam celkového toku pole skrz plochu. Například množství kapaliny, které proteče skrze plochu za jednotkový čas.
+\end{itemize}
+
+
+
+
+\subsection{Integrační věty: Stokesova, Gaussova, Greenova}
+{\bf Greenova věta} (integrace per partes):
+Pokud má oblast $V$ hranici $S$, pak pro hladké skalární pole $u$ a vektorové pole $\vc v$ platí:
+\[
+        \int_V  \prtl_x u  v \d V = \int_S u v  \d n_x - \int_V u \prtl_x v \d V
+\]
+\[
+        \int_V (\grad u) \cdot \vc v \d V = \int_S u \vc v \cdot \vc n \d S - \int_V u\, \div \vc v \d V
+\]
+{\bf Gaussova věta}: Pro objem $V$ ohraničený plochou $S$ platí
+\[
+        \int_V \div \vc F \d V = \int_S \vc F\cdot \vc n \d S.
+\]
+Můžeme odvodit z Greenovy věty, použitím $u=1$ a $\vc v = \vc F$:
+\[
+    0=\int_V (\grad 1) \cdot \vc F \d V  = \int_S 1\vc F \cdot \vc n \d S - \int_S 1 \div \vc F  \d V
+\]
+
+
+{\bf Stokesova věta}: Pro plochu $S$ ohraničenou uzavřenou křivkou $k$ platí
+\[
+        \int_S \rot \vc F \cdot \vc n \d S = \int_k \vc F\cdot \vc t \d \vc k.
+\]
+
+Hranici oblasti $\Omega$ zapisujeme též jako $\prtl \Omega$. 
+
+\section{Zákony zachování, věta o transportu}
+Konzervativní veličina.
+\begin{itemize}
+ \item Zachování hmoty.
+ \item Zachování hybnosti.
+ \item Zachování momentu hybnosti.
+ \item Zachování energie.
+ \item \dots
+\end{itemize}
+
+Natahovací pytlík s vodou se třpytkama. Hustota třpytek v v bodě $\vc x$ v čase $t$ je $\rho(t,\vc x)$. Pytlík v čase $t$, je
+oblast (otevřená jednoduše souvislá množina) $\Omega_t$, takže ho můžeme různě deformovat. Počet třpytek v pytlíku je pořád stejný:
+\[
+    \frac{\d}{\d t} \int_{\Omega_t} \rho(t,\vc x) \d \vc x =0.    
+\]
+Popis deformace v čase. Bod $\vc x_0$ v čase $0$ je přesunut do bodu $x_t$ v čase $t$. 
+\[
+  \vc x_t = X(t, \vc x_0).
+\]
+Rychlostní pole pak je $\vc u(t, x_t)= \prtl_t \vc X(t, \vc x)$.
+
+\begin{theorem}[Reynolds transport theorem]
+Nechť $J(t, \vc x)$ je hladká skalární funkce na na oblasti $\Omega_t$. Oblast $\Omega_t$ je dána hladkým zobrazením $X(t, \vc X)$
+a počáteční oblastí $\Omega_0$:
+\[
+    \Omega_t = \{\vc x = X(t, \vc x_0); \vc x_0\in \Omega_0\}.
+\]
+Pak platí:
+\begin{equation}
+    \frac{\d}{\d t} \int_{\Omega_t} q(t,\vc x) \d \vc x = \int_{\Omega_t} \prtl_t q + \div( q\vc u ) \d \vc x.
+\end{equation}
+\end{theorem}
+\begin{proof}
+Nechť $\chi_0$ je libovolná hladká funkce nulová mimo $\Omega_0$ (klobouk). Tuto funkci necháme "unášet" rychlostním polem $\vc u$, takže se v čese $t$ zdeformuje:
+\[
+  \chi(t, X(t, \vc x))=\chi_0(\vc x).
+\]
+Pro materiálovou derivaci funkce $\chi(t, \vc X)$ platí:
+\[
+  \frac{\d}{\d t} \chi(t, \vc X) = \frac{\d}{\d t} \chi(t, X(t, \vc x_0))=\prtl_t \chi(t, \vc X) + \sum_i \prtl_{X_i} \chi(t, \vc X) \prtl_t X_i(t, \vc x_0)=
+  \prtl \chi + \vc u \cdot \grad \chi 
+\]
+Nyní spočítáme :
+\[ 
+    \frac{\d}{\d t} \int_{\Omega_t} q \chi \d \vc x =
+    \frac{\d}{\d t} \int_{\Real^3} q \chi \d \vc x =
+    \int_{\Real^3} (\prtl_t q) \chi + q (\prtl_t \chi) \d \vc x =
+    \int_{\Real^3} (\prtl_t q) \chi - q (\vc u \cdot \grad \chi) \d \vc x=
+    \int_{\Omega_t} \big[ q + \div(q \vc u)\big] \chi \d \vc x
+\]
+Klobouková funkce $\chi$ může být libovolně blízko \emph{charakteristické funkci} oblasti $\Omega_t$ z čehož plyne důsledek věty.
+
+\end{proof}
+
+
+Např. zákon zachování hmoty můžeme napsat jako:
+\[
+    \frac{\d}{\d t} \int_{\Omega_t} \rho(t,\vc x) \d \vc x = \int_{\Omega_t} \prtl_t \rho + \div (\rho \vc u) \d \vc x = 0
+\]
+kde $\vc u$ je rychlost plynu a $\rho$ jeho hustota.
+
+A jelikož toto platí pro libovolnou $\Omega_t$, pak pro hladké $\rho$ a $\vc u$ platí:
+\[
+    \prtl_t \rho + \div (\rho \vc u) =0
+\]
+což je \emph{rovnice kontinuity} pro hustotu stlačitelného plynu.
+
 
 \section{Odvození rovnice vedení tepla}
+Rovnice kontinuity platí za předpokladu, že "pohyb veličiny" $q$ je způsoben unášením v rychlostním poli $u$ přirozená interpretace je, že se jedná o rychlostní 
+pole média, např. tekutiny. To ovšem obecně neplatí. Například pro koncentaci soli v roztoku platí také zákon zachování a sůl se  
+pohybuje i v (makroskopicky) stacionárním objemu vody pomocí difúze. Je tedy třeba $u$ interpretovat jinak.
+
+Definujeme plošný tok $\vc j$ veličiny $q$ jako množství veličiny, které projde jednotkovou elementární plochou za jednotku času. Tedy  
+uvažujeme nekonečně malou plošku $\Delta S$ v bodě $\vc x$ s normálou $\vc e_i$ a nekonečně malou zmenu času $\Delta t$. 
+pak složka $j_i(t, \vc x)$. Pokud mezi časy $t$ a $t+\Delta t$ projde skrz $\Delta S$ množství $\Delta Q$ veličiny $q$, platí
+\[
+    j_i(t, \vc x) = \frac{\Delta Q}{\Delta S \Delta t} 
+\]
+
+Následně si buďto můžeme představit, že je veličina $q$ unášena rychlostním polem $\vc U = \vc j / q$ nebo uvažovat následovně:
+Pro pevnou oblast $\Omega$ je pokles množství veličiny $q$ v $\Omega$ roven celkovému toku veličiny ven:
+\[
+    -\frac{\d}{\d t} \int_\Omega q \d x = \int_{\prtl \Omega} \vc j \cdot \vc n \d S = \int_\Omega \div \vc j 
+\]
+Odtud dostaneme bodovou formu obecné rovnice kontinuity:
+\[
+    \prtl_t q - \div j = 0.
+\]
+
+Tok $\vc j(t,\vc x)$ je obecně nějakou funkcí závislou na lokálním chování veličiny $q$ na okolí bodu $(t, \vc x)$, může tedy záviset na $q$, $\grad q$, na $\prtl t$ 
+a případně na vyšších prostorových a časových derivacích. Může také záviset na nějakých dalších veličinách, jako například na rychlosti média, viz. případ $\vc j = q\vc u$.
+
+Nyní uvažujme specuálně zákon zachování pro energii pevného tělesa. Energie elementárního objemu $\Delta V$ je dána jeho teplotou jako:
+\[
+    \Delta E = \rho CT\Delta V 
+\]
+kde $C$ $[J/K/kg]$ je tepelná kapacita a $T$ $[K]$ je teplota. Teplený tok $j$ $[W/m^2]$ je v nejjednodušší podobě dán Fourierovýcm zákonem:
+\[
+    \vc j = -k\grad T
+\]
+přičemž tepelná vodivost $k$ $[W/m/K]$ může být případně funkcí teploty $k(T)$. Dostáváme tak rovnici vedení tepla:
+
+\[
+   \prtl_t (C \rho T) + \div ( k \grad T) = 0
+\]
+Pokud budou v materiálu nějaké objemové teplné zdroje $f$ $[W/m^3]$ dostaneme:
+
+\[
+   \prtl_t (C \rho T) + \div ( k \grad T) = f
+\]
+
+Pokud by se jednalo o vedení tepla v kapalině, musíme do $\vc j$ zarnout i transport kapalinou:
+\[
+   \prtl_t (C \rho T) - \div (C \rho T \vc u) +\div( k \grad T) = f.
+\]
+

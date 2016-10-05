@@ -1,5 +1,5 @@
 \documentclass[a4paper]{article}
-\usepackage{amsfonts,amsmath,amssymb,cancel,graphicx,hyperref,mathabx}
+\usepackage{amsfonts,amsmath,amssymb,amsthm, cancel,graphicx,hyperref,mathabx}
 \usepackage[utf8]{inputenc}
 \usepackage[czech]{babel}
 \usepackage[numbers]{natbib}
@@ -10,6 +10,7 @@
 
 
 \newtheorem{veta}{Věta}[section]
+\newtheorem{theorem}[veta]{Věta}
 \newtheorem{lemma}[veta]{Lemma}
 \newtheorem{df}[veta]{Definice}
 \newtheorem{ex}[veta]{Příklad}
@@ -147,7 +148,10 @@
 \title{Metoda konečných prvků -- učební text}
 \author{Jan Březina \and Jan Stebel}
 
-
+\addtolength{\textwidth}{4cm}
+\addtolength{\hoffset}{-2cm}
+\addtolength{\textheight}{4cm}
+\addtolength{\voffset}{-3cm}
 \begin{document}
 
 \maketitle
