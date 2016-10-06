@@ -28,8 +28,8 @@
 \newtheorem{corollary}[thm]{Corollary}
 \numberwithin{equation}{section}
 % ***************************************** SYMBOLS
-\def\div{{\rm div}}
-\def\rot{{\rm rot}}
+\def\div{\operatorname{div}}
+\def\rot{\operatorname{rot}}
 \def\Lapl{\Delta}
 \def\grad{\nabla}
 \def\supp{{\rm supp}}
@@ -135,6 +135,10 @@
 \def\priklady{{\bf Další vhodné příklady:}}
 
 
+% ************************************ NOTATIONS JS
+\newcommand{\mat}[1]{\mathbb{#1}}
+% *************************************************
+
 
 
 \addtolength{\textwidth}{5cm}
@@ -215,78 +219,120 @@ Plyne z posledních dvou výsledků porušení Helmholtzovy dekompozice?
 
 
 \pagebreak
-\section{Integrace po křivce a po ploše. Kelvin-Stokesova, Greenova, Gaussova věta.}
-Pomocí vektorového zápisu je integrál (1. druhu) ze skalárního pole $f$ podél křivky $k$ dané parametricky funkcí $\vc \phi(t),\ t\in[\alpha,\beta]$:
+\section{Integrace po křivce a po ploše. Stokesova, Greenova, Gaussova věta.}
+\textit{Křivkový integrál 1. druhu} ze skalárního pole $f$ podél křivky $k$ dané parametricky funkcí $\vc \phi(t),\ t\in[\alpha,\beta]$ (\cite{CVUT} str. 135):
 \[
-   \int_k f \abs{\d \vc \phi} = \int_{\alpha}^\beta f\big(\vc \phi(t)\big)\, \abs{\vc \phi'(t)} \dt=
-   \int_\alpha^\beta f(\phi_x,\phi_y,\phi_z) \sqrt{ (\phi_x')^2+(\phi_y')^2+(\phi_z')^2} \dt
+   \int_k f \d k = \int_{\alpha}^\beta f\big(\vc \phi(t)\big)\, \abs{\vc \phi'(t)} \dt=
+   \int_\alpha^\beta f(\phi_x,\phi_y,\phi_z) \sqrt{ (\phi_x')^2+(\phi_y')^2+(\phi_z')^2} \dt.
 \]
-kde $\vc \phi'(t)$ je tečný vektor, tj. vektor derivace funkce $\phi$, \cite{CVUT} str. 135.
+% kde $\vc \phi'(t)$ je tečný vektor, tj. vektor derivace funkce $\phi$, .
 
-Podobně pro integrál (1. druhu) ze skalárního pole $f$ podél plochy $S$ dané parametricky funkcí
-$\vc \phi(u,v), [u,v]\in M\subset \Real^2$:
+\textit{Křivkový integrál 2. druhu} z vektorového pole $\vc F$ (práce pole podél křivky, \cite{CVUT} str. 169):
 \[
-   \int_S f \abs{\d \vc n} = \int_M f(\vc \phi(u,v)) \abs{\vc n(u,v)} \d u\d v=
-   \int_M f(\phi_x,\phi_y,\phi_z) \sqrt{ (n_x)^2 + (n_y)^2 + (n_z)^2} \d u\d v,
-\]
-kde $\vc n$ je normála plochy (vektor kolmý k ploše jehož velikost je daná "velikostí elementární plošky"). Normála je rovna vektorovému součinu tečných vektorů:
-\[
-   \vc n= \vc t_u \times \vc t_v,\quad \vc t_u = \frac{\prtl \vc \phi}{\prtl u},\quad \vc t_v=\frac{\prtl \vc \phi}{\prtl v}.
-\]
-Pozor, pokud plocha není rovina, tak normála a tudíž i její velikost závisí na parametrech $u, v$, \cite{CVUT} str. 151.
-
-Ve vektorovém zápisu je integrál (2. druhu) z vektorového pole $\vc F$ podél křivky $k$:
-\[
- \int_k \vc F \cdot \d \vc s = \int_\alpha^\beta \vc F( \vc \phi(s) ) \cdot \vc \phi'(s) \d s
-\]
-Integrál vyjadřuje práci pole podél křivky, \cite{CVUT} str. 169.
-Podobně lze integrál (2. druhu) vektorového pole $\vc F$ skrze plochu $S$ napsat:
-\[
-  \int_S \vc F\cdot \d \vc n = \int_M \vc F( \vc \phi(u,v) ) \cdot \big( \prtl_u \vc \phi \times \prtl_v \vc \phi\big) \d u\d v
-\]
-Tento integrál má význam celkového toku pole skrz plochu, \cite{CVUT} str. 192.
-
-Stokesova věta: Pro plochu $S$ ohraničenou uzavřenou křivkou $k$ platí
-\[
-        \int_S \rot \vc F \cdot \d \vc n = \int_k \vc F\cdot \d \vc k.
-\]
-Gaussova věta: Pro objem $V$ ohraničený plochou $S$ platí
-\[
-        \int_V \div \vc F \d V = \int_S \vc F\cdot \d \vc n.
+ \int_k \vc F \cdot \vc t \d k = \int_\alpha^\beta \vc F( \vc \phi(s) ) \cdot \vc \phi'(s) \d s.
 \]
 
-Greenova věta (integrace per partes):
+\textit{Plošný integrál 1. druhu} ze skalárního pole $f$ podél plochy $S$ dané parametricky funkcí
+$\vc \phi(u,v), [u,v]\in M\subset \Real^2$ (\cite{CVUT} str. 151):
 \[
-        \int_V  \prtl_x u  v \d V = \int_S u v  \d n_x - \int_V u \prtl_x v \d V
+   \int_S f \d S = \int_M f(\vc \phi(u,v)) \abs{\vc N(u,v)} \d u\d v=
+   \int_M f(\phi_x,\phi_y,\phi_z) \sqrt{ (N_x)^2 + (N_y)^2 + (N_z)^2} \d u\d v,
 \]
+kde $\vc N$ je normála plochy (vektor kolmý k ploše jehož velikost je daná "velikostí elementární plošky"). Normála je rovna vektorovému součinu tečných vektorů:
 \[
-        \int_V (\grad u) \cdot \vc v \d V = \int_S u v \cdot \d n - \int_V u \div v \d V
+   \vc N= \vc t_u \times \vc t_v,\quad \vc t_u = \frac{\prtl \vc \phi}{\prtl u},\quad \vc t_v=\frac{\prtl \vc \phi}{\prtl v}.
+\]
+Pozor, pokud plocha není rovina, tak normála a tudíž i její velikost závisí na parametrech $u, v$.
+
+\textit{Plošný integrál 2. druhu} z vektorového pole $\vc F$ (celkový tok pole skrz plochu, \cite{CVUT} str. 192):
+\[
+  \int_S \vc F\cdot \vc n\d S = \int_M \vc F( \vc \phi(u,v) ) \cdot \big( \prtl_u \vc \phi \times \prtl_v \vc \phi\big) \d u\d v.
 \]
 
+\begin{tabular}{|l|l|l|}
+\hline
+Veličina & Křivka & Plocha\\
+\hline
+Délka/plocha & $\displaystyle L=\int_k\d k$ & $\displaystyle P = \int_S\d S$\\&&\\
+Hmotnost & $\displaystyle M = \int_k\rho\d k$ & $\displaystyle M = \int_S\rho\d S$\\&&\\
+Poloha těžiště& $\displaystyle\vc T=\frac1M\int_k\vc x\rho\d k$ & $\displaystyle\vc T=\frac1M\int_S\vc x\rho\d S$\\&&\\
+Moment setrvačnosti& $\displaystyle I_z = \frac1M\int_k(x_x^2+x_y^2)\rho\d k$ & $\displaystyle I_z=\frac1M\int_S(x_x^2+x_y^2)\rho\d S$\\
+\hline
+\end{tabular}
+
+\bigskip
+
+\underline{Stokesova věta}: Pro plochu $S$ ohraničenou uzavřenou křivkou $k$ platí:
+\[
+        \int_S (\rot \vc F) \cdot \vc n \d S = \int_k \vc F\cdot \vc t \d k.
+\]
+\underline{Gaussova věta}: Pro objem $V$ ohraničený plochou $S$ platí:
+\[
+        \int_V \div \vc F \d V = \int_S \vc F\cdot \vc n \d S.
+\]
+
+\underline{Greenova věta} (integrace per partes): Pro objem $V$ ohraničený plochou $S$ platí:
+\[
+        \int_V  \prtl_x u  v \d V = \int_S u v n_x \d S - \int_V u \prtl_x v \d V
+\]
+\[
+        \int_V (\grad u) \cdot \vc v \d V = \int_S u \vc v \cdot \vc n \d S - \int_V u \div \vc v \d V
+\]
+
+\newpage
 
 {\bf Příklady k řešení:}
 \begin{enumerate}
+    \item Šroubovice má poloměr $r$ a výšku závitu $h$. Spočtěte délku jejího závitu, polohu těžiště a moment setrvačnosti vzhledem k ose šroubovice.
+    
+    [$L=\sqrt{(2\pi r)^2+h^2}$, $\vc T=(0,0,h/2)$, $I=r^2$]
+    
+    \item Spočtěte hmotnost a polohu těžiště polosféry 
+    \[ x^2+y^2+z^2=a^2, \quad z\ge 0, \]
+    jejíž hustota je $\rho(x,y,z)=\frac za$.
+    
+    [$\pi a^2$, $(0,0,\frac23a)$]
+    
+    
+    
     \item Spočítejte tok vektorového pole
         \[
-                \vc F=(x^3,y^3,z^3) 
+                \vc F=(x+y^3,y+z^3,z+x^3) 
         \]
         plochou danou rovnicí
         \[
                 x^2+y^2+z^2=x.
         \]
-        {\it Návod: }Použijte Gaussovu větu a  substituci do sférických souřadnic. $[\pi/5]$
-    \item
-        Spočítejte tok pole $\vc F=(y,x,-z)$ trojúhelníkem $A=(1,0,0)$, $B=(0,2,0)$, $C=(0,0,3)$ orientovaným 
-        směrem od počátku. [3/2]
-    \item    
-    \item
-    Spočítejte moment setrvačnosti kuželolvé plochy $x^2+y^2-4z^2=0$, $0<z<\frac12$ s hustotou $\rho(x,y,z)=z$ vzhledem k přímce $\{y=0,\ z=\frac12\}$.
-    Návod: Použijte cylindrické souřadnice pro parametrické vyjádření plochy. $[\pi\sqrt{5}13/(20*12)]$
-
-    \item
-    Spočítejte práci elastické síly směřující do počátku o velikosti dvojnásobku vzdálenosti do počátku
-    podél šroubovice $\{3\cos 2t, 3 \sin 2t, t\}$, $0<t<2\pi$. Vysvětlete proč je výsledek záporný.
-    $[-4\pi^2]$
+        {\it Návod: }Použijte Gaussovu větu a  substituci do sférických souřadnic. $[\pi/2]$
+     
+     \item Pomocí Stokesovy věty vypočtěte integrál
+     \[ \int_k (y+z,z+x,x+y)\cdot\vc t \d k, \]
+     kde $k$ je elipsa $x=a\sin^2 t$, $y=2a\sin t\cos t$, $z=a\cos^2 t$, $0\le t\le \pi$, orientovaná ve směru rostoucího parametru t. [$0$]
+     
+     \item Ukažte, že pravidlo "per partes" je speciální případ Greenovy věty.
+     
+     \item Nechť plocha $S$ ohraničuje objem $V$. Pomocí Gaussovy věty dokažte, že pro hladké vektorové pole $\vc u$ platí:
+     \[ \int_S(\rot\vc u)\cdot\vc n \d S = 0. \]
+     
+     \item Nechť $u$ je řešením okrajové úlohy
+     \[ -\div(\mat A\nabla u) = f \mbox{ ve }V,\quad (\mat A\nabla u)\cdot\vc n = g \mbox{ na }S, \]
+     kde plocha $S$ ohraničuje objem $V$ a $\mat A,f,g$ jsou zadané funkce.
+     Pomocí Greenovy věty ukažte, že pro libovolnou hladkou funkci $v$ platí rovnost:
+     \[ \int_V \mat A\nabla u\cdot\nabla v \d V= \int_S g v \d S + \int_V f v \d V. \]
+     
+       
+%     \item
+%         Spočítejte tok pole $\vc F=(y,x,-z)$ trojúhelníkem $A=(1,0,0)$, $B=(0,2,0)$, $C=(0,0,3)$ orientovaným 
+%         směrem od počátku. [3/2]
+%     \item    
+%     \item
+%     Spočítejte moment setrvačnosti kuželolvé plochy $x^2+y^2-4z^2=0$, $0<z<\frac12$ s hustotou $\rho(x,y,z)=z$ vzhledem k přímce $\{y=0,\ z=\frac12\}$.
+%     Návod: Použijte cylindrické souřadnice pro parametrické vyjádření plochy. $[\pi\sqrt{5}13/(20*12)]$
+% 
+%     \item
+%     Spočítejte práci elastické síly směřující do počátku o velikosti dvojnásobku vzdálenosti do počátku
+%     podél šroubovice $\{3\cos 2t, 3 \sin 2t, t\}$, $0<t<2\pi$. Vysvětlete proč je výsledek záporný.
+%     $[-4\pi^2]$
 
 \end{enumerate}
 
@@ -295,12 +341,12 @@ Greenova věta (integrace per partes):
 \begin{enumerate}
 \item Fubiniho věta: \cite{CVUT} str. 89 (př: 1-7,9,11)
 \item Substituce:  \cite{CVUT} str. 97 (př: 1-3, 7)
-\item Aplikace integrálů: \cite{CVUT} str. 112 ()
-\item Křivkové integrály: \cite{CVUT} str. 135 (); str. 169 ()
-\item Plošné integrály: \cite{CVUT} str. 150 (); str. 192 ()
-str. 248; 199/12 (hmotnost), 249/58 (hmotnost), 122/20 \dots (3D momenty), 159/11 (skořepina), 
-\item Greenova věta: \cite{CVUT} str. 197; 
-\item Gaussova, Stokesova věta: \cite{CVUT} str. 208; 244/48, 245/51, 246/52, 247/54, \dots
+\item Aplikace integrálů: \cite{CVUT} str. 112-134
+\item Křivkové integrály: \cite{CVUT} str. 135-150; str. 169-191
+\item Plošné integrály: \cite{CVUT} str. 150-168; str. 192-196;
+ str. 248; 199/12 (hmotnost), 249/58 (hmotnost), 122/20\dots (3D momenty), 159/11 (skořepina), 
+\item Greenova věta: \cite{CVUT} str. 197-207; 
+\item Gaussova, Stokesova věta: \cite{CVUT} str. 208-220; 244/48, 245/51, 246/52, 247/54
 \end{enumerate}
 \pagebreak
 
