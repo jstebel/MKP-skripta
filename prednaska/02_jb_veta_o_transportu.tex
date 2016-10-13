@@ -20,9 +20,18 @@ která se ovšem mění ve všech směrech. Jaká na vlas působí celková síl
 \]
 a pro zkroucený vlas:
 \[
-   \int_k f \rho_t \d k = \int_0^1 f\big(\vc \phi(t)\big)\rho_t \abs{\vc \phi'(t)} \dt=
-   \int_0^1 f(\vc x) \sqrt{ (\phi_x')^2+(\phi_y')^2+(\phi_z')^2} \dt.
+   F=\int_k f \rho_t \d k = \int_0^1 f\big(\vc \phi(t)\big)\rho_t(t) \dt
 \]
+Nakonec si představme, že jde o zkamenělý vlas uvnitř skalního bloku, jehož hustota $\rho(\vc x)$ je známá pro každý bod $\vc x$. Přírůstek síly působící
+pouze na ten zkamenělý vlas je $\d F = f(\vc x) \rho(\vc x) S(t) \d l$, kde 
+\[
+    \d l = \sqrt{ \d x^2 + \d y^2 + \d z^2 } = \sqrt{ (\phi_x')^2+(\phi_y')^2+(\phi_z')^2} \dt = \abs{\vc \phi'(t)} \dt
+\]
+ je přírůstek délky křivky pro přírůstek parametru $\d t$. Celková síla působící na vlas pak je:
+\[
+   F=\int_k f \rho \d k = \int_0^1 f\big(\vc \phi(t)\big)\rho( \vc \phi(t)) \abs{\vc \phi'(t)} \dt=
+\]
+
 Derivace $\vc \phi'(t)$ je tečný vektor ke křivce $k$ a jeho velikost je skutečný přírůstek v prostoru pro přírůstek $\d t$.
 Tento typ integrálu nazýváme křivkový integrál 1. druhu ze skalárního pole $f$ podél křivky $k$, která je dána parametricky:
 \[
@@ -40,7 +49,7 @@ Další (fyzikální) příklady použití křivkového integrálu prvního druh
 \begin{itemize}
  \item {\bf Moment síly} (vůči počátku), $M(\vc x) = \vc F(\vc x) \times \vc x$. Celkový moment na ohnutém drátu:
  \[
-    M = \int_k F(\vc x)\times \vc x \d k = \int_0^1 F(\phi(t))\times \phi(t) \abs{\vc \phi'(t)} \d t
+    M = \int_k \vc F(\vc x)\times \vc x \d k = \int_0^1 \vc F(\vc\phi(t))\times \vc\phi(t) \abs{\vc \phi'(t)} \d t
  \]
  \item \label{item:delka} {\bf Délka křivky} je integrál (1. druhu) ze skalárního pole $f(x,y,z)=1$, tj.
 \[
@@ -53,7 +62,7 @@ Další (fyzikální) příklady použití křivkového integrálu prvního druh
  kde $L$ je (skutečná) délka poledníku (viz. bod \ref{item:delka}).
  \item {\bf Hmota křivky nebo plochy} je integrál (1. druhu) ze skalárního pole hustoty $\rho(x,y,z)$.
 \[
-        M=\int_k \rho(x,y,z) \abs{\d \phi},\quad M=\int_S \rho(x,y,z) \abs{\d \vc n}
+        M=\int_k \rho(x,y,z) \d k
 \]
 \item {\bf Souřadnice těžiště} křivky je vektor $(T_x,T_y,T_z)$ integrálů (1. druhu) z vektoru skalárních funkcí 
        $x\rho(x,y,z)$, $ y \rho(x,y,z)$, $z\rho(x,y,z)$ dělený celkovou hmotou $M$. Např. pro plochu $S$:
@@ -77,8 +86,8 @@ byla jedna ze souředných os, např. pro $o$ totožnou s osou $z$ je
 \subsection{Křivkový integrál 2. druhu}
 Ve vektorovém zápisu je integrál (2. druhu) z vektorového pole $\vc F$ podél křivky $k$:
 \begin{equation}
-\label{eq:cureve_2_int}
- \int_k \vc F \cdot \vc t_k \d k = \int_\alpha^\beta \vc F( \vc \phi(s) ) \cdot \vc \phi'(s) \d k
+\label{eq:curve_2_int}
+ \int_k \vc F \cdot \vc t_k \d k = \int_0^1 \vc F( \vc \phi(s) ) \cdot \vc \phi'(s) \d k
 \end{equation}
 Zde je $\vc t_k$ tečný vektor. Přesněji pokud $\d k$ je velikost tečného vektoru jako pro integrál 1. druhu, tak $\vc t_k$, je vlastně jednotkový tečný vektor.
 Ovšem stále je třeba výrazy vlevo v \eqref{eq:curve_1_int}, \eqref{eq:curve_2_int}, \eqref{eq:surf_1_int}, \eqref{eq:surf_2_int} jsou pouze symboly (zkratky), 
@@ -93,18 +102,20 @@ Příklady:
 
 
 \subsection{Plošný integrál 1. druhu}
+Podobně jako v případě křivku je plocha dána zobrazením $\vc \phi(u,v)$ z množiny $M\subset \Real^2$ do $\Real^3$. Normála $N$ k ploše v bodě daném parametry $(u,v)$, 
+t.j, v bodě $\vc \phi(u,v)$ je dána vektorovým součinem tečných vektorů:
+\[
+   \vc N= \vc t_u \times \vc t_v,\quad \vc t_u = \frac{\prtl \vc \phi}{\prtl u},\quad \vc t_v=\frac{\prtl \vc \phi}{\prtl v}.
+\]
+Jednotková normála je pak $\vc n = \vc N /\abs{\vc N}$.
 
-Podobně pro integrál (1. druhu) ze skalárního pole $f$ podél plochy $S$ dané parametricky funkcí
-$\vc \phi(u,v), [u,v]\in M\subset \Real^2$:
-\[
-   \int_S f \d S = \int_M f(\vc \phi(u,v)) \abs{\vc n(u,v)} \d u\d v=
-   \int_M f(\phi_x,\phi_y,\phi_z) \sqrt{ (n_x)^2 + (n_y)^2 + (n_z)^2} \d u\d v,
-\]
-kde $\vc n$ je normála plochy (vektor kolmý k ploše jehož velikost je daná "velikostí elementární plošky"). Normála je rovna vektorovému součinu tečných vektorů:
-\[
-   \vc n= \vc t_u \times \vc t_v,\quad \vc t_u = \frac{\prtl \vc \phi}{\prtl u},\quad \vc t_v=\frac{\prtl \vc \phi}{\prtl v}.
-\]
-Pozor, pokud plocha není rovina, tak normála a tudíž i její velikost závisí na parametrech $u, v$, \cite{CVUT} str. 151.
+Integrál (1. druhu) ze skalárního pole $f$ přes plochu $S=\{\vc x = \vc \phi(u,v),\ (u,v) \in M\}$ je definován:
+\begin{equation}
+    \label{eq:surf_1_int}
+   \int_S f \d S = \iint_M f(\vc \phi(u,v)) \abs{\vc N(u,v)} \d u\d v=
+   \iint_M f(\phi_x,\phi_y,\phi_z) \sqrt{ (N_x)^2 + (N_y)^2 + (N_z)^2} \d u\d v, 
+\end{equation}
+Pozor, pokud plocha není rovina, tak normála a tudíž i její velikost jsou funkcí parametrů $u, v$, \cite{CVUT} str. 151.
 
 \begin{itemize}
  \item Velikost povrchu $P$  plochy $M$ je integrál (1. druhu) ze skalárního pole $f(x,y,z)=1$, tj.
@@ -135,9 +146,11 @@ kde $r$ je vzdálenost bodu $[x,y,z]$ od osy $o$. Pro osu $z$:
 
 \subsection{Plošný integrál 2. druhu}
 Podobně lze integrál (2. druhu) vektorového pole $\vc F$ skrze plochu $S$ napsat:
-\[
+\begin{equation}
+    \label{eq:surf_2_int}
   \int_S \vc F\cdot \vc n \d S = \int_M \vc F( \vc \phi(u,v) ) \cdot \big( \prtl_u \vc \phi \times \prtl_v \vc \phi\big) \d u\d v
-\]
+\end{equation}
+
 \begin{itemize}
  \item Tento integrál má význam celkového toku pole skrz plochu. Například množství kapaliny, které proteče skrze plochu za jednotkový čas.
 \end{itemize}
@@ -146,14 +159,17 @@ Podobně lze integrál (2. druhu) vektorového pole $\vc F$ skrze plochu $S$ nap
 
 
 \subsection{Integrační věty: Stokesova, Gaussova, Greenova}
+
 {\bf Greenova věta} (integrace per partes):
-Pokud má oblast $V$ hranici $S$, pak pro hladké skalární pole $u$ a vektorové pole $\vc v$ platí:
+Pokud má oblast $V$ hranici $S$, pak pro hladká skalární pole $u$ a $v$ platí:
 \[
-        \int_V  \prtl_x u  v \d V = \int_S u v  \d n_x - \int_V u \prtl_x v \d V
+        \int_V  \prtl_x u  v \d V = \int_S u v  n_x \d S - \int_V u \prtl_x v \d V
 \]
+kde $n_x$ je složka jednotkové normály. Odtud pro hladké vektorové pole $\vc v$ dostaneme:
 \[
         \int_V (\grad u) \cdot \vc v \d V = \int_S u \vc v \cdot \vc n \d S - \int_V u\, \div \vc v \d V
 \]
+
 {\bf Gaussova věta}: Pro objem $V$ ohraničený plochou $S$ platí
 \[
         \int_V \div \vc F \d V = \int_S \vc F\cdot \vc n \d S.
@@ -177,40 +193,45 @@ Konzervativní veličina.
  \item Zachování hmoty.
  \item Zachování hybnosti.
  \item Zachování momentu hybnosti.
- \item Zachování energie.
- \item \dots
+ \item Zachování energie. Zachování vnitřní energie, tepla.
 \end{itemize}
 
-Natahovací pytlík s vodou se třpytkama. Hustota třpytek v v bodě $\vc x$ v čase $t$ je $\rho(t,\vc x)$. Pytlík v čase $t$, je
+Natahovací pytlík s vodou se třpytkama. Hustota třpytek v bodě $\vc x$ v čase $t$ je $\rho(t,\vc x)$. Pytlík v čase $t$, je
 oblast (otevřená jednoduše souvislá množina) $\Omega_t$, takže ho můžeme různě deformovat. Počet třpytek v pytlíku je pořád stejný:
 \[
     \frac{\d}{\d t} \int_{\Omega_t} \rho(t,\vc x) \d \vc x =0.    
 \]
-Popis deformace v čase. Bod $\vc x_0$ v čase $0$ je přesunut do bodu $x_t$ v čase $t$. 
+Popis deformace v čase. Bod $\vc x_0$ v čase $0$ je přesunut do bodu $\vc x_t$ v čase $t$. 
 \[
   \vc x_t = X(t, \vc x_0).
 \]
-Rychlostní pole pak je $\vc u(t, x_t)= \prtl_t \vc X(t, \vc x)$.
+Rychlostní pole pak je $\vc u(t, \vc x_t)= \prtl_t \vc X(t, \vc x_0)$.
 
 \begin{theorem}[Reynolds transport theorem]
-Nechť $J(t, \vc x)$ je hladká skalární funkce na na oblasti $\Omega_t$. Oblast $\Omega_t$ je dána hladkým zobrazením $X(t, \vc X)$
+Nechť $q(t, \vc x)$ je hladká skalární funkce na na oblasti $\Omega_t$. Oblast $\Omega_t$ je dána hladkým zobrazením $X(t, \vc X)$
 a počáteční oblastí $\Omega_0$:
 \[
-    \Omega_t = \{\vc x = X(t, \vc x_0); \vc x_0\in \Omega_0\}.
+    \Omega_t = \{\vc x_t = \vc X(t, \vc x_0); \vc x_0\in \Omega_0\}.
 \]
 Pak platí:
 \begin{equation}
-    \frac{\d}{\d t} \int_{\Omega_t} q(t,\vc x) \d \vc x = \int_{\Omega_t} \prtl_t q + \div( q\vc u ) \d \vc x.
+    \frac{\d}{\d t} \int_{\Omega_t} q(t,\vc x_t) \d \vc x_t = \int_{\Omega_t} \prtl_t q + \div( q\vc u ) \d \vc x_t.
 \end{equation}
 \end{theorem}
 \begin{proof}
-Nechť $\chi_0$ je libovolná hladká funkce nulová mimo $\Omega_0$ (klobouk). Tuto funkci necháme "unášet" rychlostním polem $\vc u$, takže se v čese $t$ zdeformuje:
+Nechť $\chi_0$ je hladká "klobouková" funkce nulová mimo $\Omega_0$ a "skoro jednotková" uvnitř $\Omega_0$:
 \[
-  \chi(t, X(t, \vc x))=\chi_0(\vc x).
+    \chi_0(\vc x) = B( \dist( \vc x , \prtl \Omega_0) ),
+\]
+ kde vzdálenost $\dist$ je kladná uvnitř $\Omega_0$ a záporná vně. Funkce $B$ je nulová na $(-\infty, 0)$, $B=1$ 
+ na $(\epsilon, \infty)$, a je hladká a rostoucí na $(0,\epsilon)$.
+Tuto funkci necháme "unášet" rychlostním polem $\vc u$, takže se v čese $t$ zdeformuje:
+\[
+  \chi(t, \vc X(t, \vc x_0))=\chi_0(\vc x_0).
 \]
 Pro materiálovou derivaci funkce $\chi(t, \vc X)$ platí:
 \[
-  \frac{\d}{\d t} \chi(t, \vc X) = \frac{\d}{\d t} \chi(t, X(t, \vc x_0))=\prtl_t \chi(t, \vc X) + \sum_i \prtl_{X_i} \chi(t, \vc X) \prtl_t X_i(t, \vc x_0)=
+  \frac{\d}{\d t} \chi(t, \vc X) = \frac{\d}{\d t} \chi(t, \vc X(t, \vc x_0))=\prtl_t \chi(t, \vc X) + \sum_i \prtl_{X_i} \chi(t, \vc X) \prtl_t X_i(t, \vc x_0)=
   \prtl \chi + \vc u \cdot \grad \chi 
 \]
 Nyní spočítáme :
@@ -219,7 +240,7 @@ Nyní spočítáme :
     \frac{\d}{\d t} \int_{\Real^3} q \chi \d \vc x =
     \int_{\Real^3} (\prtl_t q) \chi + q (\prtl_t \chi) \d \vc x =
     \int_{\Real^3} (\prtl_t q) \chi - q (\vc u \cdot \grad \chi) \d \vc x=
-    \int_{\Omega_t} \big[ q + \div(q \vc u)\big] \chi \d \vc x
+    \int_{\Omega_t} \big[ \prtl_t q + \div(q \vc u)\big] \chi \d \vc x
 \]
 Klobouková funkce $\chi$ může být libovolně blízko \emph{charakteristické funkci} oblasti $\Omega_t$ z čehož plyne důsledek věty.
 
@@ -238,53 +259,68 @@ A jelikož toto platí pro libovolnou $\Omega_t$, pak pro hladké $\rho$ a $\vc 
 \]
 což je \emph{rovnice kontinuity} pro hustotu stlačitelného plynu.
 
+\subsection{Eulerovy rovnice}
+Uvažujme materiál (tekutinu, nebo elastickou pevnou látku) s rychlostním polem  $u$. Ze zákona zachování hybnosti $\rho u$ 
+plyne použitím rovnice kontinuity:
+\[
+    \prtl_t (\rho \vc u_i) +\div(\rho \vc u_i \vc u) = - \grad P,
+\]
+kde $P$ je tlak, a jeho záporný gradient je hustota síly, která způsobuje změnu hybnosti podle 2. Newtonova zákona.
+Tato rovnice spolu s rovnicí kontinuity pro plyn:
+\[
+    \prtl_t \rho + \div( \rho \vc u)=0
+\]
+tvoří systém tzv. Eulerových rovnic popisujících proudění neviskózní stlačitelné tekutiny.
+
 
 \section{Odvození rovnice vedení tepla}
-Rovnice kontinuity platí za předpokladu, že "pohyb veličiny" $q$ je způsoben unášením v rychlostním poli $u$ přirozená interpretace je, že se jedná o rychlostní 
+Rovnice kontinuity platí za předpokladu, že "pohyb veličiny" $q$ je způsoben unášením v rychlostním poli $u$.
+Přirozená interpretace je, že se jedná o rychlostní 
 pole média, např. tekutiny. To ovšem obecně neplatí. Například pro koncentaci soli v roztoku platí také zákon zachování a sůl se  
 pohybuje i v (makroskopicky) stacionárním objemu vody pomocí difúze. Je tedy třeba $u$ interpretovat jinak.
 
 Definujeme plošný tok $\vc j$ veličiny $q$ jako množství veličiny, které projde jednotkovou elementární plochou za jednotku času. Tedy  
-uvažujeme nekonečně malou plošku $\Delta S$ v bodě $\vc x$ s normálou $\vc e_i$ a nekonečně malou zmenu času $\Delta t$. 
-pak složka $j_i(t, \vc x)$. Pokud mezi časy $t$ a $t+\Delta t$ projde skrz $\Delta S$ množství $\Delta Q$ veličiny $q$, platí
+uvažujeme nekonečně malou plošku $\Delta S$ v bodě $\vc x$ s normálou $\vc n=\vc e_i$ (bázový vektor) a nekonečně malou zmenu 
+času $\Delta t$.  Pokud mezi časy $t$ a $t+\Delta t$ projde skrz $\Delta S$ množství $\Delta Q$ veličiny $q$, platí
 \[
     j_i(t, \vc x) = \frac{\Delta Q}{\Delta S \Delta t} 
 \]
-
-Následně si buďto můžeme představit, že je veličina $q$ unášena rychlostním polem $\vc U = \vc j / q$ nebo uvažovat následovně:
-Pro pevnou oblast $\Omega$ je pokles množství veličiny $q$ v $\Omega$ roven celkovému toku veličiny ven:
+Pro pevnou oblast $\Omega$ je pokles množství veličiny $q$ v $\Omega$ roven celkovému toku veličiny ven z $\Omega$ přes její hranici:
 \[
     -\frac{\d}{\d t} \int_\Omega q \d x = \int_{\prtl \Omega} \vc j \cdot \vc n \d S = \int_\Omega \div \vc j 
 \]
 Odtud dostaneme bodovou formu obecné rovnice kontinuity:
 \[
-    \prtl_t q - \div j = 0.
+    \prtl_t q + \div \vc j = 0.
 \]
+Ke stejnému výsledku dojdeme pokud použijeme Reynoldsovu větu pro rychlostní pole $\vc u = \vc j / q$.
 
-Tok $\vc j(t,\vc x)$ je obecně nějakou funkcí závislou na lokálním chování veličiny $q$ na okolí bodu $(t, \vc x)$, může tedy záviset na $q$, $\grad q$, na $\prtl t$ 
-a případně na vyšších prostorových a časových derivacích. Může také záviset na nějakých dalších veličinách, jako například na rychlosti média, viz. případ $\vc j = q\vc u$.
+Tok $\vc j(t,\vc x)$ je obecně nějakou funkcí závislou na lokálním chování veličiny $q$ na okolí bodu $(t, \vc x)$, může tedy záviset na 
+$q$, $\grad q$, na $\prtl_t q$ a případně na vyšších prostorových a časových derivacích. 
+Může také záviset na nějakých dalších veličinách, jako například na rychlosti média, viz. případ $\vc j = q\vc u$.
 
 Nyní uvažujme specuálně zákon zachování pro energii pevného tělesa. Energie elementárního objemu $\Delta V$ je dána jeho teplotou jako:
 \[
-    \Delta E = \rho CT\Delta V 
+    \Delta E =  C \rho T\Delta V 
 \]
-kde $C$ $[J/K/kg]$ je tepelná kapacita a $T$ $[K]$ je teplota. Teplený tok $j$ $[W/m^2]$ je v nejjednodušší podobě dán Fourierovýcm zákonem:
+kde $C$ $[J/K/kg]$ je tepelná kapacita a $T$ $[K]$ je teplota. Teplený tok $\vc j$ $[W/m^2]$ je v nejjednodušší podobě dán
+Fourierovým zákonem:
 \[
     \vc j = -k\grad T
 \]
 přičemž tepelná vodivost $k$ $[W/m/K]$ může být případně funkcí teploty $k(T)$. Dostáváme tak rovnici vedení tepla:
 
 \[
-   \prtl_t (C \rho T) + \div ( k \grad T) = 0
+   \prtl_t (C \rho T) - \div ( k \grad T) = 0
 \]
 Pokud budou v materiálu nějaké objemové teplné zdroje $f$ $[W/m^3]$ dostaneme:
 
 \[
-   \prtl_t (C \rho T) + \div ( k \grad T) = f
+   \prtl_t (C \rho T) - \div ( k \grad T) = f
 \]
 
 Pokud by se jednalo o vedení tepla v kapalině, musíme do $\vc j$ zarnout i transport kapalinou:
 \[
-   \prtl_t (C \rho T) - \div (C \rho T \vc u) +\div( k \grad T) = f.
+   \prtl_t (C \rho T) + \div (C \rho T \vc u) - \div( k \grad T) = f.
 \]
 

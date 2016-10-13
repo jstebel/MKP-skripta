@@ -1,4 +1,186 @@
-\section{Elektrostatika}
 \section{Transportní procesy}
-\section{Vlnové rovnice}
+Rovnice vedení tepla odvozená v předchozí kapitole je jedním z příkladů transportních procesů, které popisují transport nějaké veličiny a
+jsou odvozené ze zákona jejího zachování. Uvedeme pár dalších příkladů.
+
+\subsection{Proudění v porézním prostředí}
+Uvažujme porézní prostředí, kde podíl pórů v referenčním objemu je $\nu$ $[-]$. Tuto bezrozměrnou veličinu nazýváme porozita. 
+Podíl tekutiny (vody) v referenčním objemu $\theta$ $[-]$ se nazývá saturace (opět bezrozměrná). Saturace se pohybuje od nějaké minimální (reziduální)
+saturace $\theta_r$ po saturovaný podíl tekutiny $\theta_s$ obvykle rovný porozitě $\nu$. Pro tekutinu se zachovává její hmota, resp. hustota v prostoru
+$\rho_V = \rho \theta$, 
+kde $\rho$ je hustota tekutiny. V nejjednodušším případě uvažujeme nestlačitelnou kapalinu, plně saturovné porézní prostředí
+a uvažujeme malé tlaky. V tom případě je $\rho$ i $\theta$ konstanta. Pak z obecné rovnice kontinuity dostaneme:
+\[
+    -\div \vc j = f,
+\]
+kde $\vc j$ $[kg/m^2/s]$ je hustota toku tekutiny  a $f$ $[kg/m^3/s]$ je hustota objemových zdrojů tekutiny. Podobně jako v případě tepla 
+je nejjednodušší vztah pro $\vc j$ dán gradientem tlaku $p$ $[Pa]=[kgm^2/s]$ pomocí tzv. Darcyho zákona:
+\[
+    \vc j = -\rho k\tn K \grad p.
+\]
+Zde $k=\kappa/\mu$ je hydraulická vodivost daná permeabilitou $\kappa$ $[m^2]$, která je vlastností porézního média, a viskozitou $\mu$ $[Pa.s]$, 
+která je vlastností tekutiny. Tenzor $\tn K$ je jednotkový v případě izotropního prostředí, ale v případě anisotrpního prostředí je to obecně symetrický 
+pozitivně definitní tenzor. Pokud má porézní materiál nějak orientované mikroskopické kapiláry, bude v jednom směru mít větší vodivost než ve směrech kolmých. 
+Obecně může mít materiál tři různé vodivosti ve třech různých směrech $k_x$, $k_y$, $k_z$ a nakonec tento materiál může být libovolně natočen v prostoru 
+pomocí matice rotace $Q$:
+\[
+    \tn K = \tn Q^T \tn D \tn Q,\quad 
+    \tn D = \begin{pmatrix}
+                k_x     &0      &0\\
+                0       &k_y    &0\\
+                0       &0      &k_z                
+            \end{pmatrix}
+\]
+Vodivosti v hlavních směrech jsou vlastní čísla matice $\tn K$, musí být kladné. Matice rotace $\tn Q$ je tvořena (ortogonálními) vlastními vektory.
+Zde máme příklad anisotropie hydrulické vodivosti. Podobně existují materiály s anisotropní tepelnou vodivostí, nebo anisotrponí pevností etc.
+
+Dále můžeme uvažovat stlačitelnou tekutinu, resp. stlačitelný materiál okolo pórů. Pro použití rovnice kontinuity pořebujeme spočítat derivaci 
+hustotu hmoty tekutiny v prostoru podle času:
+\[
+    \prtl_t \rho_V = \Big(\frac{\prtl \rho}{\prtl p} + \frac{\prtl \theta}{\prtl p}\Big)\prtl_t p = S\prtl_t p.
+\]
+Veličina $S$ $[kg/m^3/Pa]$ se nazývá storativita a zahrnuje jak stlačitelnost tekutiny $\prtl_p \rho$ tak stlačitelnost prostředí $\prtl_p \theta$.
+Pro nasycené, stlačitelné porézní prostředí tedy máme rovnici:
+\[
+    S \prtl_t p -\div\Big( \rho k\tn K \grad p\Big) = f
+\]
+
+Pro nenasycené prostředí pak dostáváme záporné (sací) tlaky $p$ a pro ně saturaci $\theta_r \le \theta(p) \le \theta_s$, která je funkcí tlaku. 
+Navíc i vodivost $k$, klesá s klesajícím nasycením, je tedy $k(\theta)$ funkcí saturace. Dohromady dostaneme tzv. Richardsovu rovnici:
+\[
+    \prtl_t \theta(p) -\div\Big( \rho k(\theta(p)) \tn K \grad p\Big) = f
+\]
+kde funkce $\theta(p)$ a $k(\theta)$ jsou obecně nelineární a dostáváme tak nelineární parciální diferenciální rovnici.
+
+
+
+\subsection{Transport chemických látek}
+\begin{equation}
+    \prtl_t (\rho_i c_i) + \div (\rho_i c_i \frac{\vc u}{\nu}) - \div( \tn D \grad c_i) = r_{ij}.
+\end{equation}
+
+
+\section{Vlnová rovnice (akustika)}
+
+Odvodíme rovnici pro kmitání struny. Stav struny v čase $t$ a poloze $x$ je dán výchylkou struny $u(t,x)$. Pro zjendodušení si představujeme, 
+že struna může kmitat jen v jednom směru. Na element daný intervalem $(a,b)$ působí síly v koncových bodech:
+\[
+    \vc F(t,a) = -T(t,a) \vc t(t,a),\quad \vc F(t,b) = T(t,b) \vc t(t, b)
+\]
+kde $T$ je napětí ve struně a $\vc t$ je tečný vektor $ t(t, x) = ( 1, \prtl_x u(t,x) )$. 
+Jelikož v horizontálním směru se struna nepohybuje můsí být horizontální složka součtu sil rovna nule:
+\[
+    T(t,b) - T(t,a) = 0
+\]
+a jelikož jsme body $a$ a $b$ volili libovolně,  je napětí ve struně nazávislé na poloze: $T(t, x) = T(t)$.
+Proto pro vertikální složku síly platí 
+\[
+    F_y = F_y(t,a) + F_y(t,b) = T(t)\big(\prtl_x u(t,b) - \prtl_x u(t,a)\big)
+\]
+Nyní použijeme 2. Newtonův zákon:
+\[
+    \frac{\d}{\dt} \int_a^b \rho(x) \prtl_t u(t,x) \d x = F_y(t,x) = T(t)\big(\prtl_x u(t,b) - \prtl_x u(t,a)\big) = T(t) \int_a^b \prtl_{xx} u(t,x) \d x 
+\]
+A jelikož $a$ a $b$ jsou libovolné, dostáváme bodovou rovnici:
+\[
+    \rho(x) \prtl_{tt} u(t,x) = T(t) \prtl_{xx} u(t,x) 
+\]
+Pokud předpokládáme konstantní hustotu $\rho(x) = \rho_0$ a zanedbáme změnu napětí struny při malé výchylce $T(t)=T_0$ dostaneme vlnovou rovnici ve tvaru:
+\[
+    \prtl_{tt} u(t,x) = c^2 \prtl_{xx} u(t,x)
+\]
+kde 
+\[
+    c=\sqrt{\frac{T_0}{\rho_0}}
+\]
+je rychlost šíření vlny. 
+Mírně kompplikovanější je odvození vlnové rovnice pro změny (akustického) tlaku v prostoru:
+
+\[
+    \prtl_{tt} p(t, \vc x) = c^2 \Lapl p(t, \vc x)
+\]
+kde pro rychlost zvuku $c$ platí:
+\[
+    c = \sqrt{\frac{B}{\rho_0}},\quad B = \rho_0 \frac{\prtl P}{\prtl \rho}
+\]
+přičemž $B$ je objemová stlačitelnost při adiabatické expanzi. Pro vzduch máme $B=1.45\times 10^5\ Pa$ a hustotu $\rho_0 = 1.2kg/m^3$ a dostáváme rychlost zvuku:
+\[
+    c=347 \sqrt{\frac{kg.m/s^2/m^2}{kg/m^3}} = 1251 km/h
+\]
+Tabulková hodnota je $340m/s$.
+
+
+
+
+
+
+
+
+\section{Mechanika}
+\dots
+\section{Elektromagnetismus}
+
 \section{Klasifikace PDR}
+
+\subsection{Eliptické rovnice}
+Základním příkladem je Laplaceova rovnice:
+\[
+    \Lapl u(\vc x) = 0
+\]
+respektive Poisonova rovnice
+\[
+    \Lapl u(\vc x) = f(\vc x).
+\]
+Dalšími příklady je stacionární rovnice vedení tepla:
+\[
+    \div( k \grad T(\vc x) ) = f(\vc x),
+\]
+resp. stacionární rovnice Darcyho proudění:
+\[
+    \div( \tn K \grad p(\vc x)) = f(\vc x).
+\]
+Obecná rovnici druhého řádu:
+\[
+  \div\Big( \tn A \grad u(\vc x)\Big) + \vc b \grad u(\vc x) + c u(\vc x)= f(\vc x)
+\]
+je eliptická, pokud $\tn A$ je symetrická pozitivně definitní matice.
+
+Pro eliptické rovnice platí (za jistých omezeních pro $\vc b$ a $c$) tzv. princip maxima. Pokud $u$ je řešením eplitické rovnice na oblasti $\Omega$
+pak 
+\[
+    \max_{\vc x \in \Omega} u(\vc x) \le \max_{\vc x \in \prtl \Omega}  u(\vc x).
+\]
+Podobně pro minimum:
+\[
+    \min_{\vc x \in \Omega} u(\vc x) \ge \min_{\vc x \in \prtl \Omega}  u(\vc x).
+\]
+
+
+\subsection{Parabolické rovnice rovnice}
+Příkladem je nestacionární rovnice vedení tepla:
+\[
+    \prtl_t T -\div(k \grad T) = f
+\]
+Vlastnosti řešení:
+\begin{itemize}
+ \item I zde platí princip maxima vzhledem k okrajové podmínce.
+ \item Pokles řešení v čase:
+    \[
+        \max_{\vc x \in \Omega} u(t, \vc x)   \le \max_{\vc x \in \Omega}  u(s, \vc x),\quad \text{pro } t\ge s.
+    \]
+\end{itemize}
+
+ Rovnice "zhlazuje" počáteční podmínku.
+Nekonečná rychlost šíření změn.
+\subsection{Hyperbolické rovnice}
+
+Příklad je vlnová rovnice. 
+Eulerovy rovnice. Neplatí princip maxima. 
+Kvalitativní vlastnosti řešení:
+\begin{itemize}
+ \item Konečná rychlost šíření (vln).
+ \item Reverzibilní v čase ($u(-t, \vc x )$ je též řešením).
+ \item Nezhlazuje.
+ \item Nesplňuje princip maxima, řešení se může akumulovat v bodě (náraz vlny na pobřeží).
+\end{itemize}
+
+
