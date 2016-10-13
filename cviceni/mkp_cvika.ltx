@@ -385,7 +385,7 @@ Vždy nejprve odhadněte jak se řešení bude chovat a pak teprve spusťte simu
 Řešte rovnici vedení tepla, na oblasti $\Omega = (0,1) \subset \Real$ a pro čas $t\ge 0$:
 \begin{equation}
     \label{eq:heat_in_domain}
-    \frac{\prtl u}{\prtl t}(t,x) = \frac{\prtl^2 u}{\prtl x^2}(t,x)
+    \frac{\prtl u}{\prtl t}(t,y) = \frac{\prtl^2 u}{\prtl y^2}(t,y)
 \end{equation}
 okrajové podmínky 
 \begin{equation}
@@ -395,7 +395,7 @@ okrajové podmínky
 Počáteční podmínka:
 \begin{equation}
     \label{eq:heat_ic}
-    u(0,x) = x 
+    u(0,y) = y 
 \end{equation}
 
 \begin{enumerate}
@@ -403,7 +403,7 @@ Počáteční podmínka:
 \item Použijte okrajovou podmínku \eqref{eq:heat_bc}. Pro omezení konstanty $\lambda$ a tím prostoru řešení.
 \item Použijte princip superpozice (platí pro lineární PDR).
 \item Napište obecné řešení ve formě Fourierovy řady a použijte počáteční podmínku \eqref{eq:heat_ic}.
-\item Určete koeficienty fourierovy řady $b_k = \frac{1}{\pi}\int_{-\pi}^{+\pi} f(x) \sin(kx)$.
+\item Určete koeficienty fourierovy řady $b_k = \frac{1}{\pi}\int_{-\pi}^{+\pi} f(y) \sin(ky)$.
 Požijete \url{https://www.wolframalpha.com}.
 \end{enumerate}
 
@@ -413,7 +413,7 @@ Požijete \url{https://www.wolframalpha.com}.
 Řešte vlnovou rovnici, na oblasti $\Omega = (0,1) \subset \Real$ a pro čas $t\ge 0$:
 \begin{equation}
     \label{eq:heat_in_domain}
-    \frac{\prtl^2 u}{\prtl t^2}(t,x) = \frac{\prtl^2 u}{\prtl x^2}(t,x)
+    \frac{\prtl^2 u}{\prtl t^2}(t,y) = c^2\frac{\prtl^2 u}{\prtl y^2}(t,y)
 \end{equation}
 okrajové podmínky 
 \begin{equation}
@@ -423,15 +423,15 @@ okrajové podmínky
 Počáteční podmínky:
 \begin{equation}
     \label{eq:heat_ic}
-    u(0,x) = x,\ \prtl_t u(0,x)=0 
+    u(0,y) = y,\ \prtl_t u(0,y)=0 
 \end{equation}
 
 
 \begin{enumerate}
-\item Proveďte separaci proměnných. Hledejte řešení ve tvaru $u(t,x)= v(t)w(x)$, dosaďte do \eqref{eq:heat_in_domain}, nalezněte řešení pro $v$ a $w$.
-\item Použijte okrajovou podmínku \eqref{eq:heat_bc}. Pro omezení konstanty $\lambda$.
+\item Proveďte separaci proměnných. Hledejte řešení ve tvaru $u(t,y)= T(t)Y(y)$, dosaďte do \eqref{eq:heat_in_domain}, nalezněte řešení pro $T$ a $Y$.
+\item Použijte okrajovou podmínku \eqref{eq:heat_bc}. Pro omezení počtu řešení na spočetně mnoho.
 \item Napište obecné řešení ve formě Fourierovy řady a použijte počáteční podmínku \eqref{eq:heat_ic}.
-\item Určete koeficienty fourierovy řady $b_k = \frac{1}{\pi}\int_{-\pi}^{+\pi} f(x) \sin(kx)$.
+\item Určete koeficienty Fourierovy řady.
 \end{enumerate}
 
 
@@ -446,15 +446,6 @@ okrajové podmínky
     \label{eq:heat_bc}
     u(0,y) = u(1,y) = 0,\quad \prtl_y u(x,0)= \prtl_y u(x,1)= 0
 \end{equation}
-
-\begin{enumerate}
-\item Proveďte separaci proměnných. Hledejte řešení ve tvaru $u(t,x)= v(t)w(x)$, dosaďte do \eqref{eq:heat_in_domain}, nalezněte řešení pro $v$ a $w$.
-\item Použijte okrajovou podmínku \eqref{eq:heat_bc}. Pro omezení konstanty $\lambda$.
-\item Napište obecné řešení ve formě Fourierovy řady a použijte počáteční podmínku \eqref{eq:heat_ic}.
-\item Určete koeficienty fourierovy řady $b_k = \frac{1}{\pi}\int_{-\pi}^{+\pi} f(x) \sin(kx)$.
-\end{enumerate}
-
-
 
 
 \begin{thebibliography}{99}
