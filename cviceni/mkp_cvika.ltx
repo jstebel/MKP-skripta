@@ -15,6 +15,7 @@
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{fancyhdr}
+\usepackage{hyperref}
 \usepackage[utf8]{inputenc}
 \usepackage[czech]{babel}
 %\usepackage{mathbbol}
@@ -304,6 +305,108 @@ str. 248; 199/12 (hmotnost), 249/58 (hmotnost), 122/20 \dots (3D momenty), 159/1
 \end{enumerate}
 \pagebreak
 
+\section{Matematické modely. Klasifikace PDR, vlastnosti řešení.}
+\subsection{Rovnice kmitů struny}
+Odvoďte rovnici pro rovinné kmity struny. Výchylka struny v čase $t$ a bodě $x$ v intervalu $(0,1)$ je dána funkcí $u(t,x)$.
+\begin{enumerate}
+    \item Načrtněte si element struny mezi body $a$, $b$. Jakými silami působí okolí struny na tento element. Vypočtěte při znalosti výchylky $u(t,\argdot)$
+    horizontální a vertikální sílu působící na element.
+    \item Použijte druhý Newtonův zákon pro změnu hybnosti elementu (integrál 1. druhu) v horizontalním a vertikálním směru. 
+          Odvoďte "integrální formulaci" pro výchylku $u$.
+    \item Odvoďte bodovou formulaci rovnice. pro výchylku $u$.
+\end{enumerate}
+
+\subsection{Chování parabolických a hyperbolických rovnic}
+Na stránce \url{http://math.uchicago.edu/~luis/pde/} pozorujte chování vlnové rovnice a rovnice vedení tepla. 
+Vždy nejprve odhadněte jak se řešení bude chovat a pak teprve spusťte simulaci.
+\begin{enumerate}
+    \item Pro řešič vlnové rovnice. Spusťte simulaci pro výchozí nastavení. Počáteční podmínka se skládá z výchylku $u$ a její časové derivace $\prtl_t u$.
+    \item Upravte $\prtl_t u(0,\cdot)$ tak aby vlna na počátku směřovala doprava.
+    \item Co se stane, když nezadáte rychlost? Jaké reálné situaci to odpovídá?
+    \item Demonstrujte, že neplatí princip maxima.
+    \item Pokuste se fyzikálně interpretovat Dirichletovu a Neumannovu okrajovou podmínku.
+\end{enumerate}
+
+\begin{enumerate}
+    \item Pro řešič rovnice vedení tepla. Spusťte simulaci pro výchozí nastavení. Počáteční podmínka je pouze počáteční teplota v každém bodě $u(0,x)$.
+    \item Nastavte Neumannovu OKP (odpovídá tepelné izolaci). Nastavte na jedné straně skok z 1 na 0. Teplo jen na jedné straně. Co očekáváte?
+    \item Nastavte poč. podmínku s množstvím různých skoků? Co očekáváte?    
+    \item Pozorujte zachování principu maxima v různých případech.
+    \item Jaká je interpretace Dirichletovy okrajové podmínky.
+\end{enumerate}
+
+\subsection{Fourierova metoda pro rovnici vedení tepla}
+Řešte rovnici vedení tepla, na oblasti $\Omega = (0,1) \subset \Real$ a pro čas $t\ge 0$:
+\begin{equation}
+    \label{eq:heat_in_domain}
+    \frac{\prtl u}{\prtl t}(t,x) = \frac{\prtl^2 u}{\prtl x^2}(t,x)
+\end{equation}
+okrajové podmínky 
+\begin{equation}
+    \label{eq:heat_bc}
+    u(t,0) = u(t,1) = 0
+\end{equation}
+Počáteční podmínka:
+\begin{equation}
+    \label{eq:heat_ic}
+    u(0,x) = x 
+\end{equation}
+
+\begin{enumerate}
+\item Proveďte separaci proměnných. Hledejte všechna řešení ve tvaru $u(t,y)= T(t)Y(y)$. Dosaďte do \eqref{eq:heat_in_domain}, nalezněte řešení pro $T$ a $Y$.
+\item Použijte okrajovou podmínku \eqref{eq:heat_bc}. Pro omezení konstanty $\lambda$ a tím prostoru řešení.
+\item Použijte princip superpozice (platí pro lineární PDR).
+\item Napište obecné řešení ve formě Fourierovy řady a použijte počáteční podmínku \eqref{eq:heat_ic}.
+\item Určete koeficienty fourierovy řady $b_k = \frac{1}{\pi}\int_{-\pi}^{+\pi} f(x) \sin(kx)$.
+Požijete \url{https://www.wolframalpha.com}.
+\end{enumerate}
+
+
+
+\subsection{Fourierova metoda pro vlnovou rovnici}
+Řešte vlnovou rovnici, na oblasti $\Omega = (0,1) \subset \Real$ a pro čas $t\ge 0$:
+\begin{equation}
+    \label{eq:heat_in_domain}
+    \frac{\prtl^2 u}{\prtl t^2}(t,x) = \frac{\prtl^2 u}{\prtl x^2}(t,x)
+\end{equation}
+okrajové podmínky 
+\begin{equation}
+    \label{eq:heat_bc}
+    u(t,0) = u(t,1) = 0
+\end{equation}
+Počáteční podmínky:
+\begin{equation}
+    \label{eq:heat_ic}
+    u(0,x) = x,\ \prtl_t u(0,x)=0 
+\end{equation}
+
+
+\begin{enumerate}
+\item Proveďte separaci proměnných. Hledejte řešení ve tvaru $u(t,x)= v(t)w(x)$, dosaďte do \eqref{eq:heat_in_domain}, nalezněte řešení pro $v$ a $w$.
+\item Použijte okrajovou podmínku \eqref{eq:heat_bc}. Pro omezení konstanty $\lambda$.
+\item Napište obecné řešení ve formě Fourierovy řady a použijte počáteční podmínku \eqref{eq:heat_ic}.
+\item Určete koeficienty fourierovy řady $b_k = \frac{1}{\pi}\int_{-\pi}^{+\pi} f(x) \sin(kx)$.
+\end{enumerate}
+
+
+\subsection{Fourierova metoda pro Laplaceovu rovnici}
+Řešte Laplaceovu rovnici, na oblasti $\Omega = (0,\pi)\times (0,\pi)$:
+\begin{equation}
+    \label{eq:heat_in_domain}
+    \frac{\prtl^2 u}{\prtl x^2}(x,y) + \frac{\prtl^2 u}{\prtl y^2}(x,y) = f(x,y)
+\end{equation}
+okrajové podmínky 
+\begin{equation}
+    \label{eq:heat_bc}
+    u(0,y) = u(1,y) = 0,\quad \prtl_y u(x,0)= \prtl_y u(x,1)= 0
+\end{equation}
+
+\begin{enumerate}
+\item Proveďte separaci proměnných. Hledejte řešení ve tvaru $u(t,x)= v(t)w(x)$, dosaďte do \eqref{eq:heat_in_domain}, nalezněte řešení pro $v$ a $w$.
+\item Použijte okrajovou podmínku \eqref{eq:heat_bc}. Pro omezení konstanty $\lambda$.
+\item Napište obecné řešení ve formě Fourierovy řady a použijte počáteční podmínku \eqref{eq:heat_ic}.
+\item Určete koeficienty fourierovy řady $b_k = \frac{1}{\pi}\int_{-\pi}^{+\pi} f(x) \sin(kx)$.
+\end{enumerate}
 
 
 
