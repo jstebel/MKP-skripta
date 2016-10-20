@@ -138,6 +138,7 @@
 
 % ************************************ NOTATIONS JS
 \newcommand{\mat}[1]{\mathbb{#1}}
+\newcommand{\Vc}{\mathcal V}
 % *************************************************
 
 
@@ -448,6 +449,111 @@ okrajové podmínky
 \end{equation}
 
 
+
+
+
+
+
+
+\pagebreak
+
+\section{Slabé řešení a úvod do metody konečných prvků}
+
+\subsection{Slabé řešení}
+Nechť $f$ je zadaná spojitá funkce.
+Okrajová úloha
+\begin{equation}\label{eq:1d_bvp}
+\begin{aligned}
+-u''(x) &= f(x) &&\mbox{ pro }x\in(0,1), \\
+u(0) &= u(1) = 0,
+\end{aligned}
+\end{equation}
+je prototypem úlohy, popisující např. průhyb struny nebo vedení tepla.
+V jedné prostorové dimenzi umíme úlohu na intervalu vyřešit analyticky, pokud rovnici dvakrát integrujeme.
+Pro analogickou úlohu na obecné oblasti ve 2D nebo 3D však \emph{klasické} řešení najít neumíme, a proto místo něj hledáme řešení \emph{slabé}.
+Při definici slabého řešení budeme používat množinu funkcí
+\[ \Vc:=\{v\in C([0,1]);~v'\mbox{ je po částech spojitá},~v(0)=v(1)=0\} \]
+a skalární součin
+\[ (u,v) := \int_0^1 u(x)v(x)~\d x. \]
+Ve slabé formulaci úlohy \eqref{eq:1d_bvp} hledáme funkci $u\in\Vc$, splňující
+\begin{equation}\label{eq:1d_bvp_weak}\tag{V}
+\forall v\in\Vc:~(u',v')=(f,v).
+\end{equation}
+
+\begin{enumerate}
+\item Odvoďte vztah \eqref{eq:1d_bvp_weak}:
+\begin{itemize}
+\item Vynásobte \eqref{eq:1d_bvp}${}_1$ číslem $v(x)$, kde $v\in \Vc$.
+\item Rovnici integrujte přes interval $(0,1)$ a levou stranu upravte pomocí integrace per partes.
+\end{itemize}
+
+\item Ukažte, že pokud slabé řešení $u\in\Vc$ má na intervalu $(0,1)$ spojitou 2. derivaci, pak je také klasickým řešením.
+
+\item Ukažte, že formulace \eqref{eq:1d_bvp_weak} je ekvivalentní úloze minimalizace funkcionálu $F(u):=\frac12(u',u')-(f,u)$:
+\begin{equation}\label{eq:1d_min}\tag{M}
+\mbox{Najdi }u\in\Vc\mbox{ takové, že }\forall v\in\Vc:~F(u)\le F(v).
+\end{equation}
+
+\item Ukažte, že nemohou existovat dvě různá slabá řešení úlohy \eqref{eq:1d_bvp}.
+
+\item Odvoďte slabou formulaci pro úlohu
+\[ -u''(x)+u(x) = f(x) \mbox{ pro }x\in(0,1),  \quad u'(0)=u'(1)=0. \]
+
+\item* Odvoďte slabou formulaci pro úlohu 4. řádu
+\[ u^{(4)}(x) = f(x) \mbox{ pro }x\in(0,1),  \quad  u(0)=u'(0)=u(1)=u'(1)=0, \]
+která popisuje průhyb nosníku.
+
+\item* Odvoďte slabou formulaci pro úlohu 
+     \[ -\div(\mat A\nabla u) = f \mbox{ ve }V,\quad (\mat A\nabla u)\cdot\vc n = g \mbox{ na }S, \]
+     kde plocha $S$ ohraničuje objem $V$ a $\mat A,f,g$ jsou zadané funkce.
+
+\end{enumerate}
+
+
+\subsection{Metoda konečných prvků}
+
+Nyní zavedeme podprostor $\Vc_h\subset\Vc$ s konečnou dimenzí, tvořený po částech lineárními funkcemi.
+\begin{itemize}
+\item Rozdělíme interval $(0,1)$ pomocí bodů $0=x_0<x_1<x_2<...<x_M<x_{M+1}=1$ na podintervaly $I_j=(x_{j-1},x_j)$.
+Délku $I_j$ označíme $h_j:=x_j-x_{j-1}$ a definujeme $h:=\max h_j$.
+\item Prostor $\Vc_h$ definujeme jako množinu všech spojitých funkcí $v$, které jsou na každém podintervalu $I_j$ lineární, a navíc $v(0)=v(1)=0$.
+\item Bázi $\Vc_h$ definujeme jako funkce $\varphi_i\in\Vc_h$, určené podmínkami $\varphi_i(x_j)=\delta_{ij}$.
+Libovolnou funkci $v\in\Vc_h$ pak můžeme zapsat ve tvaru
+\[ v(x) = \sum_{j=1}^M\xi_j\varphi_j(x),~\xi_j=v(x_j). \]
+Vektorový prostor $\Vc_h$ má tedy dimenzi $M$.
+\end{itemize}
+Metodu konečných prvků pro úlohu \eqref{eq:1d_bvp} nyní můžeme formulovat následovně:
+\begin{equation}\label{eq:1d_galerkin}\tag{V${}_h$}
+\mbox{Najdi }u_h\in\Vc_h \mbox{ takové, že }\forall v\in\Vc_h:~(u_h',v')=(f,v).
+\end{equation}
+Nebo alternativně:
+\begin{equation}\label{eq:1d_ritz}\tag{M${}_h$}
+\mbox{Najdi }u_h\in\Vc_h\mbox{ takové, že }\forall v\in\Vc_h:~F(u_h)\le F(v_h).
+\end{equation}
+První formulaci říkáme \emph{Galerkinova} metoda, druhé \emph{Ritzova} metoda.
+
+
+\begin{enumerate}
+\setcounter{enumi}{7}
+\item Vypočítejte skalární součiny $(\varphi_i,\varphi_j)$, $i,j=1,...,M$.
+\item Pro $u_h$ ve tvaru $u_h(x)=\sum_{j=1}^M\xi_j\varphi_j(x)$ formulujte úlohu \eqref{eq:1d_galerkin} jako soustavu lineárních rovnic pro $\vc\xi=(\xi_1,...,\xi_M)^\top$.
+\item Určete matici soustavy z předchozího cvičení pro případ ekvidistantního dělění intervalu, tj. $h_j=h$.
+Ukažte, že tato matice je symetrická a pozitivně definitní (tj. $\vc \eta\cdot\mat A\vc \eta>0$ pro každé $\vc \eta\in\Real^M\setminus\{\vc 0\}$).
+\item Uvažujte prostor $\Vc_h$ tvořený spojitými funkcemi, které jsou na každém $i_j$ kvadratické.
+Jak lze zvolit parametry popisující tyto funkce?
+Najděte vhodnou bázi.
+Formulujte metodu konečných prvků s tímto prostorem a pro ekvidistantní dělení intervalu odvoďte tvar matice soustavy.
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
 \begin{thebibliography}{99}
 \bibitem{Rektorys} K. Rektorys a spol. : 
 {\it Přehled užité matematiky.} Prometheus, Praha, 1995.
@@ -455,7 +561,7 @@ okrajové podmínky
    \verb http://morf.matfyz.cz/vyuka/mft/MA2_CV.pdf (kopie)
 \bibitem{Veit} J. Veit: {\it Integrální transformace.} SNTL, Praha, 1979.
 \bibitem{FeynmanII} R. Feynman: {\it Přednášky z fyziky II.}, Fragment, 2001
-\bibitem{SedlakStoll} B. Sedlák,I. Štoll :{\it Eletřina a magnetismus.} Academia, Praha, 2002.. 
+\bibitem{SedlakStoll} B. Sedlák, I. Štoll: {\it Eletřina a magnetismus.} Academia, Praha, 2002.
 \end{thebibliography}
 
 %        * MEZNÍK, I, KARÁSEK, J., MIKLÍČEK, J. Matematika I pro strojní fakulty. SNTL, Praha, 1992.
