@@ -43,7 +43,7 @@ Uloziste: http://mkp.nti.tul.cz
 Literatura:
 
 An Introduction to Computer Simulation - Woolfson and Pert.pdf
-    Overrview of methods" ODE, FD, MC, praticle, FEM, CFD; some interesting physical problems, no math
+    Overrview of methods: ODE, FD, MC, praticle, FEM, CFD; some interesting physical problems, no math
     
 Applied Finite Element Analysis - Larry J. Segerlind.pdf
     Textbook, engineering, mechanics, overview of methods on examples, 
@@ -58,10 +58,10 @@ Numerical Methods for Elliptic and Parabolic PDEs - P. Knabner & L. Angermann.pd
     Quite good, no phys. examples
        
 Numerical PDEs for Environmental Scientists and Engineers - D.R.Lynch.pdf
-    Engineering, some examples and +d tutorial problems
+    Engineering, some examples and 1d tutorial problems
     
 Numerical Solutions of PDEs by the Finite Element Method - Johnson.djvu
-    Textbook, classical introduction. Application of the theory to examples.
+    Very Good. Textbook, classical introduction. Application of the theory to examples.
 
 
     (Too fuzzy and advanced)    

@@ -173,13 +173,27 @@ Vlastnosti řešení:
 Nekonečná rychlost šíření změn.
 \subsection{Hyperbolické rovnice}
 
-Příklad je vlnová rovnice. 
-Eulerovy rovnice. Neplatí princip maxima. 
+Příklad je vlnová rovnice:
+\[
+    \prtl_{tt} p(t, \vc x) = c^2 \Lapl p(t, \vc x)
+\]
+
+Transportní rovnice (rovnice kontinuity), např. pro rozpuštěnou látku:
+\[
+    \prtl_t (\rho c) + \div( (\rho c) \vc u)=0
+\]
+
+Eulerovy rovnice:
+\[
+    \prtl_t \rho + \div( \rho \vc u)=0
+\]
+\[
+    \prtl_t (\rho \vc u_i) +\div(\rho \vc u_i \vc u) = - \grad P,
+\]
 Kvalitativní vlastnosti řešení:
 \begin{itemize}
  \item Konečná rychlost šíření (vln).
- \item Reverzibilní v čase ($u(-t, \vc x )$ je též řešením).
- \item Nezhlazuje.
+ \item Nezhlazuje.  
  \item Nesplňuje princip maxima, řešení se může akumulovat v bodě (náraz vlny na pobřeží).
 \end{itemize}
 
