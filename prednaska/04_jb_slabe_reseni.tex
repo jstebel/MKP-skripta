@@ -172,14 +172,14 @@ Dále tuto funkci hladc prodloužíme dovnitř  $\Omega$ a dostaneme  (hladkou) 
 $\Gamma_{nr}$ hodnotu $\psi$ a je nenulová pouze na tenkém proužku do vzdálenosti $\epsilon$ od hranice.
 Nyní v \eqref{eq:weak_homo_dirich} použijeme testovací funkci $\phi_\epsilon$ a použijeme Greenovu větu, dostaneme:
 \[
-    \int_\Omega X(u)\phi_\epsilon \d \vc x + \int_{\Gamma_{nr} (\tn K\grad u-\vc v u)\cdot \vc n \phi_\epsilon \d s    
+    \int_\Omega X(u)\phi_\epsilon \d \vc x + \int_{\Gamma_{nr}} (\tn K\grad u-\vc v u)\cdot \vc n \phi_\epsilon \d s    
               =  \int_{\Gamma_r} \sigma_r (u_r -u) \phi_\epsilon \d s + \int_{\Gamma_n} -q \phi_\epsilon \d s 
 \]
 kde první člen obsahuje všechny členy z předchozí rovnice \eqref{eq:green_interior}. Nyní provedeme limitu $\epsilon \to 0$. V této limitě se první intergál 
 bude blížit nule, jelikož $\phi_\epsilon$ je nenulová na množině velikosti $\epsilon \times \abs{\Gamma_nr}$, což konverguje k nule. Naproti tomu ve zbylých 
 hraničních integrálech je $\phi_\epsilon = \psi$, což na $\epsilon$ nezávisí, tedy dostaneme:
 \[
-    \int_{\Gamma_{nr} -(\tn K\grad u-\vc v u)\cdot \vc n \psi \d s  
+    \int_{\Gamma_{nr}} -(\tn K\grad u-\vc v u)\cdot \vc n \psi \d s  
               =  \int_{\Gamma_r} \sigma_r (u -u_r) \psi \d s + \int_{\Gamma_n} q \psi \d s 
 \]
 a odtud obě okrajové podmínky.
