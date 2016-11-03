@@ -554,6 +554,29 @@ Spodní podstava je preforovaná a je naměřen konstantní tok vody $1e-6 m^3/s
 Sestavte rovnice popisující rozložení tlaku a rychlosti ve válci. Napište okrajové podmínky. Odvoďte slabou formulaci úlohy.
 
 
+\pagebreak
+\section{Normovaný lineární prostor}
+
+\begin{enumerate}
+\item Zjistěte, zda následující zobrazení jsou lineární, resp. bilineární formy:
+\[ l_1(u) = \int_0^1 (u(x)+1)~dx,~u\in C([0,1]), \]
+\[ l_2(u) = u(0) + \int_{\frac12}^1 u'(x)~dx,~u\in C^1([0,1]), \]
+\[ l_3(u) = \int_0^1 u^2(x)~dx, ~u\in C([0,1]); \]
+\[ a_1(u,v) = \int_0^1u(x)v'(x)~dx,~u,v\in C^1([0,1]), \]
+\[ a_2(u,v) = \int_0^1 xu'(x)v'(x)~dx,~u,v\in C^1([0,1]). \]
+Je některá z bilineárních forem skalárním součinem?
+
+\item Ověřte, že $\norm{\ }_\infty$ je norma na $C(\overline\Omega)$.
+
+\item Pomocí definice ukažte, že norma je nezáporná funkce.
+
+\item Množiny v $\Real^2$ ...
+
+\item Zjistěte, zda následující posloupnosti mají bodovou limitu a pokud ano, ověřte, zda konvergují v $\norm{\ }_2$ a $\norm{\ }_\infty$:
+\[ u_n(x)=x^n \mbox{ na }[0,1],\qquad v_n(x)=x^2+x/n \mbox{ na }[-1,1],\quad w_n(x)=\begin{cases}n;&x\in[0,1/n^3]\\x^{-1/3};&x\in(1/n^3;1],\end{cases} \]
+\[ z_n(x)=\sqrt{\cos(\frac xn)e^{-x}}\mbox{ na }[-1,1]. \]
+\end{enumerate}
+
 
 \pagebreak
 
