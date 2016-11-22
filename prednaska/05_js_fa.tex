@@ -666,25 +666,25 @@ Díky Friedrichsově nerovnosti platí:
 
 \subsubsection{Advekce-difúze}
 
-Je dána oblast $\Omega\subset\R^d$ s hranicí $\partial\Omega=\overline\Gamma_n\cup\overline\Gamma_r$, vektorové pole $\vc v:\Omega\to\R^d$ a skalární funkce $\sigma_r$, $u_r$ na $\Gamma_r$.
+Je dána oblast $\Omega\subset\R^d$ s hranicí $\partial\Omega=\overline\Gamma_n\cup\overline\Gamma_r$, vektorové pole $\vc q:\Omega\to\R^d$ a skalární funkce $\sigma_r$, $u_r$ na $\Gamma_r$.
 Hledáme funkci $u:\overline\Omega\to\R$, která splňuje:
 \[ \begin{aligned}
--\Delta u + \div(\vc v u) &= 0 &&\text{v }\Omega,\\
+-\Delta u + \div(\vc q u) &= 0 &&\text{v }\Omega,\\
 -\grad u \cdot \vc n &= 0 &&\text{na }\Gamma_n,\\
-(-\grad u + \vc v u) \cdot \vc n &= \sigma_r(u - u_r) &&\text{na }\Gamma_r.
+(-\grad u + \vc q u) \cdot \vc n &= \sigma_r(u - u_r) &&\text{na }\Gamma_r.
 \end{aligned} \]
 Slabá formulace:
 \[ \mbox{Najdi }u\in V:=H^1(\Omega) \mbox{ takové, že }\forall v\in H^1(\Omega):~a(u,v)=l(v), \]
 kde
 \begin{equation}\label{eq:def_a_ad}
-a(u,v) := (\grad u-\vc v u, \grad v) + (\vc v\cdot\vc n u,v)_{\Gamma_n} + (\sigma_r u, v)_{\Gamma_r},
+a(u,v) := (\grad u-\vc q u, \grad v) + (\vc q\cdot\vc n u,v)_{\Gamma_n} + (\sigma_r u, v)_{\Gamma_r},
 \end{equation}
 \begin{equation}\label{eq:def_l_ad}
 l(v) := (\sigma_r u_r, v)_{\Gamma_r}.
 \end{equation}
 % 
 \begin{veta}
-Nechť $\vc v\in L^\infty(\Omega;\R^d)$, $\vc v\cdot\vc n\in L^\infty(\Gamma_n)$ a $\sigma_r\in L^\infty(\Gamma_r)$. Pak existuje konstanta $\beta:=\beta(\norm{\vc v}_\infty,\norm{\vc v\cdot\vc n}_{\infty,\Gamma_n},\norm{\sigma_r}_{\infty,\Gamma_r})$ taková, že
+Nechť $\vc q\in L^\infty(\Omega;\R^d)$, $\vc q\cdot\vc n\in L^\infty(\Gamma_n)$ a $\sigma_r\in L^\infty(\Gamma_r)$. Pak existuje konstanta $\beta:=\beta(\norm{\vc q}_\infty,\norm{\vc q\cdot\vc n}_{\infty,\Gamma_n},\norm{\sigma_r}_{\infty,\Gamma_r})$ taková, že
 \[ \forall v,w\in H^1(\Omega):~a(v,w) \le \beta \norm{v}_{1,2}\norm{w}_{1,2}, \]
 kde bilineární forma $a$ je definována v \eqref{eq:def_a_ad}.
 Je-li navíc $u_r\in L^2(\Gamma_r)$, pak existuje $\gamma:=\gamma(\norm{\sigma_r}_{\infty,\Gamma_r},\norm{u_r}_{2,\Gamma_r})$ takové, že
@@ -693,21 +693,21 @@ kde lineární forma $l$ je definována v \eqref{eq:def_l_ad}.
 \end{veta}
 \begin{proof}
 Nejprve odhadneme postupně všechny výrazy v $a$.
-S využitím Cauchyovy-Schwarzovy nerovnosti a faktu, že $\norm{w_i}_2\le\norm{\vc w}_2$ dostaneme:
+S využitím Cauchyovy-Schwarzovy nerovnosti a faktu, že $\norm{\partial_{x_i} w}_2\le\norm{\nabla w}_2$ dostaneme:
 \begin{align*}
 (\nabla v,\nabla w) \le \norm{v}_{1,2}\norm{w}_{1,2},
 \end{align*}
 \begin{align*}
-(\vc v v,\nabla w)
-&\le \sum_{i=1}^d(|v_i||v|,|\partial_{x_i}w|)
-\le \norm{\vc v}_\infty\sum_{i=1}^d(|v|,|\partial_{x_i}w|)\\
-&\le \norm{\vc v}_\infty\norm{v}_2\sum_{i=1}^d\norm{\partial_{x_i}w}_2
-\le d\norm{\vc v}_\infty\norm{v}_2\norm{\nabla w}_2\\
-&\le d\norm{\vc v}_\infty\norm{v}_{1,2}\norm{w}_{1,2},
+(\vc q v,\nabla w)
+&\le \sum_{i=1}^d(|q_i||v|,|\partial_{x_i}w|)
+\le \norm{\vc q}_\infty\sum_{i=1}^d(|v|,|\partial_{x_i}w|)\\
+&\le \norm{\vc q}_\infty\norm{v}_2\sum_{i=1}^d\norm{\partial_{x_i}w}_2
+\le d\norm{\vc q}_\infty\norm{v}_2\norm{\nabla w}_2\\
+&\le d\norm{\vc q}_\infty\norm{v}_{1,2}\norm{w}_{1,2},
 \end{align*}
 Pro odhad hraničních členů použijeme navíc větu o stopách:
-\[ (\vc v\cdot\vc n v,w)_{\Gamma_n} \le \norm{\vc v\cdot\vc n}_{\infty,\Gamma_n}\norm{v}_{2,\Gamma_n}\norm{w}_{2,\Gamma_n}
-\le C_1^2\norm{\vc v\cdot\vc n}_{\infty,\Gamma_n}\norm{v}_{1,2}\norm{w}_{1,2}, \]
+\[ (\vc q\cdot\vc n v,w)_{\Gamma_n} \le \norm{\vc q\cdot\vc n}_{\infty,\Gamma_n}\norm{v}_{2,\Gamma_n}\norm{w}_{2,\Gamma_n}
+\le C_1^2\norm{\vc q\cdot\vc n}_{\infty,\Gamma_n}\norm{v}_{1,2}\norm{w}_{1,2}, \]
 \begin{align*}
 (\sigma_r v,w)_{\Gamma_r}
 &\le \norm{\sigma_r}_{\infty,\Gamma_r}(|v|,|w|)_{\Gamma_r}
@@ -717,7 +717,7 @@ Pro odhad hraničních členů použijeme navíc větu o stopách:
 \end{align*}
 Zde $C_1=C(\Omega,\Gamma_n)$ a $C_2=C(\Omega,\Gamma_r)$ jsou konstanty z Věty \ref{th:trace}.
 V souhrnu jsme dokázali, že
-\[ a(v,w) \le \left(1+d\norm{\vc v}_\infty+C_1^2\norm{\vc v\cdot\vc n}_{\infty,\Gamma_n}+C_2^2\norm{\sigma_r}_{\infty,\Gamma_r}\right)\norm{v}_{1,2}\norm{w}_{1,2} =: \beta \norm{v}_{1,2}\norm{w}_{1,2}. \]
+\[ a(v,w) \le \left(1+d\norm{\vc q}_\infty+C_1^2\norm{\vc q\cdot\vc n}_{\infty,\Gamma_n}+C_2^2\norm{\sigma_r}_{\infty,\Gamma_r}\right)\norm{v}_{1,2}\norm{w}_{1,2} =: \beta \norm{v}_{1,2}\norm{w}_{1,2}. \]
 Nyní odhadneme formu $l$:
 \begin{align*}
 l(v)=(\sigma_r u_r,v)_{\Gamma_r} & \le \norm{\sigma_r}_{\infty,\Gamma_r}\norm{u_r}_{2,\Gamma_r}\norm{v}_{2,\Gamma_r}\\
@@ -730,19 +730,19 @@ l(v)=(\sigma_r u_r,v)_{\Gamma_r} & \le \norm{\sigma_r}_{\infty,\Gamma_r}\norm{u_
 \begin{veta}
 Nechť jsou splněny následující předpoklady:
 \begin{itemize}
-\item[(i)] $\vc v$ má nulovou divergenci, $\vc v\cdot\vc n\ge 0$ na $\Gamma_n$ a $\vc v\cdot\vc n\le 0$ na $\Gamma_r$;
+\item[(i)] $\vc q$ má nulovou divergenci, $\vc q\cdot\vc n\ge 0$ na $\Gamma_n$ a $\vc q\cdot\vc n\le 0$ na $\Gamma_r$;
 \item[(ii)] existuje konstanta $\underline\sigma_r>0$ taková, že
 \[ \forall\vc x\in\Gamma_r:~\sigma_r(\vc x)\ge\underline\sigma_r\ge 0. \]
 \end{itemize}
 Pak bilineární forma $a$ je eliptická na $H^1(\Omega)$ s konstantou $\alpha=\min\{1,\underline\sigma_r\}/(2C^2)$, kde $C>0$ je konstanta z Věty \ref{th:friedrichs}.
 \end{veta}
 \begin{proof}
-Jelikož $\div\vc v=0$ a $\vc v\cdot\vc n\le 0$ na $\Gamma_r$, platí:
-\[ -(\vc v v,\nabla v) = -(\vc v,\nabla\frac{v^2}2) = -\frac12(\vc v\cdot\vc n v,v)_{\partial\Omega} +(\div\vc v,\frac{v^2}2) \ge -\frac12(\vc v\cdot\vc n v,v)_{\Gamma_n}, \]
+Jelikož $\div\vc q=0$ a $\vc q\cdot\vc n\le 0$ na $\Gamma_r$, platí:
+\[ -(\vc q v,\nabla v) = -(\vc q,\nabla\frac{v^2}2) = -\frac12(\vc q\cdot\vc n v,v)_{\partial\Omega} +(\div\vc q,\frac{v^2}2) \ge -\frac12(\vc q\cdot\vc n v,v)_{\Gamma_n}, \]
 a proto také
 \begin{align*}
-a(v,v) & = \norm{\nabla v}_2^2 - (\vc v v,\nabla v) + (\vc v\cdot\vc n v,v)_{\Gamma_n} + (\sigma_r v,v)_{\Gamma_r}\\
-&\ge \norm{\nabla v}_2^2 + \frac12 (\vc v\cdot\vc n v,v)_{\Gamma_n} + (\sigma_r v,v)_{\Gamma_r}\\
+a(v,v) & = \norm{\nabla v}_2^2 - (\vc q v,\nabla v) + (\vc q\cdot\vc n v,v)_{\Gamma_n} + (\sigma_r v,v)_{\Gamma_r}\\
+&\ge \norm{\nabla v}_2^2 + \frac12 (\vc q\cdot\vc n v,v)_{\Gamma_n} + (\sigma_r v,v)_{\Gamma_r}\\
 &\ge \norm{\nabla v}_2^2 + \underline\sigma_r\norm{v}_{2,\Gamma_r}^2\\
 &\ge \min\{1,\underline\sigma_r\}(\norm{\nabla v}_2^2 + \norm{v}_{2,\Gamma_r}^2).
 \end{align*}
