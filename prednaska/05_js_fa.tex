@@ -532,7 +532,7 @@ a nechť $l$ je omezená lineární forma na $V$, tj.
 \end{itemize}
 Pak existuje právě jedno řešení $u\in V$ variační úlohy \eqref{eq:variational_problem}.
 Navíc platí odhad:
-\[ \norm{u} \le \frac\beta\alpha. \]
+\[ \norm{u} \le \frac\gamma\alpha. \]
 \end{veta}
 
 
@@ -543,45 +543,53 @@ Navíc platí odhad:
 
 Je dána oblast $\Omega\subset\R^d$ a skalární funkce $f$ na $\Omega$ a $u_d$ na $\partial\Omega$.
 Hledáme funkci $u:\overline\Omega\to\R$, která splňuje:
-\[ \begin{aligned}
--\Delta u &= f &&\text{v }\Omega,\\
-u&=u_d && \text{na }\partial\Omega.
-\end{aligned} \]
+\[ 
+\begin{aligned}
+    -\Delta u &= f &&\text{v }\Omega,\\
+    u&=u_d && \text{na }\partial\Omega.
+\end{aligned} 
+\]
 Protože je předepsána Dirichletova podmínka na $\partial\Omega$, prostor, ve kterém budeme hledat slabé řešení, je $V:=H^1_0(\Omega)$.
 Jelikož ale hodnota $u$ na hranici je dána funkcí $u_d$, pak obecně $u\notin H^1_0(\Omega)$.
 Předpokládejme proto, že $u_d$ lze rozšířit na celou oblast $\Omega$ tak, aby $u_d\in H^1(\Omega)$.
 Pak $u-u_d\in H^1_0(\Omega)$.
 Řešení budeme hledat ve tvaru $u=z+u_d\in H^1(\Omega)$, kde $z\in H^1_0(\Omega)$, a
-\[ \forall v\in H^1_0(\Omega):~a(z,v)=l(v), \]
+\[ 
+    \forall v\in H^1_0(\Omega):\ a(z,v)=l(v), 
+\]
 kde
 \begin{equation}\label{eq:def_a_nonhom_dir}
-a(z,v) := (\grad z, \grad v),
+    a(z,v) := (\grad z, \grad v)_{L^2(\Omega)},
 \end{equation}
 \begin{equation}\label{eq:def_l_nonhom_dir}
-l(v) := (f,v) - (\nabla u_d,\nabla v).
+    l(v) := (f,v)_{L^2(\Omega)} - (\nabla u_d,\nabla v)_{L^2(\Omega)}.
 \end{equation}
 % Ukážeme, že formy $a$ a $l$ mají konečnou hodnotu pro každé $u,\varphi\in H^1(\Omega)$.
 \begin{veta}
-Pro bilineární formu $a$ definovanou v \eqref{eq:def_a_nonhom_dir} platí:
-\[ \forall v,w\in H^1(\Omega):~a(v,w) \le \norm{v}_{1,2}\norm{w}_{1,2}. \]
-Je-li navíc $f\in L^2(\Omega)$, pak existuje $\gamma:=\norm{f}_2+\norm{\nabla u_d}_2$ takové, že
-\[ \forall v\in H^1(\Omega):~l(v) \le \gamma\norm{v}_{1,2}, \]
-kde lineární forma $l$ je definována v \eqref{eq:def_l_nonhom_dir}.
+    Pro bilineární formu $a$ definovanou v \eqref{eq:def_a_nonhom_dir} platí:
+    \[ \forall v,w\in H^1(\Omega):~a(v,w) \le \norm{v}_{1,2}\norm{w}_{1,2}. \]
+    Je-li navíc $f\in L^2(\Omega)$, pak existuje $\gamma:=\norm{f}_2+\norm{\nabla u_d}_2$ takové, že
+    \[ \forall v\in H^1(\Omega):~l(v) \le \gamma\norm{v}_{1,2}, \]
+    kde lineární forma $l$ je definována v \eqref{eq:def_l_nonhom_dir}.
 \end{veta}
 \begin{proof}
-Omezenost $a$ plyne přímo z Cauchyovy-Schwarzovy nerovnosti a faktu, že $\norm{\nabla v}_2\le\norm{v}_{1,2}$.
-Dále
-\[ l(v)\le \norm{f}_2\norm{v}_2 + \norm{\nabla u_d}_2\norm{\nabla v}_2
-\le (\norm{f}_2+\norm{\nabla u_d}_2)\norm{v}_{1,2}. \]
+    Omezenost $a$ plyne přímo z Cauchyovy-Schwarzovy nerovnosti a faktu, že $\norm{\nabla v}_2\le\norm{v}_{1,2}$.
+    Dále
+    \[ l(v)\le \norm{f}_2\norm{v}_2 + \norm{\nabla u_d}_2\norm{\nabla v}_2
+    \le (\norm{f}_2+\norm{\nabla u_d}_2)\norm{v}_{1,2}. \]
 \end{proof}
 
 
 \begin{veta}
-Bilineární forma $a$ je eliptická na $H^1_0(\Omega)$ s konstantou $\alpha=1/C^2$, kde $C=C(\Omega,\partial\Omega)$ je konstanta z Friedrichsovy nerovnosti \eqref{eq:friedrichs_H10}.
+    Bilineární forma $a$ je eliptická na $H^1_0(\Omega)$ s konstantou $\alpha=1/C^2$, 
+    kde $C=C(\Omega,\partial\Omega)$ je konstanta z Friedrichsovy nerovnosti \eqref{eq:friedrichs_H10}.
 \end{veta}
 \begin{proof}
-Je-li $v\in H^1_0(\Omega)$, pak
-\[ a(v,v) = (\nabla v,\nabla v) = \norm{\nabla v}_2^2 \ge \frac1{C^2}\norm{v}_{1,2}^2. \]
+    Je-li $v\in H^1_0(\Omega)$, pak
+    \[ 
+        a(v,v) = (\nabla v,\nabla v)_{L^2(\Omega)} 
+               = \norm{\nabla v}_2^2 \ge \frac1{C^2}\norm{v}_{1,2}^2. 
+    \]
 \end{proof}
 
 
@@ -590,58 +598,104 @@ Je-li $v\in H^1_0(\Omega)$, pak
 
 
 \subsubsection{Anizotropní difúze}
-Je dána oblast $\Omega\subset\R^d$ s hranicí $\partial\Omega=\overline\Gamma_d\cup\overline\Gamma_n$, maticová funkce $\tn K:\Omega\to\R^{d\times d}$ a skalární funkce $f$, $\sigma_f$, $u_f$ na $\Omega$ a $q$ na $\Gamma_n$.
-Hledáme funkci $u:\overline\Omega\to\R$, která splňuje:
-\[ \begin{aligned}
--\div(\tn K\grad u) &= f + \sigma_f(u_f - u) &&\text{v }\Omega,\\
-u&=0 && \text{na }\Gamma_d,\\
--\tn K \grad u \cdot \vc n &= q &&\text{na }\Gamma_n.
-\end{aligned} \]
-Aby byla splněna Dirichletova podmínka na $\Gamma_d$ a formy $a$, $l$ měly konečnou hodnotu, budeme hledat slabé řešení v prostoru $V:=H^1_{\Gamma_d}(\Omega)$:
-\[ \mbox{Najdi }u\in H^1_{\Gamma_d}(\Omega):~\forall v\in H^1_{\Gamma_d}(\Omega):~a(u,v)=l(v), \]
-kde
+Uvažujme úlohu vedení tepla ve čtvercové desce, která je z jedné strany zahřívána infračervenými lampami 
+tepelným tokem $f$ a z druhé strany předehřívána ocelovou matricí s tepelnou vodivostí $\sigma$, která je dále 
+vyhřívána soustavou kanálků s vodou o teplotě $u_f$. Na dvou stranách čtverce je tepelná izolace, na druhých dvou stranách je 
+kostantní teplota $u=0$ (toto je nereálné, ale je to jen příklad). Deska je kompozitní materiál složený z polymerové pryskyřice 
+(vodivost 1W/mK) a uhlíkových vláken (vodivost 1000W/mK) s preferovaným směrem, tepelná vodivost desky je proto anisotropní.
+
+Formulujme nyní úlohu abstraktněji.
+
+Mějme oblast $\Omega\subset\R^d$ (například čtverec $d=2$) s hranicí 
+$\partial\Omega=\overline\Gamma_d\cup\overline\Gamma_n$, tedy s Dirichletovskou a Neumannovskou částí hranice.
+Na této oblasti hledáme teplotu $u:\overline\Omega\to\R$, která je řešením stacionární rovnice vední tepla:
+\begin{align}
+    -\div(\tn K\grad u) &= f + \sigma(u_f - u) &&\text{v }\Omega,\\
+    u&=0 && \text{na }\Gamma_d,\\
+    -\tn K \grad u \cdot \vc n &= q &&\text{na }\Gamma_n.
+\end{align} 
+Zde $\tn K:\Omega\to\R^{d\times d}$ je maticová funkce pro tenzor tepelné vodivosti
+a $f$, $\sigma$, $u_f$ jsou skalární funkce na $\Omega$  a $q$ skalární funkce na $\Gamma_n$.
+
+Aby byla splněna Dirichletova podmínka na $\Gamma_d$ a formy $a$, $l$ měly konečnou hodnotu, 
+budeme hledat slabé řešení v prostoru 
+\[
+    V:=H^1_{\Gamma_d}(\Omega) = \{ \phi \in H^1(\Omega),\ \phi = 0\text{ na }\Gamma_d\} 
+\]
+Nyní převedeme úlohu vedení tepla na abstraktní variační úlohu:
+\[ 
+    \mbox{Najdi }u\in H^1_{\Gamma_d}(\Omega):~\forall v\in H^1_{\Gamma_d}(\Omega):~a(u,v)=l(v), 
+\]
+kde formy $a(\cdot, \cdot)$ a $l(\cdot)$ mají tvar:
 \begin{equation}\label{eq:def_a_diffusion}
-a(u,v) := (\tn K\grad u, \grad v) + (\sigma_f u, v),
+    a(u,v) := (\tn K\grad u, \grad v)_{L^2(\Omega)} + (\sigma u, v)_{L^2(\Omega)},
 \end{equation}
 \begin{equation}\label{eq:def_l_diffusion}
-l(v) := (f + \sigma_f u_f,v) - ( q, v)_{\Gamma_n}.
+    l(v) := (f + \sigma u_f,v)_{L^2(\Omega)} - ( q, v)_{L^2(\Gamma_n)}.
 \end{equation}
-% Ukážeme, že formy $a$ a $l$ mají konečnou hodnotu pro každé $u,\varphi\in H^1(\Omega)$.
+Pro použití Lax-Milgramova lemmatu potřebujeme ověřit omezenost forem $a$ a $l$. To ovšem platí 
+za nějakých předpokladů na další parametry úlohy. Konkrétně dokážeme následujícíc větu.
 \begin{veta}
-Nechť $\tn K\in L^\infty(\Omega;~\R^{d\times d})$ a $\sigma_f\in L^\infty(\Omega)$. Pak existuje konstanta $\beta:=\beta(\norm{\tn K}_\infty,\norm{\sigma_f}_\infty)$ taková, že
-\[ \forall u,v\in H^1(\Omega):~a(u,v) \le \beta \norm{u}_{1,2}\norm{v}_{1,2}, \]
-kde bilineární forma $a$ je definována v \eqref{eq:def_a_diffusion}.
-Je-li navíc $f,u_f\in L^2(\Omega)$ a $q\in L^2(\Gamma_n)$, pak existuje $\gamma:=\gamma(\norm{f}_2,\norm{\sigma_f}_\infty,\norm{u_f}_2,\norm{q}_{2,\Gamma_n})$ takové, že
-\[ \forall v\in H^1(\Omega):~l(v) \le \gamma\norm{v}_{1,2}, \]
-kde lineární forma $l$ je definována v \eqref{eq:def_l_diffusion}.
+    Nechť $\tn K\in L^\infty(\Omega;~\R^{d\times d})$ a $\sigma\in L^\infty(\Omega)$. 
+    Pak existuje konstanta $\beta:=\beta(\norm{\tn K}_\infty,\norm{\sigma}_\infty)$ taková, že
+    \[ 
+        \forall u,v\in H^1(\Omega):~a(u,v) \le \beta \norm{u}_{1,2}\norm{v}_{1,2}, 
+    \]
+    kde bilineární forma $a$ je definována v \eqref{eq:def_a_diffusion}.
+    Je-li navíc $f,u_f\in L^2(\Omega)$ a $q\in L^2(\Gamma_n)$, pak existuje 
+    $\gamma:=\gamma(\norm{f}_2,\norm{\sigma}_\infty,\norm{u_f}_2,\norm{q}_{2,\Gamma_n})$ takové, že
+    \[ 
+        \forall v\in H^1(\Omega):~l(v) \le \gamma\norm{v}_{1,2}, 
+    \]
+    kde lineární forma $l$ je definována v \eqref{eq:def_l_diffusion}.
 \end{veta}
 \begin{proof}
-Nejprve odhadneme postupně všechny výrazy v $a$.
-S využitím Cauchyovy-Schwarzovy nerovnosti a faktu, že $\norm{w_i}_2\le\norm{\vc w}_2$ dostaneme:
-\begin{align*}
-(\tn K\nabla v,\nabla w)
-&\le \sum_{i,j=1}^d\int_\Omega|k_{ij}(x)||\partial_{x_j}v(x)||\partial_{x_i}w(x)|~dx\\
-&\le \norm{\tn K}_\infty\sum_{i,j=1}^d(|\partial_{x_j}v|,|\partial_{x_i}w|)\\
-&\le \norm{\tn K}_\infty\left(\sum_{j=1}^d\norm{\partial_{x_j}v}_2\right)\left(\sum_{i=1}^d\norm{\partial_{x_i}w}_2\right)\\
-&\le d^2\norm{\tn K}_\infty \norm{\nabla v}_2 \norm{\nabla w}_2\\
-&\le d^2\norm{\tn K}_\infty\norm{v}_{1,2}\norm{w}_{1,2},
-\end{align*}
-Obdobně lze odhadnout
-\[ (\sigma_f v,w)
-\le \norm{\sigma_f}_\infty(|v|,|w|)
-\le \norm{\sigma_f}_\infty\norm{v}_2\norm{w}_2
-\le \norm{\sigma_f}_\infty\norm{v}_{1,2}\norm{w}_{1,2}. \]
-V souhrnu jsme dokázali, že
-\[ a(v,w) \le \left(d^2\norm{\tn K}_\infty+\norm{\sigma_f}_\infty\right)\norm{v}_{1,2}\norm{w}_{1,2} =: \beta \norm{v}_{1,2}\norm{w}_{1,2}. \]
-Nyní odhadneme výrazy ve formě $l$:
-\[ (f,v) \le \norm{f}_2\norm{v}_2 \le \norm{f}_2\norm{v}_{1,2}, \]
-\[ (\sigma_f u_f,v) \le \norm{\sigma_f}_\infty\norm{u_f}_2\norm{v}_2 \le \norm{\sigma_f}_\infty\norm{u_f}_2\norm{v}_{1,2}, \]
-\[ (q,v)_{\Gamma_n} \le \norm{q}_{2,\Gamma_n}\norm{v}_{2,\Gamma_n}
-\le \norm{q}_{2,\Gamma_n}\norm{v}_{2,\partial\Omega}
-\le C\norm{q}_{2,\Gamma_n}\norm{v}_{1,2}, \]
-kde $C$ je konstanta z věty o stopách.
-Platí tedy
-\[ l(v) \le \left(\norm{f}_2+\norm{\sigma_f}_\infty\norm{u_f}_2+C\norm{q}_{2,\Gamma_n}\right)\norm{v}_{1,2} =:\gamma\norm{v}_{1,2}. \]
+    Nejprve odhadneme postupně všechny výrazy v $a$.
+    S využitím Cauchyovy-Schwarzovy nerovnosti a faktu, že $\norm{w_i}_2\le\norm{\vc w}_2$ dostaneme:
+    \begin{align*}    
+        &&(\tn K\nabla v,\nabla w)
+            & = \sum_{i,j=1}^d\int_\Omega k_{ij}(x)\partial_{x_j}v(x)\partial_{x_i}w(x)~dx\\
+        &(\text{$ab\le |a||b|$})\qquad&
+            &\le \sum_{i,j=1}^d\int_\Omega |k_{ij}||\partial_{x_j}v||\partial_{x_i}w|~dx\\
+        &(\text{předpoklad o $\tn K$)})\qquad&
+            &\le \norm{\tn K}_\infty \sum_{i,j=1}^d ( |\partial_{x_j}v|, |\partial_{x_i}w| )_{L^2(\Omega)}\\
+        &(\text{Cauchy-Schwarzova nerovnost})\qquad&
+            &\le \norm{\tn K}_\infty\left(\sum_{j=1}^d\norm{\partial_{x_j}v}_2\right)\left(\sum_{i=1}^d\norm{\partial_{x_i}w}_2\right)\\
+        &(\text{$\norm{v_i} \le \norm{\vc v}$})\qquad&
+            &\le \norm{\tn K}_\infty \big( d\norm{\nabla v}_2\big) \big( d\norm{\nabla w}_2\big)\\
+        &(\text{definice $\norm{\cdot}_{H^1(\Omega)}$})\qquad&
+            &\le d^2\norm{\tn K}_\infty\norm{v}_{H^1(\Omega)} \norm{w}_{H^1(\Omega)},
+    \end{align*}
+    
+    
+    Obdobně lze odhadnout
+    \[ 
+        (\sigma v,w)
+        \le \norm{\sigma}_\infty(|v|,|w|)
+        \le \norm{\sigma}_\infty\norm{v}_2\norm{w}_2
+        \le \norm{\sigma}_\infty\norm{v}_{1,2}\norm{w}_{1,2}. 
+    \]
+    V souhrnu jsme dokázali, že
+    \[ 
+        a(v,w) \le \left(d\norm{\tn K}_\infty+\norm{\sigma}_\infty\right)\norm{v}_{1,2}\norm{w}_{1,2} =: \beta \norm{v}_{1,2}\norm{w}_{1,2}. 
+    \]
+    Nyní odhadneme výrazy ve formě $l$:
+    \[ 
+        (f,v) \le \norm{f}_2\norm{v}_2 \le \norm{f}_2\norm{v}_{1,2}, 
+    \]
+    \[ 
+        (\sigma u_f,v) \le \norm{\sigma}_\infty\norm{u_f}_2\norm{v}_2 \le \norm{\sigma}_\infty\norm{u_f}_2\norm{v}_{1,2}, 
+    \]
+    \[ 
+        (q,v)_{\Gamma_n} \le \norm{q}_{2,\Gamma_n}\norm{v}_{2,\Gamma_n}
+        \le \norm{q}_{2,\Gamma_n}\norm{v}_{2,\partial\Omega}
+        \le C\norm{q}_{2,\Gamma_n}\norm{v}_{1,2}, 
+    \]
+    kde $C$ je konstanta z věty o stopách.
+    Platí tedy
+    \[ 
+        l(v) \le \left(\norm{f}_2+\norm{\sigma}_\infty\norm{u_f}_2+C\norm{q}_{2,\Gamma_n}\right)\norm{v}_{1,2} =:\gamma\norm{v}_{1,2}. 
+    \]
 \end{proof}
 
 
@@ -650,14 +704,14 @@ Nechť jsou splněny následující předpoklady:
 \begin{itemize}
 \item[(i)] $\tn K$ je stejnoměrně pozitivně definitní na $\Omega$, tj.
 \[ \exists \underline k>0~\forall \vc x\in\Omega~\forall\vc q\in\R^d:~\tn K(\vc x)\vc q\cdot\vc q\ge\underline k\norm{\vc q}^2; \]
-\item[(ii)] $\sigma_f$ je nezáporná funkce, tj.
-\[ \forall\vc x\in\Omega:~\sigma_f(\vc x)\ge 0. \]
+\item[(ii)] $\sigma$ je nezáporná funkce, tj.
+\[ \forall\vc x\in\Omega:~\sigma(\vc x)\ge 0. \]
 \end{itemize}
 Pak bilineární forma $a$ je eliptická na $H^1_{\Gamma_d}(\Omega)$ s konstantou $\alpha=\underline k/{C^2}$, kde $C=C(\Omega,\Gamma_d)>0$ je konstanta z \eqref{eq:friedrichs_H1gamma}.
 \end{veta}
 \begin{proof}
-\[ a(v,v) = (\tn K\nabla v,\nabla v) + (\sigma_f v,v)
-\ge \underline k\norm{\nabla v}_2^2 + \norm{\sqrt{\sigma_f}v}_2^2 \ge \underline k\norm{\nabla v}_2^2. \] 
+\[ a(v,v) = (\tn K\nabla v,\nabla v) + (\sigma v,v)
+\ge \underline k\norm{\nabla v}_2^2 + \norm{\sqrt{\sigma}v}_2^2 \ge \underline k\norm{\nabla v}_2^2. \] 
 Díky Friedrichsově nerovnosti platí:
 \[ a(v,v) \ge \underline k\norm{\nabla v}_2^2 \ge \frac{\underline k}{C^2}\norm{v}_{1,2}^2. \]
 \end{proof}
@@ -684,11 +738,20 @@ l(v) := (\sigma_r u_r, v)_{\Gamma_r}.
 \end{equation}
 % 
 \begin{veta}
-Nechť $\vc q\in L^\infty(\Omega;\R^d)$, $\vc q\cdot\vc n\in L^\infty(\Gamma_n)$ a $\sigma_r\in L^\infty(\Gamma_r)$. Pak existuje konstanta $\beta:=\beta(\norm{\vc q}_\infty,\norm{\vc q\cdot\vc n}_{\infty,\Gamma_n},\norm{\sigma_r}_{\infty,\Gamma_r})$ taková, že
-\[ \forall v,w\in H^1(\Omega):~a(v,w) \le \beta \norm{v}_{1,2}\norm{w}_{1,2}, \]
+Nechť $\vc q\in L^\infty(\Omega;\R^d)$, $\vc q\cdot\vc n\in L^\infty(\Gamma_n)$ a $\sigma_r\in L^\infty(\Gamma_r)$. 
+Pak existuje konstanta 
+\[
+    \beta:=\beta(\norm{\vc q}_\infty,\norm{\vc q\cdot\vc n}_{\infty,\Gamma_n},\norm{\sigma_r}_{\infty,\Gamma_r})
+\]
+taková, že
+\[ 
+    \forall v,w\in H^1(\Omega):~a(v,w) \le \beta \norm{v}_{1,2}\norm{w}_{1,2}, 
+\]
 kde bilineární forma $a$ je definována v \eqref{eq:def_a_ad}.
 Je-li navíc $u_r\in L^2(\Gamma_r)$, pak existuje $\gamma:=\gamma(\norm{\sigma_r}_{\infty,\Gamma_r},\norm{u_r}_{2,\Gamma_r})$ takové, že
-\[ \forall v\in H^1(\Omega):~l(v) \le \gamma\norm{v}_{1,2}, \]
+\[ 
+    \forall v\in H^1(\Omega):~l(v) \le \gamma\norm{v}_{1,2}, 
+\]
 kde lineární forma $l$ je definována v \eqref{eq:def_l_ad}.
 \end{veta}
 \begin{proof}
