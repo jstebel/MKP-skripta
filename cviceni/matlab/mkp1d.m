@@ -2,8 +2,9 @@ function [x,u,A,b] = mkp1d(u0,u1,n)
 % Vypocet pruhybu nosniku (1D interval (0,1))
 % metodou konecnych prvku
 %
-% k  = funkce definujici tuhost nosniku
-% f  = pusobici sila (zatizeni)
+% -u'' = -1 v (0,1)
+%  u(0) = u0, u(1) = u1
+%
 % u0 = poloha leveho konce nosniku
 % u1 = poloha praveho konce nosniku
 % n  = pocet delicich uzlu intervalu
