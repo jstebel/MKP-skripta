@@ -18,7 +18,11 @@
 %       - měnit sigma (sigma = 0.01)
 %       - nastavit výrazně větší epsilon (epsilon=100)
 %       - měnit počet elementů (opravte výpočet jakobianu)
-
+%       - nastavte epsilon v závislosti na n
+%
+%   - aplikace nenulové Dirichletovy okrajové podmínky
+%   - přepis na sestavení A a b cyklem přes elementy
+%   - 
 
 %%%%% Vypocet %%%%%
 
