@@ -21,13 +21,21 @@
 %\usepackage{mathbbol}
 %\usepackage{bbm}
 % ***************************************** THEOREMS
-\newtheorem{thm}{Theorem}[section]
-\newtheorem{proposition}[thm]{Proposition}
-\newtheorem{definition}[thm]{Definition}
-\newtheorem{remark}[thm]{Remark}
-\newtheorem{lemma}[thm]{Lemma}
-\newtheorem{corollary}[thm]{Corollary}
+%\newtheorem{thm}{Theorem}[section]
+%\newtheorem{proposition}[thm]{Proposition}
+%\newtheorem{definition}[thm]{Definition}
+%\newtheorem{remark}[thm]{Remark}
+%\newtheorem{corollary}[thm]{Corollary}
+%\numberwithin{equation}{section}
+
+\newtheorem{veta}{Věta}[section]
+\newtheorem{theorem}[veta]{Věta}
+\newtheorem{lemma}[veta]{Lemma}
+\newtheorem{df}[veta]{Definice}
+\newtheorem{ex}[veta]{Příklad}
 \numberwithin{equation}{section}
+
+
 % ***************************************** SYMBOLS
 \def\div{\operatorname{div}}
 \def\rot{\operatorname{rot}}
@@ -63,6 +71,7 @@
 %\def\Implies{\Longrightarrow}
 %\def\Equiv{\Longleftrightarrow}
 % ****************************************** GENERAL MATH NOTATION
+\def\R{{\rm\bf R}}
 \def\Real{{\rm\bf R}}
 \def\Rd{{{\rm\bf R}^{\rm 3}}}
 \def\RN{{{\rm\bf R}^N}}
@@ -582,7 +591,266 @@ Je některá z bilineárních forem skalárním součinem?
 \section{Lax-Milgramovo lemma, vlastnosti forem}
 ... viz. příklady z kapitoly 12 textů k přednášce.
 
+% \subsubsection{Anizotropní difúze}
+% Uvažujme úlohu vedení tepla ve čtvercové desce, která je z jedné strany zahřívána infračervenými lampami 
+% tepelným tokem $f$ a z druhé strany předehřívána ocelovou matricí s tepelnou vodivostí $\sigma$, která je dále 
+% vyhřívána soustavou kanálků s vodou o teplotě $u_f$. Na dvou stranách čtverce je tepelná izolace, na druhých dvou stranách je 
+% kostantní teplota $u=0$ (toto je nereálné, ale je to jen příklad). Deska je kompozitní materiál složený z polymerové pryskyřice 
+% (vodivost 1W/mK) a uhlíkových vláken (vodivost 1000W/mK) s preferovaným směrem, tepelná vodivost desky je proto anisotropní.
+% 
+% Formulujme nyní úlohu abstraktněji.
+% 
+% Mějme oblast $\Omega\subset\R^d$ (například čtverec $d=2$) s hranicí 
+% $\partial\Omega=\overline\Gamma_d\cup\overline\Gamma_n$, tedy s Dirichletovskou a Neumannovskou částí hranice.
+% Na této oblasti hledáme teplotu $u:\overline\Omega\to\R$, která je řešením stacionární rovnice vední tepla:
+% \begin{align}
+%     -\div(\tn K\grad u) &= f + \sigma(u_f - u) &&\text{v }\Omega,\\
+%     u&=0 && \text{na }\Gamma_d,\\
+%     -\tn K \grad u \cdot \vc n &= q &&\text{na }\Gamma_n.
+% \end{align} 
+% Zde $\tn K:\Omega\to\R^{d\times d}$ je maticová funkce pro tenzor tepelné vodivosti
+% a $f$, $\sigma$, $u_f$ jsou skalární funkce na $\Omega$  a $q$ skalární funkce na $\Gamma_n$.
+% 
+% Aby byla splněna Dirichletova podmínka na $\Gamma_d$ a formy $a$, $l$ měly konečnou hodnotu, 
+% budeme hledat slabé řešení v prostoru 
+% \[
+%     V:=H^1_{\Gamma_d}(\Omega) = \{ \phi \in H^1(\Omega),\ \phi = 0\text{ na }\Gamma_d\} 
+% \]
+% Nyní převedeme úlohu vedení tepla na abstraktní variační úlohu:
+% \[ 
+%     \mbox{Najdi }u\in H^1_{\Gamma_d}(\Omega):~\forall v\in H^1_{\Gamma_d}(\Omega):~a(u,v)=l(v), 
+% \]
+% kde formy $a(\cdot, \cdot)$ a $l(\cdot)$ mají tvar:
+% \begin{equation}\label{eq:def_a_diffusion}
+%     a(u,v) := (\tn K\grad u, \grad v)_{L^2(\Omega)} + (\sigma u, v)_{L^2(\Omega)},
+% \end{equation}
+% \begin{equation}\label{eq:def_l_diffusion}
+%     l(v) := (f + \sigma u_f,v)_{L^2(\Omega)} - ( q, v)_{L^2(\Gamma_n)}.
+% \end{equation}
+% Pro použití Lax-Milgramova lemmatu potřebujeme ověřit omezenost forem $a$ a $l$. To ovšem platí 
+% za nějakých předpokladů na další parametry úlohy. Konkrétně dokážeme následujícíc větu.
+% \begin{veta}
+%     Nechť $\tn K\in L^\infty(\Omega;~\R^{d\times d})$ a $\sigma\in L^\infty(\Omega)$. 
+%     Pak existuje konstanta $\beta:=\beta(\norm{\tn K}_\infty,\norm{\sigma}_\infty)$ taková, že
+%     \[ 
+%         \forall u,v\in H^1(\Omega):~a(u,v) \le \beta \norm{u}_{1,2}\norm{v}_{1,2}, 
+%     \]
+%     kde bilineární forma $a$ je definována v \eqref{eq:def_a_diffusion}.
+%     Je-li navíc $f,u_f\in L^2(\Omega)$ a $q\in L^2(\Gamma_n)$, pak existuje 
+%     $\gamma:=\gamma(\norm{f}_2,\norm{\sigma}_\infty,\norm{u_f}_2,\norm{q}_{2,\Gamma_n})$ takové, že
+%     \[ 
+%         \forall v\in H^1(\Omega):~l(v) \le \gamma\norm{v}_{1,2}, 
+%     \]
+%     kde lineární forma $l$ je definována v \eqref{eq:def_l_diffusion}.
+% \end{veta}
+% \begin{proof}
+%     Nejprve odhadneme postupně všechny výrazy v $a$.
+%     S využitím Cauchyovy-Schwarzovy nerovnosti a faktu, že $\norm{w_i}_2\le\norm{\vc w}_2$ dostaneme:
+%     \begin{align*}    
+%         &&(\tn K\nabla v,\nabla w)
+%             & = \sum_{i,j=1}^d\int_\Omega k_{ij}(x)\partial_{x_j}v(x)\partial_{x_i}w(x)~dx\\
+%         &(\text{$ab\le |a||b|$})\qquad&
+%             &\le \sum_{i,j=1}^d\int_\Omega |k_{ij}||\partial_{x_j}v||\partial_{x_i}w|~dx\\
+%         &(\text{předpoklad o $\tn K$)})\qquad&
+%             &\le \norm{\tn K}_\infty \sum_{i,j=1}^d ( |\partial_{x_j}v|, |\partial_{x_i}w| )_{L^2(\Omega)}\\
+%         &(\text{Cauchy-Schwarzova nerovnost})\qquad&
+%             &\le \norm{\tn K}_\infty\left(\sum_{j=1}^d\norm{\partial_{x_j}v}_2\right)\left(\sum_{i=1}^d\norm{\partial_{x_i}w}_2\right)\\
+%         &(\text{$\norm{v_i} \le \norm{\vc v}$})\qquad&
+%             &\le \norm{\tn K}_\infty \big( d\norm{\nabla v}_2\big) \big( d\norm{\nabla w}_2\big)\\
+%         &(\text{definice $\norm{\cdot}_{H^1(\Omega)}$})\qquad&
+%             &\le d^2\norm{\tn K}_\infty\norm{v}_{H^1(\Omega)} \norm{w}_{H^1(\Omega)},
+%     \end{align*}
+%     
+%     
+%     Obdobně lze odhadnout
+%     \[ 
+%         (\sigma v,w)
+%         \le \norm{\sigma}_\infty(|v|,|w|)
+%         \le \norm{\sigma}_\infty\norm{v}_2\norm{w}_2
+%         \le \norm{\sigma}_\infty\norm{v}_{1,2}\norm{w}_{1,2}. 
+%     \]
+%     V souhrnu jsme dokázali, že
+%     \[ 
+%         a(v,w) \le \left(d\norm{\tn K}_\infty+\norm{\sigma}_\infty\right)\norm{v}_{1,2}\norm{w}_{1,2} =: \beta \norm{v}_{1,2}\norm{w}_{1,2}. 
+%     \]
+%     Nyní odhadneme výrazy ve formě $l$:
+%     \[ 
+%         (f,v) \le \norm{f}_2\norm{v}_2 \le \norm{f}_2\norm{v}_{1,2}, 
+%     \]
+%     \[ 
+%         (\sigma u_f,v) \le \norm{\sigma}_\infty\norm{u_f}_2\norm{v}_2 \le \norm{\sigma}_\infty\norm{u_f}_2\norm{v}_{1,2}, 
+%     \]
+%     \[ 
+%         (q,v)_{\Gamma_n} \le \norm{q}_{2,\Gamma_n}\norm{v}_{2,\Gamma_n}
+%         \le \norm{q}_{2,\Gamma_n}\norm{v}_{2,\partial\Omega}
+%         \le C\norm{q}_{2,\Gamma_n}\norm{v}_{1,2}, 
+%     \]
+%     kde $C$ je konstanta z věty o stopách.
+%     Platí tedy
+%     \[ 
+%         l(v) \le \left(\norm{f}_2+\norm{\sigma}_\infty\norm{u_f}_2+C\norm{q}_{2,\Gamma_n}\right)\norm{v}_{1,2} =:\gamma\norm{v}_{1,2}. 
+%     \]
+% \end{proof}
+% 
+% 
+% \begin{veta}
+% Nechť jsou splněny následující předpoklady:
+% \begin{itemize}
+% \item[(i)] $\tn K$ je stejnoměrně pozitivně definitní na $\Omega$, tj.
+% \[ \exists \underline k>0~\forall \vc x\in\Omega~\forall\vc q\in\R^d:~\tn K(\vc x)\vc q\cdot\vc q\ge\underline k\norm{\vc q}^2; \]
+% \item[(ii)] $\sigma$ je nezáporná funkce, tj.
+% \[ \forall\vc x\in\Omega:~\sigma(\vc x)\ge 0. \]
+% \end{itemize}
+% Pak bilineární forma $a$ je eliptická na $H^1_{\Gamma_d}(\Omega)$ s konstantou $\alpha=\underline k/{C^2}$, kde $C=C(\Omega,\Gamma_d)>0$ je konstanta z \eqref{eq:friedrichs_H1gamma}.
+% \end{veta}
+% \begin{proof}
+% \[ a(v,v) = (\tn K\nabla v,\nabla v) + (\sigma v,v)
+% \ge \underline k\norm{\nabla v}_2^2 + \norm{\sqrt{\sigma}v}_2^2 \ge \underline k\norm{\nabla v}_2^2. \] 
+% Díky Friedrichsově nerovnosti platí:
+% \[ a(v,v) \ge \underline k\norm{\nabla v}_2^2 \ge \frac{\underline k}{C^2}\norm{v}_{1,2}^2. \]
+% \end{proof}
 
+\pagebreak
+\section{Implementace Galerkinovy metody pro 1d prvky}
+Chceme řešit rovnici vedení tepla na $\Omega = (0,L)$, $\Gamma_d$ je v $0$, $\Gamma_n$ je v $L$.
+\begin{align}
+    -\div(\tn K\grad u) &= \sigma(u_f - u) &&\text{v }\Omega,\\
+    u&=0 && \text{v bodě }0,\\
+    -\tn K \grad u \cdot \vc n &= q &&\text{v bodě }L.
+\end{align} 
+Jelikož aplikace Dirichletovy podmínky je v MKP trochu komplikovanější, aproximujeme pro začátek tuto podmínku pomocí Robinovy podmínky:
+\[
+    -\tn K \grad u \cdot \vc n = (u_d - u)/\epsilon\qquad \text{v bodě }0,
+\]
+kde $\epsilon$ je dostatečně malé kladné číslo.
+
+Abstraktní variační úloha:
+\[ 
+    \mbox{Najdi }u\in H^1_{\Gamma_d}(\Omega):~\forall v\in H^1(\Omega):~a(u,v)=b(v), 
+\]
+kde formy $a(\cdot, \cdot)$ a $b(\cdot)$ mají tvar:
+\begin{equation}\label{eq:def_a_diffusion}
+    a(u,v) := ( Ku',  v')_{L^2(\Omega)} + (\sigma u, v)_{L^2(\Omega)} + u(0)v(0)/\epsilon,
+\end{equation}
+\begin{equation}\label{eq:def_l_diffusion}
+    b(v) := (\sigma u_f,v)_{L^2(\Omega)} - qv(L).
+\end{equation}
+
+Nyní předpokládejme konečný podprostor $\tilde V \subset H^1(\Omega)$ s bází $\{v_i,\ i\in I\}$. Aplikujte na úlohu Galerkinovu metodu
+a odvoďte předpis pro matici a pravou stranu. Diskrétní řešení uvažujeme ve tvaru:
+\[
+    \tilde u(x) = \sum_{j\in I}  u_j v_j(x)
+\]
+Diskrétní podobu variační úlohy dostaneme dosazením $\tilde u(x)$ a testováním $v_i(x)$:
+\[
+    a(\tilde u,v_i) = \sum_{j\in I} a(v_i, v_j) u_j =  b(v_i)
+\]
+Odtud dostaneme prvky matice a pravé strany Zde a dále uvažujeme konstantní data $K$, $\sigma$, $u_f$.
+\begin{equation}
+    a_{ij} = a(v_i, v_j) = K \int_0^L v'_i(x) v'_j(x) \d x+ \sigma \int_0^1 v_i(x) v_j(x) \d x + v_i(0)v_j(0)/\epsilon
+\end{equation} 
+\begin{equation}
+    b_i = b(v_i) = \sigma u_f \int_0^L  v_i(x) \d x - qv_i(L).
+\end{equation}
+Pro výpočet integrálů a sestavení soustavy již potžebujeme zvolit konkrétní konečné prvky. V našem případě bude 
+prostor $\tilde V$ tvořen bázovými funkcemi lineárních konečných prvků. Inteval $(0,L)$ rozdělíme pomocí bodů $x_1$,\dots, $x_{n+1}$
+na $n$ podintervalů (elementů) $e_i = (x_i, x_{i+1})$. Bázové funkce jsou po částech lineární na elementech, 
+funkce  $v_i$ je nenulová pouze na elementech $e_{i-1}$ a $e_{i}$. Speciálně je nutno uvažovat krajní funkce $v_1$ a $v_{n+1}$,
+které jsou nenulové pouze na $e_1$, resp. $e_n$. Nyní můžeme integraci rozdělit na jednotlivé elementy. 
+Postup si ukážeme pouze pro druhý integrál v první rovnici:
+\[
+    a_{i,j}^\sigma = \int_0^L v_i(x)v_j(x) = \int_{e_{i-1}} v_i(x)v_j(x) + \int_{e_i} v_i(x)v_j(x), \text{ pro }j= i-1, i, i+1 
+\]
+Dále provedeme na každém elementu $e=(y,z)$ lineární substituci $x = (z-y)t + y$, $\d x = \abs{e}\d t$, kde $\abs{e} = z-y$ je velikost elementu.
+Substituce převede integrály na různých elementech na integrály přes interval $(0,1)$ 
+a dostaneme bázové funkce dané pomocí jednoduchých lineárních funkcí $\phi_1(t)=t$ a $\phi_2(t)=(1-t)$:
+\[
+    a_{i,i}^\sigma = \abs{e_{i-1}}\int_0^1 \phi_1(t) \phi_1(t) + \abs{e_i} \int_0^1 \phi_2(t) \phi_2(t)   
+\]
+\[
+    a_{i,i-1}^\sigma = \abs{e_{i-1}}\int_0^1 \phi_1(t) \phi_2(t)
+\]
+\[
+    a_{i,i+1}^\sigma = \abs{e_{i-1}}\int_0^1 \phi_2(t) \phi_1(t)
+\]
+Pro další výpočty budeme potřebovat integrály:
+\[
+ \int_0^1 (1-t)^2 = \int_0^1 (t)^2 = 1/3,\quad \int_0^1 (1-t)t=1/6,\quad \int_0^1 (1-t)=\int_0^1 t=1/2
+\]
+Dosazením za funkce $\phi$ dostaneme:
+\[
+    a_{i,i}^\sigma = \abs{e_{i-1}}\int_0^1 t^2 + \abs{e_i} \int_0^1 (1-t)^2 = (\abs{e_{i-1}} + \abs{e_i})(1/3)    
+\]
+\[
+    a_{i,i-1}^\sigma = \abs{e_{i-1}}\int_0^1 t(1-t) = \abs{e_{i-1}}(1/6)
+\]
+\[
+    a_{i,i+1}^\sigma = \abs{e_{i-1}}\int_0^1 (1-t)t = \abs{e_{i}}(1/6)
+\]
+Podobně zpracujeme i další členy a dostaneme:
+\[
+    a_{i,i} =  (\abs{e_{i-1}} + \abs{e_i})(K + \sigma/3)    
+\]
+\[
+    a_{i,i-1} = \abs{e_{i-1}}(-K + \sigma/6)
+\]
+\[
+    a_{i,i+1} = \abs{e_{i}}(-K + \sigma/6)
+\]
+\[
+    b_{i} = (\abs{e_{i-1}} + \abs{e_i})(\sigma u_f/2)
+\]
+Pro $i=1$ dostaneme odlišný předpisy zahrnující pouze element $e_i$ :
+\[
+    a_{i,i} =  \abs{e_i}(K + \sigma/3)    
+\]
+\[
+    a_{i,i+1} = \abs{e_{i}}(-K + \sigma/6)
+\]
+\[
+    b_{i} = \abs{e_i}(\sigma u_f/2)
+\]
+Podobně pro $i=n+1$ dostaneme předpisy zahrnující pouze element $e_{n-1}$ :
+\[
+    a_{i,i} =  \abs{e_{i-1}(K + \sigma/3)    
+\]
+\[
+    a_{i,i-1} = \abs{e_{i-1}}(-K + \sigma/6)
+\]
+\[
+    b_{i} = \abs{e_{i-1}}(\sigma u_f/2)
+\]
+
+
+s
+
+Na jednom elementu $e=(y,z)$ použijeme substituci $x = (z-y)t+y$ čímž převedeme integraci na interval $(0,1)$:
+\begin{equation}
+    a_{ij} = \sum_{e\in\mathcal T} \int_0^1 \Big[ K_e \phi'_i(t) \phi'_j(t) 
+    + \sigma_e \phi_i(t) \phi_j(t) \Big] \abs{e} \d t  
+             + v_i(0)v_j(0)/\epsilon
+\end{equation}
+\begin{equation}
+    b_i = \sum_{e\in\mathcal T} \int_e \sigma_e u_{fe} \phi_i(t))  \abs{e} \d t - q(L)v(L).
+\end{equation}
+
+
+Na "referenčním elementu" $(0,1)$ máme dvě bázové funkce $\phi_0=(1-t)$ a $\phi_1=t$ a lokální příspěvek do matice $\tn A$ a pravé strany $\vc b$ je
+\[
+        a_{00} =K_e \abs{e} \int_0^1 (-1)(-1) + \sigma_e \abs{e}\int_0^1 (1-t)^2
+\]
+\[
+        a_{11} =K_e \abs{e} \int_0^1 (1)(1) + \sigma_e \abs{e}\int_0^1 (t)^2
+\]
+\[
+        a_{01} =K_e \abs{e} \int_0^1 (1)(-1) + \sigma_e \abs{e}\int_0^1 (1-t)t
+\]
+\[
+        b_0 = \sigma_e u_{fe} \abs{e} \int_0^1 (1-t)
+\]
+\[
+        b_1 = \sigma_e u_{fe} \abs{e} \int_0^1 t
+\]
 
 
 
