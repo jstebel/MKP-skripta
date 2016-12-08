@@ -765,7 +765,7 @@ funkce  $v_i$ je nenulová pouze na elementech $e_{i-1}$ a $e_{i}$. Speciálně 
 které jsou nenulové pouze na $e_1$, resp. $e_n$. Nyní můžeme integraci rozdělit na jednotlivé elementy. 
 Postup si ukážeme pro druhý integrál v rovnici (\ref{eq:heat_a_finite}) :
 \[
-    a_{i,j}^\sigma = \int_0^L v_i(x)v_j(x) = \sum_{k=1}^n \int_{e_k} v_i(x)v_j(x), \text{ pro }j= i-1, i, i+1 
+    a_{i,j}^\sigma = \int_0^L v_i(x)v_j(x) = \sum_{k=1}^n \int_{e_k} v_i(x)v_j(x).
 \]
 Integrací přes jeden element $e_k$ získáme takzvanou lokální matici $\tn A^k$. Jelikož jsou na elementu $e_k$ nenulové pouze funkce $v_k$ a $v_{k+1}$ 
 (platí včetně krajních elementů), má matice $\tn A^k$ pouze čtyři nenulové prvky na pozicích $(k,k)$, $(k,k+1)$, $(k+1,k)$, $(k+1,k+1)$. Podobně bude 
