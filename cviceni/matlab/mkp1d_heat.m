@@ -1,37 +1,41 @@
-% Vypocet rovnice vedení tepla (1D interval (x0,x1))
+% Vypocet rovnice vedeni tepla (1D interval (x0,x1))
 % metodou konecnych prvku
 %
-% -Ku'' = sigma*(u_f - u) v (x0,x1)
-% 
+% -K*u'' = sigma*(u-u_f) v (x0,x1)
+%
 % okrajove podminky:
-%   
-%   -Ku'(x1) = -bc_flux    (tok dovnitř je pro bc_flux>0)
-%   u(x0) = u0, Dirichlet
-%  
-%   aproximováno pomocí:
-%   Ku'(x0) = (u0 - u)/epsilon
 %
-%  Úkoly:
-%   - zkusit výpočet pro:
+% -K*u'(x1) = q   (Robin)
+%  u(x0)    = u_d (Dirichlet)
+%
+% Dirichletova podminka aproximovana pomoci:
+%  K*u'(x0) = (u-u_d)/epsilon
+%
+% u_d = teplota v bode x0
+% q   = tepelny tok v bode x1
+% n   = pocet delicich uzlu intervalu
+%
+% x = delici body intervalu
+% u = vypoctena teplota
+% A = matice diskretni ulohy
+% b = vektor diskretni ulohy
+%
+% Ukoly:
+%   - zkusit vypocet pro:
 %       - bc_flux=0
-%       - změnit uf
-%       - měnit sigma (sigma = 0.01)
-%       - nastavit výrazně větší epsilon (epsilon=100)
-%       - měnit počet elementů (opravte výpočet jakobianu)
-%       - nastavte epsilon v závislosti na n
+%       - zmenit uf
+%       - menit sigma (sigma = 1000)
+%       - nastavit vyrazne vetsi epsilon (epsilon=100)
+%       - menit pocet elementu (opravte vypocet jakobianu)
 %
-%   - aplikace nenulové Dirichletovy okrajové podmínky
-%   - přepis na sestavení A a b cyklem přes elementy
-%   - 
+%   - aplikace nenulove Dirichletovy okrajove podminky
+%   - prepis na sestaveni A a b cyklem přes elementy
 
-%%%%% Vypocet %%%%%
+% Vstupni parametry
 
 x0 = 0;  % leva hranice
 x1 = 1;  % prava hranice
-n  = 10; % pocet elementu
-jac=(x1-x0)/10;
-
-% q
+% q = -bc_flux (tok dovnitr je pro bc_flux>0)
 bc_flux=1; 
 % K
 cond = 2;
@@ -39,30 +43,35 @@ cond = 2;
 sigma = 1;
 % u_f
 uf = 1;
-% u_0 (Dirichlet)
+% u_d (Dirichlet)
 u0 = 10;
 % epsilon - aproximace Dirichletovy podminky
 epsilon=1e-3;
 
 
+%%%%% Vypocet %%%%%
+n  = 10; % pocet elementu
+
+jac=(x1-x0)/10; % jakobian (velikost elementu)
+
   % Sestaveni matice
   A = zeros(n+1,n+1);  
   i=1
-  A(i,i)   = cond*jac + sigma*jac*(1.0/3.0);    
-  A(i,i+1) = -cond*jac + sigma*jac*(1.0/6.0);
+  A(i,i)   = (cond/jac^2 + sigma*(1.0/3.0))*jac;
+  A(i,i+1) = (-cond/jac^2 + sigma*(1.0/6.0))*jac;
   
-  for i=2:n    
-    A(i,i)   = 2*cond*jac + 2*sigma*jac*(1.0/3.0);    
-    A(i,i-1) = -cond*jac + sigma*jac*(1.0/6.0);
-    A(i,i+1) = -cond*jac + sigma*jac*(1.0/6.0);
+  for i=2:n
+    A(i,i)   = (2*cond/jac^2 + 2*sigma*(1.0/3.0))*jac;
+    A(i,i-1) = (-cond/jac^2 + sigma*(1.0/6.0))*jac;
+    A(i,i+1) = (-cond/jac^2 + sigma*(1.0/6.0))*jac;
   end
   i=n+1
-  A(i,i)   = cond*jac + sigma*jac*(1.0/3.0);    
-  A(i,i-1) = -cond*jac + sigma*jac*(1.0/6.0);
+  A(i,i)   = (cond/jac^2 + sigma*(1.0/3.0))*jac;
+  A(i,i-1) = (-cond/jac^2 + sigma*(1.0/6.0))*jac;
 
-  % Dirichletova okrajová podminka pro u0=0, 
-  % aproximovaná pomocí Robinovy podmínky
-  A(1,1) = A(1,1)+1/epsilon;    
+  % Dirichletova okrajova podminka pro u0=0, 
+  % aproximovana pomoci Robinovy podminky
+  A(1,1) = A(1,1) + 1/epsilon;    
       
   
   
