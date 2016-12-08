@@ -821,8 +821,8 @@ Podobně pro $i=n+1$ dostaneme předpisy zahrnující pouze element $e_{n-1}$ :
     b_{i} = \abs{e_{i-1}}(\sigma u_f/2)
 \]
 
+\subsubsection{Transformace na referenční element}
 
-s
 
 Na jednom elementu $e=(y,z)$ použijeme substituci $x = (z-y)t+y$ čímž převedeme integraci na interval $(0,1)$:
 \begin{equation}
@@ -852,7 +852,10 @@ Na "referenčním elementu" $(0,1)$ máme dvě bázové funkce $\phi_0=(1-t)$ a 
         b_1 = \sigma_e u_{fe} \abs{e} \int_0^1 t
 \]
 
-
+\subsubsection{Zdrojové kódy}
+Zdrojové kódy ke cvičením jsou v adresáři \ulr{http://bacula.nti.tul.cz/~mkp/matlab/}.
+Příklad implementace řešení Laplaceovy rovnice na intrevalu $(0,1)$ je v souboru \verb'mkp1d_laplace.m'. Z něj je 
+odvozena implementace úlohy popsané výše: \verb'mkp1d_heat.m'.
 
 \begin{thebibliography}{99}
 \bibitem{Rektorys} K. Rektorys a spol. : 

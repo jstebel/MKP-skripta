@@ -1,0 +1,50 @@
+\section{Diskrétní prostory konečných prvků}
+V předchozích kapitolách jsme odvodili aproximaci abstraktní eliptické pomocí Galerkinovy metody.
+Vycházeli jsme přitom z předpokladu, že nekonečný prostor řešení $V$ (např. $H^1(\Omega)$) aproximujeme
+konečným prostorem $V_h$ aniž bychom přesněji specifikovali jak se tento prostor konkrétně sestrojí.
+Volbu tohoto prostoru je nutno provést tak, aby bylo možno pro jeho funkce vyhodnotit formy $a(\cdot, \cdot)$
+a $l(\cdot)$, což je nutné pro sestavení lineárního systému. Pro vyhodnocení forem je typicky potřeba 
+počítat integrály přes $\Omega$ z funkcí ve $V_h$ jejich mocnin a derivací. Základní myšlenka metody konečných prvků je
+\begin{enumerate}
+ \item Rozdělit (složitou) oblast $\Omega$ na jednodušší podoblasti $K\in \mathcal T$ a vyhodnocovat integrál přes 
+ $\Omega$ jako součet integrálů přes podoblasti.
+ \item Na jednotlivých podoblastech sestrojit $V_h(K)$ jako prostor vhodných polynomů. Polynomy zůstávají polynomy 
+ při umocňování i derivování a na jednoduchých oblastech je lze integrovat přesně.
+ \item Sestrojit $V_h$ jako prostor po částech polynomiálních funkcí, zajistit spojitost (nebo i spojitost derivací) mezi podoblastmi 
+ pomocí {\it stupňů volnosti}.
+\end{enumerate}
+
+%\jb{TODO: pokračovat podle Johnsona}
+\subsubsection{Kostrukce konečně prvkového prostoru}
+
+\subsubsection{Příklad lineárních prvků ve 2d}
+
+\subsubsection{Příklad kvadratických prvků ve 2d}
+
+\subsubsection{Obecný konečný prvek}
+Předchozí příklady můžeme shrnout do obecné definice konečného prvku.
+\begin{df}
+Konečný prvek je trojice $(K, P_K, \Sigma)$, kde
+\begin{enumerate}
+ \item $K$ je konvexní podmnožina $\Real^n$ (úsečka, trojúhelních, čtyřúhelník, čtyřstěn, osmistěn, pyramida, hranol)
+ \item $P_K$ je prostor funkcí na množině $K$ (většinou polynomiální funkce, skalární nebo i vektorové). 
+ \item $\Sigma$ je množina lineárních forem na $P_K$ (o velikosti $\dim(P_K)$) splňujících podmínku unisolventnosti:
+ \[
+    \text{Pokud je $p$ funkce z $P_K$ a $\Phi( p )=0$ pro každou formu $\Phi\in\Sigma$, pak je $p\equiv0$.}
+ \]
+\end{enumerate}
+\end{df}
+
+
+\subsection{Vyhodnocení forem}
+Demonstrujme vyhodnocení integrálů ve formách $a(\cdot, \cdot)$, $l(\cdot)$ na následujícím integrálu, který vznikne slabou formulací Laplaceovy rovnice:
+\begin{align*}
+ a(\phi_i, \phi_j) &= \int_\Omega \grad \phi_i(\vc x) \cdot \grad \phi_j(\vc x) \d \vc x\\
+                   &= \sum_{K\in \mathcal T} \int_K  \grad \phi_i(\vc x) \cdot \grad \phi_j(\vc x) \d \vc x =
+                   &= \sum_{K\in \mathcal T} \int_{\hat K} \grad \hat\phi_i(\hat{\vc x}) \cdot \grad \hat \phi_j(\hat{\vc x}) J(\hat{\vc x}) \d \hat{\vc x}
+                   &= \sum_{K\in \mathcal T} \sum_{q\in Q} \grad \grad \hat\phi_i(q) \cdot \grad \hat \phi_j(q) J(q)w_q
+\end{align*}
+
+
+
+
