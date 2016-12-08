@@ -18,6 +18,8 @@
 \usepackage{hyperref}
 \usepackage[utf8]{inputenc}
 \usepackage[czech]{babel}
+\usepackage{arydshln}
+
 %\usepackage{mathbbol}
 %\usepackage{bbm}
 % ***************************************** THEOREMS
@@ -715,14 +717,16 @@ Je některá z bilineárních forem skalárním součinem?
 Chceme řešit rovnici vedení tepla na $\Omega = (0,L)$, $\Gamma_d$ je v $0$, $\Gamma_n$ je v $L$.
 \begin{align}
     -\div(\tn K\grad u) &= \sigma(u_f - u) &&\text{v }\Omega,\\
-    u&=0 && \text{v bodě }0,\\
-    -\tn K \grad u \cdot \vc n &= q &&\text{v bodě }L.
+    u&=u_d && \text{v bodě }0,\\
+    -\tn K \grad u \cdot \vc n &= -q &&\text{v bodě }L.
 \end{align} 
-Jelikož aplikace Dirichletovy podmínky je v MKP trochu komplikovanější, aproximujeme pro začátek tuto podmínku pomocí Robinovy podmínky:
+Jelikož aplikace Dirichletovy podmínky na levém okraji je v MKP trochu komplikovanější, 
+aproximujeme pro začátek tuto podmínku pomocí Robinovy podmínky:
 \[
-    -\tn K \grad u \cdot \vc n = (u_d - u)/\epsilon\qquad \text{v bodě }0,
+    -\tn K \grad u \cdot \vc n = (u - u_d)/\epsilon\qquad \text{v bodě }0,
 \]
 kde $\epsilon$ je dostatečně malé kladné číslo.
+Na pravém okraji aplikujeme Neumannovu podmínku, ale zde s konvencí $q>0$ pro tok dovnitř oblasti.
 
 Abstraktní variační úloha:
 \[ 
@@ -733,7 +737,7 @@ kde formy $a(\cdot, \cdot)$ a $b(\cdot)$ mají tvar:
     a(u,v) := ( Ku',  v')_{L^2(\Omega)} + (\sigma u, v)_{L^2(\Omega)} + u(0)v(0)/\epsilon,
 \end{equation}
 \begin{equation}\label{eq:def_l_diffusion}
-    b(v) := (\sigma u_f,v)_{L^2(\Omega)} - qv(L).
+    b(v) := (\sigma u_f,v)_{L^2(\Omega)} + qv(L)+u_dv(0)/\epsilon.
 \end{equation}
 
 Nyní předpokládejme konečný podprostor $\tilde V \subset H^1(\Omega)$ s bází $\{v_i,\ i\in I\}$. Aplikujte na úlohu Galerkinovu metodu
@@ -747,113 +751,171 @@ Diskrétní podobu variační úlohy dostaneme dosazením $\tilde u(x)$ a testov
 \]
 Odtud dostaneme prvky matice a pravé strany Zde a dále uvažujeme konstantní data $K$, $\sigma$, $u_f$.
 \begin{equation}
-    a_{ij} = a(v_i, v_j) = K \int_0^L v'_i(x) v'_j(x) \d x+ \sigma \int_0^1 v_i(x) v_j(x) \d x + v_i(0)v_j(0)/\epsilon
+    \label{eq:heat_a_finite}
+    a_{ij} = a(v_i, v_j) = K \int_0^L v'_i(x) v'_j(x) \d x+ \sigma \int_0^L v_i(x) v_j(x) \d x + v_i(0)v_j(0)/\epsilon
 \end{equation} 
 \begin{equation}
-    b_i = b(v_i) = \sigma u_f \int_0^L  v_i(x) \d x - qv_i(L).
+    \label{eq:heat_b_finite}
+    b_i = b(v_i) = \sigma u_f \int_0^L  v_i(x) \d x + qv_i(L) + u_dv_i(0)/\epsilon.
 \end{equation}
-Pro výpočet integrálů a sestavení soustavy již potžebujeme zvolit konkrétní konečné prvky. V našem případě bude 
-prostor $\tilde V$ tvořen bázovými funkcemi lineárních konečných prvků. Inteval $(0,L)$ rozdělíme pomocí bodů $x_1$,\dots, $x_{n+1}$
+Pro výpočet integrálů a sestavení soustavy již potřebujeme zvolit konkrétní konečné prvky. V našem případě bude 
+prostor $\tilde V$ tvořen bázovými funkcemi lineárních konečných prvků. Interval $(0,L)$ rozdělíme pomocí bodů $x_1$,\dots, $x_{n+1}$
 na $n$ podintervalů (elementů) $e_i = (x_i, x_{i+1})$. Bázové funkce jsou po částech lineární na elementech, 
 funkce  $v_i$ je nenulová pouze na elementech $e_{i-1}$ a $e_{i}$. Speciálně je nutno uvažovat krajní funkce $v_1$ a $v_{n+1}$,
 které jsou nenulové pouze na $e_1$, resp. $e_n$. Nyní můžeme integraci rozdělit na jednotlivé elementy. 
-Postup si ukážeme pouze pro druhý integrál v první rovnici:
+Postup si ukážeme pro druhý integrál v rovnici (\ref{eq:heat_a_finite}) :
 \[
-    a_{i,j}^\sigma = \int_0^L v_i(x)v_j(x) = \int_{e_{i-1}} v_i(x)v_j(x) + \int_{e_i} v_i(x)v_j(x), \text{ pro }j= i-1, i, i+1 
+    a_{i,j}^\sigma = \int_0^L v_i(x)v_j(x) = \sum_{k=1}^n \int_{e_k} v_i(x)v_j(x), \text{ pro }j= i-1, i, i+1 
 \]
-Dále provedeme na každém elementu $e=(y,z)$ lineární substituci $x = (z-y)t + y$, $\d x = \abs{e}\d t$, kde $\abs{e} = z-y$ je velikost elementu.
-Substituce převede integrály na různých elementech na integrály přes interval $(0,1)$ 
-a dostaneme bázové funkce dané pomocí jednoduchých lineárních funkcí $\phi_1(t)=t$ a $\phi_2(t)=(1-t)$:
+Integrací přes jeden element $e_k$ získáme takzvanou lokální matici $\tn A^k$. Jelikož jsou na elementu $e_k$ nenulové pouze funkce $v_k$ a $v_{k+1}$ 
+(platí včetně krajních elementů), má matice $\tn A^k$ pouze čtyři nenulové prvky na pozicích $(k,k)$, $(k,k+1)$, $(k+1,k)$, $(k+1,k+1)$. Podobně bude 
+vektor $\vc b$ složen z příspěvků na jednotlivých elementech, kde lokální vektor pravé strany na elementu $e_k$ má nenulové pouze prvky na pozicích 
+$k$ a $k+1$.
+
+%% use package: arydshln
 \[
-    a_{i,i}^\sigma = \abs{e_{i-1}}\int_0^1 \phi_1(t) \phi_1(t) + \abs{e_i} \int_0^1 \phi_2(t) \phi_2(t)   
+\left[
+\arraycolsep=1.4pt\def\arraystretch{1.4}
+\setlength{\dashlinedash}{0.5pt}
+\setlength{\dashlinegap}{2pt}
+\begin{array}{c:c:c:c}
+    \ddots      & \tn A^{k-1}\hphantom{{}+\tn A^k}      & 0                                     & \ddots        \\ \hdashline
+    \tn A^{k-1} & \tn A^{k-1}+\tn A^k                   & \tn A^k\hphantom{{}+\tn A^{k+1}}      & 0             \\ \hdashline
+    0           & \hphantom{\tn A^{k-1}+{}}\tn A^k      & \tn A^k+\tn A^{k+1}                   & \tn A^{k+1}   \\ \hdashline
+    \ddots      & 0                                     & \hphantom{\tn A^k+{}}\tn A^{k+1}      & \ddots        \\
+\end{array}
+\right]
+%
+\qquad
+%
+\left[
+\arraycolsep=1.4pt\def\arraystretch{1.4}
+\setlength{\dashlinedash}{0.5pt}
+\setlength{\dashlinegap}{2pt}
+\begin{array}{c}
+    \vdots      \\ \hdashline
+    \vc b^{k-1} + \vc b^{k}\\ \hdashline
+    \vc b^{k} + \vc b^{k+1}\\ \hdashline
+    \vdots      \\      
+\end{array}
+\right]
+\]
+
+Dále provedeme na každém elementu $e_k$ lineární substituci $x = (x_{k+1}-x_k)t + x_k$, $\d x = \abs{e}\d t$, kde $\abs{e} = x_{k+1}-x_k$ je velikost elementu.
+Substituce převede integrály na různých elementech na integrály přes interval $(0,1)$ (tzv. referenční element)
+a dostaneme bázové funkce dané pomocí jednoduchých lineárních funkcí $\phi_0(t)=1-t$ a $\phi_1(t)=t$. Pro čtyři nenulové prvky lokální matice
+pak dostaneme vztah:
+\[
+    A_{k+i,k+j}^{\sigma,k} = \int_{e_k} v_{k+i}(x)v_{k+j}(x) \d x = \abs{e_{k}}\int_0^1 \phi_i(t) \phi_j(t) \d t,
+\]
+kde $i,j = 0,1$.
+Při transformaci na referenční element je třeba správně transformovat derivace. Platí:
+\[
+    \prtl_x v(x) = \prtl_t \phi(t) \frac{\d t}{\d x} = \prtl_t \phi(t) / \abs{e}
+\]
+Pro první integrál v (\ref{eq:heat_a_finite}) pak máme:
+\[
+    A_{k+i,k+j}^{K,k} = \int_{e_k} v'_{k+i}(x)v'_{k+j}(x) \d x = \abs{e_{k}}\int_0^1 \big[\phi'_i(t)/\abs{e_{k}}\big] \big[ \phi'_j(t) / \abs{e_{k}} \big] \d t    
+\]
+opět pro $i,j=0,1$.
+Po transformaci na referenční element dostaneme následující vztahy pro výpočet prvků lokální matice $A^l$ a lokálního příspěvku pravé strany $b^l$ na elementu $e$:
+\[
+        A^l_{00} = K_e / \abs{e} \int_0^1 (-1)(-1) + \sigma_e \abs{e}\int_0^1 (1-t)^2
 \]
 \[
-    a_{i,i-1}^\sigma = \abs{e_{i-1}}\int_0^1 \phi_1(t) \phi_2(t)
+        A^l_{11} = K_e / \abs{e} \int_0^1 (1)(1) + \sigma_e \abs{e}\int_0^1 (t)^2
 \]
 \[
-    a_{i,i+1}^\sigma = \abs{e_{i-1}}\int_0^1 \phi_2(t) \phi_1(t)
+        A^l_{01} = A^l_{10} = K_e /\abs{e} \int_0^1 (1)(-1) + \sigma_e \abs{e}\int_0^1 (1-t)t
 \]
-Pro další výpočty budeme potřebovat integrály:
+\[
+        b^l_0 = \sigma_e u_{fe} \abs{e} \int_0^1 (1-t)
+\]
+\[
+        b^l_1 = \sigma_e u_{fe} \abs{e} \int_0^1 t
+\]
+V případě konstantních koeficientů $K$ a $\sigma$ a pro stejné velikosti elementů $\abs{e_k}=h=L/n$ budou všechny lokální matice i pravé strany stejné.
+Pro další výpočet použijeme integrály:
 \[
  \int_0^1 (1-t)^2 = \int_0^1 (t)^2 = 1/3,\quad \int_0^1 (1-t)t=1/6,\quad \int_0^1 (1-t)=\int_0^1 t=1/2
 \]
-Dosazením za funkce $\phi$ dostaneme:
+Dostaneme:
 \[
-    a_{i,i}^\sigma = \abs{e_{i-1}}\int_0^1 t^2 + \abs{e_i} \int_0^1 (1-t)^2 = (\abs{e_{i-1}} + \abs{e_i})(1/3)    
+        A^l_{00} = K / h + \sigma h / 3
 \]
 \[
-    a_{i,i-1}^\sigma = \abs{e_{i-1}}\int_0^1 t(1-t) = \abs{e_{i-1}}(1/6)
+        A^l_{11} = K / h + \sigma_e h / 3
 \]
 \[
-    a_{i,i+1}^\sigma = \abs{e_{i-1}}\int_0^1 (1-t)t = \abs{e_{i}}(1/6)
-\]
-Podobně zpracujeme i další členy a dostaneme:
-\[
-    a_{i,i} =  (\abs{e_{i-1}} + \abs{e_i})(K + \sigma/3)    
+        A^l_{01} = A^l_{10} = - K / h  + \sigma h / 6
 \]
 \[
-    a_{i,i-1} = \abs{e_{i-1}}(-K + \sigma/6)
+        b^l_0 = \sigma u_f h / 2
 \]
 \[
-    a_{i,i+1} = \abs{e_{i}}(-K + \sigma/6)
-\]
-\[
-    b_{i} = (\abs{e_{i-1}} + \abs{e_i})(\sigma u_f/2)
-\]
-Pro $i=1$ dostaneme odlišný předpisy zahrnující pouze element $e_i$ :
-\[
-    a_{i,i} =  \abs{e_i}(K + \sigma/3)    
-\]
-\[
-    a_{i,i+1} = \abs{e_{i}}(-K + \sigma/6)
-\]
-\[
-    b_{i} = \abs{e_i}(\sigma u_f/2)
-\]
-Podobně pro $i=n+1$ dostaneme předpisy zahrnující pouze element $e_{n-1}$ :
-\[
-    a_{i,i} =  \abs{e_{i-1}(K + \sigma/3)    
-\]
-\[
-    a_{i,i-1} = \abs{e_{i-1}}(-K + \sigma/6)
-\]
-\[
-    b_{i} = \abs{e_{i-1}}(\sigma u_f/2)
+        b^l_1 = \sigma u_f h / 2
 \]
 
-\subsubsection{Transformace na referenční element}
+Na prvním elementu $e_1$ musíme navíc aplikovat Robinovu okrajovou podmínku $v_i(0)v_j(0)/\epsilon$ z (\ref{eq:heat_a_finite}).
+Jelikož tento člen je nenulový pouze pro $i=j=0$, musíme k prvku $a_{0,0}$ globální matice přičíst $1/\epsilon$. Na elemenu $e_1$ proto bude:
+\[
+        A^l_{00} = K / h + \sigma h / 3 + 1/\epsilon
+\]
+Podobně člen $u_dv_i(0)/\epsilon$ v (\ref{eq:heat_b_finite}) je nenulový pouze pro $i=0$ a k prvku $b_0$ globální pravé strany je třeba přičíst 
+$u_d/\epsilon$, předpis pro $b^l_0$ na elementu $e_1$ bude:
+\[
+        b^l_0 = \sigma u_f h / 2 + u_d/\epsilon
+\]
+
+Na posledním elementu musíme aplikovat Neumannovu podmínku. Lokální příspěvek pravé strany na elementu $e_n$ bude:
+\[
+        b^l_1 = \sigma u_f h / 2 + q
+\]
 
 
-Na jednom elementu $e=(y,z)$ použijeme substituci $x = (z-y)t+y$ čímž převedeme integraci na interval $(0,1)$:
-\begin{equation}
-    a_{ij} = \sum_{e\in\mathcal T} \int_0^1 \Big[ K_e \phi'_i(t) \phi'_j(t) 
-    + \sigma_e \phi_i(t) \phi_j(t) \Big] \abs{e} \d t  
-             + v_i(0)v_j(0)/\epsilon
-\end{equation}
-\begin{equation}
-    b_i = \sum_{e\in\mathcal T} \int_e \sigma_e u_{fe} \phi_i(t))  \abs{e} \d t - q(L)v(L).
-\end{equation}
 
 
-Na "referenčním elementu" $(0,1)$ máme dvě bázové funkce $\phi_0=(1-t)$ a $\phi_1=t$ a lokální příspěvek do matice $\tn A$ a pravé strany $\vc b$ je
+
+
+
+Po sečtení všech lokálních matic a aplikování okrajových podmínek dostaneme následující vtahy pro jednotlivé prvky matice a pravé strany:
 \[
-        a_{00} =K_e \abs{e} \int_0^1 (-1)(-1) + \sigma_e \abs{e}\int_0^1 (1-t)^2
+    a_{i,i} =  2 K / h + 2\sigma h/3
 \]
 \[
-        a_{11} =K_e \abs{e} \int_0^1 (1)(1) + \sigma_e \abs{e}\int_0^1 (t)^2
+    a_{i,i-1} = -K / h + \sigma h/6
 \]
 \[
-        a_{01} =K_e \abs{e} \int_0^1 (1)(-1) + \sigma_e \abs{e}\int_0^1 (1-t)t
+    a_{i,i+1} = -K / h + \sigma h/6
 \]
 \[
-        b_0 = \sigma_e u_{fe} \abs{e} \int_0^1 (1-t)
+    b_{i} = \sigma u_f h
+\]
+Pro $i=1$ dostaneme odlišné předpisy:
+\[
+    a_{i,i} =  K / h + \sigma h/3 + 1/\epsilon   
 \]
 \[
-        b_1 = \sigma_e u_{fe} \abs{e} \int_0^1 t
+    a_{i,i+1} = -K/h + \sigma h/6
 \]
+\[
+    b_{i} = \sigma  u_f h /2 + u_d/\epsilon
+\]
+Podobně pro $i=n+1$ dostaneme předpisy:
+\[
+    a_{i,i} =  K / h + \sigma h/3    
+\]
+\[
+    a_{i,i-1} = -K/h + \sigma h/6
+\]
+\[
+    b_{i} = \sigma  u_f h/2 + q
+\]
+
+
 
 \subsubsection{Zdrojové kódy}
-Zdrojové kódy ke cvičením jsou v adresáři \ulr{http://bacula.nti.tul.cz/~mkp/matlab/}.
+Zdrojové kódy ke cvičením jsou v adresáři \url{http://bacula.nti.tul.cz/~mkp/matlab/}.
 Příklad implementace řešení Laplaceovy rovnice na intrevalu $(0,1)$ je v souboru \verb'mkp1d_laplace.m'. Z něj je 
 odvozena implementace úlohy popsané výše: \verb'mkp1d_heat.m'.
 
