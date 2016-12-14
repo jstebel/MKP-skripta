@@ -1,4 +1,4 @@
-function [xx, ww] = GaussQuad(n, a, b)
+function [xx, ww] = gauss_1d(n, a, b)
 
    u = 1 : n-1;
    u = u ./ sqrt(4*u.^2 - 1);

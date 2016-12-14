@@ -5,14 +5,14 @@
 %
 % okrajove podminky:
 %
-% -K*u'(x1) = q   (Robin)
+% -K*u'(x1) = -q  (Robin)
 %  u(x0)    = u_d (Dirichlet)
 %
 % Dirichletova podminka aproximovana pomoci:
 %  K*u'(x0) = (u-u_d)/epsilon
 %
 % u_d = teplota v bode x0
-% q   = tepelny tok v bode x1
+% q   = tepelny tok do oblasti v bode x1
 % n   = pocet delicich uzlu intervalu
 %
 % x = delici body intervalu
@@ -29,13 +29,13 @@
 %       - menit pocet elementu (opravte vypocet jakobianu)
 %
 %   - aplikace nenulove Dirichletovy okrajove podminky
-%   - prepis na sestaveni A a b cyklem přes elementy
+%   - prepis na sestaveni A a b cyklem pres elementy
 
 % Vstupni parametry
 
 x0 = 0;  % leva hranice
 x1 = 1;  % prava hranice
-% q = -bc_flux (tok dovnitr je pro bc_flux>0)
+% q (tok dovnitr je pro bc_flux>0)
 bc_flux=1; 
 % K
 cond = 2;

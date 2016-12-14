@@ -24,26 +24,44 @@ n = 10;
 
   % Sestaveni matice
   A = zeros(n+1,n+1);
-  % dirichletovy okrajove podminky
-  A(1,1) = 1;
-  A(n+1,n+1) = 1;
-  % vypocet skalarnich soucinu bazovych funkci
-  % (pouzivame po castech linearni funkce, tzv. Courantovu bazi)
-  for i=2:n
-    A(i,i)   = 2*n;
-    A(i,i-1) = -1*n;
-    A(i,i+1) = -1*n;
+  L = zeros(2,2);
+  for elem=1:n
+    % lokalni matice
+    L(1,1) = 1*n;
+    L(1,2) = -1*n;
+    L(2,1) = -1*n;
+    L(2,2) = 1*n;
+    % pridani do globalni matice
+    index = [elem, elem+1];
+    for i=1:2
+      for j=1:2
+        A(index(i),index(j)) = A(index(i),index(j)) + L(i,j);
+      end
+    end
   end
+
   
   % Sestaveni prave strany
   b = zeros(n+1,1);
-  % okrajove podminky
+  l = zeros(2,1);
+  for elem=1:n
+    % lokalni vektor
+    l(1,1) = -0.5/n;
+    l(2,1) = -0.5/n;
+    % pridani do globalniho vektoru
+    index = [elem, elem+1];
+    for i=1:2
+      b(index(i),1) = b(index(i),1) + l(i,1);
+    end
+  end
+  
+  % dirichletovy okrajove podminky
+  A(1,:) = zeros(1,n+1);
+  A(1,1) = 1;
+  A(n+1,:) = zeros(1,n+1);
+  A(n+1,n+1) = 1;
   b(1,1) = u0;
   b(n+1,1) = u1;
-  % vypocet skalarnich soucinu s bazovymi funkcemi
-  for i=2:n
-    b(i,1) = -1/n;
-  end
   
   % Vyreseni algebraicke soustavy
   u = A\b;
