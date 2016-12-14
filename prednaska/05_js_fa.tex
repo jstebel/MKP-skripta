@@ -517,7 +517,7 @@ budeme nazývat \emph{abstraktní variační úloha}.
 % Bilineární forma $a$ je eliptická na $V$, pokud existuje konstanta $\alpha>0$ taková, že
 % \[ \forall v\in V:~a(v,v)\ge \alpha\norm{v}^2. \]
 
-\begin{veta}[Lax-Milgram]
+\begin{veta}[Lax-Milgram]\label{th:lax-milgram}
 Nechť $V$ je Hilbertův prostor, $a$ je bilineární forma na $V$, pro niž existují konstanty $\alpha,\beta>0$ takové, že
 \begin{itemize}
 \item[(i)] $a$ je omezená, tj.
@@ -824,50 +824,139 @@ Díky Friedrichsově nerovnosti máme
 
 \section{Galerkinova metoda}
 
-% Princip na abstraktni uloze
-% Ceovo lemma a veta o konvergenci
-% Interpolace a rychlost konvergence?
+Metoda konečných prvků pro řešení variační úlohy typu \eqref{eq:variational_problem} se nazývá Galerkinova metoda.
+Její myšlenkou je nahradit prostor funkcí $V$ vhodným podprostorem $V_h$ konečné dimenze tak, aby bylo možné jednoduše zavést vhodnou bázi.
+Typicky se jedná o podprostory funkcí po částech polynomiálních.
+Metoda konečných prvků generuje báze které jsou téměř ortogonální, což výrazně zjednodušuje řešení vzniklé soustavy lineárních rovnic.
+Řešení variační úlohy na podprostoru $V_h$ pak je aproximací slabého řešení a jeho odchylku lze kvantifikovat v závislosti na volbě podprostoru.
 
-% Na závěr ještě uvedeme příklad, jak lze formulovat okrajovou úlohu s nespojitou pravou stranou a její aproximaci.
-% 
-% Je dána okrajová úloha
-% \[ -u''+u=f \mbox{ v }(0,1),\quad u(0)=u(1)=0. \]
-% Je-li $f\in C[0,1]$, pak má smysl hledat klasické řešení, tj. funkci $u\in C^2(0,1)\cap C[0,1]$ takovou, že uvedené rovnosti platí v celém intervalu $(0,1)$.
-% Pro méně regulární pravou stranu ale klasické řešení nemusí existovat.
-% Ukážeme odvození definice tzv. slabého (zobecněného) řešení.
-% 
-% Předpokládejme, že $u$ je klasické řešení.
-% Pak pro každé $v\in V:=\{v\in C^1[0,1];~v(0)=v(1)=0\}$ platí
-% \[ (-u''+u,v)=(f,v). \]
-% Integrací per partes dostaneme
-% \begin{multline*}
-%  (-u''+u,v) = \int_0^1(-u''(x)+u(x))v(x)~dx\\
-% =[-u'(x)v(x)]_{x=0}^1 + \int_0^1 u'(x)v'(x) + u(x)v(x)~dx = ((u,v)).
-% \end{multline*}
-% Místo klasického řešení můžeme tedy hledat funkci $u$ takovou, aby
-% \[ ((u,v))=(f,v) \]
-% pro všechna $v\in V$.
-% Protože ale $V$ není úplný prostor v normě $H^1(0,1)$, nehodí se pro definici zobecněného řešení $u$. Zúplněním $V$ v normě $H^1(0,1)$ dostaneme prostor
-% \[ H^1_0(0,1):=\{v\in H^1(0,1);~v(0)=v(1)=0\footnote{Výraz $v(0)$, resp. $v(1)$ zde značí tzv. stopu funkce $v$.}\}. \]
-% \underline{Slabé (zobecněné) řešení} okrajové úlohy tedy lze definovat jako funkci $u\in H^1_0(0,1)$, která splňuje
-% \[ \forall v\in H^1_0(0,1):~((u,v))=(f,v). \]
-% Všimněme si, že tato formulace okrajové úlohy má smysl pro $f\in L^2(0,1)$.
-% 
-% Nechť $\{v_i\}_{i=1}^\infty$ je nějaká báze prostoru $H^1_0(0,1)$.
-% \underline{Galerkinova aproximace} slabého řešení je definována jako funkce
-% \[ u^n(x):=\sum_{i=1}^n\alpha_i^n v_i(x), \]
-% která splňuje
-% \[ \forall j=1,\ldots,n:~ ((u^n,v_j)) = (f,v_j). \]
-% Dosazením za $u^n$ dostaneme soustavu lineárních algebraických rovnic
-% \[ \sum_{i=1}^n\alpha_i^n((v_i,v_j)) = (f,v_j),~j=1,\ldots,n, \]
-% pro koeficienty $\uu:=(\alpha_1^n,\ldots,\alpha_n^n)^\top$.
-% Definujeme-li matici $\A=(a_{ij})_{i,j=1}^n$, kde $a_{ij}:=((v_j,v_i))$, a vektor $\bb=(b_i)_{i=1}^n$, kde $b_i:=(f,v_i)$, pak lze tuto soustavu zapsat zkráceně
-% \[ \A\uu=\bb. \]
-% Díky vlastnostem skalárního součinu je matice $\A$ symetrická pozitivně definitní, soustava má proto pro libovolné $\bb\in\R^n$ právě jedno řešení.
-% 
-% Lze také ukázat, že posloupnost $\{u^n\}$ je v jistém smyslu konvergentní a její limita je slabé řešení $u$.
+\subsection{Abstraktní úloha}
+
+Uvažujme nejprve abstraktní úlohu \eqref{eq:variational_problem} a nechť $V_h$ je podprostor $V$ s konečnou dimenzí $N:=\dim V_h$.
+Místo úlohy \eqref{eq:variational_problem} budeme řešit tzv. Galerkinovu úlohu:
+\begin{equation}\label{eq:galerkin}
+\mbox{Najdi }u_h\in V_h:~\forall v_h\in V_h~a(u_h,v_h)=l(v_h).
+\end{equation}
+Řešení $u_h$ této úlohy se nazývá Galerkinova aproximace prvku $u$.
+Nechť $\varphi_1,...,\varphi_N$ je báze $V_h$.
+Pak lze prvek $u_h$ zapsat ve tvaru
+\[ u_h=\sum_{j=1}^N\xi_j\varphi_j,~\vc\xi=(\xi_1,...,\xi_N)^\top\in\R^N. \]
+Jelikož i každá testovací funkce $v_h$ je lineární kombinací bázových funkcí $\{\varphi_i\}_{i=1}^N$, v Galerkinově úloze postačí za testovací funkce brát pouze tyto bázové funkce:
+\[ \eqref{eq:galerkin} \Leftrightarrow \forall i=1,...,N:~ a(u_h,\varphi_i)=\sum_{j=1}^N\xi_j a(\varphi_j,\varphi_i) = l(\varphi_i). \]
+Vzniklá soustava $N$ rovnic je lineární a neznámými jsou koeficienty $\xi_1,...,\xi_N$.
+Můžeme ji přepsat do maticového tvaru:
+\[ \tn A\vc\xi := \begin{pmatrix}a(\varphi_1,\varphi_1) & ... & a(\varphi_N,\varphi_1)\\&...&\\a(\varphi_1,\varphi_N) & ... & a(\varphi_N,\varphi_N)\end{pmatrix}\begin{pmatrix}\xi_1\\\vdots\\\xi_N\end{pmatrix} = \begin{pmatrix}l(\varphi_1)\\\vdots\\l(\varphi_N)\end{pmatrix} =: \vc b, \]
+% kde
+% \[ \tn A = \begin{pmatrix}a(\varphi_1,\varphi_1) & ... & a(\varphi_N,\varphi_1)\\&...&\\a(\varphi_1,\varphi_N) & ... & a(\varphi_N,\varphi_N)\end{pmatrix}, \]
+kde prvek $a_{ij}$ matice $\tn A$ je roven $a(\varphi_j,\varphi_i)$ a prvek $b_i$ vektoru $\vc b$ je roven $l(\varphi_i)$, $i,j=1,...,N$.
+
+Lze snadno ověřit, že z vlastností formy $a$ vyplývají obdobné vlastnosti matice $\tn A$: Např. je-li $a$ symetrická, pak také $\tn A$ je symetrická; je-li $a$ eliptická, pak $\tn A$ je pozitivně definitní, a tedy regulární, a soustava $\tn A\vc\xi=\vc b$ má právě jedno řešení.
+
+Důležitá otázka je, zda $u_h$ je dostatečně přesná aproximace $u$.
+Obecně platí následující věta:
+\begin{veta}[Céovo lemma]\label{th:cea}
+Nech jsou splněny předpoklady Laxovy-Milgramovy věty (Věta \ref{th:lax-milgram}) a $V_h$ je podprostor $V$.
+Pak pro řešení úloh \eqref{eq:variational_problem} a \eqref{eq:galerkin} platí:
+\begin{equation}\label{eq:cea}
+\norm{u-u_h}\le\frac\beta\alpha\inf_{v_h\in V_h} \norm{u-v_h}.
+\end{equation}
+\end{veta}
+
+Pokud $\alpha=\beta$, pak tato věta říká, že $u_h$ je nejbližší prvek k $u$ v podprostoru $V_h$.
+V tomto případě je tedy Galerkinova aproximace zároveň nejlepší aproximací v daném podprostoru.
+Obecně platí $\alpha<\beta$ a $u_h$ je alespoň kvalitativně stejně dobré jako nejlepší aproximace.
+Pro konkrétní typy podprostorů $V_h$ lze z \eqref{eq:cea} odvodit přesnější odhad chyby, když za $v_h$ dosadíme vhodnou funkci (např. Lagrangeovu interpolantu funkce $u$).
+
+\begin{proof}[Důkaz Věty \ref{th:cea}]
+Nechť $w_h\in V_h$. Protože $V_h$ je podprostor $V$, je také $w_h\in V$ a platí $a(u,w_h) = l(w_h)$ a $a(u_h,w_h)=l(w_h)$.
+Odečtením těchto rovností dostaneme vztah označovaný jako tzv. Galerkinova ortogonalita:
+\begin{equation}\label{eq:galerkin_ortho}
+\forall w_h\in V_h:~a(u-u_h,w_h)=0.
+\end{equation}
+Z elipticity a omezenosti formy $a$ pak dostaneme pro $v_h:=u_h+w_h\in V_h$:
+\[ \alpha\norm{u-u_h}^2 \le a(u-u_h,u-u_h) = a(u-u_h,u-v_h) + \underbrace{a(u-u_h,v_h-u_h)}_{=a(u-u_h,w_h)=0} \le \beta\norm{u-u_h}\norm{u-v_h}, \]
+kde člen $a(u-u_h,v_h-u_h)$ vypadl díky \eqref{eq:galerkin_ortho}.
+Vydělením celé nerovnice výrazem $\alpha\norm{u-u_h}$ dostaneme
+\[ \norm{u-u_h} \le \frac\beta\alpha\norm{u-v_h}. \]
+Protože $v_h$ je libovolný prvek z $V_h$, je tak \eqref{eq:cea} dokázáno.
+\end{proof}
 
 
+\subsection{Příklad lineárních prvků v 1D}
+
+Uvažujme okrajovou úlohu
+\[ -u''=f \mbox{ v }(0,1),\quad u(0)=u(1)=0, \]
+jejíž slabá formulace zní:
+\[ \mbox{Najdi }u\in H^1_0(0,1) \mbox{ tak, aby }\forall v\in H^1_0(0,1):~a(u,v):=(u',v')=(f,v)=:l(v). \]
+Jako podprostor $V_h$ zvolíme množinu lineárních lomených funkcí na intervalu $[0,1]$.
+Rozdělme interval $[0,1]$ pomocí bodů $x_0=0<x_1<x_2<...<x_{N+1}=1$ na intervaly $I_j:=(x_{j-1},x_j)$ o délce $h_j:=x_j-x_{j-1}$.
+Normu tohoto dělení zavedeme jako $h:=\max_{j=1,...,N+1} h_j$.
+Definujeme
+\[ V_h:=\{v_h\in C([0,1]);~\forall j=1,...,N:~v_h \mbox{ je lineární na }I_j,~v_h(0)=v_h(1)=0 \}. \]
+Jelikož funkce z $V_h$ jsou spojité a nulové v bodech $0$ a $1$, je automaticky $V_h$ podprostorem $H^1_0(0,1)$.
+Každou funkci $v_h$ z $V_h$ jednoznačně určují její hodnoty v dělících bodech $\{x_j\}_{j=1}^N$.
+Dimenze podprostoru tedy je $\dim V_h=N$.
+Pro metodu konečných prvků je klíčová volba báze.
+Zvolíme bázové funkce podprostoru $V_h$ pomocí vztahů $\varphi_i(x_j):=\delta_{ij}$.
+Každá bázová funkce je tedy nenulová v právě jednom dělícím bodě (viz Obr. \ref{fig:base_1d_lin}).
+\begin{figure}[h]
+\centering
+\includegraphics{base_1d_lin}
+\caption{Bázové funkce pro prostor po částech lineárních funkcí.}
+\label{fig:base_1d_lin}
+\end{figure}
+Prvky matice $\tn A\in\R^{N\times N}$ a vektoru $\vc b\in\R^{N}$ mají tvar
+\[ a_{ij}=\int_0^1\varphi_j'(x)\varphi_i(x), \]
+\[ b_i = \int_0^1 f(x)\varphi_i(x)\d x. \]
+Je zřejmé, že $a_{ij}$ je nulové, pokud se indexy $i$ a $j$ liší více než o 1, neboť v takovém případě je v každém bodě intervalu $(0,1)$ alespoň jedna z funkcí $\varphi_i$, $\varphi_j$ nulová. Matice $\tn A$ proto bude třídiagonální, a tedy řídká.
+Platí:
+\begin{align*}
+a_{jj} &= \int_{x_{j-1}}^{x_j}\varphi_j'(x)^2\d x + \int_{x_j}^{x_{j+1}}\varphi_j'(x)^2\d x
+= \int_{x_{j-1}}^{x_j}\frac1{h_{j-1}^2}\d x + \int_{x_j}^{x_{j+1}}\frac1{h_j^2}\d x\\
+&= \frac1{h_{j-1}} + \frac1{h_j},~j=1,...,N,\\\\
+a_{j,j-1} &= a_{j-1,j} = \int_{x_{j-1}}^{x_j}\varphi_{j-1}'(x)\varphi_j'(x)\d x\\
+&= \int_{x_{j-1}}^{x_j}\frac{(-1)}{h_{j-1}^2} \d x = -\frac1{h_{j-1}}, j=2,...,N.
+\end{align*}
+V případě ekvidistantního dělení ($h=h_j$ $\forall j=1,...,N$) máme
+\[ \tn A = \frac{1}{h}\begin{pmatrix}2 & -1 & \\-1 & 2 & -1\\\ddots&\ddots&\ddots\\&-1 & 2 & -1\\&& -1 & 2\end{pmatrix}. \]
+Protože bilineární forma $(a,u,v)$ je symetrická a eliptická, je také $\tn A$ symetrická a pozitivně definitní.
+Soustava $\tn A\vc\xi=\vc b$ má řešení pro každý vektor $\vc b$ a řešením Galerkinovy úlohy je funkce $u_h(x):=\sum_{i=1}^N\xi_i\varphi_i(x)$.
+Hodnoty $\xi_i$ jsou zároveň hodnotami funkce $u_h$ v bodech $x_i$.
+
+Podobně jako ve Větě \ref{th:cea} lze ukázat, že platí odhad chyby
+\begin{equation}\label{eq:error_est_laplace_dir}
+\forall v_h\in V_h:~\norm{u'-u_h'}_2 \le \norm{u'-v_h'}_2,
+\end{equation}
+takže $u_h$ je zároveň nejlepší aproximace slabého řešení $u$ v prostoru po částech lineárních funkcí.
+Zvolme nyní vhodnou funkci $v_h$, abychom odhad chyby \eqref{eq:error_est_laplace_dir} vyjádřili kvantitativně.
+Položíme $v_h:=\tilde u_h$, kde $\tilde u_h$ je interpolanta $u$ (po částech lineární funkce taková, že $\tilde u_h(x_i)=u(x_i)$, $i=0,...,N+1$).
+Pak z teorie Lagrangeovy interpolace víme, že platí
+\[ |u'(x)-\tilde u_h'(x)|\le h\max_{y\in[0,1]}|u''(y)| ~\forall x\in[0,1]. \]
+Je-li funkce $u$ třídy $C^2([0,1])$, pak dostáváme odhad
+\[ \norm{u'-u_h'}_2 \le \norm{u'-\tilde u_h'}_2 \le h\max_{y\in[0,1]}|u''(y)|, \]
+který říká, že chyba Galerkinovy aproximace měřená jako $L^2$ norma rozdílu derivací je řádu $O(h)$.
+
+
+\subsection{Lineární prvky ve vyšší dimenzi}
+
+Pro oblasti v $\R^2$ a $\R^3$ se Galerkinova metoda liší v konstrukci podprostoru $V_h$.
+Předpokládejme, že oblast $\Omega$ je polygonální, resp. polyhedrální.
+Rozdělme $\Omega$ na nepřekrývající se trojúhelníky, resp. čtyřstěny (tzv. elementy).
+Označme $h$ jako průměr největšího elementu.
+Množinu všech elementů (triangulace oblasti $\Omega$) budeme značit $\mathcal T_h$.
+
+Je-li slabá formulace zavedena v prostoru $V=H^1_0(\Omega)$, pak prostor $V_h$ můžeme definovat jako množinu
+\[ V_h:=\{v_h\in C(\overline\Omega);~\forall K\in\mathcal T_h:~ v_h\mbox{ je lineární na }K,~v_h=0\mbox{ na }\partial\Omega\} \]
+všech spojitých po částech lineárních funkcí na $\overline\Omega$.
+Na jednom trojúhelníku, resp. čtyřstěnu, je lineární funkce jednoznačně určena svými hodnotami ve vrcholech.
+Hodnoty ve všech vrcholech $\{\vc x_i\}_{i=1}^N$ pak tvoří stupně volnosti.
+Bázové funkce $\{\varphi_i\}_{i=1}^N$ volíme tak, aby $\varphi_i(\vc x_j)=\delta_{ij}$ (viz Obr. \ref{fig:base_2d_lin}).
+\begin{figure}[h]
+\centering
+\includegraphics{base_2d_lin}
+\caption{Příklad bázové funkce pro prostor po částech lineárních funkcí na 2D oblasti.}
+\label{fig:base_2d_lin}
+\end{figure}
 
 
 % \section{Značení}
