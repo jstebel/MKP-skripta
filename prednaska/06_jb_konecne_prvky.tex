@@ -4,13 +4,14 @@ Vycházeli jsme přitom z předpokladu, že nekonečný prostor řešení $V$ (n
 konečným prostorem $V_h$ aniž bychom přesněji specifikovali jak se tento prostor konkrétně sestrojí.
 Volbu tohoto prostoru je nutno provést tak, aby bylo možno pro jeho funkce vyhodnotit formy $a(\cdot, \cdot)$
 a $l(\cdot)$, což je nutné pro sestavení lineárního systému. Pro vyhodnocení forem je typicky potřeba 
-počítat integrály přes $\Omega$ z funkcí ve $V_h$ jejich mocnin a derivací. Základní myšlenka metody konečných prvků je
+počítat integrály přes $\Omega$ z funkcí v prostoru $V_h$ a z jejich mocnin a derivací. 
+Základní myšlenky metody konečných prvků jsou:
 \begin{enumerate}
  \item Rozdělit (složitou) oblast $\Omega$ na jednodušší podoblasti $K\in \mathcal T$ a vyhodnocovat integrál přes 
  $\Omega$ jako součet integrálů přes podoblasti.
- \item Na jednotlivých podoblastech sestrojit $V_h(K)$ jako prostor vhodných polynomů. Polynomy zůstávají polynomy 
+ \item Na každé podoblasti $K$ sestrojit prostor $V_h(K)$ z jednoduchých funkcí typicky z polynomů. Polynomy zůstávají polynomy 
  při umocňování i derivování a na jednoduchých oblastech je lze integrovat přesně.
- \item Sestrojit $V_h$ jako prostor po částech polynomiálních funkcí, zajistit spojitost (nebo i spojitost derivací) mezi podoblastmi 
+ \item Sestrojit $V_h(\Omega)$ jako prostor po částech polynomiálních funkcí, zajistit spojitost (nebo i spojitost derivací) mezi podoblastmi 
  pomocí {\it stupňů volnosti}.
 \end{enumerate}
 
@@ -38,12 +39,59 @@ Konečný prvek je trojice $(K, P_K, \Sigma)$, kde
 
 \subsection{Vyhodnocení forem}
 Demonstrujme vyhodnocení integrálů ve formách $a(\cdot, \cdot)$, $l(\cdot)$ na následujícím integrálu, který vznikne slabou formulací Laplaceovy rovnice:
-\begin{align*}
- a(\phi_i, \phi_j) &= \int_\Omega \grad \phi_i(\vc x) \cdot \grad \phi_j(\vc x) \d \vc x\\
-                   &= \sum_{K\in \mathcal T} \int_K  \grad \phi_i(\vc x) \cdot \grad \phi_j(\vc x) \d \vc x =
-                   &= \sum_{K\in \mathcal T} \int_{\hat K} \grad \hat\phi_i(\hat{\vc x}) \cdot \grad \hat \phi_j(\hat{\vc x}) J(\hat{\vc x}) \d \hat{\vc x}
-                   &= \sum_{K\in \mathcal T} \sum_{q\in Q} \grad \grad \hat\phi_i(q) \cdot \grad \hat \phi_j(q) J(q)w_q
-\end{align*}
+\[
+ a(\phi_i, \phi_j) = \int_\Omega \grad \phi_i(\vc x) \cdot \grad \phi_j(\vc x) \d \vc x
+\]
+Po rozdělení integrace na elementy $K$ z triangulace $\mathcal T$:
+\[
+ a(\phi_i, \phi_j) =\sum_{K\in \mathcal T} \int_K  \grad \phi_i(\vc x) \cdot \grad \phi_j(\vc x) \d \vc x 
+\]
+Každý prvek sítě $K$ převedeme na referenční element $\hat K$ pomocí substituce 
+${\vc x} = \tn P_K \hat{\vc x} + \vc q_K$, $\d \vc x = \abs{\tn P_K} \d \hat{ \vc x}$. 
+Při této transformaci se zachovávají hodnoty funkcí, t.j. 
+\[
+    \phi(\vc x) = \phi\big( \vc x(\hat{\vc x}) \big)=\hat \phi(\hat{\vc x}) 
+\]
+ale mění se hodnoty derivací:
+\[
+   \frac{\prtl \hat\phi(\hat{\vc x}) }{\prtl \hat{x}_i} = \frac{\prtl \phi(\vc x(\hat{\vc x})) }{\prtl \hat{x}_i} = \frac{\prtl \phi(\vc x)}{\prtl x_j}\frac{\prtl x_j}{\prtl \hat x_i}
+\]
+neboli pro gradient $\grad_{\hat{\vc x}} \hat \phi = \tn P_K \grad_{\vc x} \phi$. Po substituci dostaneme tedy integrál:
+
+\[
+  a(\phi_i, \phi_j) = \sum_{K\in \mathcal T} \int_{\hat K} 
+        \big[ \tn P_K^{-1} \grad_{\hat{\vc x}} \hat\phi_i \big] \cdot \big[ \tn P_K^{-1} \grad_{\hat{ \vc x}} {\hat \phi}_j \big] \abs{\tn P_K} \d \hat{\vc x}.
+\]
+Pro transformaci složitějších než simplexových 
+elementů je transformace nelineární a tudíž matice $\tn P_K$ a vektor posunutí $\vc q_K$ jsou obecně závislé na $\vc x$ resp. $\hat{\vc x}$.
+Použitím numerické integrace (viz. dále) na náš integrál pak dostaneme:
+\[
+ a(\phi_i, \phi_j) = \sum_{K\in \mathcal T} \sum_{q\in Q} \vc D_i(\vc q) \cdot  \vc D_j(\vc q) J(\vc q)w_{\vc q},
+\]                   
+kde $\vc D_i(\vc q) = \tn P_K^{-1}(\vc q) \grad \hat \phi_i(\vc q)$.
+
+\subsubsection{Numerická integrace}
+Pro vyhodnocení integálů je výhodné použít numerickou integraci (kvadraturu). Pro polynomiální bázové funkce lze zvolit takovou kvadraturu, že jsou 
+příslušné integrály spočteny přesně. Pokud jsou pod integrálem i jiné funkce, například vlivem koeficientů v rovnici nebo kvůli 
+transformaci na referenční element poskytuje numerická kvadratura obvykle dobrou aproximaci. Konkrétní kvadratura na referenčním prvku $\hat K$ je dána
+\begin{enumerate}
+ \item množinou kvadraturních bodů $Q=\{\vc q \in \hat K\}$,
+ \item množinou jim příslušejících vah $w_{\vc q}$.
+\end{enumerate}
+Integrál z funkce $f(\hat{\vc x})$ je pak aproximován pomocí sumy:
+\[
+    \int_{\hat K} f(\hat{\vc x}) \d \hat{\vc x} \approx \sum_{\vc q\in Q} f(\hat{\vc q}) w_{\vc q}.
+\]
+
+Pro integraci na reálném intervalu $K\subset \Real$ lze použít {\it Gaussovu kvadraturu},  která má optimální řád chyby. Při použití $n$ kvadraturních bodů integruje
+kvadrature přesně polynomy do řádu $2n-1$. Pro vyhodnocení bilineární formy pro Laplaceovu rovnici a při použití prvků s polynomi řádu $k$, mají derivace řád $k-1$ a 
+jejich součin řád $2(k-1)$ pro přesné vyhodnocení integrálů je tedy potřeba použít $k$-bodovou Gaussovu kvadraturu. Pro 2d a 3d prvky je situace komplikovanější,
+nicméně vhodné kvadratury existují pro všechny základní typy elementů.
+
+\section{Interpolační vlastnosti konečných prvků}
+% 
+
+
 
 
 
