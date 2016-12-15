@@ -889,10 +889,10 @@ Uvažujme okrajovou úlohu
 jejíž slabá formulace zní:
 \[ \mbox{Najdi }u\in H^1_0(0,1) \mbox{ tak, aby }\forall v\in H^1_0(0,1):~a(u,v):=(u',v')=(f,v)=:l(v). \]
 Jako podprostor $V_h$ zvolíme množinu lineárních lomených funkcí na intervalu $[0,1]$.
-Rozdělme interval $[0,1]$ pomocí bodů $x_0=0<x_1<x_2<...<x_{N+1}=1$ na intervaly $I_j:=(x_{j-1},x_j)$ o délce $h_j:=x_j-x_{j-1}$.
+Rozdělme interval $[0,1]$ pomocí bodů $x_0=0<x_1<x_2<...<x_{N+1}=1$ na intervaly $E_j:=(x_{j-1},x_j)$ o délce $h_j:=x_j-x_{j-1}$.
 Normu tohoto dělení zavedeme jako $h:=\max_{j=1,...,N+1} h_j$.
 Definujeme
-\[ V_h:=\{v_h\in C([0,1]);~\forall j=1,...,N:~v_h \mbox{ je lineární na }I_j,~v_h(0)=v_h(1)=0 \}. \]
+\[ V_h:=\{v_h\in C([0,1]);~\forall j=1,...,N:~v_h \mbox{ je lineární na }E_j,~v_h(0)=v_h(1)=0 \}. \]
 Jelikož funkce z $V_h$ jsou spojité a nulové v bodech $0$ a $1$, je automaticky $V_h$ podprostorem $H^1_0(0,1)$.
 Každou funkci $v_h$ z $V_h$ jednoznačně určují její hodnoty v dělících bodech $\{x_j\}_{j=1}^N$.
 Dimenze podprostoru tedy je $\dim V_h=N$.
@@ -946,10 +946,10 @@ Označme $h$ jako průměr největšího elementu.
 Množinu všech elementů (triangulace oblasti $\Omega$) budeme značit $\mathcal T_h$.
 
 Je-li slabá formulace zavedena v prostoru $V=H^1_0(\Omega)$, pak prostor $V_h$ můžeme definovat jako množinu
-\[ V_h:=\{v_h\in C(\overline\Omega);~\forall K\in\mathcal T_h:~ v_h\mbox{ je lineární na }K,~v_h=0\mbox{ na }\partial\Omega\} \]
+\[ V_h:=\{v_h\in C(\overline\Omega);~\forall E\in\mathcal T_h:~ v_h\mbox{ je lineární na }E,~v_h=0\mbox{ na }\partial\Omega\} \]
 všech spojitých po částech lineárních funkcí na $\overline\Omega$.
-Na jednom trojúhelníku, resp. čtyřstěnu, je lineární funkce jednoznačně určena svými hodnotami ve vrcholech.
-Hodnoty ve všech vrcholech $\{\vc x_i\}_{i=1}^N$ pak tvoří stupně volnosti.
+Na jednom trojúhelníku, resp. čtyřstěnu, je lineární funkce jednoznačně určena svými hodnotami ve vrcholech $\{\vc x_i\}_{i=1}^N$ uvnitř oblasti.
+Hodnoty ve všech těchto vrcholech pak tvoří stupně volnosti funkce z $V_h$.
 Bázové funkce $\{\varphi_i\}_{i=1}^N$ volíme tak, aby $\varphi_i(\vc x_j)=\delta_{ij}$ (viz Obr. \ref{fig:base_2d_lin}).
 \begin{figure}[h]
 \centering
