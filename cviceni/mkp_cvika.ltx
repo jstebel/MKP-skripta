@@ -19,6 +19,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage[czech]{babel}
 \usepackage{arydshln}
+\usepackage{graphicx}
+\usepackage{gensymb}
 
 %\usepackage{mathbbol}
 %\usepackage{bbm}
@@ -918,6 +920,96 @@ Podobně pro $i=n+1$ dostaneme předpisy:
 Zdrojové kódy ke cvičením jsou v adresáři \url{http://bacula.nti.tul.cz/~mkp/matlab/}.
 Příklad implementace řešení Laplaceovy rovnice na intrevalu $(0,1)$ je v souboru \verb'mkp1d_laplace.m'. Z něj je 
 odvozena implementace úlohy popsané výše: \verb'mkp1d_heat.m'.
+
+
+
+
+
+\pagebreak
+\section{Lokální matice a numerická integrace pro MKP v 1d}
+
+Pro 1d lineární prvky jsme si ukázali, že globální matice metody konečných prvků $\tn A$ má blokově diagonální tvar:
+\[ \tn A=\begin{pmatrix}\includegraphics[width=2cm]{global_local_matrix}\end{pmatrix}, \quad \tn A^k=\begin{pmatrix} A^k_{00} & A^k_{01}\\A^k_{10} & A^k_{11}\end{pmatrix},\]
+kde $\tn A^k$ je tzv. lokální matice řádu $2\times2$ vzniklá integrací na elementu $e^k$.
+Např. pokud globální matice má prvky $a_{ij}=\int_\Omega \mathcal K(x) v_j'(x) v_i'(x)\d x$, pak prvky lokální matice na elementu $e^k$ jsou:
+\[ A^k_{ij} = \int_{e^k} \mathcal K(x) v_{k+j}'(x) v_{k+i}'(x) \d x = \int_0^1 \mathcal K(x) \frac{\varphi_j'(t)}{|e^k|} \frac{\varphi_i'(t)}{|e^k|} |e^k|\dt,~i,j=0,1 \]
+a bázové funkce na referenčním elementu $(0,1)$ mají tvar
+\begin{equation}\label{eq:basis_lin}
+\varphi_0(t)=1-t, \quad\varphi_1(t)=t.
+\end{equation}
+Podobně sestavujeme i vektor $\vc b$ pomocí lokálních příspěvků na elementech.
+\paragraph{Okrajové podmínky.} Na elementech ležících na hranici oblasti mohou lokální matice a vektory mít odlišnou podobu podle zadaných okrajových podmínek.
+Konkrétně pro Dirichletovu podmínku $u=u_d$ uvažujeme i bázové funkce nenulové na hranici intervalu $(0,1)$.
+Na levé straně 1. elementu pak definujeme
+\[ A^1_{00} = 1,~A^1_{01} = 0,~b^1_0=u_d. \]
+
+\paragraph{Báze pro konečné prvky.} Pro kvadratické konečné prvky máme na referenčním elementu bázové funkce:
+\begin{equation}\label{eq:basis_quad}
+\varphi_0(t)=(t-1)(2t-1), \quad \varphi_1(t)=4t(1-t), \quad \varphi_2(t)=t(2t-1)
+\end{equation}
+odpovídající stupňům volnosti $\hat u(0)$, $\hat u(\frac12)$, $\hat u(1)$ a lokální matice jsou řádu $3\times 3$.
+\\
+Kubické konečné prvky:
+\[ \varphi_0(t)=\frac92(1-t)(t-\frac13)(t-\frac23),\quad \varphi_1(t)=\frac{27}2t(t-\frac23)(t-1),\quad \varphi_2(t)=\frac{27}2t(t-\frac13)(1-t),\quad \varphi_3(t)=\frac92t(t-\frac13)(t-\frac23), \]
+stupně volnosti: $\hat u(0)$, $\hat u(\frac13)$, $\hat u(\frac23)$, $\hat u(1)$.
+
+\paragraph{Numerická integrace.} Pro výpočet integrálů v lokálních maticích a vektorech je vhodné použít numerickou integraci:
+\[ \int_0^1 f(x)\d x \approx \sum_{i=1} f(x_i)w_i, \]
+kde $\{x_i\}$ jsou kvadraturní body rozmístěné v intervalu $(0,1)$ a $\{w_i\}$ jsou kvadraturní váhy $(\sum w_i=1)$.
+Např. dvě nejjednodušší Gaussovy kvadratury, které jsou přesné pro polynomy 1., resp. 3. stupně, mají tvar:
+\[ \int_0^1 f(x)\d x \approx f(1/2),\quad \int_0^1 f(x)\d x\approx \frac12\left(f(\frac{3-\sqrt 3}6)+f(\frac{3+\sqrt 3}6)\right). \]
+
+\begin{enumerate}
+\item Pro následující úlohy nejprve sestavte lokální matice a vektory $\tn A^k$, $\vc b^k$ a poté je implementujte úpravou skriptu \url{http://bacula.nti.tul.cz/~mkp/matlab/mkp1d_laplace_numint.m}:
+\begin{align*}
+&a)~ -u'' = 1 \mbox{ v }(0,1),\quad u(0)=2,~u(1)=3,\\%\quad \mbox{(přesné řešení $u(x)=2+2x-x^2$)},\\
+&b)~ -u''= 2(1-u) \mbox{ v }(0,2),\quad u'(0)=1, -u'(2)=\frac12, \\
+&c)~ -((1+x)u')' = 1 \mbox{ v }(0,1),\quad u(0)=u(1)=0, \\
+&d)~ -u''+u'= 0 \mbox{ v }(0,1),\quad u(0)=1, -u'(1)=0.
+\end{align*}
+Uvažujte ekvidistantní dělení a lineární, resp. kvadratické konečné prvky.
+Dirichletovy podmínky aplikujte jako dodatečné rovnice pro stupně volnosti v krajních bodech.
+\item Sestavte lokální matice a vektory $\tn A$ a vektor $\vc b$ pro MKP s 1d lineárními prvky pro úlohu
+\[ -\mathcal Ku'' = \sigma(u_f-u) \mbox{ v }(0,1),\quad u(0)=u_d,~\mathcal K(1)u''(1)= q. \]
+Úloha popisuje vedení tepla v tyči o délce 1, která je zleva předehřívána na konstantní teplotu $u_d=373~K\doteq100~\degree C$, zprava tepelným tokem $q=1~W/K$.
+Tepelná vodivost $\mathcal K(x)=\begin{cases}10^3 ~W/K & x\le\frac12\\10^6 ~W/K & x>\frac12\end{cases}$.
+Těleso je chlazeno vodou o teplotě $u_f=283 ~K$ s koeficientem přestupu $\sigma=10^7~W/(K m^2)$.
+\end{enumerate}
+
+
+Tabulka integrálů na referenčním prvku $(0,1)$ pro lineární bázové funkce \eqref{eq:basis_lin}:
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+& $\varphi_0$ & $\varphi_1$ & $\varphi_0'$ & $\varphi_1'$\\
+\hline
+$\varphi_0$ & 1/3&&&\\\hline
+$\varphi_1$ & 1/6 & 1/3&&\\\hline
+$\varphi_0'$ & -1/2 & -1/2 & 1 &\\\hline
+$\varphi_1'$ & 1/2 & 1/2 & -1 & 1\\\hline
+\end{tabular}
+\end{center}
+
+Tabulka integrálů na referenčním prvku $(0,1)$ pro kvadratické bázové funkce \eqref{eq:basis_quad}:
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+& $\varphi_0$ & $\varphi_1$ & $\varphi_2$ & $\varphi_0'$ & $\varphi_1'$ & $\varphi_2'$\\
+\hline
+$\varphi_0$ & 2/15&&&&&\\\hline
+$\varphi_1$ & 1/15 & 8/15&&&&\\\hline
+$\varphi_2$ & 1/60 & 7/15 & 8/15&&&\\\hline
+$\varphi_0'$ & -1/2 & -2/3 & -1/3 & 7/3&&\\\hline
+$\varphi_1'$ & 2/3 & 0 & -2/3 & -8/3 & 16/3&\\\hline
+$\varphi_2'$ & -1/6 & 2/3 & 1 & 1/3 & -8/3 & 7/3\\\hline
+\end{tabular}
+\end{center}
+
+
+
+
+
+
 
 \begin{thebibliography}{99}
 \bibitem{Rektorys} K. Rektorys a spol. : 
