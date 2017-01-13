@@ -1,4 +1,6 @@
 \section{Diskrétní prostory konečných prvků}
+(Viz. Johnson \cite{Johnson}, kapitola 3)
+
 V předchozích kapitolách jsme odvodili aproximaci abstraktní eliptické pomocí Galerkinovy metody.
 Vycházeli jsme přitom z předpokladu, že nekonečný prostor řešení $V$ (např. $H^1(\Omega)$) aproximujeme
 konečným prostorem $V_h$ aniž bychom přesněji specifikovali jak se tento prostor konkrétně sestrojí.
@@ -15,14 +17,12 @@ Základní myšlenky metody konečných prvků jsou:
  pomocí {\it stupňů volnosti}.
 \end{enumerate}
 
-%\jb{TODO: pokračovat podle Johnsona}
-\subsubsection{Kostrukce konečně prvkového prostoru}
+\subsection{Kostrukce konečně prvkového prostoru}
 
-\subsubsection{Příklad lineárních prvků ve 2d}
+\subsection{Příklad lineárních prvků ve 2d}
 
-\subsubsection{Příklad kvadratických prvků ve 2d}
-
-\subsubsection{Obecný konečný prvek}
+\subsection{Příklad kvadratických prvků ve 2d}
+\subsection{Obecný konečný prvek}
 Předchozí příklady můžeme shrnout do obecné definice konečného prvku.
 \begin{df}
 Konečný prvek je trojice $(K, P_K, \Sigma)$, kde
@@ -70,7 +70,7 @@ Použitím numerické integrace (viz. dále) na náš integrál pak dostaneme:
 \]                   
 kde $\vc D_i(\vc q) = \tn P_K^{-1}(\vc q) \grad \hat \phi_i(\vc q)$.
 
-\subsubsection{Numerická integrace}
+\subsection{Numerická integrace}
 Pro vyhodnocení integálů je výhodné použít numerickou integraci (kvadraturu). Pro polynomiální bázové funkce lze zvolit takovou kvadraturu, že jsou 
 příslušné integrály spočteny přesně. Pokud jsou pod integrálem i jiné funkce, například vlivem koeficientů v rovnici nebo kvůli 
 transformaci na referenční element poskytuje numerická kvadratura obvykle dobrou aproximaci. Konkrétní kvadratura na referenčním prvku $\hat K$ je dána
@@ -89,6 +89,15 @@ jejich součin řád $2(k-1)$ pro přesné vyhodnocení integrálů je tedy pot�
 nicméně vhodné kvadratury existují pro všechny základní typy elementů.
 
 \section{Interpolační vlastnosti konečných prvků}
+Podle Johnson \cite{Johnson}, kapitola 4, bez důkazů.
+\begin{itemize}
+ \item Interpolační vlastnosti lineárních prvků ve 2D.
+ \item Interpolační vlastnosti prvků vyšších řádů.
+ \item Aplikace interpolačních odhadů v Ceově lemmatu.
+ \item Regularita přesného slabého řešení (Kdy je možno použít prvky vyšších řádů?)
+ \item Adaptivní metody, základní principy.
+\end{itemize}
+
 % 
 
 
