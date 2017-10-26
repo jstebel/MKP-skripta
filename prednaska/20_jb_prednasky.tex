@@ -13,7 +13,7 @@ Celkovou energii v oblasti $\Omega$ v čase $t$ tedy vyjádříme jako
 \[
   \int\limits_0^1 q(x,t) \d x
 \]
-Dále si zaveďme tepelný tok $j(x,t)$, který vyjadřuje kolik energie projde bodem $x$ (představujeme si příčný průrez termoskou)
+Dále si zaveďme tepelný tok $j(x,t)$, který vyjadřuje kolik energie projde bodem $x$ (představujeme si příčný průřez termoskou)
 za jednotku času.
 Nyní můžeme vyjádřit úbytek energie jako zápornou změnu celkové energie v čase a tu položit rovnu rozdílu tepelného toku
 na začátku a konci oblasti, tedy v bodech $x=0$ a $x=1$.
@@ -64,7 +64,7 @@ a \eqref{eqn:hom_dirichlet} je homogenní Dirichletovou okrajovou podmínkou a p
 
 
 Slabou formulaci získáme přenásobením \eqref{eqn:poisson} testovací funkcí $\varphi(x)\in\mathcal{C}([0,1])$, $\varphi(1)=0$, 
-následnou integrací rovnice přes oblast $\Omega$ a aplicaí okrajových podmínek za použití per partes (resp. Greenovy věty).
+následnou integrací rovnice přes oblast $\Omega$ a aplikací okrajových podmínek za použití per partes (resp. Greenovy věty).
 \[
   \int\limits_{\Omega} -\left( Ku'\right)'(x) \varphi(x) \d x = \int\limits_{\Omega} f(x) \varphi(x) \d x
 \]
@@ -135,8 +135,8 @@ a pozitivní definitnost
     
 \subsection{Lineární konečné prvky v 1D}
 Jako podprostor $V_h$ zvolíme množinu lineárních lomených funkcí na intervalu $[0,1]$.
-Rozdělme interval $[0,1]$ pomocí bodů $x_0=0<x_1<x_2<...<x_{N}=1$ na intervaly $E_j:=(x_{j-1},x_j)$ o délce $h_j:=x_j-x_{j-1}$.
-Normu tohoto dělení zavedeme jako $h:=\max_{j=1,...,N+1} h_j$.
+Rozdělme interval $[0,1]$ pomocí bodů $x_1=0<x_1<x_2<...<x_{N+1}=1$ na intervaly $E_j:=(x_j,x_{j+1})$ o délce $h_j:=x_{j+1}-x_{j}$.
+Normu tohoto dělení zavedeme jako $h:=\max\limits_{j=1,...,N} h_j$.
 Definujeme
 \[ V_h:=\{v_h\in C([0,1]);~\forall j=1,...,N:~v_h \mbox{ je lineární na }E_j,~v_h(1)=0 \}. \]
 %Jelikož funkce z $V_h$ jsou spojité a nulové v bodech $0$ a $1$, je automaticky $V_h$ podprostorem $H^1_0(0,1)$.
@@ -144,7 +144,7 @@ Každou funkci $v_h$ z $V_h$ jednoznačně určují její hodnoty v dělících 
 Dimenze podprostoru tedy je $\dim V_h=N$.
 
 Pro metodu konečných prvků je klíčová volba báze.
-Zvolíme bázové funkce podprostoru $V_h$ pomocí vztahů
+Zvolíme bázové funkce $\{\varphi_j\}_{j=1}^N$ podprostoru $V_h$ pomocí vztahů
 \begin{equation*}
       \varphi_i(x_j) = 
         \begin{cases}
@@ -152,10 +152,10 @@ Zvolíme bázové funkce podprostoru $V_h$ pomocí vztahů
           0 \quad \textrm{pro } i\neq j\\
         \end{cases}
 \end{equation*}
-Každá bázová funkce je tedy nenulová v právě jednom dělícím bodě (viz Obr. \ref{fig:base_1d_lin}).
+Každá bázová funkce je tedy nenulová v právě jednom uzlovém bodě (viz Obr. \ref{fig:base_1d_lin}). Všimněme si zde také, že na konci s Neumannovou okrajovou podmínkou existuje na intervalu $E_1$ funkce $\varphi_1$. Naopak na konci s Dirichletovou okrajovou podmínkou na intervalu $E_N$ existuje již pouze funkce $\varphi_N$. Prostory $V$ a $V_h$ a jeho báze závisí na konkrétních okrajových podmínkách.
 \begin{figure}[h]
 \centering
-\includegraphics{base_1d_lin}
+\includegraphics{base_1d_lin_termoska}
 \caption{Bázové funkce pro prostor po částech lineárních funkcí.}
 \label{fig:base_1d_lin}
 \end{figure}
@@ -163,23 +163,48 @@ Každá bázová funkce je tedy nenulová v právě jednom dělícím bodě (viz
 % \[ a_{ij}=\int_0^1\varphi_j'(x)\varphi_i(x), \]
 % \[ b_i = \int_0^1 f(x)\varphi_i(x)\d x. \]
 
-Podívejme se nyní na konkrétní soustavu rovnic, kterou dostáváme.
+Podívejme se nyní na konkrétní soustavu rovnic, kterou dostáváme z~\eqref{eqn:discrete_weak_form}.
 Je zřejmé, že $A_{ij}$ je nulové, pokud se indexy $i$ a $j$ liší více než o 1, neboť v takovém případě je v každém bodě intervalu $(0,1)$ alespoň jedna z funkcí $\varphi_i$, $\varphi_j$ (a tedy i $\varphi_i'$, $\varphi_j'$) nulová. Matice $\vc A$ proto bude třídiagonální, a tedy řídká.
 
 Pokud budeme uvažovat $K(x) = const.\, \forall x\in E_j,\, j = 1\ldots N$, pak platí:
 \begin{align*}
 A_{jj} &= \int_{x_{j-1}}^{x_j} K(x)\varphi_j'(x)^2\d x + \int_{x_j}^{x_{j+1}} K(x) \varphi_j'(x)^2\d x
 = \int_{x_{j-1}}^{x_j}\frac{K}{h_{j-1}^2}\d x + \int_{x_j}^{x_{j+1}}\frac{K}{h_j^2}\d x\\
-&= K\left(\frac1{h_{j-1}} + \frac1{h_j}\right),~j=1,...,N,\\\\
+&= K\left(\frac1{h_{j-1}} + \frac1{h_j}\right),~j=2,...,N,\\\\
+A_{11} &= \int_{x_1}^{x_{2}} K(x) \varphi_1'(x)^2\d x
+= \frac{K}{h_1},&\\\\
 A_{j,j-1} &= A_{j-1,j} = \int_{x_{j-1}}^{x_j}K(x)\varphi_{j-1}'(x)\varphi_j'(x)\d x\\
-&= \int_{x_{j-1}}^{x_j}\frac{(-K)}{h_{j-1}^2} \d x = -\frac{K}{h_{j-1}}, j=2,...,N.
+&= \int_{x_{j-1}}^{x_j}\frac{(-K)}{h_{j-1}^2} \d x = -\frac{K}{h_{j-1}}, j=2,...,N.\\\\
+b_j &= \int_{x_{j-1}}^{x_{j+1}} f(x)\varphi_j(x)\d x,~j=2,...,N,&\\\\
+b_1 &= \int_{x_1}^{x_2} f(x)\varphi_1(x)\d x,&\\\\
 \end{align*}
-V případě ekvidistantního dělení ($h=h_j$ $\forall j=1,...,N$) a $K(x) = const.\, \forall x\in\Omega$ máme
-\[ \tn A = \frac{K}{h}\begin{pmatrix}2 & -1 & \\-1 & 2 & -1\\\ddots&\ddots&\ddots\\&-1 & 2 & -1\\&& -1 & 2\end{pmatrix}. \]
+V případě ekvidistantního dělení ($h=h_j$ $\forall j=1,...,N$) a $K(x) = const.,\,f(x)=const.\, \forall x\in\Omega$ máme
+\[
+  \vc A = \frac{K}{h}\begin{pmatrix}1 & -1 &&& \\-1 & 2 & -1&&\\&\ddots&\ddots&\ddots&\\&&-1 & 2 & -1\\&&& -1 & 2\end{pmatrix}
+  = fh\begin{pmatrix}0.5\\1\\1\\1\\1\end{pmatrix}= \vc b.
+\]
 % Protože bilineární forma $(a,u,v)$ je symetrická a eliptická, je také $\tn A$ symetrická a pozitivně definitní.
 Soustava $\vc A\vc u_h=\vc b$ má řešení pro každý vektor $\vc b$,
 %a řešením Galerkinovy úlohy je funkce $u_h(x):=\sum_{i=1}^N\xi_i\varphi_i(x)$.
 hodnoty $u_h^i$ jsou zároveň hodnotami funkce $u_h$ v bodech $x_i$.
+
+
+
+
+Nyní budeme zkoumat chybu řešení, tedy v jakém vztahu jsou $u$ a $u_h$.
+Předem zavedeme zjednodušené značení
+\[
+a(u,v) = \int\limits_\Omega K(x) u'(x) v'(x) \d x, \qquad b(v) = \int\limits_\Omega f(x) v(x) \d x
+\]
+Nyní dosadíme $u$ a $u_h$ do naší slabé formulace, za použité nového značení a obě rovnice odečteme:
+\[
+\int\limits_\Omega K(x) u'(x) \varphi'(x) \d x = a(u,\varphi) = b(\varphi) = \int\limits_\Omega f \varphi(x) \d x
+\]
+\[
+\int\limits_\Omega K(x) u'(x) \varphi'(x) \d x = a(u,\varphi) = b(\varphi) = \int\limits_\Omega f \varphi(x) \d x
+\]
+
+
 
 Podobně jako ve Větě \ref{th:cea} lze ukázat, že platí odhad chyby
 \begin{equation}\label{eq:error_est_laplace_dir}
