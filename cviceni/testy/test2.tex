@@ -1,0 +1,48 @@
+\documentclass{article}
+\usepackage[czech]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+
+\renewcommand{\div}{\operatorname{div}}
+\newcommand{\R}{\mathbb R}
+\newcommand{\vc}[1]{\boldsymbol{#1}}
+
+\begin{document}
+
+\title{Zápočtový test č. 1}
+\date{11. 12. 2017}
+\author{}
+\maketitle
+
+\begin{enumerate}
+\item Napište slabou formulaci problému vedení tepla.\\
+Tepelný tok je dán vztahem
+\[
+q(x) = -(3+x)^2 u'(x)
+\]
+a rovnice kontinuity
+\[
+q'(x) = x + \sigma(u_f - u(x)) \qquad \textrm{v }\Omega=[a,b],
+\]
+kde $\sigma>0$ a $u_f$ jsou konstanty.\\
+Definovány jsou následující okrajové podmínky
+\begin{eqnarray*}
+-q(x) &=& q_N \qquad \textrm{v } x=a, \\
+u(x) &=& u_b \qquad \textrm{v } x=b.
+\end{eqnarray*}
+(Definujte příslušné vektorové prostory a vhodné bilineární a lineární formy.)
+
+
+\item Aplikujte Galerkinovu metodu na slabou formulaci
+\begin{multline*}
+    \sigma u(a)v(a) + \int\limits_a^b k(x) u'(x)v'(x) + cu'(x)v(x) \,\textrm{d}x =\\
+    = \int\limits_a^b f(x)v(x) \,\textrm{d}x + \sigma u_r v(a) \\ \forall v\in V=\{w\in H^1(\Omega), w(b) = 0\},\; u\in V.
+\end{multline*}
+Použijte lineární konečné prvky, definujte diskrétní slabé řešení a příslušný diskrétní vektorový prostor.
+Sestavte příslušný lineární algebraický systém, uveďte lokální matice a jejich pravé strany.
+
+\emph{Bonus: Nalezněte příslušnou silnou formulaci -- parciální differenciální rovnici včetně okrajových podmínek.}
+
+\end{enumerate}
+
+\end{document}
