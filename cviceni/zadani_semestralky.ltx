@@ -166,7 +166,10 @@
 \parindent=0pt
 \parskip=0.3cm
 \begin{center}
-{\LARGE MKP - Metoda konečných prvků, zadání semestrálních prací}
+{\LARGE MKP - Metoda konečných prvků }
+\vspace{0.5cm}
+
+{\LARGE Zadání semestrálních prací}
 
 \vspace{1cm}
 {\Large naposledy upraveno: \today}
@@ -174,7 +177,6 @@
 
 \pagebreak
 {\LARGE{Zadání}}
-
 \vfil
 
 Pro zadanou úlohu proveďte následující úkoly:
@@ -193,11 +195,34 @@ Pro zadanou úlohu proveďte následující úkoly:
   \item Spočítejte analyticky řešení $u(x)$. \\
         \emph{Pozn.: Pro přesné řešení je potřeba vyřešit nehomogenní dif. rovnici 2.řádu pomocí variace konstant nebo přímou integrací. K~vybraným úlohám je řešení dáno až na konstanty.}
   \item Implementujte MKP v Matlabu/Octave.\\
-        (Použijte lokální matice, numerickou integraci a sestavení pomocí referenčního elementu.)
+        Použijte lokální matice, numerickou integraci a sestavení pomocí referenčního elementu.\\
+        (Máte na webu k dispozici skripty ze cvičení, nebojte se je použít!)
   \item Ověřte numericky konvergenci metody. Použijte dělení $\verb'n = [10 20 40 80 160 320 640 1280]'$.
 \end{enumerate}
 
-\hrulefill
+Přiložená zpráva musí splňovat následující:
+\begin{itemize}
+    \item formát PDF (zpracujte pomocí MS Word, Libre Office Writer nebo \LaTeX)
+    \item úvodní strana - název předmětu, název sem. práce, jména řešitelů, semestr, datum, (logo TUL)
+    \item zadání Vaší vybrané úlohy
+    \item analytické řešení, vypočítané konstanty
+    \item odvození slabé formulace -- všechny nálěžitosti, viz body výše
+    \item diskrétní slabá formulace -- jasně označené, popsané a definované body, indexy, elementy, proměnné atd.
+    \item lokální matice a vektor pravé strany, viz body výše
+    \item chyby řešení v $L_2$ a $H^1$ normě, řád konvergence (konvergenční tabulka)
+    \item graf řešení (pro vybraný diskretizační krok, analytické a diskrétní), graf konvergence
+    \item grafy, tabulky číslované a popsané, rovnice číslované
+    \item komentáře k jednotlivým (alespoň k těm nejpodstatnějším) krokům
+    \item ZÁVĚR - shrnutí, zhodnocení výsledků, co vám vyšlo $\times$ co jste očekávali (co mělo vyjít), konverguje správně vaše metoda? atd. V rozsahu půl A4.
+\end{itemize}
+
+Všechny soubory Vaší semestrální práce (všechny potřebné \verb'*.m' skripty, PDF) mějte v jednom adresáři, který zabalte (\verb'zip, rar, tar') a odešlete na emailovou adresu cvičícího (\verb'pavel.exner@tul.cz').
+
+% \hrulefill
+\pagebreak
+
+{\LARGE{Úlohy}}
+\vfil
 
 \begin{enumerate}
   \item
