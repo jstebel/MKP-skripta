@@ -1,0 +1,102 @@
+\documentclass{article}
+\usepackage[czech]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+
+\renewcommand{\div}{\operatorname{div}}
+\newcommand{\R}{\mathbb R}
+\newcommand{\vc}[1]{\boldsymbol{#1}}
+\def\d{{\rm{d}}}
+
+\begin{document}
+
+\title{Písemka č. 1}
+\date{9. 12. 2019}
+\author{}
+\maketitle
+
+\noindent
+Napište slabou formulaci ustáleného problému difuzního šíření koncentrace látky na oblasti $\Omega=[a,b]$.\\
+Difuzní tok je dán vztahem
+\[
+    q(x) = -Du'(x) \qquad \textrm{v }\Omega,
+\]
+kde $D=const.$ je koeficient difuzivity. Dále platí rovnice kontinuity
+\[
+    q'(x) = 1-x \qquad \textrm{v }\Omega.
+\]
+Definovány jsou následující okrajové podmínky:
+\begin{itemize}
+\item v bodě $a$ se koncentrace šíří skrz membránu a difuzní tok je zde dán vztahem $\sigma(u(a) - u_R)$,
+kde $\sigma=const.$ je přechodový koeficient membrány a $u_R=const.$ je neměnná koncentrace na vnější straně membrány.
+
+\item v bodě $b$ je změřena ustálená koncentrace $u_B$
+\end{itemize}
+
+% \begin{eqnarray*}
+%     -Ku'(a) &=& \sigma(u(a) - u_D) \qquad \sigma=const.,\; u_D=const.\\
+%     u(b) &=& 0
+% \end{eqnarray*}
+
+\vspace{2cm}
+
+\begin{enumerate}
+\item Zakreslete oblast $\Omega$, zaveďte souřadný systém, vyznačte okrajové podmínky.
+\item Definujte prostory, ve kterých leží funkce $u,v$.
+\item Odvoďte slabou formulaci, dosaďte okrajové podmínky.
+\end{enumerate}
+
+
+
+
+\newpage
+
+\noindent
+
+
+1)\\
+Napište slabou formulaci ustáleného problému vedení tepla v kovové tyči (oblast $\Omega=[a,b]$).\\
+Tepelný tok je dán vztahem
+\[
+    q(x) = -K(x)u'(x), \quad K(x)=10^{-3}x \qquad \textrm{v }\Omega,
+\]
+a platí rovnice kontinuity
+\[
+    q'(x) = 5\sin(2x) \qquad \textrm{v }\Omega.
+\]
+
+Na levé straně bodě $a$ je udržována stálá teplota $U_a$.\\
+Na druhé straně je tyč dokonale tepelně izolována.
+
+\begin{enumerate}
+\item Zakreslete oblast $\Omega$, zaveďte souřadný systém, vyznačte okrajové podmínky.
+\item Definujte prostory, ve kterých leží funkce $u,v$.
+\item Odvoďte slabou formulaci, aplikujte okrajové podmínky.
+\end{enumerate}
+
+
+
+
+\vspace{1cm}
+
+2)\\
+\noindent
+Určete, zda posloupnost funkcí
+\[
+f_n(x) = -\left( 0,2x \right)^{2n}+2, \qquad x\in[-5,5],
+\]
+konverguje ke své bodové limitě v normě $L_2$ a $L_\infty$.
+
+\vspace{2cm}
+
+\begin{enumerate}
+\item Načtrněte graf několika prvních funkcí posloupnosti.
+\item Určete bodovou limitu $f$.
+\item Zapište symbolicky, co znamená, že $f_n$ konverguje k $f$ ve zvolené normě.
+\item Vypočítejte.
+\end{enumerate}
+
+
+
+
+\end{document}

@@ -1,0 +1,38 @@
+\documentclass{article}
+\usepackage[czech]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+
+\renewcommand{\div}{\operatorname{div}}
+\newcommand{\R}{\mathbb R}
+\newcommand{\vc}[1]{\boldsymbol{#1}}
+\def\d{{\rm{d}}}
+
+\begin{document}
+
+\title{Písemka č. 3}
+\date{26. 11. 2018}
+\author{}
+\maketitle
+
+\noindent
+Mějme danou slabou formulaci
+\begin{equation*}
+    a(u,v) = l(v) \qquad \forall v\in V=\{w\in H^1([a,b]), w(a)=0\},
+\end{equation*}
+kde $u\in V$ a dále
+\begin{eqnarray*}
+    a(u,v) &=& \int_a^b \Big( Ku'(x)v'(x) + g(x)u(x)v(x) \Big)\, \d x, \\
+    l(v) &=& \int_a^b f(x)v(x)\, \d x - q_N v(b).
+\end{eqnarray*}
+
+\begin{enumerate}
+\item Ukažte, že forma $a$ je skutečně bilineární a dále zdali může být skalárním součinem na prostoru V.
+\item Ukažte, že forma $a$ je eliptická a omezená, doplňte nutné předpoklady o $K$ a $g(x)$.
+\item Ukažte, že forma $f$ je omezená.
+\item Formulujte Laxovu-Milgramovu větu o existenci řešení daného problému.
+\end{enumerate}
+
+Bonus: Najděte odpovídající silnou formulaci problému.
+
+\end{document}

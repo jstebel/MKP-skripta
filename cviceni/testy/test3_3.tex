@@ -1,0 +1,65 @@
+\documentclass{article}
+\usepackage[czech]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+
+\renewcommand{\div}{\operatorname{div}}
+\newcommand{\R}{\mathbb R}
+\newcommand{\vc}[1]{\boldsymbol{#1}}
+\def\d{{\rm{d}}}
+
+\begin{document}
+
+\title{Opravná zápočtová písemka}
+\date{23. 1. 2020}
+\author{}
+\maketitle
+
+\noindent
+1) \hspace{0.5cm}
+Napište slabou formulaci ustáleného problému difúze na oblast $\Omega=[a,b]$.\\
+Difuzní tok je dán Fickovým zákonem
+\[
+    q(x) = -D(x)u'(x), \quad D(x)>0 \qquad \textrm{v }\Omega
+\]
+a platí bilanční rovnice
+\[
+    q'(x) = 1-x \qquad \textrm{v }\Omega.
+\]
+\noindent
+V bodě $a$ je difuzní tok skrz membránu dán rozdílem koncentrací: $\sigma(u(a)-u_R)$, kde
+$\sigma>0$ je přechodový koeficient a $u_R$ je stálá koncentrace udržovaná na vnější straně membrány.
+V bodě $b$ je předepsán difuzní tok $q_N$.
+
+\vspace{1cm}
+\begin{enumerate}
+\item Zakreslete oblast $\Omega$, zaveďte souřadný systém, vyznačte okrajové podmínky.
+\item Definujte prostory, ve kterých leží funkce $u,v$.
+\item Odvoďte slabou formulaci, aplikujte okrajové podmínky.
+\end{enumerate}
+
+
+
+
+\vspace{2cm}
+
+\noindent
+2) \hspace{0.5cm}
+Určete, zda posloupnost funkcí
+\[
+f_n(x) = |x-1|^{\frac{1}{2n-1}}, \qquad x\in[0,2],
+\]
+konverguje ke své bodové limitě v normě $L_2$ a $L_\infty$.
+
+\vspace{1cm}
+\begin{enumerate}
+\item Načtrněte graf několika prvních funkcí posloupnosti.
+\item Určete bodovou limitu $f$.
+\item Zapište symbolicky, co znamená, že $f_n$ konverguje k $f$ ve zvolené normě.
+\item Vypočítejte.
+\end{enumerate}
+
+
+
+
+\end{document}

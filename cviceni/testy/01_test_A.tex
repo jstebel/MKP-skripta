@@ -1,0 +1,51 @@
+\documentclass{article}
+\usepackage[czech]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+
+\renewcommand{\div}{\operatorname{div}}
+\newcommand{\R}{\mathbb R}
+\newcommand{\vc}[1]{\boldsymbol{#1}}
+\def\d{{\rm{d}}}
+
+\begin{document}
+
+\title{Test č. 1}
+\date{13. 12. 2021}
+\author{}
+\maketitle
+
+
+\noindent
+
+Napište slabou formulaci ustáleného problému vedení tepla v kovové tyči (oblast $\Omega=[a,b]$).\\
+Tepelný tok je dán Fourierovým zákonem
+\[
+    q(x) = -(x^4+5)u'(x), \qquad \textrm{v }\Omega,
+\]
+a platí rovnice kontinuity
+\[
+    q'(x) = \cos(3x) \qquad \textrm{v }\Omega.
+\]
+
+\noindent
+Na pravé straně v bodě $b$ je udržována stálá teplota $U_b$.\\
+Na druhé straně v bodě $a$ je udržován stálý vnější tepelný tok $q_a$.
+
+\begin{enumerate}
+\item Zakreslete oblast $\Omega$, zaveďte souřadný systém, vyznačte okrajové podmínky.
+\item Formulujte okrajové podmínky.
+\item Definujte prostory, ve kterých leží funkce $u,v$.
+\item Odvoďte slabou formulaci, aplikujte okrajové podmínky.
+\end{enumerate}
+
+\vspace{2cm}
+\emph{Bonus:}\\
+Uvažujte slabou formulaci problému
+\begin{align*}
+    \sigma u(a)v(a) + \int\limits_{a}^{b} \lambda(x) & u'(x)v'(x) + u'(x)v(x) \,\d x = \\
+        &\int\limits_{a}^{b} f(x)v(x) \,\d x - q_Nv(b) + \sigma u_R v(a) \qquad \forall v\in \mathrm{H}^1([a,b])
+\end{align*}
+Formulujte odpovídající silnou formulaci, tedy parc. diferenciální rovnici s okrajovými podmínkami.
+
+\end{document}

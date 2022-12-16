@@ -1,0 +1,44 @@
+\documentclass{article}
+\usepackage[czech]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+
+\renewcommand{\div}{\operatorname{div}}
+\newcommand{\R}{\mathbb R}
+\newcommand{\vc}[1]{\boldsymbol{#1}}
+\def\d{{\rm{d}}}
+
+\begin{document}
+
+\title{Test č. 1 -- oprava}
+\date{8. 12. 2022}
+\author{}
+\maketitle
+
+
+\noindent
+
+Napište slabou formulaci ustáleného difúzního problému na 1D oblasti $\Omega=[a,b]$.
+Difúzní tok je dán Fickovým zákonem
+\[
+    q(x) = -(x^2+2)u'(x), \qquad \textrm{v }\Omega,
+\]
+a platí rovnice kontinuity
+\[
+    q'(x) = 20\log(x) \qquad \textrm{v }\Omega.
+\]
+
+\noindent
+Na levé straně v bodě $a$ je membrána s propustností $\sigma$, difúzní tok skrz membránu je pak přímo úměrný rozdílu vnitřní
+a vnější koncentrace, tedy $u(a)$, resp. $u_r$.\\
+Na druhé straně v bodě $b$ je udržována stálá koncentrace $U_b$.
+
+\begin{enumerate}
+\item Zakreslete oblast $\Omega$, zaveďte souřadný systém, vyznačte okrajové podmínky.
+\item Formulujte okrajové podmínky.
+\item Definujte prostor, ve kterém leží slabé řešení $u$, a prostor testovacích funkcí.
+\item Odvoďte slabou formulaci, aplikujte okrajové podmínky.
+\item Definujte vhodné bilineární a lineární formy a zapište slabou formulaci pomocí nich.
+\end{enumerate}
+
+\end{document}

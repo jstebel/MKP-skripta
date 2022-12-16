@@ -1,0 +1,43 @@
+\documentclass{article}
+\usepackage[czech]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+
+\renewcommand{\div}{\operatorname{div}}
+\newcommand{\R}{\mathbb R}
+\newcommand{\vc}[1]{\boldsymbol{#1}}
+\def\d{{\rm{d}}}
+
+\begin{document}
+
+\title{Test č. 1 -- B}
+\date{13. 12. 2021}
+\author{}
+\maketitle
+
+
+\noindent
+
+Napište slabou formulaci problému vedení tepla.\\
+Tepelný tok je dán vztahem
+\[
+q(x) = -\sin(x) u'(x) + cu,
+\]
+kde $c=const$. Dále platí rovnice kontinuity
+\[
+q'(x) = f(x) \qquad \textrm{v }\Omega=[a,b].
+\]
+Definovány jsou následující okrajové podmínky
+\begin{eqnarray*}
+u(x) &=& 0 \qquad \textrm{v } x=a, \\
+-\sin(x) u'(x) &=& q_N \qquad \textrm{v } x=b.
+\end{eqnarray*}
+
+\begin{enumerate}
+\item Zakreslete oblast $\Omega$, zaveďte souřadný systém, vyznačte okrajové podmínky.
+\item Formulujte okrajové podmínky.
+\item Definujte prostory, ve kterých leží funkce $u,v$.
+\item Odvoďte slabou formulaci, aplikujte okrajové podmínky.
+\end{enumerate}
+
+\end{document}
