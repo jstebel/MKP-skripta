@@ -75,7 +75,8 @@
 %\def\Implies{\Longrightarrow}
 %\def\Equiv{\Longleftrightarrow}
 % ****************************************** GENERAL MATH NOTATION
-\def\R{{\rm\bf R}}
+\def\R{{\mathcal R}}
+\def\Rp{{\R}^+}
 \def\Real{{\rm\bf R}}
 \def\Rd{{{\rm\bf R}^{\rm 3}}}
 \def\RN{{{\rm\bf R}^N}}
@@ -188,78 +189,96 @@ U následujících úloh:
       \item globálně prvky $A_{ij}$ a $b_i$.
       \item nebo lokální matici $\vc L$ a lokální vektor pravé strany $\vc {lb}$.
     \end{itemize}
-%   \item Ukažte, že existuje jednoznačné řešení slabé formulace $u(x)$.
+  \item Ukažte, že existuje jednoznačné řešení slabé formulace $u(x)$
+    (kromě úloh, kde je na levé straně bilanční rovnice více členů, tedy úloh 7 a 13, tam je potřeba dalších předpokladů a znalostí).
+  \item Zkuste k úloze vymyslet aplikaci -- vyberte si fyzikální problém a popište veličiny a význam/interpretaci jednotlivých členů.
 \end{enumerate}
 
 \hrulefill
 
 \begin{enumerate}
   \item
-    \begin{eqnarray*}
-      -u''(x) &=& -1 \qquad \textrm{in } \Omega=[0,1] \\
-      u(0) &=& 0 \\
-      u(1) &=& 0
-    \end{eqnarray*}
+    \begin{align*}
+      -u''(x) &= -1 & \textrm{na } \Omega=[0,1] \\
+      u(0) &= 0 \\
+      u(1) &= 0
+    \end{align*}
   \item
-    \begin{eqnarray*}
-      -u''(x) &=& -1 \qquad \textrm{in } \Omega=[0,1] \\
-      u(0) &=& 0 \\
-      -u'(1) &=& 0
-    \end{eqnarray*}
+    \begin{align*}
+      -u''(x) &= -1 & \textrm{na } \Omega=[0,1] \\
+      u(0) &= 0 \\
+      -u'(1) &= 0
+    \end{align*}
   \item
-    \begin{eqnarray*}
-      -Ku''(x) &=& -1 \qquad \textrm{in } \Omega=[0,1],\; K=const. \\
-      u(0) &=& 0 \\
-      -Ku'(1) &=& q_N
-    \end{eqnarray*}
+    \begin{align*}
+      -Ku''(x) &= -1 & \textrm{na } \Omega=[0,1],\; K\in\Rp \\
+      u(0) &= 0 \\
+      -Ku'(1) &= q_N & q_N\in\R \\
+    \end{align*}
   \item
-    \begin{eqnarray*}
-      -Ku''(x) &=& 1-x \qquad \textrm{in } \Omega=[a,b],\; K=const. \\
-      -Ku'(0) &=& \sigma(u(0) - u_D) \qquad \sigma=const.,\; u_D=const.\\
-      u(1) &=& 0
-    \end{eqnarray*}
+    \begin{align*}
+      -Ku''(x) &= 1-x & \textrm{na } \Omega=[a,b],\; K\in\Rp \\
+      Ku'(a) &= \sigma(u(a) - u_R) & \sigma\in\Rp,\; u_R\in\R\\
+      u(b) &= 0
+    \end{align*}
   \item
-    \begin{eqnarray*}
-      -(K(x)u'(x))' &=& f(x) \qquad \textrm{in } \Omega=[a,b],\; K(x)>0 \,\forall x\in\Omega \\
-      -Ku'(0) &=& -q_N\\
-      u(1) &=& 0
-    \end{eqnarray*}
+    \begin{align*}
+      q(x) &= -K(x)u'(x) & K(x)>0 \,\forall x\in\Omega\\
+      q'(x) &= f(x) & \textrm{na } \Omega=[a,b], \; f\in{L}^2(\Omega) \\
+      K(a)u'(a) &= q_N & q_N\in\R \\
+      u(b) &= 0
+    \end{align*}
   \item
-    \begin{eqnarray*}
-      -Ku''(x) &=& \sigma(u - u_f) \qquad \textrm{in } \Omega=[a,b],\; K=const.,\; u_f=const.\\
-      -Ku'(0) &=& -q_N\\
-      u(1) &=& 0
-    \end{eqnarray*}
+    \begin{align*}
+      -Ku''(x) &= \sigma(u_f - u(x)) & \textrm{na } \Omega=[a,b],\; K\in\Rp,\; \sigma\in\Rp,\; u_f\in\R\\
+      Ku'(a) &= q_N & q_N\in\R \\
+      u(b) &= 0
+    \end{align*}
   \item
-    \begin{eqnarray*}
-      g(x)u'(x)-Ku''(x) &=& f(x) \qquad \textrm{in } \Omega=[a,b],\; K=const.,\; u_f=const.\\
-      -Ku'(0) &=& -q_N\\
-      u(1) &=& 0
-    \end{eqnarray*}
+    \begin{align*}
+      g(x)u'(x)-Ku''(x) &= f(x) & \textrm{na } \Omega=[a,b],\; K\in\Rp,\; g,f\in{L}^2(\Omega)\\
+      Ku'(a) &= q_N & q_N\in\R \\
+      u(b) &= 0
+    \end{align*}
   \item
-    \begin{eqnarray*}
-      -u''(x) &=& 1 \qquad \textrm{in } \Omega=[0,1]\\
-      u(0) &=& 2\\
-      u(1) &=& 3
-    \end{eqnarray*}
+    \begin{align*}
+      q(x) &= -K(x)u'(x) & K(x)>0 \,\forall x\in\Omega\\
+      q'(x) &= f(x) & \textrm{na } \Omega=[a,b], \; f\in{L}^2(\Omega) \\
+      u(a) &= U_a & U_a\in\R \\
+      u(b) &= U_b & U_b\in\R
+    \end{align*}
   \item
-    \begin{eqnarray*}
-      -u''(x) &=& 2(1-u(x)) \qquad \textrm{in } \Omega=[0,2]\\
-      u'(0) &=& 1\\
-      -u'(2) &=& \frac12
-    \end{eqnarray*}
+    \begin{align*}
+      q(x) &= -Ku'(x) & K\in\Rp\\
+      q'(x) &= \sigma_f(x)(u_f(x) - u(x)) & \textrm{na } \Omega=[a,b],\; \sigma_f,u_f\in{L}^2(\Omega),
+          \sigma_f(x)>0 \,\forall x\in\Omega\\
+      u(a) &= U_a & U_a\in\R \\
+      -Ku'(b) &= \sigma_R(u(b) - u_R) & \sigma_R\in\Rp,\; u_R\in\R\\
+    \end{align*}
   \item
-    \begin{eqnarray*}
-      -((1+x)u'(x))' &=& 1 \qquad \textrm{in } \Omega=[0,1]\\
-      u(0) &=& 0\\
-      u(1) &=& 0
-    \end{eqnarray*}
+    \begin{align*}
+      -u''(x) &= 1 & \textrm{na } \Omega=[0,1]\\
+      u(0) &= 2\\
+      u(1) &= 3
+    \end{align*}
   \item
-    \begin{eqnarray*}
-      -u''(x)+u'(x) &=& 0 \qquad \textrm{in } \Omega=[0,1]\\
-      u(0) &=& 1\\
-      -u'(1) &=& 0
-    \end{eqnarray*}
+    \begin{align*}
+      -u''(x) &= 2(1-u(x)) & \textrm{na } \Omega=[0,2]\\
+      u'(0) &= 1\\
+      -u'(2) &= \frac12
+    \end{align*}
+  \item
+    \begin{align*}
+      -((1+x)u'(x))' &= 1 & \textrm{na } \Omega=[0,1]\\
+      u(0) &= 0\\
+      u(1) &= 0
+    \end{align*}
+  \item
+    \begin{align*}
+      -u''(x)+u'(x) &= 0 & \textrm{na } \Omega=[0,1]\\
+      u(0) &= 1\\
+      -u'(1) &= 0
+    \end{align*}
 \end{enumerate}
 
 \end{document}
