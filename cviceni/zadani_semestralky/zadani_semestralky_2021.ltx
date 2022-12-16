@@ -1,0 +1,305 @@
+    % typesetting TODO
+%
+% - bibliography
+% - METAFONT def of := ... \eqdef
+% - tecky nad bold symbol se spatne umistuji
+%
+% conventions:
+% crossrefs - typechap:name (type: [s]ection,[e]quation,[d]efinition,[t]heorem(lemma,..))
+%                           (chap: [p]hysical background, [m]ath tools, [f]luid, [b]odies, [s]teady)
+\documentclass[a4paper]{article}
+% ***************************************** PACKAGES
+%\usepackage[active]{srcltx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[czech]{babel}
+\usepackage{arydshln}
+\usepackage{graphicx}
+\usepackage{gensymb}
+
+%\usepackage{mathbbol}
+%\usepackage{bbm}
+% ***************************************** THEOREMS
+%\newtheorem{thm}{Theorem}[section]
+%\newtheorem{proposition}[thm]{Proposition}
+%\newtheorem{definition}[thm]{Definition}
+%\newtheorem{remark}[thm]{Remark}
+%\newtheorem{corollary}[thm]{Corollary}
+%\numberwithin{equation}{section}
+
+\newtheorem{veta}{Věta}[section]
+\newtheorem{theorem}[veta]{Věta}
+\newtheorem{lemma}[veta]{Lemma}
+\newtheorem{df}[veta]{Definice}
+\newtheorem{ex}[veta]{Příklad}
+\numberwithin{equation}{section}
+
+
+% ***************************************** SYMBOLS
+\def\div{\operatorname{div}}
+\def\rot{\operatorname{rot}}
+\def\Lapl{\Delta}
+\def\grad{\nabla}
+\def\supp{{\rm supp}}
+\def\dist{{\rm dist}}
+%\def\chset{\mathbbm{1}}
+\def\chset{1}
+
+\def\Tr{{\rm Tr}}
+\def\sgn{{\rm sgn}}
+\def\to{\rightarrow}
+\def\weakto{\rightharpoonup}
+\def\imbed{\hookrightarrow}
+\def\cimbed{\subset\subset}
+\def\range{{\mathcal R}}
+\def\leprox{\lesssim}
+\def\argdot{{\hspace{0.18em}\cdot\hspace{0.18em}}}
+\def\Distr{{\mathcal D}}
+\def\calK{{\mathcal K}}
+\def\FromTo{|\rightarrow}
+\def\convol{\star}
+\def\impl{\Rightarrow}
+\DeclareMathOperator*{\esslim}{esslim}
+\DeclareMathOperator*{\esssup}{ess\,sup}
+\DeclareMathOperator{\ess}{ess}
+\DeclareMathOperator{\osc}{osc}
+\DeclareMathOperator{\curl}{curl}
+
+%\def\Ess{{\rm ess}}
+%\def\Exp{{\rm exp}}
+%\def\Implies{\Longrightarrow}
+%\def\Equiv{\Longleftrightarrow}
+% ****************************************** GENERAL MATH NOTATION
+\def\R{{\rm\bf R}}
+\def\Real{{\rm\bf R}}
+\def\Rd{{{\rm\bf R}^{\rm 3}}}
+\def\RN{{{\rm\bf R}^N}}
+\def\D{{\mathbb D}}
+\def\Nnum{{\mathbb N}}
+\def\Measures{{\mathcal M}}
+\def\d{\,{\rm d}}               % differential
+\def\sdodt{\genfrac{}{}{}{1}{\rm d}{{\rm d}t}}
+\def\dodt{\genfrac{}{}{}{}{\rm d}{{\rm d}t}}
+
+\def\vc#1{\mathbf{\boldsymbol{#1}}}     % vector
+\def\tn#1{{\mathbb{#1}}}    % tensor
+\def\abs#1{\lvert#1\rvert}
+\def\Abs#1{\bigl\lvert#1\bigr\rvert}
+\def\bigabs#1{\bigl\lvert#1\bigr\rvert}
+\def\Bigabs#1{\Big\lvert#1\Big\rvert}
+\def\ABS#1{\left\lvert#1\right\rvert}
+\def\norm#1{\bigl\Vert#1\bigr\Vert} %norm
+\def\close#1{\overline{#1}}
+\def\inter#1{#1^\circ}
+\def\ol#1{\overline{#1}}
+\def\ul#1{\underline{#1}}
+\def\eqdef{\mathrel{\mathop:}=}     % defining equivalence
+\def\where{\,|\,}                    % "where" separator in set's defs
+\def\timeD#1{\dot{\overline{{#1}}}}
+
+% ******************************************* USEFULL MACROS
+\def\RomanEnum{\renewcommand{\labelenumi}{\rm (\roman{enumi})}}   % enumerate by roman numbers
+\def\rf#1{(\ref{#1})}                                             % ref. shortcut
+\def\prtl{\partial}                                        % partial deriv.
+\def\Names#1{{\scshape #1}}
+\def\rem#1{{\parskip=0cm\par!! {\sl\small #1} !!}}
+
+\def\Xint#1{\mathchoice
+{\XXint\displaystyle\textstyle{#1}}%
+{\XXint\textstyle\scriptstyle{#1}}%
+{\XXint\scriptstyle\scriptscriptstyle{#1}}%
+{\XXint\scriptscriptstyle\scriptscriptstyle{#1}}%
+\!\int}
+\def\XXint#1#2#3{{\setbox0=\hbox{$#1{#2#3}{\int}$}
+\vcenter{\hbox{$#2#3$}}\kern-.5\wd0}}
+\def\ddashint{\Xint=}
+\def\dashint{\Xint-}
+
+% ******************************************* DOCUMENT NOTATIONS
+% document specific
+\def\rh{\varrho}
+\def\vl{{\vc{u}}}
+\def\th{\vartheta}
+\def\vx{\vc{x}}
+\def\vX{\vc{X}}
+\def\vr{\vc{r}}
+\def\veta{\vc{\eta}}
+\def\dx{\,\d\vx}
+\def\dt{\,\d t}
+\def\bulk{\zeta}
+\def\cS{\close{S}}
+\def\eps{\varepsilon}
+\def\phi{\varphi}
+\def\Bog{{\mathcal B}}
+\def\Riesz{{\mathcal R}}
+\def\distr{\mathcal D}
+\def\Item{$\bullet$}
+
+\def\MEtst{\mathcal T}
+%***************************************************************************
+\def\vrb#1{\verb"#1"}
+
+\def\prednaska{\pagebreak \item přednáška \hrule}
+\def\cviceni{\pagebreak \item cvičení \hrule}
+\def\priklady{{\bf Další vhodné příklady:}}
+
+
+% ************************************ NOTATIONS JS
+\newcommand{\mat}[1]{\mathbb{#1}}
+\newcommand{\Vc}{\mathcal V}
+% *************************************************
+
+
+
+\addtolength{\textwidth}{5cm}
+\addtolength{\hoffset}{-2.5cm}
+\addtolength{\textheight}{4cm}
+\addtolength{\voffset}{-3cm}
+%\addtolength{\oddsidemargin}{1cm}
+%\addtolength{\evensidemargin}{-1cm}
+\begin{document}
+\parindent=0pt
+\parskip=0.3cm
+\begin{center}
+{\LARGE MKP - Metoda konečných prvků }
+\vspace{0.5cm}
+
+{\LARGE Zadání semestrálních prací}
+
+\vspace{1cm}
+{\Large naposledy upraveno: \today}
+\end{center}
+
+\pagebreak
+{\LARGE{Zadání}}
+\vfil
+
+Pro zadanou úlohu proveďte následující úkoly:
+\begin{enumerate}
+  \item Odvoďte slabou formulaci daného problému, aplikujte Galerkinovu metodu.
+  \item Definujte prostor testovacích funkcí $\mathcal{V}$ a prostor řešení $\mathcal{U}$.
+  \item Definujte vhodné bilineární a lineární formy a zapište pomocí nich odvozenou slabou formulaci.
+  \item Definujte konečně-dimenzionální prostory \emph{\textbf{lineárních}} konečných prvků.
+        $\mathcal{V}_h\subset\mathcal{V}$ a $\mathcal{U}_h \subset\mathcal{U}$.\\
+        Definujte řešení $u_h\in\mathcal{U}_h.$
+  \item Proveďte zvolenou diskretizaci a sestavte systém lineárních algebraických rovnic
+        ($\vc A \vc x = \vc b$).
+  \item Pro systém $\vc A \vc x = \vc b$ definujte lokální matice $\vc M_k$ 
+        a lokální vektor pravé strany $\vc {m_k}$ pro všechny elementy $E_k$.
+  %\item Ukažte, že existuje jednoznačné řešení slabé formulace $u(x)$.
+  \item Určete analytické řešení $u(x)$. \\
+        \emph{Pozn.: Pro analytické řešení je potřeba vyřešit nehomogenní dif. rovnici 2.řádu pomocí variace konstant nebo přímou integrací.
+        K~vybraným úlohám je řešení dáno až na konstanty. Vaším úkolem je tyto dopočítat.}
+  \item Implementujte MKP v Matlabu/Octave.\\
+        Použijte lokální matice, numerickou integraci a sestavení pomocí referenčního elementu.\\
+        (Máte na webu k dispozici pomocné skripty a skripty ze cvičení, nebojte se je použít!)
+  \item Ověřte numericky konvergenci metody. Použijte dělení $\verb'n = [10 20 40 80 160 320 640 1280]'$.
+\end{enumerate}
+
+Přiložená zpráva musí splňovat následující:
+\begin{itemize}
+    \item formát PDF (zpracujte pomocí MS Word, Libre Office Writer nebo \LaTeX)
+    \item úvodní strana - název předmětu, název sem. práce, jména řešitelů, semestr, datum, (logo TUL)
+    \item zadání Vaší vybrané úlohy
+    \item analytické řešení, vypočítané konstanty
+    \item odvození slabé formulace -- všechny nálěžitosti, viz body výše
+    \item diskrétní slabá formulace -- jasně označené, popsané a definované body, indexy, elementy, proměnné atd.
+    \item lokální matice a vektor pravé strany, viz body výše
+    \item chyby řešení v $L_2$ a $H^1$ normě, řád konvergence (konvergenční tabulka)
+    \item graf řešení (pro vybraný diskretizační krok, analytické a diskrétní), graf konvergence
+    \item grafy, tabulky číslované a popsané, rovnice číslované
+    \item komentáře k jednotlivým (alespoň k těm nejpodstatnějším) krokům
+    \item ZÁVĚR - shrnutí, zhodnocení výsledků, co vám vyšlo $\times$ co jste očekávali (co mělo vyjít), konverguje správně vaše metoda? atd. V rozsahu půl A4.
+\end{itemize}
+
+
+Implementaci si ověřte prostřednictvím rozhraní \verb'Code Critic'.
+
+Všechny soubory Vaší semestrální práce (všechny potřebné \verb'*.m' skripty, PDF) pak mějte v jednom adresáři, který zabalte (\verb'zip, rar, tar') a odevzdejte (např. \verb'pavel.exner@tul.cz', nebo sdílený Google disk).
+
+% \hrulefill
+\pagebreak
+
+{\LARGE{Úlohy}}
+\vfil
+
+\begin{enumerate}
+  \item
+    \begin{eqnarray*}
+      -Ku''(x) &=& \sigma(u - u_f) \qquad \textrm{in } \Omega=[a,b]\\
+      u(a) &=& U_a\\
+      -Ku'(b) &=& 0
+    \end{eqnarray*}
+    Analytické řešení hledejte ve tvaru  $u(x) = C_1\cos(\sqrt{\alpha} x) + C_2\sin(\sqrt{\alpha} x) + u_f$,
+    $\alpha=\frac{\sigma}{K}$. \\
+    Pro výpočet volte $K=0.3\,, u_f=5\,, \sigma=1.2\,, U_a=0.2\,, a=0\,, b=5.$
+  \item
+    \begin{eqnarray*}
+      -8u''(x) + 2 u'(x) &=& 17\cos(x) \qquad \textrm{in } \Omega=[0,L] \\
+      u'(0) &=& q_N \\
+      u(L) &=& 0
+    \end{eqnarray*}
+    Analytické řešení hledejte ve tvaru $u(x)=C_1 + C_2e^{0.25x} + 0.5(\sin(x) + 4\cos(x))$. \\
+    Pro výpočet volte $L=10, q_N=1$.
+  \item
+    \begin{eqnarray*}
+      -((1+x)u'(x))' &=& d \qquad \textrm{in } \Omega=[a,b]\\
+      (1+a)u'(a) &=& \sigma(u(a)-U_R)\\
+      u(b) &=& U_b
+    \end{eqnarray*}
+    Analytické řešení hledejte ve tvaru $u(x)=-dx + C_1\ln(x+1) + C_2$. \\
+    Pro výpočet volte $d=-3\,, \sigma=5\,, U_R=2, U_b=3\,, [a,b]=[2,7].$
+  \item
+    \begin{eqnarray*}
+      -Ku''(x) + c u'(x) &=& de^{\frac{c}{K}x} \qquad \textrm{in } \Omega=[1,3] \\
+      u(1) &=& 0 \\
+      -Ku'(3) &=& q_N
+    \end{eqnarray*}
+    Analytické řešení hledejte ve tvaru $u(x)=C_1 + \left(C_2 - \frac{d}{c}x\right) e^{\frac{c}{K}x}$.\\
+    Pro výpočet volte $K=4\,, c=-5\,, d=3\,, q_N=2.$
+  \item
+    \begin{eqnarray*}
+      -u''(x) + Ku &=& dx \qquad \textrm{in } \Omega=[0,L] \\
+      u'(0) &=& 0 \\
+      u(L) &=& U_L
+    \end{eqnarray*}
+    Analytické řešení hledejte ve tvaru $u(x)=C_1e^{\sqrt{K}x} + C_2e^{-\sqrt{K}x} + \frac{d}{K}x$.\\
+    Pro výpočet volte $K=3\,, d=2.5\,, L=5,\, U_L=-2.$
+  \item
+    \begin{eqnarray*}
+      -((x^2+c)u'(x))' &=& -dx \qquad \textrm{in } \Omega=[a,b]\\
+      u(a) &=& U_a\\
+      -(b^2+c)u'(b) &=& q_N
+    \end{eqnarray*}
+    Analytické řešení hledejte ve tvaru $u(x)=\frac{d}{2}x - \frac{C_1}{\sqrt{c}}\arctan{\frac{x}{\sqrt{c}}} + C_2$. \\
+    Pro výpočet volte $d=0.7\,, c=0.05\,, U_a=-10, q_N=1\,, [a,b]=[-5,5].$ \\
+    Vyzkoušejte zmenšovat postupně konstantu $c$ k hodnotě $10^{-4}$, pozorujte řešení a~konvergenci metody a~pokuste se vysvětlit, co se děje a proč.
+    
+%   \item
+%     \begin{eqnarray*}
+%       -Ku''(x) &=& 1-x \qquad \textrm{in } \Omega=[a,b],\; K=const. \\
+%       -Ku'(0) &=& \sigma(u(0) - u_D) \qquad \sigma=const.,\; u_D=const.\\
+%       u(1) &=& 0
+%     \end{eqnarray*}
+%   \item
+%     \begin{eqnarray*}
+%       -(K(x)u'(x))' &=& f(x) \qquad \textrm{in } \Omega=[a,b],\; K(x)>0 \,\forall x\in\Omega \\
+%       -Ku'(0) &=& -q_N\\
+%       u(1) &=& 0
+%     \end{eqnarray*}
+%   \item
+%     \begin{eqnarray*}
+%       -u''(x) &=& 2(1-u(x)) \qquad \textrm{in } \Omega=[0,2]\\
+%       u'(0) &=& 1\\
+%       -u'(2) &=& \frac12
+%     \end{eqnarray*}
+  
+\end{enumerate}
+
+\end{document}
+
