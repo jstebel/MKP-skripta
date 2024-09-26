@@ -1,5 +1,6 @@
 \documentclass[a4paper]{article}
-\usepackage{amsfonts,amsmath,amssymb,amsthm, cancel,graphicx,hyperref,mathabx}
+\usepackage{amsfonts,amsmath,amssymb,amsthm, cancel,graphicx,hyperref}
+\usepackage{mathbbol}
 \usepackage[utf8]{inputenc}
 \usepackage[czech]{babel}
 \usepackage[numbers]{natbib}
@@ -156,14 +157,22 @@
 \addtolength{\voffset}{-3cm}
 \begin{document}
 
+\includegraphics[width=\textwidth]{img/image1.png}
+
 \maketitle
 
 \tableofcontents
 
-\input 01_jb_opakovani.tex
-\input 02_jb_veta_o_transportu.tex
-\input 03_jb_fyzikalni_priklady_klasifikace.tex
-\input 04_jb_slabe_reseni.tex
+%\input 01_jb_opakovani.tex
+%\input 02_jb_veta_o_transportu.tex
+%\input 03_jb_fyzikalni_priklady_klasifikace.tex
+
+\input uvod_klasifikace_PDR.tex
+\input 01_jb_1d_okrajova_uloha_slabe_reseni.tex
+\input 02_jb_1d_linearni_konecne_prvky.tex
+\input 03_jb_1d_implementace.tex
+\input 04_jb_2d_Poisson.tex
+
 
 \input 05_js_fa.tex
 
