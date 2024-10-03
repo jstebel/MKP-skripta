@@ -1,144 +1,462 @@
-\section{Silná a slabá formulace 1D okrajové úlohy 2. řádu}
-
-Řešme jednoduchou úlohu vedení tepla. 
-
-Představme si zjednodušeně termosku jako 1D úsečku (oblast $\Omega = [0,1]$),
-která na jedné straně (na dně) nepropouští žádné teplo a na straně druhé je otevřená,
-tedy v kontaktu s okolím o referenční teplotě 0 (řekněme, že tu můžeme libovolně škálovat, např. že odpovídá 25$^\circ$C).
-
-Zaveďme si veličinu $q(x,t)$, která bude popisovat hustotu energie (tepla) uvnitř oblasti $\Omega$.
-Oblast $\Omega$ je interval, jedná se tedy v tomto případě o délkovou hustotu.
-Může se samozřejmě měnit v čase $t$.
-Celkovou energii v oblasti $\Omega$ v čase $t$ tedy vyjádříme jako
-\[
-  \int\limits_0^1 q(x,t) \d x
-\]
-Dále si zaveďme tepelný tok $j(x,t)$, který vyjadřuje kolik energie projde bodem $x$ (představujeme si příčný průřez termoskou)
-za jednotku času.
-Nyní můžeme vyjádřit úbytek energie jako zápornou změnu celkové energie v čase a tu položit rovnu rozdílu tepelného toku
-na začátku a konci oblasti, tedy v bodech $x=0$ a $x=1$.
-\[
-  -\frac{\partial}{\partial t}\int\limits_0^1 q \d x = j(1) - j(0) = \int\limits_0^1 \frac{\partial j}{\partial x} \d x
-\]
-Dostali jsme energetickou bilační rovnici. Pokud budeme předpokládat, že $j$ je hladkou funkcí podle $x$, můžeme rozdíl tepelných toků nahradit 
-integrálem derivace $j$ přes danou oblast.
-
-Dále si můžeme představit, že stěny termosky přece jen nejsou ideální a i přes ně probíhá výměna tepla.
-Tedy zavedeme funkci $f(x)$, která bude popisovat dodávání ($f(x)>0$) nebo odebírání ($f(x)<0$) energie z venku do/z oblasti $\Omega$.
-Tím získáme následující bilanční rovnici:
-\[
-  -\frac{\partial}{\partial t}\int\limits_0^1 q \d x = j(1) - j(0) + \int\limits_0^1 f(x) \d x= \int\limits_0^1 \left(\frac{\partial j}{\partial x} + f(x) \right) \d x
-\]
-
-....
-
-\[
-  \frac{\partial q}{\partial t} + \frac{\partial j}{\partial x} = f(x)
-\]
-Pokud budeme uvažovat ustálenou úlohu, tedy časově neměnnou, zjednoduší se rovnice na
-\begin{equation}
-  j'(x) = f(x) \label{eqn:continuity_steady_1d}
-\end{equation}
-
-Nyní připomeňme Fourierův zákon, který definuje tepelný tok pomocí gradientu teploty
-\begin{equation}
-j(x) = -K(x)u'(x), \label{eqn:fourier_1d}
-\end{equation}
-kde $K(x)$ je tepelná vodivost materiálu.
-
-
-Pokud nyní dosadíme \eqref{eqn:fourier_1d} do \eqref{eqn:continuity_steady_1d}, dostaneme Poissonovu rovnici,
-a poté popíšeme náš problém termosky
+% \section{Silná a slabá formulace 1D okrajové úlohy 2. řádu}
+% 
+% Řešme jednoduchou úlohu vedení tepla. 
+% 
+% Představme si zjednodušeně termosku jako 1D úsečku (oblast $\Omega = [0,1]$),
+% která na jedné straně (na dně) nepropouští žádné teplo a na straně druhé je otevřená,
+% tedy v kontaktu s okolím o referenční teplotě 0 (řekněme, že tu můžeme libovolně škálovat, např. že odpovídá 25$^\circ$C).
+% 
+% Zaveďme si veličinu $q(x,t)$, která bude popisovat hustotu energie (tepla) uvnitř oblasti $\Omega$.
+% Oblast $\Omega$ je interval, jedná se tedy v tomto případě o délkovou hustotu.
+% Může se samozřejmě měnit v čase $t$.
+% Celkovou energii v oblasti $\Omega$ v čase $t$ tedy vyjádříme jako
 % \[
-% -(K(x)u'(x))' = f(x)
+%   \int\limits_0^1 q(x,t) \d x
 % \]
+% Dále si zaveďme tepelný tok $j(x,t)$, který vyjadřuje kolik energie projde bodem $x$ (představujeme si příčný průřez termoskou)
+% za jednotku času.
+% Nyní můžeme vyjádřit úbytek energie jako zápornou změnu celkové energie v čase a tu položit rovnu rozdílu tepelného toku
+% na začátku a konci oblasti, tedy v bodech $x=0$ a $x=1$.
+% \[
+%   -\frac{\partial}{\partial t}\int\limits_0^1 q \d x = j(1) - j(0) = \int\limits_0^1 \frac{\partial j}{\partial x} \d x
+% \]
+% Dostali jsme energetickou bilační rovnici. Pokud budeme předpokládat, že $j$ je hladkou funkcí podle $x$, můžeme rozdíl tepelných toků nahradit 
+% integrálem derivace $j$ přes danou oblast.
+% 
+% Dále si můžeme představit, že stěny termosky přece jen nejsou ideální a i přes ně probíhá výměna tepla.
+% Tedy zavedeme funkci $f(x)$, která bude popisovat dodávání ($f(x)>0$) nebo odebírání ($f(x)<0$) energie z venku do/z oblasti $\Omega$.
+% Tím získáme následující bilanční rovnici:
+% \[
+%   -\frac{\partial}{\partial t}\int\limits_0^1 q \d x = j(1) - j(0) + \int\limits_0^1 f(x) \d x= \int\limits_0^1 \left(\frac{\partial j}{\partial x} + f(x) \right) \d x
+% \]
+% 
+% ....
+% 
+% \[
+%   \frac{\partial q}{\partial t} + \frac{\partial j}{\partial x} = f(x)
+% \]
+% Pokud budeme uvažovat ustálenou úlohu, tedy časově neměnnou, zjednoduší se rovnice na
+% \begin{equation}
+%   j'(x) = f(x) \label{eqn:continuity_steady_1d}
+% \end{equation}
+% 
+% Nyní připomeňme Fourierův zákon, který definuje tepelný tok pomocí gradientu teploty
+% \begin{equation}
+% j(x) = -K(x)u'(x), \label{eqn:fourier_1d}
+% \end{equation}
+% kde $K(x)$ je tepelná vodivost materiálu.
+% 
+% 
+% Pokud nyní dosadíme \eqref{eqn:fourier_1d} do \eqref{eqn:continuity_steady_1d}, dostaneme Poissonovu rovnici,
+% a poté popíšeme náš problém termosky
+% % \[
+% % -(K(x)u'(x))' = f(x)
+% % \]
+% 
+% \begin{eqnarray}
+% -(Ku')'(x) &=& f(x) \qquad \textrm{in } \Omega = [0,1], \label{eqn:poisson}\\
+% -(Ku')(0) &=& 0, \label{eqn:hom_neumann}\\
+% u(1) &=& 0, \label{eqn:hom_dirichlet}
+% \end{eqnarray}
+% kde \eqref{eqn:poisson} řídí rozložení teploty $u(x)$ uvnitř termosky,
+% \eqref{eqn:hom_neumann} je homogenní Neumannovou okrajovou podmínkou a vyjadřuje nulový tepelný tok skrz dno termosky
+% a \eqref{eqn:hom_dirichlet} je homogenní Dirichletovou okrajovou podmínkou a pokládá teplotu na otevřeném konci termosky rovnou nule.
+% 
+% 
+% Slabou formulaci získáme přenásobením \eqref{eqn:poisson} testovací funkcí $\varphi(x)\in\mathcal{C}([0,1])$, $\varphi(1)=0$, 
+% následnou integrací rovnice přes oblast $\Omega$ a aplikací okrajových podmínek za použití per partes (resp. Greenovy věty).
+% \[
+%   \int\limits_{\Omega} -\left( Ku'\right)'(x) \varphi(x) \d x = \int\limits_{\Omega} f(x) \varphi(x) \d x
+% \]
+% 
+% \begin{equation}
+% \left[-\left( Ku'\right)(x)\varphi(x)\right]_0^1 + \int\limits_0^1 \left( Ku'\right)'(x) \varphi'(x) \d x
+%     = \int\limits_0^1 f(x) \varphi(x) \d x\label{eqn:weak_form}
+% \end{equation}
+% První člen daný okrajovými podmínkami je v našem případě nulový, díky Neumannově okrajové podmínce a volbě $\varphi$.
+% 
+% Integrální rovnici \eqref{eqn:weak_form} nazýváme slabou formulací problému \eqref{eqn:poisson}-\eqref{eqn:hom_dirichlet}.
+% Všimněme si dvou vlastností této formulace:
+% \begin{itemize}
+%   \item $u''$ nemusí existovat
+%   \item $u'$ nemusí být spojitá, stačí existence integrálu $\int_0^1(u')^2 \d x$
+% \end{itemize}
+% 
+% Označme nyní prostor, ze kterého pochází funkce $\varphi$:
+% \begin{equation}
+%   V = \{v\in H^1(\Omega); v(0) = 0\},
+% \end{equation}
+% kde prostor $H^1(\Omega)$ zaručuje pro funkce $\varphi$ výše zmíněnou druhou vlastnost,
+% a kde dále vidíme závislost $V$ na Dirichletově okrajové podmínce.
+% Z tohoto prostoru bude pocházet i řešení $u\in V$.
+% 
+% \paragraph{Galerkinova aproximace}
+% Nyní zvolíme konečně rozměrný vektorový podprostor $V_h\subset V$.
+% V tomto prostoru definujeme bázi $\{\varphi_j(x)\}_{j=1}^N$.
+% Tedy pro každou funkci $v_h\in V_h$ existuje právě jeden vektor $v_h^j,\, j=1\ldots N$,
+% takový že 
+% \[
+%   v_h(x) = \sum\limits_{j=1}^N v_h^j \varphi_j
+% \]
+% 
+% Uvažujme nyní aproximativní řešení $u_h\in V_h$ ve tvaru
+% \[
+%   u_h(x) = \sum\limits_{j=1}^N u^j_h \varphi_j
+% \]
+% 
+% Hledáme tedy $\vc u_h$ (vektor  koeficientů lineární kombinace), splňující \eqref{eqn:weak_form}
+% \[
+%   \int\limits_{\Omega} K(x) \left( \sum\limits_{j=1}^N u^j_h \varphi_j(x) \right)' \varphi_i'(x) \d x
+%     = \int\limits_{\Omega} f(x) \varphi_i(x) \d x \qquad \forall i=1\ldots N \label{eqn:discrete_weak_form}
+% \]
+% \begin{equation}
+% \sum\limits_{j=1}^N \underbrace{ \int\limits_{\Omega} K(x) \varphi'_j(x) \varphi_i'(x) \d x }_{A_{ij}} u^j_h
+%     = \underbrace{ \int\limits_{\Omega} f(x) \varphi_i(x) \d x }_{b_i} \qquad \forall i=1\ldots N \label{eqn:discrete_weak_form}
+% \end{equation}
+% čímž získáváme soustavu lineární algebraických rovnic
+% \begin{equation}
+%   \vc A \vc u_h = \vc b\label{eqn:linear_system}
+% \end{equation}
+% 
+% Uveďme si nyní dvě zásadní vlastnosti matice $\vc A$, a to symetrii
+% \begin{equation}
+%   A_{ij} = \int\limits_{\Omega} K(x) \varphi'_j(x) \varphi_i'(x) \d x = \int\limits_{\Omega} K(x) \varphi'_i(x) \varphi_j'(x) \d x = A_{ji}, \label{eqn:linear_system_symetry}
+% \end{equation}
+% a pozitivní definitnost
+% \begin{multline}
+%   \vc\alpha^T \vc A \vc\alpha = \sum\limits_{i,j=1}^N \alpha_i \alpha_j A_{ij}
+%   = \int\limits_{\Omega} K(x)
+%     \underbrace{\left( \sum\limits_{i=1}^N \alpha_i \varphi'_i(x) \right)}_{\vc v}
+%     \underbrace{\left( \sum\limits_{j=1}^N \alpha_j \varphi'_j(x) \right)}_{\vc v} \d x \\
+%   = \int\limits_{\Omega} K(x) |\vc v|^2 > 0 \quad \forall \vc v: |\vc v|\neq 0. \label{eqn:linear_system_pos_def}
+% \end{multline}
+%     
+%     
+%     
+% \subsection{Lineární konečné prvky v 1D}
+% Jako podprostor $V_h$ zvolíme množinu lineárních lomených funkcí na intervalu $[0,1]$.
+% Rozdělme interval $[0,1]$ pomocí bodů $x_1=0<x_1<x_2<...<x_{N+1}=1$ na intervaly $E_j:=(x_j,x_{j+1})$ o délce $h_j:=x_{j+1}-x_{j}$.
+% Normu tohoto dělení zavedeme jako $h:=\max\limits_{j=1,...,N} h_j$.
+% Definujeme
+% \[ V_h:=\{v_h\in C([0,1]);~\forall j=1,...,N:~v_h \mbox{ je lineární na }E_j,~v_h(1)=0 \}. \]
+% %Jelikož funkce z $V_h$ jsou spojité a nulové v bodech $0$ a $1$, je automaticky $V_h$ podprostorem $H^1_0(0,1)$.
+% Každou funkci $v_h$ z $V_h$ jednoznačně určují její hodnoty v dělících bodech $\{x_j\}_{j=1}^N$.
+% Dimenze podprostoru tedy je $\dim V_h=N$.
+% 
+% Pro metodu konečných prvků je klíčová volba báze.
+% Zvolíme bázové funkce $\{\varphi_j\}_{j=1}^N$ podprostoru $V_h$ pomocí vztahů
+% \begin{equation*}
+%       \varphi_i(x_j) = 
+%         \begin{cases}
+%           1 \quad \textrm{pro } i=j\\
+%           0 \quad \textrm{pro } i\neq j\\
+%         \end{cases}
+% \end{equation*}
+% Každá bázová funkce je tedy nenulová v právě jednom uzlovém bodě (viz Obr. \ref{fig:base_1d_lin}). Všimněme si zde také, že na konci s Neumannovou okrajovou podmínkou existuje na intervalu $E_1$ funkce $\varphi_1$. Naopak na konci s Dirichletovou okrajovou podmínkou na intervalu $E_N$ existuje již pouze funkce $\varphi_N$. Prostory $V$ a $V_h$ a jeho báze závisí na konkrétních okrajových podmínkách.
+% \begin{figure}[h]
+% \centering
+% \includegraphics{base_1d_lin_termoska}
+% \caption{Bázové funkce pro prostor po částech lineárních funkcí.}
+% \label{fig:base_1d_lin}
+% \end{figure}
+% % Prvky matice $\tn A\in\R^{N\times N}$ a vektoru $\vc b\in\R^{N}$ mají tvar
+% % \[ a_{ij}=\int_0^1\varphi_j'(x)\varphi_i(x), \]
+% % \[ b_i = \int_0^1 f(x)\varphi_i(x)\d x. \]
+% 
+% Podívejme se nyní na konkrétní soustavu rovnic, kterou dostáváme z~\eqref{eqn:discrete_weak_form}.
+% Je zřejmé, že $A_{ij}$ je nulové, pokud se indexy $i$ a $j$ liší více než o 1, neboť v takovém případě je v každém bodě intervalu $(0,1)$ alespoň jedna z funkcí $\varphi_i$, $\varphi_j$ (a tedy i $\varphi_i'$, $\varphi_j'$) nulová. Matice $\vc A$ proto bude třídiagonální, a tedy řídká.
+% 
+% Pokud budeme uvažovat $K(x) = const.\, \forall x\in E_j,\, j = 1\ldots N$, pak platí:
+% \begin{align*}
+% A_{jj} &= \int_{x_{j-1}}^{x_j} K(x)\varphi_j'(x)^2\d x + \int_{x_j}^{x_{j+1}} K(x) \varphi_j'(x)^2\d x
+% = \int_{x_{j-1}}^{x_j}\frac{K}{h_{j-1}^2}\d x + \int_{x_j}^{x_{j+1}}\frac{K}{h_j^2}\d x\\
+% &= K\left(\frac1{h_{j-1}} + \frac1{h_j}\right),~j=2,...,N,\\\\
+% A_{11} &= \int_{x_1}^{x_{2}} K(x) \varphi_1'(x)^2\d x
+% = \frac{K}{h_1},&\\\\
+% A_{j,j-1} &= A_{j-1,j} = \int_{x_{j-1}}^{x_j}K(x)\varphi_{j-1}'(x)\varphi_j'(x)\d x\\
+% &= \int_{x_{j-1}}^{x_j}\frac{(-K)}{h_{j-1}^2} \d x = -\frac{K}{h_{j-1}}, j=2,...,N.\\\\
+% b_j &= \int_{x_{j-1}}^{x_{j+1}} f(x)\varphi_j(x)\d x,~j=2,...,N,&\\\\
+% b_1 &= \int_{x_1}^{x_2} f(x)\varphi_1(x)\d x,&\\\\
+% \end{align*}
+% V případě ekvidistantního dělení ($h=h_j$ $\forall j=1,...,N$) a $K(x) = const.,\,f(x)=const.\, \forall x\in\Omega$ máme
+% \[
+%   \vc A = \frac{K}{h}\begin{pmatrix}1 & -1 &&& \\-1 & 2 & -1&&\\&\ddots&\ddots&\ddots&\\&&-1 & 2 & -1\\&&& -1 & 2\end{pmatrix}
+%   = fh\begin{pmatrix}0.5\\1\\1\\1\\1\end{pmatrix}= \vc b.
+% \]
+% % Protože bilineární forma $(a,u,v)$ je symetrická a eliptická, je také $\tn A$ symetrická a pozitivně definitní.
+% Soustava $\vc A\vc u_h=\vc b$ má řešení pro každý vektor $\vc b$,
+% %a řešením Galerkinovy úlohy je funkce $u_h(x):=\sum_{i=1}^N\xi_i\varphi_i(x)$.
+% hodnoty $u_h^i$ jsou zároveň hodnotami funkce $u_h$ v bodech $x_i$.
+% 
+% 
+% \subsection{Chyba řešení}
+% 
+% Nyní budeme zkoumat chybu řešení, tedy v jakém vztahu jsou $u$ a $u_h$.
+% Předem zavedeme zjednodušené značení
+% \[
+% a(u,v) = \int\limits_\Omega K(x) u'(x) v'(x) \d x, \qquad b(v) = \int\limits_\Omega f(x) v(x) \d x
+% \]
+% Nyní dosadíme $u$ a $u_h$ do naší slabé formulace, za použité nového značení a obě rovnice odečteme:
+% \[
+% \int\limits_\Omega K(x) u'(x) \varphi'(x) \d x = a(u,\varphi) = b(\varphi) = \int\limits_\Omega f \varphi(x) \d x
+% \]
+% \[
+% \int\limits_\Omega K(x) u'(x) \varphi'(x) \d x = a(u,\varphi) = b(\varphi) = \int\limits_\Omega f \varphi(x) \d x
+% \]
+% 
+% 
+% 
+% Podobně jako ve Větě \ref{th:cea} lze ukázat, že platí odhad chyby
+% \begin{equation}\label{eq:error_est_laplace_dir}
+% \forall v_h\in V_h:~\norm{u'-u_h'}_2 \le \norm{u'-v_h'}_2,
+% \end{equation}
+% takže $u_h$ je zároveň nejlepší aproximace slabého řešení $u$ v prostoru po částech lineárních funkcí.
+% Zvolme nyní vhodnou funkci $v_h$, abychom odhad chyby \eqref{eq:error_est_laplace_dir} vyjádřili kvantitativně.
+% Položíme $v_h:=\tilde u_h$, kde $\tilde u_h$ je interpolanta $u$ (po částech lineární funkce taková, že $\tilde u_h(x_i)=u(x_i)$, $i=0,...,N+1$).
+% Pak z teorie Lagrangeovy interpolace víme, že platí
+% \[ |u'(x)-\tilde u_h'(x)|\le h\max_{y\in[0,1]}|u''(y)| ~\forall x\in[0,1]. \]
+% Je-li funkce $u$ třídy $C^2([0,1])$, pak dostáváme odhad
+% \[ \norm{u'-u_h'}_2 \le \norm{u'-\tilde u_h'}_2 \le h\max_{y\in[0,1]}|u''(y)|, \]
+% který říká, že chyba Galerkinovy aproximace měřená jako $L^2$ norma rozdílu derivací je řádu $O(h)$.
+% 
+% 
+% 
+% %\section{Rovnice vedení tepla}
+% 
+% 
+% 
+% % Uvažujme transportní rovnici na nekonečné oblasti $\Omega = \Real$ (pro $x$):
+% % \begin{equation}
+% %     \label{eq:point_transport_1d}
+% %     \prtl_t u(t,x) + v\prtl_x u(t,x) =0 
+% % \end{equation}
+% % kde $v$ je konstantní rychlost. Řešením je posunutá počáteční podmínka $u_0(x)$:
+% % \[
+% %     u(t,x) = u_0(x-vt)
+% % \]
+% % pro libovolnou diferencovatelnou funkci $u_0$ máme:
+% % \[
+% %     \prtl_t u + v\prtl_x u=u_0'(x-vt)(-v) + vu_0'(x-vt)=0
+% % \]
+% % 
+% % Zdá se logické, že by toto mělo platit pro libovolnou počáteční podmínku $u_0$, ale rovnice je formulována tak, že 
+% % to platí jen pokud je $u_0$ diferencovatelná. Zkusme se vrátit k tomu jak jsme transportní rovnici odvodili. Pomocí Raynoldsovy věty jsme dostali:
+% % \[
+% %     \int_{\Omega_t} \prtl_t u + \div(v u) \d x= \int_{\Omega_t} \prtl_t u + v\prtl_x u \d x= 0
+% % \]
+% % pro libovolnou oblast $\Omega_t$. A bodovou rovnici \eqref{eq:point_transport_1d} jsme dostali za předpokladu, že vnitřek integrálu je spojitý, 
+% % tedy $u$ je spojitě diferencovatelná v prostoru i čase. Tedy požadavek na diferencovatelnost je ve skutečnosti umělý a i bez něj platí:
+% % \[
+% %     \int_\Real \phi(\prtl_t u + \prtl_x(vu)) \d x = 0
+% % \]
+% % pro libovolnou hladkou funkci $\phi$ s kompaktním nosičem. Nosič funkce je množina, kde je funkce nenulová:
+% % \[
+% %     \supp \phi = \{ x,\ \phi(x) > 0\}
+% % \]
+% % a v našem případě jsou kompaktní všechny omezené a uzavřené intervaly. Jde tedy o to, že $\phi$ musí být \emph{směrem k nekonečnu} nulová.
+% % 
+% % Nyní však nevíme co je $\prtl_t u$ pokud je $u_0$ nespojitá, např. $u_0(x)=\sgn(x)$. Abychom se tohoto problému zbavili použijeme Greenovu větu 
+% % (zde vlastně jen integraci per partes):
+% % 
+% % \[
+% %     \int_\Real \int_\Real \phi(t,x)\big(\prtl_t u + \prtl_x(vu)\big) \d x \d t= 
+% %     \int_\Real \int_\Real -\prtl_t \phi u - \prtl_x \phi vu \d x \d t = 0
+% % \]
+% % pro libovolnou hladkou funkci $\phi(t,x)$ s kompaktním nosičem na $\Real \times \Real$.
+% % Tato rovnice již skutečně platí pro libovolnou integrovatelnou počáteční podmínku $u_0$.
+% 
+% 
+% 
+% 
+% 
+% 
+\hypertarget{sec:diff_eq}{%
+\section{MKP pro eliptické rovnice v 1D}
+\label{sec:diff_eq}}
 
+% \subsection{Motivace k~zavedení metody konečných prvků}
+% 
+% Řadu fyzikálních, chemických. biologických a sociálních procesů lze 
+% popsat pomocí parciálních diferenciálních rovnic (PDR) a jejich soustav.
+% Možnost řešení těchto rovnic je zásadní pro predikci a optimalizaci 
+% příslušných procesů při řešení řady inženýrských problémů. PDR jsou rovnice, kde neznámou 
+% je fyzikální pole popsané funkcí $u(\vc x)$, která bodům $\vc x$ 
+% na na nějaké prostorové oblasti přiřazuje hodnoty pole. 
+% Pro většinu PDR nelze řešení (funkci) zapsat v uzavřeném tvaru (t.j. vzorečkem) proto 
+% jsou využány numerické (přibližné) metody jejichž výsledkem je funkce splňující rovnici 
+% s nějakou numerickou chybou. Je to obdobné jako nemožnost reprezentovat v počítači přesně reálná čísla.
+% 
+% Metoda konečných prvků -- MKP, anglicky Finite Elment Method (FEM) je jednou ze standarodních metod pro numerické (přibližné)
+% řešení PDR, dalšími metodamy jsou například metoda konečných objemů (Finite Volume Method -- FVM) 
+% nebo nespojitá Galerkinova metoda (Discontinuous Galerkin -- DG).
+% Společným rysem těchto metod je využití takzvané slabé formulace zadané rovnice. 
+% V této kapitole si celý postup metody konečných prvků představíme na jednoduché úloze vedení tepla v 1D.
+
+\subsection{Fyzikální úloha a klasická formulace}
+
+\paragraph{Rozložení tepla v tělese.}
+Příkladem úlohy popsané pomocí \emph{obyčejné diferenciální rovnice} (ODR) je rozložení teploty v tyči,
+která je nějakým způsobem zahřívána. V~tomto případě nebudeme uvažovat tloušťku
+tyče (předpokládáme, že teplota v příčném směru je konstantní) a počítáme tedy pouze v~1D souřadném systému. Jediná souřadnice je
+$x\in[0,L]$ a interval $[0,L]$ představuje tyč o délce $L$. Teplotu v~různých částech tyče můžeme popsat funkcí
+$u(x)$. Rovnice vedení tepla má tvar
+\eq{\label{eq:heat_1d} -(k(x)u'(x))' = 0 \mbox{ pro }x\in(0,L), }
+kde $k(x)$ je koeficient tepelné vodivosti v tyči (může být konstantní, pokud je materiál tyče homogenní). Výraz $-k(x)u'(x)$ představuje tepelný tok (úbytek tepla v bodě $x$).
+% 
+Rovnice \eqref{eq:heat_1d} popisuje rozložení tepla uvnitř tělesa.
+Aby byl popis kompletní a matematická úloha řešitelná, je třeba upřesnit chování na hranici, tj. na koncích tyče.
+Těmto vztahům říkáme \emph{okrajové podmínky}. Mezi nejběžnější typy okrajových podmínek pro rovnici vedení tepla patří:
+\begin{enumerate}
+\item[a)] Neumannova podmínka: Pokud je např. levý konec tyče zahříván vnějším zdrojem tepla s určitým tepelným tokem $g$, platí
+\[ -k(0)u'(0)n(0) = g, \]
+kde $n(x)$ je tzv. vnější jednotková normála nabývající hodnot $n(0)=-1$, $n(L)=1$ ($n$ určuje směr ``ven z tyče'').
+Například hodnota $g=0$ znamená, že konec tyče je tepelně izolovaný od vnějšího prostředí.
+
+\item[b)] Dirichletova podmínka: Pokud je pravý konec tyče udržován při konstantní teplotě $u_D$, platí
+\[ u(L) = u_D. \]
+\end{enumerate}
+
+Taková úloha jde zobecnit i pro více dimenzí, můžeme např. popisovat
+teplotu na nějaké dvourozměrné ploše (viz obr. \ref{fig:heat}).
+\begin{figure}
+\centering
+\includegraphics[width=0.3\textwidth]{img/image3.png}%
+\includegraphics[width=0.5\textwidth]{img/image5.png}
+\caption{Ilustrace fyzikální úlohy vedení tepla v rovinné oblasti (vlevo) a v 1D tyči (vpravo).}
+\label{fig:heat}
+\end{figure}
+K~tomu bychom využili funkci
+$u(x, y)$. Příslušná rovnice pak obsahuje derivace podle $x$ i
+podle $y$. Takováto úloha ve více dimenzích s~derivacemi podle více
+proměnných vede na využití \emph{parciálních diferenciálních rovnic}.
+Okrajové úlohy pro ODR lze považovat za speciální případ (nejjednodušší) PDR.
+
+
+\paragraph{Průhyb nosníku.}
+Podobným způsobem lze matematicky popsat průhyb zatíženého nosníku.
+Je-li tloušťka nosníku výrazně menší než jeho délka, pak lze nosník opět reprezentovat jako interval $[0,L]$.
+Průhyb pak popisuje funkce $u(x)$, která splňuje rovnici bilance sil:
+\[ -(k(x)u'(x))' = f(x) \mbox{ pro }x\in(0,L), \]
+kde $k(x)$ je koeficient tuhosti materiálu nosníku a $f(x)$ je vnější objemová síla (zatížení působící po celé délce nosníku).
+Výraz $k(x)u'(x)$ pak představuje vnitřní napětí v bodě $x$.
+Podle toho, jak jsou upevněny konce nosníku je rovnice doplněna o okrajové podmínky. Např.:
+\begin{enumerate}
+\item[a)] Dirichletova podmínka: Je-li levý konec nosníku pevně uchycen, platí
+\[ u(0)=0. \]
+\item[b)] Neumannova podmínka: Je-li pravý konec nosníku zatížen, platí
+\[ -k(L)u'(L)n(L) = g, \]
+kde $g$ je vnější povrchová síla (zatížení působící v bodě $x=L$).
+\end{enumerate}
+
+\subsection{Klasická formulace okrajové úlohy}
+Předchozí dva příklady fyzikálních problémů jsme popsali jako tzv. okrajové úlohy, sestávající z ODR a okrajových podmínek.
+V další části budeme pracovat s okrajovou úlohou samostatně, bez přímé návaznosti na fyzikální problém.
+Uvažujme tedy následující úlohu:
+\begin{subequations}\label{eq:okr_uloha}
 \begin{eqnarray}
--(Ku')'(x) &=& f(x) \qquad \textrm{in } \Omega = [0,1], \label{eqn:poisson}\\
--(Ku')(0) &=& 0, \label{eqn:hom_neumann}\\
-u(1) &=& 0, \label{eqn:hom_dirichlet}
+-(k(x)u'(x))' &= f(x), &x\in(0,L),\label{eq:poisson}\\
+-k(0)u'(0)n(0) &= g,\label{eq:neumann}\\
+u(L) &= 0.\label{eq:hom_dirichlet}
 \end{eqnarray}
-kde \eqref{eqn:poisson} řídí rozložení teploty $u(x)$ uvnitř termosky,
-\eqref{eqn:hom_neumann} je homogenní Neumannovou okrajovou podmínkou a vyjadřuje nulový tepelný tok skrz dno termosky
-a \eqref{eqn:hom_dirichlet} je homogenní Dirichletovou okrajovou podmínkou a pokládá teplotu na otevřeném konci termosky rovnou nule.
+\end{subequations}
+Klasickým řešením úlohy \eqref{eq:okr_uloha} je funkce $u:[0,L]\to\Real$, která je dvakrát spojitě diferencovatelná a v příslušných bodech $x$ splňuje rovnice \eqref{eq:okr_uloha}.
+
+\begin{ex}
+Za speciálních zjednodušených podmínek je možné klasické řešení spočítat nebo ``uhodnout''.
+Např. pokud $k(x)=f(x)=1$, $L=1$, $g=1$, pak klasické řešení má tvar
+\[ u(x) = -\frac12(1-x)^2. \]
+\end{ex}
+
+Pro obecný případ s nekonstantními koeficienty se klasické řešení obvykle nedá vyjádřit v uzavřeném tvaru, tj. jako vzorec sestávající z aritmetických operací a analytických funkcí.
+Proto je nutné hledat řešení přibližné (numerické).
+To je předmětem metody konečných prvků.
+Výchozí bod MKP je tzv. slabá formulace, jejíž odvození si ukážeme v následující sekci.
 
 
-Slabou formulaci získáme přenásobením \eqref{eqn:poisson} testovací funkcí $\varphi(x)\in\mathcal{C}([0,1])$, $\varphi(1)=0$, 
-následnou integrací rovnice přes oblast $\Omega$ a aplikací okrajových podmínek za použití per partes (resp. Greenovy věty).
-\[
-  \int\limits_{\Omega} -\left( Ku'\right)'(x) \varphi(x) \d x = \int\limits_{\Omega} f(x) \varphi(x) \d x
-\]
+\subsection{Slabá formulace}
 
-\begin{equation}
-\left[-\left( Ku'\right)(x)\varphi(x)\right]_0^1 + \int\limits_0^1 \left( Ku'\right)'(x) \varphi'(x) \d x
-    = \int\limits_0^1 f(x) \varphi(x) \d x\label{eqn:weak_form}
-\end{equation}
-První člen daný okrajovými podmínkami je v našem případě nulový, díky Neumannově okrajové podmínce a volbě $\varphi$.
+Slabou formulaci úlohy \eqref{eq:okr_uloha} získáme následujícím postupem.
+\begin{enumerate}
+\item Rovnici \eqref{eq:poisson} přenásobíme tzv. testovací funkcí $v(x)$, která splňuje Dirichletovu podmínku \eqref{eq:hom_dirichlet}, tj. $v(L)=0$:
+\[ -(k(x)u'(x))'v(x) = f(x)v(x). \]
 
-Integrální rovnici \eqref{eqn:weak_form} nazýváme slabou formulací problému \eqref{eqn:poisson}-\eqref{eqn:hom_dirichlet}.
-Všimněme si dvou vlastností této formulace:
+\item Vzniklou rovnici integrujeme přes interval $[0,L]$:
+\[ \int_0^L -(k(x)u'(x))'v(x) \d x = \int_0^L f(x)v(x) \d x. \]
+
+\item Levou stranu upravíme pomocí pravidla per partes:
+\[ \int_0^L -(k(x)u'(x))'v(x) \d x = \left[-k(x)u'(x)v(x)\right]_{x=0}^L + \int_0^L k(x)u'(x)v'(x) \d x. \]
+
+\item Aplikujeme okrajové podmínky:
+\[ \left[-k(x)u'(x)v(x)\right]_{x=0}^L = -k(L)u'(L)\underbrace{v(L)}_{=0} + \underbrace{k(0)u'(0)}_{=g}v(0) = gv(0). \]
+První člen je nahrazen díky volbě testovací funkce $v$ a druhý díky Neumannově okrajové podmínce.
+
+\item Výsledná slabá formulace zní: Hledáme funkci $u\in V$, kde
+\[ V=\{v:[0,L]\to\Real;~v \mbox{ je po částech diferencovatelná},~v(L)=0\}, \]
+která splňuje
+\eq{\label{eq:weak_poisson}
+  \forall v\in V:\quad \int_0^L k(x)u'(x)v'(x) \d x = \int_0^L f(x)v(x) \d x - gv(0).
+}
+\end{enumerate}
+
+
+Všimněme si dvou vlastností slabé formulace:
 \begin{itemize}
-  \item $u''$ nemusí existovat
-  \item $u'$ nemusí být spojitá, stačí existence integrálu $\int_0^1(u')^2 \d x$
+  \item $u''$ nemusí existovat,
+  \item $u'$ nemusí být spojitá, stačí existence integrálu na levé straně \eqref{eq:weak_poisson}.
 \end{itemize}
 
-Označme nyní prostor, ze kterého pochází funkce $\varphi$:
-\begin{equation}
-  V = \{v\in H^1(\Omega); v(0) = 0\},
-\end{equation}
-kde prostor $H^1(\Omega)$ zaručuje pro funkce $\varphi$ výše zmíněnou druhou vlastnost,
-a kde dále vidíme závislost $V$ na Dirichletově okrajové podmínce.
-Z tohoto prostoru bude pocházet i řešení $u\in V$.
 
-\paragraph{Galerkinova aproximace}
+
+\subsection{Galerkinova aproximace}
 Nyní zvolíme konečně rozměrný vektorový podprostor $V_h\subset V$.
 V tomto prostoru definujeme bázi $\{\varphi_j(x)\}_{j=1}^N$.
 Tedy pro každou funkci $v_h\in V_h$ existuje právě jeden vektor $v_h^j,\, j=1\ldots N$,
 takový že 
 \[
-  v_h(x) = \sum\limits_{j=1}^N v_h^j \varphi_j
+  v_h(x) = \sum\limits_{j=1}^N v_h^j \varphi_j.
 \]
-
+% 
 Uvažujme nyní aproximativní řešení $u_h\in V_h$ ve tvaru
 \[
-  u_h(x) = \sum\limits_{j=1}^N u^j_h \varphi_j
+  u_h(x) = \sum\limits_{j=1}^N ´\xi^j \varphi_j.
 \]
+% 
+Hledáme tedy $\vc\xi$ (vektor  koeficientů lineární kombinace), splňující \eqref{eq:weak_poisson} s testovacími funkcemi $v_h=\varphi_i$, $i=1,...,N$:
+\eq{
+  \int_0^L k(x) \left( \sum\limits_{j=1}^N \xi^j \varphi_j(x) \right)' \varphi_i'(x) \d x
+    = \int_0^L f(x) \varphi_i(x) \d x - g\varphi(0)\qquad \forall i=1\ldots N \label{eqn:discrete_weak_form}
+}
+% 
+Označíme-li
+\[ a_{ij} := \int_0^L k(x) \varphi'_j(x) \varphi_i'(x) \d x, \]
+\[ b_i := \int_0^L f(x) \varphi_i(x) \d x, \]
+pak \eqref{eqn:discrete_weak_form} lze zapsat jako soustavu lineárních rovnic pro neznámý vektor $\vc\xi$:
 
-Hledáme tedy $\vc u_h$ (vektor  koeficientů lineární kombinace), splňující \eqref{eqn:weak_form}
-\[
-  \int\limits_{\Omega} K(x) \left( \sum\limits_{j=1}^N u^j_h \varphi_j(x) \right)' \varphi_i'(x) \d x
-    = \int\limits_{\Omega} f(x) \varphi_i(x) \d x \qquad \forall i=1\ldots N \label{eqn:discrete_weak_form}
-\]
 \begin{equation}
-\sum\limits_{j=1}^N \underbrace{ \int\limits_{\Omega} K(x) \varphi'_j(x) \varphi_i'(x) \d x }_{A_{ij}} u^j_h
-    = \underbrace{ \int\limits_{\Omega} f(x) \varphi_i(x) \d x }_{b_i} \qquad \forall i=1\ldots N \label{eqn:discrete_weak_form}
-\end{equation}
-čímž získáváme soustavu lineární algebraických rovnic
-\begin{equation}
-  \vc A \vc u_h = \vc b\label{eqn:linear_system}
+  \mat A \vc\xi = \vc b\label{eqn:linear_system}
 \end{equation}
 
-Uveďme si nyní dvě zásadní vlastnosti matice $\vc A$, a to symetrii
+Uveďme si nyní dvě zásadní vlastnosti matice $\mat A$, a to symetrii
 \begin{equation}
-  A_{ij} = \int\limits_{\Omega} K(x) \varphi'_j(x) \varphi_i'(x) \d x = \int\limits_{\Omega} K(x) \varphi'_i(x) \varphi_j'(x) \d x = A_{ji}, \label{eqn:linear_system_symetry}
+  a_{ij} = \int_0^L k(x) \varphi'_j(x) \varphi_i'(x) \d x = \int_0^L k(x) \varphi'_i(x) \varphi_j'(x) \d x = a_{ji}, \label{eqn:linear_system_symetry}
 \end{equation}
 a pozitivní definitnost
 \begin{multline}
-  \vc\alpha^T \vc A \vc\alpha = \sum\limits_{i,j=1}^N \alpha_i \alpha_j A_{ij}
-  = \int\limits_{\Omega} K(x)
+  \vc\alpha^T \mat A \vc\alpha = \sum\limits_{i,j=1}^N \alpha_i \alpha_j a_{ij}
+  = \int_0^L k(x)
     \underbrace{\left( \sum\limits_{i=1}^N \alpha_i \varphi'_i(x) \right)}_{\vc v}
     \underbrace{\left( \sum\limits_{j=1}^N \alpha_j \varphi'_j(x) \right)}_{\vc v} \d x \\
-  = \int\limits_{\Omega} K(x) |\vc v|^2 > 0 \quad \forall \vc v: |\vc v|\neq 0. \label{eqn:linear_system_pos_def}
+  = \int_0^L k(x) |\vc v|^2 > 0 \quad \forall \vc v: |\vc v|\neq 0. \label{eqn:linear_system_pos_def}
 \end{multline}
     
     
     
 \subsection{Lineární konečné prvky v 1D}
-Jako podprostor $V_h$ zvolíme množinu lineárních lomených funkcí na intervalu $[0,1]$.
-Rozdělme interval $[0,1]$ pomocí bodů $x_1=0<x_1<x_2<...<x_{N+1}=1$ na intervaly $E_j:=(x_j,x_{j+1})$ o délce $h_j:=x_{j+1}-x_{j}$.
+Jako podprostor $V_h$ zvolíme množinu lineárních lomených funkcí na intervalu $[0,L]$.
+Rozdělme interval $[0,L]$ pomocí bodů $x_1=0<x_2<...<x_{N+1}=L$ na intervaly $E_j:=(x_j,x_{j+1})$ o délce $h_j:=x_{j+1}-x_{j}$.
 Normu tohoto dělení zavedeme jako $h:=\max\limits_{j=1,...,N} h_j$.
 Definujeme
-\[ V_h:=\{v_h\in C([0,1]);~\forall j=1,...,N:~v_h \mbox{ je lineární na }E_j,~v_h(1)=0 \}. \]
+\[ V_h:=\{v_h\in C([0,L]);~\forall j=1,...,N:~v_h \mbox{ je lineární na }E_j,~v_h(L)=0 \}. \]
 %Jelikož funkce z $V_h$ jsou spojité a nulové v bodech $0$ a $1$, je automaticky $V_h$ podprostorem $H^1_0(0,1)$.
 Každou funkci $v_h$ z $V_h$ jednoznačně určují její hodnoty v dělících bodech $\{x_j\}_{j=1}^N$.
 Dimenze podprostoru tedy je $\dim V_h=N$.
@@ -152,7 +470,7 @@ Zvolíme bázové funkce $\{\varphi_j\}_{j=1}^N$ podprostoru $V_h$ pomocí vztah
           0 \quad \textrm{pro } i\neq j\\
         \end{cases}
 \end{equation*}
-Každá bázová funkce je tedy nenulová v právě jednom uzlovém bodě (viz Obr. \ref{fig:base_1d_lin}). Všimněme si zde také, že na konci s Neumannovou okrajovou podmínkou existuje na intervalu $E_1$ funkce $\varphi_1$. Naopak na konci s Dirichletovou okrajovou podmínkou na intervalu $E_N$ existuje již pouze funkce $\varphi_N$. Prostory $V$ a $V_h$ a jeho báze závisí na konkrétních okrajových podmínkách.
+Každá bázová funkce je tedy nenulová v právě jednom uzlovém bodě (viz Obr. \ref{fig:base_1d_lin}). Všimněme si zde také, že na konci s Neumannovou okrajovou podmínkou existuje na intervalu $E_1$ funkce $\varphi_1$. Naopak na konci s Dirichletovou okrajovou podmínkou na intervalu $E_N$ existuje již pouze funkce $\varphi_N$. Prostory $V$ a $V_h$ a jejich báze závisí na konkrétních okrajových podmínkách.
 \begin{figure}[h]
 \centering
 \includegraphics{base_1d_lin_termoska}
@@ -164,7 +482,7 @@ Každá bázová funkce je tedy nenulová v právě jednom uzlovém bodě (viz O
 % \[ b_i = \int_0^1 f(x)\varphi_i(x)\d x. \]
 
 Podívejme se nyní na konkrétní soustavu rovnic, kterou dostáváme z~\eqref{eqn:discrete_weak_form}.
-Je zřejmé, že $A_{ij}$ je nulové, pokud se indexy $i$ a $j$ liší více než o 1, neboť v takovém případě je v každém bodě intervalu $(0,1)$ alespoň jedna z funkcí $\varphi_i$, $\varphi_j$ (a tedy i $\varphi_i'$, $\varphi_j'$) nulová. Matice $\vc A$ proto bude třídiagonální, a tedy řídká.
+Je zřejmé, že $a_{ij}$ je nulové, pokud se indexy $i$ a $j$ liší více než o 1, neboť v takovém případě je v každém bodě intervalu $(0,L)$ alespoň jedna z funkcí $\varphi_i$, $\varphi_j$ (a tedy i $\varphi_i'$, $\varphi_j'$) nulová. Matice $\mat A$ proto bude třídiagonální, a tedy řídká.
 
 Pokud budeme uvažovat $K(x) = const.\, \forall x\in E_j,\, j = 1\ldots N$, pak platí:
 \begin{align*}
@@ -221,149 +539,63 @@ který říká, že chyba Galerkinovy aproximace měřená jako $L^2$ norma rozd
 
 
 
-%\section{Rovnice vedení tepla}
 
 
 
-% Uvažujme transportní rovnici na nekonečné oblasti $\Omega = \Real$ (pro $x$):
-% \begin{equation}
-%     \label{eq:point_transport_1d}
-%     \prtl_t u(t,x) + v\prtl_x u(t,x) =0 
-% \end{equation}
-% kde $v$ je konstantní rychlost. Řešením je posunutá počáteční podmínka $u_0(x)$:
-% \[
-%     u(t,x) = u_0(x-vt)
-% \]
-% pro libovolnou diferencovatelnou funkci $u_0$ máme:
-% \[
-%     \prtl_t u + v\prtl_x u=u_0'(x-vt)(-v) + vu_0'(x-vt)=0
-% \]
+% V~matematice a fyzice jsme se dosud v~souvislosti s~diferenciálními
+% rovnicemi setkávali s~tzv. \textbf{počátečním problémem} neboli
+% \textbf{úlohou s~počátečními podmínkami} (Cauchyho úlohou). Příkladem
+% úlohy, kterou lze takto řešit je kyvadlo. To můžeme aproximovat jako
+% lineární oscilátor a při zadaných počátečních podmínkách (počáteční
+% výchylka) dokážeme pomocí ODR závislé pouze na čase (\emph{\textbf{t}})
+% popsat časový vývoj tohoto systému až do nekonečna (např. až do
+% zastavení kyvadla).
+
+% \subsection{Okrajová úloha, typy okrajových podmínek}
 % 
-% Zdá se logické, že by toto mělo platit pro libovolnou počáteční podmínku $u_0$, ale rovnice je formulována tak, že 
-% to platí jen pokud je $u_0$ diferencovatelná. Zkusme se vrátit k tomu jak jsme transportní rovnici odvodili. Pomocí Raynoldsovy věty jsme dostali:
-% \[
-%     \int_{\Omega_t} \prtl_t u + \div(v u) \d x= \int_{\Omega_t} \prtl_t u + v\prtl_x u \d x= 0
-% \]
-% pro libovolnou oblast $\Omega_t$. A bodovou rovnici \eqref{eq:point_transport_1d} jsme dostali za předpokladu, že vnitřek integrálu je spojitý, 
-% tedy $u$ je spojitě diferencovatelná v prostoru i čase. Tedy požadavek na diferencovatelnost je ve skutečnosti umělý a i bez něj platí:
-% \[
-%     \int_\Real \phi(\prtl_t u + \prtl_x(vu)) \d x = 0
-% \]
-% pro libovolnou hladkou funkci $\phi$ s kompaktním nosičem. Nosič funkce je množina, kde je funkce nenulová:
-% \[
-%     \supp \phi = \{ x,\ \phi(x) > 0\}
-% \]
-% a v našem případě jsou kompaktní všechny omezené a uzavřené intervaly. Jde tedy o to, že $\phi$ musí být \emph{směrem k nekonečnu} nulová.
+% \includegraphics[width=1.93264in,height=0.92708in]{img/image7.png}
 % 
-% Nyní však nevíme co je $\prtl_t u$ pokud je $u_0$ nespojitá, např. $u_0(x)=\sgn(x)$. Abychom se tohoto problému zbavili použijeme Greenovu větu 
-% (zde vlastně jen integraci per partes):
+% Jiný
+% typ úlohy, kterým se zejména budeme zabývat, je tzv. \textbf{okrajová
+% úloha}, kde máme zadané podmínky v~krajních bodech zkoumaného intervalu.
+% Jako příklad použijeme výše zmíněnou úlohu s~teplotou tyče. Tyč má délku
+% \emph{\textbf{L}} a rovnici popisující vývoj její teploty obecně
+% zapíšeme jako:
 % 
-% \[
-%     \int_\Real \int_\Real \phi(t,x)\big(\prtl_t u + \prtl_x(vu)\big) \d x \d t= 
-%     \int_\Real \int_\Real -\prtl_t \phi u - \prtl_x \phi vu \d x \d t = 0
-% \]
-% pro libovolnou hladkou funkci $\phi(t,x)$ s kompaktním nosičem na $\Real \times \Real$.
-% Tato rovnice již skutečně platí pro libovolnou integrovatelnou počáteční podmínku $u_0$.
-
-
-
-
-
-
-\hypertarget{sec:diff_eq}{%
-\section{MKP pro 1D úlohu vedení tepla}
-\label{sec:diff_eq}}
-
-\subsection{Motivace k~zavedení metody konečných prvků}
-
-Řadu fyzikálních, chemických. biologických a sociálních procesů lze 
-popsat pomocí parciálních diferenciálních rovnic (PDR) a jejich soustav.
-Možnost řešení těchto rovnic je zásadní pro predikci a optimalizaci 
-příslušných procesů při řešení řady inženýrských problémů. PDR jsou rovnice, kde neznámou 
-je fyzikální pole popsané funkcí $u(\vc x)$, která bodům $\vc x$ 
-na na nějaké prostorové oblasti přiřazuje hodnoty pole. 
-Pro většinu PDR nelze řešení (funkci) zapsat v uzavřeném tvaru (t.j. vzorečkem) proto 
-jsou využány numerické (přibližné) metody jejichž výsledkem je funkce splňující rovnici 
-s nějakou numerickou chybou. Je to obdobné jako nemožnost reprezentovat v počítači přesně reálná čísla.
-
-Metoda konečných prvků -- MKP, anglicky Finite Elment Method (FEM) je jednou ze standarodních metod pro numerické (přibližné)
-řešení PDR, dalšími metodamy jsou například metoda konečných objemů (Finite Volume Method -- FVM) 
-nebo nespojitá Galerkinova metoda (Discontinuous Galerkin -- DG).
-Společným rysem těchto metod je využití takzvané slabé formulace zadané rovnice. 
-V této kapitole si celý postup metody konečných prvků představíme na jednoduché úloze vedení tepla v 1D.
-
-\begin{figure}
-\includegraphics[width=0.5\textwidth]{img/image3.png}\includegraphics[width=0.5\textwidth]{img/image5.png}
-\end{figure}
-
-\subsection{Fyzikální úloha - termoska}
-Příkladem úlohy s~\textbf{obyčejnou diferenciální rovnicí} (ODR) je popis teploty tyče,
-která je nějakým způsobem zahřívána. V~tomto případě zanedbáme tloušťku
-tyče a počítáme tedy pouze v~1D souřadném systému, jediná souřadnice je
-$x$. Teplotu v~různých částech tyče můžeme popsat funkcí
-$u(x)$. Rovnice pak obsahuje derivace podle $x$.
-
-Taková úloha jde zobecnit i pro více dimenzí, můžeme např. popisovat
-teplotu na nějaké dvourozměrné ploše. K~tomu bychom využili funkci
-$u(x, y)$. Příslušná rovnice pak obsahuje derivace podle $x$ i
-podle $y$. Takováto úloha ve více dimenzích s~derivacemi podle více
-proměnných vede na využití \textbf{parciálních diferenciálních rovnic}.
-Okrajové úlohy pro ODR lze považovat za speciální případ (nejjednodušší) PDR.
-
-V~matematice a fyzice jsme se dosud v~souvislosti s~diferenciálními
-rovnicemi setkávali s~tzv. \textbf{počátečním problémem} neboli
-\textbf{úlohou s~počátečními podmínkami} (Cauchyho úlohou). Příkladem
-úlohy, kterou lze takto řešit je kyvadlo. To můžeme aproximovat jako
-lineární oscilátor a při zadaných počátečních podmínkách (počáteční
-výchylka) dokážeme pomocí ODR závislé pouze na čase (\emph{\textbf{t}})
-popsat časový vývoj tohoto systému až do nekonečna (např. až do
-zastavení kyvadla).
-
-\subsection{Okrajová úloha, typy okrajových podmínek}
-
-\includegraphics[width=1.93264in,height=0.92708in]{img/image7.png}
-
-Jiný
-typ úlohy, kterým se zejména budeme zabývat, je tzv. \textbf{okrajová
-úloha}, kde máme zadané podmínky v~krajních bodech zkoumaného intervalu.
-Jako příklad použijeme výše zmíněnou úlohu s~teplotou tyče. Tyč má délku
-\emph{\textbf{L}} a rovnici popisující vývoj její teploty obecně
-zapíšeme jako:
-
-\[- k  u^{''}\left( x \right) = f(x)\]
-
-Kde \emph{\textbf{k}}~je konstanta, v~tomto případě \emph{koeficient
-tepelné vodivosti} a \emph{\textbf{f(x)}} je funkce popisující zdroj
-tepla s~fyzikálním rozměrem W/m (watt na metr). Existují dva typy
-okrajových podmínek, kterými se budeme zabývat, ukážeme si je na
-příkladech:
-
-1. typ -- Neumannova podmínka: Představme si, že tyč je na jednom konci
-(v bodě \(x\  = \ 0\)) izolována, takže z~ní nemůže unikat teplo do
-okolí. Tuto situaci lze matematicky zapsat jako:
-
-\[u'\left( 0 \right) = 0\]
-
-Přičemž 1. derivace \(u\) souvisí s~\textbf{tokem tepla}, který má
-obecně podobu \(- k \bullet u'\) a někdy se značí \(q\). Podmínka, která
-definuje \textbf{tok} nějaké veličiny v~okrajovém bodě se nazývá
-\textbf{Neumannova podmínka}.
-
-2. typ -- Dirichletova podmínka: Na druhém konci tyče (v bodě
-\(x\  = \ L\)) je termostat, který udržuje konstantní teplotu (např. 0
-°C). To lze zapsat jako:
-
-\[u\left( L \right) = konst.\ (\text{např.}\ 0\ {^\circ}C)\]
-
-Tento typ podmínky, který definuje \textbf{hodnotu} nějaké veličiny
-v~okrajovém bodě se nazývá \textbf{Dirichletova podmínka.}
-
-\[- k \bullet u^{''}\left( x \right) = f(x)\]
-
-V~tomto případě označuje \emph{\textbf{k}}~tuhost nosníku a funkce
-\emph{f} nějakým způsobem vyjadřuje sílu či zatížení seshora. Takto lze
-vymyslet ještě mnoho dalších úloh popsatelných stejnou rovnicí (např.
-šíření chemické látky nějaké koncentrace uzavřeným systémem).
+% \[- k  u^{''}\left( x \right) = f(x)\]
+% 
+% Kde \emph{\textbf{k}}~je konstanta, v~tomto případě \emph{koeficient
+% tepelné vodivosti} a \emph{\textbf{f(x)}} je funkce popisující zdroj
+% tepla s~fyzikálním rozměrem W/m (watt na metr). Existují dva typy
+% okrajových podmínek, kterými se budeme zabývat, ukážeme si je na
+% příkladech:
+% 
+% 1. typ -- Neumannova podmínka: Představme si, že tyč je na jednom konci
+% (v bodě \(x\  = \ 0\)) izolována, takže z~ní nemůže unikat teplo do
+% okolí. Tuto situaci lze matematicky zapsat jako:
+% 
+% \[u'\left( 0 \right) = 0\]
+% 
+% Přičemž 1. derivace \(u\) souvisí s~\textbf{tokem tepla}, který má
+% obecně podobu \(- k \bullet u'\) a někdy se značí \(q\). Podmínka, která
+% definuje \textbf{tok} nějaké veličiny v~okrajovém bodě se nazývá
+% \textbf{Neumannova podmínka}.
+% 
+% 2. typ -- Dirichletova podmínka: Na druhém konci tyče (v bodě
+% \(x\  = \ L\)) je termostat, který udržuje konstantní teplotu (např. 0
+% °C). To lze zapsat jako:
+% 
+% \[u\left( L \right) = konst.\ (\text{např.}\ 0\ {^\circ}C)\]
+% 
+% Tento typ podmínky, který definuje \textbf{hodnotu} nějaké veličiny
+% v~okrajovém bodě se nazývá \textbf{Dirichletova podmínka.}
+% 
+% \[- k \bullet u^{''}\left( x \right) = f(x)\]
+% 
+% V~tomto případě označuje \emph{\textbf{k}}~tuhost nosníku a funkce
+% \emph{f} nějakým způsobem vyjadřuje sílu či zatížení seshora. Takto lze
+% vymyslet ještě mnoho dalších úloh popsatelných stejnou rovnicí (např.
+% šíření chemické látky nějaké koncentrace uzavřeným systémem).
 % 
 % Slabá formulace problému:
 % 

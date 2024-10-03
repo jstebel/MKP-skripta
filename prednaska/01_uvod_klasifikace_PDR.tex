@@ -1,3 +1,24 @@
+\section*{Úvod}
+
+Řadu fyzikálních, chemických, biologických nebo socio-ekonomických procesů lze popsat pomocí obyčejných nebo parciálních diferenciálních rovnic (ODR, PDR) a jejich soustav.
+Řešení těchto rovnic umožňuje predikci a optimalizaci příslušných procesů při řešení řady inženýrských problémů jako např. vedení tepla, proudění kapalin a plynů, statické a dynamické namáhání konstrukcí nebo vývoj populace živých organismů.
+PDR jsou rovnice, kde neznámou je fyzikální pole popsané funkcí $u(\vc x)$, která bodům $\vc x$ na na nějaké prostorové oblasti přiřazuje hodnoty pole. 
+Pro většinu PDR nelze řešení (funkci) zapsat v uzavřeném tvaru (t.j. pomocí analytických vzorců), proto jsou využívány numerické (přibližné) metody, jejichž výsledkem je funkce splňující rovnici 
+s nějakou numerickou chybou.
+Je to obdobné jako nemožnost reprezentovat v počítači přesně reálná čísla.
+
+Metoda konečných prvků -- MKP, anglicky Finite Elment Method (FEM) je jednou ze standarodních metod pro numerické (přibližné) řešení PDR, dalšími metodami jsou například metoda konečných objemů (Finite Volume Method -- FVM) nebo nespojitá Galerkinova metoda (Discontinuous Galerkin -- DG).
+Společným rysem těchto metod je využití takzvané slabé formulace zadané rovnice. 
+
+V tomto textu představíme některé typy diferenciálních rovnic, které se používají pro popis výše zmíněných procesů, a jejich klasickou a slabou formulaci.
+Na modelové úloze (eliptická rovnice pro popis jednorozměrného vedení tepla) si ukážeme postup metody konečných prvků v případě tzv. lineárních prvků.
+Pro zobecnění metody zavedeme potřebný matematický aparát.
+Ten nám umožní aplikovat MKP pro širokou řadu problémů a analyzovat důležité vlastnosti metody, zejména pak konvergenci a chybu přibližného řešení.
+Důraz je kladen také na praktickou implementaci metody v MATLABu nebo jiném vhodném programovacím jazyce.
+
+
+
+
 \section{Klasifikace PDR}
 \subsection{Fyzikální pole}
 \begin{itemize}
