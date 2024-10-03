@@ -82,8 +82,8 @@ Tato rovnice již skutečně platí pro libovolnou integrovatelnou počáteční
 \label{sec:weak_sol_elliptic_eq}
 Budeme řešit rovnici
 \begin{align}
-   -\div(\vc q) =f + \sigma_f(u_f - u) \quad\text{na }\Omega \\
-   \vc q = \tn K\grad u
+   \div(\vc q) =f + \sigma_f(u_f - u) \quad\text{na }\Omega \\
+   \vc q = -\tn K\grad u
     \label{eq:elliptic}
 \end{align}
 Rovnice popisuje ustálené rozložení teploty, dále značené $u(\vc x)$, v tělese $\Omega$. 
@@ -109,7 +109,7 @@ tělesa z velkou teplenou kapacitou.
 
 {\bf Neumannova okrajová podmínka.}
 \[
-    (-\tn K \grad u + \vc v u) \cdot \vc n = q_n\text{ na }\Gamma_n.
+    \vc q \cdot \vc n = (-\tn K \grad u) \cdot \vc n = q_n\text{ na }\Gamma_n.
 \]
 Člen vlevo se nazývá normálový teplený tok, který je předepsán jako $q_n$. V teorii se obvykle uvažuje jako kladný tok ve směru ven z oblasti (vnější normála), 
 nicmáně z důvodu konzistence s objemovými zdroji se v praxi používá raději opačná konvence. Fyzikálně relevantní je případ kdy je hranice pevná 
@@ -117,21 +117,16 @@ $\vc v = 0$ a teplený tok je dán např. výkonem topidla na hranici.
 
 {\bf Robinova (Newtonova) okrajová podmínka.}
 \[
-     -\tn K \grad u  \cdot \vc n = \sigma_r(u - u_r)\text{ na }\Gamma_r. 
+     \vc q \cdot \vc n = (-\tn K \grad u)  \cdot \vc n = \sigma_r(u - u_r)\text{ na }\Gamma_r. 
 \]
 Opět je releventní především případ $\vc v =0$, kdy podmínka modeluje realistický přenost tepla s koeficientem $\sigma_r\ge 0$ z tělesa o teplotě $u_r$.
 Zde je opět $\vc n$ vnější normála, tedy vlevo je tok ven z oblasti, který je kladný pokud je $u > u_r$ což souhlasí se znaménkem na pravé straně.
 
-Mimo tyto základní podmínky se v reálných úlohách objevují nejrůznější další podmínky. Například pokud na části hranice vtéká do oblasti 
-voda o dané teplotě $U$, bude, půjde o Neumannovu podmínku s $\vc v\ne 0$ a 
-$q_n=U\vc v \cdot \vc n$. Pro výtok z oblasti však potřebujeme podmínku $q_n=u\vc v \cdot \vc n$, což lze považovat za Robinovu podmínku s $u_r=0$ 
-a $\sigma_r=\vc v \cdot\vc n$. Ovšem rychlost $\vc v$ nemusí být na hranici dopředu známa, může být výsledkem řešení nějaké rovnice proudění, proto 
-je obvykle tuto podmínku chýpat jako zvláštní typ.
-V praxi se také objevuje například kombinace Neumannovy a Robinovy okrajové podmínky:
+Mimo tyto základní podmínky se v reálných úlohách objevují i nejrůznější další podmínky. 
+Například kombinace Neumannovy a Robinovy okrajové podmínky:
 \[
     -\tn K \grad u \cdot \vc n = \sigma_r(u - u_r) + q_n
 \]
-Z hlediska teorie lze obvykle tyto zvláštní případy popsat pomocí předchozích tří typů, ale jsou užitečné pro praxi.
 
 Dále předpokládáme, že množiny $\Gamma_d$, $\Gamma_n$, a $\Gamma_r$ jsou navzájem diskjunktní (nemají průnik) a jejich sjednocení (respektive sjednocení jejich uzávěrů)
 je hranice $\prtl \Omega$.
@@ -231,35 +226,65 @@ ta se vynásobí skalárním součinem s testovací funkcí (ket) $|v\rangle$.
 
 
 \subsection{Odvození klasické formulace ze slabé}
-Je třeba ověřit, že slabá formulace je ekvivalentní se silnou formulací v případě, že řešení je dostatečně hladké. Předpokládejme tedy, že $u\in C^2(\Omega)$.
-Použijeme v \eqref{eq:weak_homo_dirich} testovací funkci s nosičem uvnitř $\Omega$, t.j. $\phi$ je nulová na hranici. Dále použijeme Greenovu větu, 
-hraniční integrály budou nulové a dostaneme:
+Doposud jsme odvodili, že ze silné formulace plyne splnění slabé formulace, ale není zřejmé, že jsme 
+tímto postupem napřišli o nějakou informaci, tedy zda je ze slabé formulace plyne silná pokud 
+z nějakého důvodu bude slabé řešení hladší, konkrétně se spojitými druhými derivacemi: $u\in C^2(\Omega)$.
+
+V principu všechny výchozí rovnice musíme dostat aplikováním vhodných testovacích funkcí. 
+Nejprve odvodíme rovnici uvnitř $\Omega$. Ve slabé formulaci  \eqref{eq:weak_homo_dirich} 
+budeme testovat funkcí $v$ s nosičem uvnitř $\Omega$, t.j. $v$ je nulová na hranici. 
+Hraniční intergrály jsou tedy nulové a použitím Greenovy věty, zpětně dostaneme:
 \begin{equation}
     \label{eq:green_interior}
-    \int_\Omega -\div (\tn K\grad u-\vc v u) \phi \d \vc x = \int_\Omega \Big(f + \sigma_f (u_f - u)\Big)\phi \d \vc x.
+    \int_\Omega -\div (\tn K\grad u) v \d \vc x = \int_\Omega \Big(f + \sigma_f (u_f - u)\Big)v \d \vc x.
 \end{equation}
-Odtud plyne splnění bodové rovnice \eqref{ModelEq} v každém bodě uvnitř $\Omega$.
+Odtud plyne splnění bodové rovnice \eqref{eq:elliptic} v každém bodě uvnitř $\Omega$.
 
-Dále potřebujeme odvodit splnění okrajových podmínek. Dirichletova podmínka je splněna přímo, jelikož $u=\tilde u_d + u_0$ a $u_0$ je nulová na $\Gamma_d$.
-Pro odvození Neumannovy a Robinovy okrajové podmínky uvažujeme libovolnou (hladkou) testovací funkci $\psi$ s nosičem uvnitř $\Gamma_{nr} =\Gamma_n \cup \Gamma_r$. 
-Dále tuto funkci hladc prodloužíme dovnitř  $\Omega$ a dostaneme  (hladkou) testovací funkci $\phi_\epsilon \in \mathcal D_0$, která má na 
-$\Gamma_{nr}$ hodnotu $\psi$ a je nenulová pouze na tenkém proužku do vzdálenosti $\epsilon$ od hranice.
-Nyní v \eqref{eq:weak_homo_dirich} použijeme testovací funkci $\phi_\epsilon$ a použijeme Greenovu větu, dostaneme:
+Dále potřebujeme odvodit splnění okrajových podmínek. Dirichletova podmínka je splněna přímo volbou prostoru, 
+jelikož $u=\tilde u_d + u_0$ a $u_0$ je nulová na $\Gamma_d$.
+
+Pro odvození Neumannovy a Robinovy okrajové podmínky uvažujeme libovolnou hladkou
+ funkci $v$ s nosičem na hranici $\Gamma_{nr} =\Gamma_n \cup \Gamma_r$. 
+Funkce je nulová uvnitř $\Omega$.
+Dále tuto funkci hladce prodloužíme dovnitř  $\Omega$ (jako jsme to uvažovali pro Dirichletovu podmínku),
+ale tak aby měla nosič pouze do vzdálenosti $\eps$ od hranice. Výslednou funkci  $v_\epsilon \in \mathcal D_0$
+použijeme jako testovací v \eqref{eq:weak_homo_dirich} a aplikujeme Greenovu větu:
 \[
-    \int_\Omega X(u)\phi_\epsilon \d \vc x + \int_{\Gamma_{nr}} (\tn K\grad u-\vc v u)\cdot \vc n \phi_\epsilon \d s    
-              =  \int_{\Gamma_r} \sigma_r (u_r -u) \phi_\epsilon \d s + \int_{\Gamma_n} -q \phi_\epsilon \d s 
+    \int_\Omega X(u)v_\epsilon \d \vc x + \int_{\Gamma_{nr}} (\tn K\grad u-\vc v u)\cdot \vc n v_\epsilon \d s    
+              =  \int_{\Gamma_r} \sigma_r (u_r -u) v_\epsilon \d s + \int_{\Gamma_n} -q v_\epsilon \d s 
 \]
-kde první člen obsahuje všechny členy z předchozí rovnice \eqref{eq:green_interior}. Nyní provedeme limitu $\epsilon \to 0$. V této limitě se první intergál 
-bude blížit nule, jelikož $\phi_\epsilon$ je nenulová na množině velikosti $\epsilon \times \abs{\Gamma_nr}$, což konverguje k nule. Naproti tomu ve zbylých 
-hraničních integrálech je $\phi_\epsilon = \psi$, což na $\epsilon$ nezávisí, tedy dostaneme:
+kde první člen obsahuje všechny členy z předchozí rovnice \eqref{eq:green_interior}. 
+Nyní provedeme limitu $\epsilon \to 0$. V této limitě se první intergál 
+bude blížit nule, jelikož $v_\epsilon$ je nenulová na množině velikosti $\epsilon \times \abs{\Gamma_nr}$, 
+což konverguje k nule. Naproti tomu ve zbylých 
+hraničních integrálech je $v_\epsilon = v$, což na $\epsilon$ nezávisí, tedy dostaneme:
 \[
-    \int_{\Gamma_{nr}} -(\tn K\grad u-\vc v u)\cdot \vc n \psi \d s  
-              =  \int_{\Gamma_r} \sigma_r (u -u_r) \psi \d s + \int_{\Gamma_n} q \psi \d s 
+    \int_{\Gamma_{nr}} -(\tn K\grad u)\cdot \vc n v \d s  
+              =  \int_{\Gamma_r} \sigma_r (u -u_r) v \d s + \int_{\Gamma_n} q v \d s 
 \]
 a odtud obě okrajové podmínky.
 
+
+% JB TODO: pokud přidáme přednášku pro nestacionární úlohy, tak uvést rovnici s advekcí
+% a zmínit problematiku podmínek závislých na rychlosti.
+% \subsubsection{Advekčně difúzní případ}
+% Například pokud na části hranice vtéká do oblasti voda o rychlosti $\vc V$ o dané teplotě $U$, 
+% půjde o Neumannovu podmínku s $\vc v\ne 0$ a $q_n=U\vc v \cdot \vc n$. Pro výtok z oblasti však potřebujeme podmínku $q_n=u\vc v \cdot \vc n$, což lze považovat za Robinovu podmínku s $u_r=0$ 
+% a $\sigma_r=\vc v \cdot\vc n$. Ovšem rychlost $\vc v$ nemusí být na hranici dopředu známa, může být výsledkem řešení nějaké rovnice proudění, proto 
+% je obvykle tuto podmínku chýpat jako zvláštní typ.
+
+
 \section{MKP pro eliptické úlohy}
 \subsection{Galerkinova aproximace}
+{\bf Konečněrozměrný podprostor $V_0^n$.} Řešení (a jak uvidíme ve slabé formulaci
+
+{\bf Volba báze.}
+
+{\bf Lineární systém.}
+\[
+ A\Big(\sum_{j=1}^n u_j\phi_j, \phi_i\Big) = l(\phi_i)
+\]
+
 
 \subsection{Konečné prvky prvního řádu}
 \subsubsection{Referenční element}
