@@ -450,7 +450,7 @@ a pozitivní definitnost
 \end{multline}
     
     
-    
+
 \subsection{Lineární konečné prvky v 1D}
 Jako podprostor $V_h$ zvolíme množinu lineárních lomených funkcí na intervalu $[0,L]$.
 Rozdělme interval $[0,L]$ pomocí bodů $x_1=0<x_2<...<x_{N+1}=L$ na intervaly $E_j:=(x_j,x_{j+1})$ o délce $h_j:=x_{j+1}-x_{j}$.
@@ -484,58 +484,60 @@ Každá bázová funkce je tedy nenulová v právě jednom uzlovém bodě (viz O
 Podívejme se nyní na konkrétní soustavu rovnic, kterou dostáváme z~\eqref{eqn:discrete_weak_form}.
 Je zřejmé, že $a_{ij}$ je nulové, pokud se indexy $i$ a $j$ liší více než o 1, neboť v takovém případě je v každém bodě intervalu $(0,L)$ alespoň jedna z funkcí $\varphi_i$, $\varphi_j$ (a tedy i $\varphi_i'$, $\varphi_j'$) nulová. Matice $\mat A$ proto bude třídiagonální, a tedy řídká.
 
-Pokud budeme uvažovat $K(x) = const.\, \forall x\in E_j,\, j = 1\ldots N$, pak platí:
-\begin{align*}
-A_{jj} &= \int_{x_{j-1}}^{x_j} K(x)\varphi_j'(x)^2\d x + \int_{x_j}^{x_{j+1}} K(x) \varphi_j'(x)^2\d x
-= \int_{x_{j-1}}^{x_j}\frac{K}{h_{j-1}^2}\d x + \int_{x_j}^{x_{j+1}}\frac{K}{h_j^2}\d x\\
-&= K\left(\frac1{h_{j-1}} + \frac1{h_j}\right),~j=2,...,N,\\\\
-A_{11} &= \int_{x_1}^{x_{2}} K(x) \varphi_1'(x)^2\d x
-= \frac{K}{h_1},&\\\\
-A_{j,j-1} &= A_{j-1,j} = \int_{x_{j-1}}^{x_j}K(x)\varphi_{j-1}'(x)\varphi_j'(x)\d x\\
-&= \int_{x_{j-1}}^{x_j}\frac{(-K)}{h_{j-1}^2} \d x = -\frac{K}{h_{j-1}}, j=2,...,N.\\\\
-b_j &= \int_{x_{j-1}}^{x_{j+1}} f(x)\varphi_j(x)\d x,~j=2,...,N,&\\\\
-b_1 &= \int_{x_1}^{x_2} f(x)\varphi_1(x)\d x,&\\\\
-\end{align*}
-V případě ekvidistantního dělení ($h=h_j$ $\forall j=1,...,N$) a $K(x) = const.,\,f(x)=const.\, \forall x\in\Omega$ máme
-\[
-  \vc A = \frac{K}{h}\begin{pmatrix}1 & -1 &&& \\-1 & 2 & -1&&\\&\ddots&\ddots&\ddots&\\&&-1 & 2 & -1\\&&& -1 & 2\end{pmatrix}
-  = fh\begin{pmatrix}0.5\\1\\1\\1\\1\end{pmatrix}= \vc b.
-\]
-% Protože bilineární forma $(a,u,v)$ je symetrická a eliptická, je také $\tn A$ symetrická a pozitivně definitní.
-Soustava $\vc A\vc u_h=\vc b$ má řešení pro každý vektor $\vc b$,
-%a řešením Galerkinovy úlohy je funkce $u_h(x):=\sum_{i=1}^N\xi_i\varphi_i(x)$.
-hodnoty $u_h^i$ jsou zároveň hodnotami funkce $u_h$ v bodech $x_i$.
+% \begin{ex}
+% Pokud budeme uvažovat $k(x) = konst.\, \forall x\in E_j,\, j = 1\ldots N$, pak platí:
+% \begin{align*}
+% a_{jj} &= \int_{x_{j-1}}^{x_j} k(x)\varphi_j'(x)^2\d x + \int_{x_j}^{x_{j+1}} K(x) \varphi_j'(x)^2\d x
+% = \int_{x_{j-1}}^{x_j}\frac{k}{h_{j-1}^2}\d x + \int_{x_j}^{x_{j+1}}\frac{k}{h_j^2}\d x\\
+% &= k\left(\frac1{h_{j-1}} + \frac1{h_j}\right),~j=2,...,N,\\\\
+% a_{11} &= \int_{x_1}^{x_{2}} k(x) \varphi_1'(x)^2\d x
+% = \frac{k}{h_1},&\\\\
+% a_{j,j-1} &= a_{j-1,j} = \int_{x_{j-1}}^{x_j}k(x)\varphi_{j-1}'(x)\varphi_j'(x)\d x\\
+% &= \int_{x_{j-1}}^{x_j}\frac{(-k)}{h_{j-1}^2} \d x = -\frac{k}{h_{j-1}}, j=2,...,N.\\\\
+% b_j &= \int_{x_{j-1}}^{x_{j+1}} f(x)\varphi_j(x)\d x,~j=2,...,N,&\\\\
+% b_1 &= \int_{x_1}^{x_2} f(x)\varphi_1(x)\d x,&\\\\
+% \end{align*}
+% V případě ekvidistantního dělení ($h=h_j$ $\forall j=1,...,N$) a $k(x) = konst.,\,f(x)=konst.\, \forall x\in\Omega$ máme
+% \[
+%   \vc A = \frac{k}{h}\begin{pmatrix}1 & -1 &&& \\-1 & 2 & -1&&\\&\ddots&\ddots&\ddots&\\&&-1 & 2 & -1\\&&& -1 & 2\end{pmatrix}
+%   = fh\begin{pmatrix}0.5\\1\\1\\1\\1\end{pmatrix}= \vc b.
+% \]
+% % Protože bilineární forma $(a,u,v)$ je symetrická a eliptická, je také $\tn A$ symetrická a pozitivně definitní.
+% Soustava $\vc A\vc u_h=\vc b$ má řešení pro každý vektor $\vc b$,
+% %a řešením Galerkinovy úlohy je funkce $u_h(x):=\sum_{i=1}^N\xi_i\varphi_i(x)$.
+% hodnoty $u_h^i$ jsou zároveň hodnotami funkce $u_h$ v bodech $x_i$.
+% \end{ex}
 
 
-\subsection{Chyba řešení}
-
-Nyní budeme zkoumat chybu řešení, tedy v jakém vztahu jsou $u$ a $u_h$.
-Předem zavedeme zjednodušené značení
-\[
-a(u,v) = \int\limits_\Omega K(x) u'(x) v'(x) \d x, \qquad b(v) = \int\limits_\Omega f(x) v(x) \d x
-\]
-Nyní dosadíme $u$ a $u_h$ do naší slabé formulace, za použité nového značení a obě rovnice odečteme:
-\[
-\int\limits_\Omega K(x) u'(x) \varphi'(x) \d x = a(u,\varphi) = b(\varphi) = \int\limits_\Omega f \varphi(x) \d x
-\]
-\[
-\int\limits_\Omega K(x) u'(x) \varphi'(x) \d x = a(u,\varphi) = b(\varphi) = \int\limits_\Omega f \varphi(x) \d x
-\]
-
-
-
-Podobně jako ve Větě \ref{th:cea} lze ukázat, že platí odhad chyby
-\begin{equation}\label{eq:error_est_laplace_dir}
-\forall v_h\in V_h:~\norm{u'-u_h'}_2 \le \norm{u'-v_h'}_2,
-\end{equation}
-takže $u_h$ je zároveň nejlepší aproximace slabého řešení $u$ v prostoru po částech lineárních funkcí.
-Zvolme nyní vhodnou funkci $v_h$, abychom odhad chyby \eqref{eq:error_est_laplace_dir} vyjádřili kvantitativně.
-Položíme $v_h:=\tilde u_h$, kde $\tilde u_h$ je interpolanta $u$ (po částech lineární funkce taková, že $\tilde u_h(x_i)=u(x_i)$, $i=0,...,N+1$).
-Pak z teorie Lagrangeovy interpolace víme, že platí
-\[ |u'(x)-\tilde u_h'(x)|\le h\max_{y\in[0,1]}|u''(y)| ~\forall x\in[0,1]. \]
-Je-li funkce $u$ třídy $C^2([0,1])$, pak dostáváme odhad
-\[ \norm{u'-u_h'}_2 \le \norm{u'-\tilde u_h'}_2 \le h\max_{y\in[0,1]}|u''(y)|, \]
-který říká, že chyba Galerkinovy aproximace měřená jako $L^2$ norma rozdílu derivací je řádu $O(h)$.
+% \subsection{Chyba řešení}
+% 
+% Nyní budeme zkoumat chybu řešení, tedy v jakém vztahu jsou $u$ a $u_h$.
+% Předem zavedeme zjednodušené značení
+% \[
+% a(u,v) = \int\limits_\Omega K(x) u'(x) v'(x) \d x, \qquad b(v) = \int\limits_\Omega f(x) v(x) \d x
+% \]
+% Nyní dosadíme $u$ a $u_h$ do naší slabé formulace, za použité nového značení a obě rovnice odečteme:
+% \[
+% \int\limits_\Omega K(x) u'(x) \varphi'(x) \d x = a(u,\varphi) = b(\varphi) = \int\limits_\Omega f \varphi(x) \d x
+% \]
+% \[
+% \int\limits_\Omega K(x) u'(x) \varphi'(x) \d x = a(u,\varphi) = b(\varphi) = \int\limits_\Omega f \varphi(x) \d x
+% \]
+% 
+% 
+% 
+% Podobně jako ve Větě \ref{th:cea} lze ukázat, že platí odhad chyby
+% \begin{equation}\label{eq:error_est_laplace_dir}
+% \forall v_h\in V_h:~\norm{u'-u_h'}_2 \le \norm{u'-v_h'}_2,
+% \end{equation}
+% takže $u_h$ je zároveň nejlepší aproximace slabého řešení $u$ v prostoru po částech lineárních funkcí.
+% Zvolme nyní vhodnou funkci $v_h$, abychom odhad chyby \eqref{eq:error_est_laplace_dir} vyjádřili kvantitativně.
+% Položíme $v_h:=\tilde u_h$, kde $\tilde u_h$ je interpolanta $u$ (po částech lineární funkce taková, že $\tilde u_h(x_i)=u(x_i)$, $i=0,...,N+1$).
+% Pak z teorie Lagrangeovy interpolace víme, že platí
+% \[ |u'(x)-\tilde u_h'(x)|\le h\max_{y\in[0,1]}|u''(y)| ~\forall x\in[0,1]. \]
+% Je-li funkce $u$ třídy $C^2([0,1])$, pak dostáváme odhad
+% \[ \norm{u'-u_h'}_2 \le \norm{u'-\tilde u_h'}_2 \le h\max_{y\in[0,1]}|u''(y)|, \]
+% který říká, že chyba Galerkinovy aproximace měřená jako $L^2$ norma rozdílu derivací je řádu $O(h)$.
 
 
 
