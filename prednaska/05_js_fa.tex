@@ -822,36 +822,6 @@ Díky Friedrichsově nerovnosti máme
 
 
 
-\section{Galerkinova metoda}
-(Viz. Johnson \cite{Johnson}, kapitola 2)
-
-Metoda konečných prvků pro řešení variační úlohy typu \eqref{eq:variational_problem} se nazývá Galerkinova metoda.
-Její myšlenkou je nahradit prostor funkcí $V$ vhodným podprostorem $V_h$ konečné dimenze tak, aby bylo možné jednoduše zavést vhodnou bázi.
-Typicky se jedná o podprostory funkcí po částech polynomiálních.
-Metoda konečných prvků generuje báze které jsou téměř ortogonální, což výrazně zjednodušuje řešení vzniklé soustavy lineárních rovnic.
-Řešení variační úlohy na podprostoru $V_h$ pak je aproximací slabého řešení a jeho odchylku lze kvantifikovat v závislosti na volbě podprostoru.
-
-\subsection{Abstraktní úloha}
-
-Uvažujme nejprve abstraktní úlohu \eqref{eq:variational_problem} a nechť $V_h$ je podprostor $V$ s konečnou dimenzí $N:=\dim V_h$.
-Místo úlohy \eqref{eq:variational_problem} budeme řešit tzv. Galerkinovu úlohu:
-\begin{equation}\label{eq:galerkin}
-\mbox{Najdi }u_h\in V_h:~\forall v_h\in V_h~a(u_h,v_h)=l(v_h).
-\end{equation}
-Řešení $u_h$ této úlohy se nazývá Galerkinova aproximace prvku $u$.
-Nechť $\varphi_1,...,\varphi_N$ je báze $V_h$.
-Pak lze prvek $u_h$ zapsat ve tvaru
-\[ u_h=\sum_{j=1}^N\xi_j\varphi_j,~\vc\xi=(\xi_1,...,\xi_N)^\top\in\R^N. \]
-Jelikož i každá testovací funkce $v_h$ je lineární kombinací bázových funkcí $\{\varphi_i\}_{i=1}^N$, v Galerkinově úloze postačí za testovací funkce brát pouze tyto bázové funkce:
-\[ \eqref{eq:galerkin} \Leftrightarrow \forall i=1,...,N:~ a(u_h,\varphi_i)=\sum_{j=1}^N\xi_j a(\varphi_j,\varphi_i) = l(\varphi_i). \]
-Vzniklá soustava $N$ rovnic je lineární a neznámými jsou koeficienty $\xi_1,...,\xi_N$.
-Můžeme ji přepsat do maticového tvaru:
-\[ \tn A\vc\xi := \begin{pmatrix}a(\varphi_1,\varphi_1) & ... & a(\varphi_N,\varphi_1)\\&...&\\a(\varphi_1,\varphi_N) & ... & a(\varphi_N,\varphi_N)\end{pmatrix}\begin{pmatrix}\xi_1\\\vdots\\\xi_N\end{pmatrix} = \begin{pmatrix}l(\varphi_1)\\\vdots\\l(\varphi_N)\end{pmatrix} =: \vc b, \]
-% kde
-% \[ \tn A = \begin{pmatrix}a(\varphi_1,\varphi_1) & ... & a(\varphi_N,\varphi_1)\\&...&\\a(\varphi_1,\varphi_N) & ... & a(\varphi_N,\varphi_N)\end{pmatrix}, \]
-kde prvek $a_{ij}$ matice $\tn A$ je roven $a(\varphi_j,\varphi_i)$ a prvek $b_i$ vektoru $\vc b$ je roven $l(\varphi_i)$, $i,j=1,...,N$.
-
-Lze snadno ověřit, že z vlastností formy $a$ vyplývají obdobné vlastnosti matice $\tn A$: Např. je-li $a$ symetrická, pak také $\tn A$ je symetrická; je-li $a$ eliptická, pak $\tn A$ je pozitivně definitní, a tedy regulární, a soustava $\tn A\vc\xi=\vc b$ má právě jedno řešení.
 
 Důležitá otázka je, zda $u_h$ je dostatečně přesná aproximace $u$.
 Obecně platí následující věta:
@@ -882,82 +852,82 @@ Vydělením celé nerovnice výrazem $\alpha\norm{u-u_h}$ dostaneme
 Protože $v_h$ je libovolný prvek z $V_h$, je tak \eqref{eq:cea} dokázáno.
 \end{proof}
 
-
-\subsection{Příklad lineárních prvků v 1D}
-
-Uvažujme okrajovou úlohu
-\[ -u''=f \mbox{ v }(0,1),\quad u(0)=u(1)=0, \]
-jejíž slabá formulace zní:
-\[ \mbox{Najdi }u\in H^1_0(0,1) \mbox{ tak, aby }\forall v\in H^1_0(0,1):~a(u,v):=(u',v')=(f,v)=:l(v). \]
-Jako podprostor $V_h$ zvolíme množinu lineárních lomených funkcí na intervalu $[0,1]$.
-Rozdělme interval $[0,1]$ pomocí bodů $x_0=0<x_1<x_2<...<x_{N+1}=1$ na intervaly $E_j:=(x_{j-1},x_j)$ o délce $h_j:=x_j-x_{j-1}$.
-Normu tohoto dělení zavedeme jako $h:=\max_{j=1,...,N+1} h_j$.
-Definujeme
-\[ V_h:=\{v_h\in C([0,1]);~\forall j=1,...,N:~v_h \mbox{ je lineární na }E_j,~v_h(0)=v_h(1)=0 \}. \]
-Jelikož funkce z $V_h$ jsou spojité a nulové v bodech $0$ a $1$, je automaticky $V_h$ podprostorem $H^1_0(0,1)$.
-Každou funkci $v_h$ z $V_h$ jednoznačně určují její hodnoty v dělících bodech $\{x_j\}_{j=1}^N$.
-Dimenze podprostoru tedy je $\dim V_h=N$.
-Pro metodu konečných prvků je klíčová volba báze.
-Zvolíme bázové funkce podprostoru $V_h$ pomocí vztahů $\varphi_i(x_j):=\delta_{ij}$.
-Každá bázová funkce je tedy nenulová v právě jednom dělícím bodě (viz Obr. \ref{fig:base_1d_lin}).
-\begin{figure}[h]
-\centering
-\includegraphics{base_1d_lin}
-\caption{Bázové funkce pro prostor po částech lineárních funkcí.}
-\label{fig:base_1d_lin}
-\end{figure}
-Prvky matice $\tn A\in\R^{N\times N}$ a vektoru $\vc b\in\R^{N}$ mají tvar
-\[ a_{ij}=\int_0^1\varphi_j'(x)\varphi_i(x), \]
-\[ b_i = \int_0^1 f(x)\varphi_i(x)\d x. \]
-Je zřejmé, že $a_{ij}$ je nulové, pokud se indexy $i$ a $j$ liší více než o 1, neboť v takovém případě je v každém bodě intervalu $(0,1)$ alespoň jedna z funkcí $\varphi_i$, $\varphi_j$ nulová. Matice $\tn A$ proto bude třídiagonální, a tedy řídká.
-Platí:
-\begin{align*}
-a_{jj} &= \int_{x_{j-1}}^{x_j}\varphi_j'(x)^2\d x + \int_{x_j}^{x_{j+1}}\varphi_j'(x)^2\d x
-= \int_{x_{j-1}}^{x_j}\frac1{h_{j-1}^2}\d x + \int_{x_j}^{x_{j+1}}\frac1{h_j^2}\d x\\
-&= \frac1{h_{j-1}} + \frac1{h_j},~j=1,...,N,\\\\
-a_{j,j-1} &= a_{j-1,j} = \int_{x_{j-1}}^{x_j}\varphi_{j-1}'(x)\varphi_j'(x)\d x\\
-&= \int_{x_{j-1}}^{x_j}\frac{(-1)}{h_{j-1}^2} \d x = -\frac1{h_{j-1}}, j=2,...,N.
-\end{align*}
-V případě ekvidistantního dělení ($h=h_j$ $\forall j=1,...,N$) máme
-\[ \tn A = \frac{1}{h}\begin{pmatrix}2 & -1 & \\-1 & 2 & -1\\\ddots&\ddots&\ddots\\&-1 & 2 & -1\\&& -1 & 2\end{pmatrix}. \]
-Protože bilineární forma $(a,u,v)$ je symetrická a eliptická, je také $\tn A$ symetrická a pozitivně definitní.
-Soustava $\tn A\vc\xi=\vc b$ má řešení pro každý vektor $\vc b$ a řešením Galerkinovy úlohy je funkce $u_h(x):=\sum_{i=1}^N\xi_i\varphi_i(x)$.
-Hodnoty $\xi_i$ jsou zároveň hodnotami funkce $u_h$ v bodech $x_i$.
-
-Podobně jako ve Větě \ref{th:cea} lze ukázat, že platí odhad chyby
-\begin{equation}\label{eq:error_est_laplace_dir}
-\forall v_h\in V_h:~\norm{u'-u_h'}_2 \le \norm{u'-v_h'}_2,
-\end{equation}
-takže $u_h$ je zároveň nejlepší aproximace slabého řešení $u$ v prostoru po částech lineárních funkcí.
-Zvolme nyní vhodnou funkci $v_h$, abychom odhad chyby \eqref{eq:error_est_laplace_dir} vyjádřili kvantitativně.
-Položíme $v_h:=\tilde u_h$, kde $\tilde u_h$ je interpolanta $u$ (po částech lineární funkce taková, že $\tilde u_h(x_i)=u(x_i)$, $i=0,...,N+1$).
-Pak z teorie Lagrangeovy interpolace víme, že platí
-\[ |u'(x)-\tilde u_h'(x)|\le h\max_{y\in[0,1]}|u''(y)| ~\forall x\in[0,1]. \]
-Je-li funkce $u$ třídy $C^2([0,1])$, pak dostáváme odhad
-\[ \norm{u'-u_h'}_2 \le \norm{u'-\tilde u_h'}_2 \le h\max_{y\in[0,1]}|u''(y)|, \]
-který říká, že chyba Galerkinovy aproximace měřená jako $L^2$ norma rozdílu derivací je řádu $O(h)$.
-
-
-\subsection{Lineární prvky ve vyšší dimenzi}
-
-Pro oblasti v $\R^2$ a $\R^3$ se Galerkinova metoda liší v konstrukci podprostoru $V_h$.
-Předpokládejme, že oblast $\Omega$ je polygonální, resp. polyhedrální.
-Rozdělme $\Omega$ na nepřekrývající se trojúhelníky, resp. čtyřstěny (tzv. elementy).
-Označme $h$ jako průměr největšího elementu.
-Množinu všech elementů (triangulace oblasti $\Omega$) budeme značit $\mathcal T_h$.
-
-Je-li slabá formulace zavedena v prostoru $V=H^1_0(\Omega)$, pak prostor $V_h$ můžeme definovat jako množinu
-\[ V_h:=\{v_h\in C(\overline\Omega);~\forall E\in\mathcal T_h:~ v_h\mbox{ je lineární na }E,~v_h=0\mbox{ na }\partial\Omega\} \]
-všech spojitých po částech lineárních funkcí na $\overline\Omega$.
-Na jednom trojúhelníku, resp. čtyřstěnu, je lineární funkce jednoznačně určena svými hodnotami ve vrcholech $\{\vc x_i\}_{i=1}^N$ uvnitř oblasti.
-Hodnoty ve všech těchto vrcholech pak tvoří stupně volnosti funkce z $V_h$.
-Bázové funkce $\{\varphi_i\}_{i=1}^N$ volíme tak, aby $\varphi_i(\vc x_j)=\delta_{ij}$ (viz Obr. \ref{fig:base_2d_lin}).
-\begin{figure}[h]
-\centering
-\includegraphics{base_2d_lin}
-\caption{Příklad bázové funkce pro prostor po částech lineárních funkcí na 2D oblasti.}
-\label{fig:base_2d_lin}
-\end{figure}
+% 
+% \subsection{Příklad lineárních prvků v 1D}
+% 
+% Uvažujme okrajovou úlohu
+% \[ -u''=f \mbox{ v }(0,1),\quad u(0)=u(1)=0, \]
+% jejíž slabá formulace zní:
+% \[ \mbox{Najdi }u\in H^1_0(0,1) \mbox{ tak, aby }\forall v\in H^1_0(0,1):~a(u,v):=(u',v')=(f,v)=:l(v). \]
+% Jako podprostor $V_h$ zvolíme množinu lineárních lomených funkcí na intervalu $[0,1]$.
+% Rozdělme interval $[0,1]$ pomocí bodů $x_0=0<x_1<x_2<...<x_{N+1}=1$ na intervaly $E_j:=(x_{j-1},x_j)$ o délce $h_j:=x_j-x_{j-1}$.
+% Normu tohoto dělení zavedeme jako $h:=\max_{j=1,...,N+1} h_j$.
+% Definujeme
+% \[ V_h:=\{v_h\in C([0,1]);~\forall j=1,...,N:~v_h \mbox{ je lineární na }E_j,~v_h(0)=v_h(1)=0 \}. \]
+% Jelikož funkce z $V_h$ jsou spojité a nulové v bodech $0$ a $1$, je automaticky $V_h$ podprostorem $H^1_0(0,1)$.
+% Každou funkci $v_h$ z $V_h$ jednoznačně určují její hodnoty v dělících bodech $\{x_j\}_{j=1}^N$.
+% Dimenze podprostoru tedy je $\dim V_h=N$.
+% Pro metodu konečných prvků je klíčová volba báze.
+% Zvolíme bázové funkce podprostoru $V_h$ pomocí vztahů $\varphi_i(x_j):=\delta_{ij}$.
+% Každá bázová funkce je tedy nenulová v právě jednom dělícím bodě (viz Obr. \ref{fig:base_1d_lin}).
+% \begin{figure}[h]
+% \centering
+% \includegraphics{base_1d_lin}
+% \caption{Bázové funkce pro prostor po částech lineárních funkcí.}
+% \label{fig:base_1d_lin}
+% \end{figure}
+% Prvky matice $\tn A\in\R^{N\times N}$ a vektoru $\vc b\in\R^{N}$ mají tvar
+% \[ a_{ij}=\int_0^1\varphi_j'(x)\varphi_i(x), \]
+% \[ b_i = \int_0^1 f(x)\varphi_i(x)\d x. \]
+% Je zřejmé, že $a_{ij}$ je nulové, pokud se indexy $i$ a $j$ liší více než o 1, neboť v takovém případě je v každém bodě intervalu $(0,1)$ alespoň jedna z funkcí $\varphi_i$, $\varphi_j$ nulová. Matice $\tn A$ proto bude třídiagonální, a tedy řídká.
+% Platí:
+% \begin{align*}
+% a_{jj} &= \int_{x_{j-1}}^{x_j}\varphi_j'(x)^2\d x + \int_{x_j}^{x_{j+1}}\varphi_j'(x)^2\d x
+% = \int_{x_{j-1}}^{x_j}\frac1{h_{j-1}^2}\d x + \int_{x_j}^{x_{j+1}}\frac1{h_j^2}\d x\\
+% &= \frac1{h_{j-1}} + \frac1{h_j},~j=1,...,N,\\\\
+% a_{j,j-1} &= a_{j-1,j} = \int_{x_{j-1}}^{x_j}\varphi_{j-1}'(x)\varphi_j'(x)\d x\\
+% &= \int_{x_{j-1}}^{x_j}\frac{(-1)}{h_{j-1}^2} \d x = -\frac1{h_{j-1}}, j=2,...,N.
+% \end{align*}
+% V případě ekvidistantního dělení ($h=h_j$ $\forall j=1,...,N$) máme
+% \[ \tn A = \frac{1}{h}\begin{pmatrix}2 & -1 & \\-1 & 2 & -1\\\ddots&\ddots&\ddots\\&-1 & 2 & -1\\&& -1 & 2\end{pmatrix}. \]
+% Protože bilineární forma $(a,u,v)$ je symetrická a eliptická, je také $\tn A$ symetrická a pozitivně definitní.
+% Soustava $\tn A\vc\xi=\vc b$ má řešení pro každý vektor $\vc b$ a řešením Galerkinovy úlohy je funkce $u_h(x):=\sum_{i=1}^N\xi_i\varphi_i(x)$.
+% Hodnoty $\xi_i$ jsou zároveň hodnotami funkce $u_h$ v bodech $x_i$.
+% 
+% Podobně jako ve Větě \ref{th:cea} lze ukázat, že platí odhad chyby
+% \begin{equation}\label{eq:error_est_laplace_dir}
+% \forall v_h\in V_h:~\norm{u'-u_h'}_2 \le \norm{u'-v_h'}_2,
+% \end{equation}
+% takže $u_h$ je zároveň nejlepší aproximace slabého řešení $u$ v prostoru po částech lineárních funkcí.
+% Zvolme nyní vhodnou funkci $v_h$, abychom odhad chyby \eqref{eq:error_est_laplace_dir} vyjádřili kvantitativně.
+% Položíme $v_h:=\tilde u_h$, kde $\tilde u_h$ je interpolanta $u$ (po částech lineární funkce taková, že $\tilde u_h(x_i)=u(x_i)$, $i=0,...,N+1$).
+% Pak z teorie Lagrangeovy interpolace víme, že platí
+% \[ |u'(x)-\tilde u_h'(x)|\le h\max_{y\in[0,1]}|u''(y)| ~\forall x\in[0,1]. \]
+% Je-li funkce $u$ třídy $C^2([0,1])$, pak dostáváme odhad
+% \[ \norm{u'-u_h'}_2 \le \norm{u'-\tilde u_h'}_2 \le h\max_{y\in[0,1]}|u''(y)|, \]
+% který říká, že chyba Galerkinovy aproximace měřená jako $L^2$ norma rozdílu derivací je řádu $O(h)$.
+% 
+% 
+% \subsection{Lineární prvky ve vyšší dimenzi}
+% 
+% Pro oblasti v $\R^2$ a $\R^3$ se Galerkinova metoda liší v konstrukci podprostoru $V_h$.
+% Předpokládejme, že oblast $\Omega$ je polygonální, resp. polyhedrální.
+% Rozdělme $\Omega$ na nepřekrývající se trojúhelníky, resp. čtyřstěny (tzv. elementy).
+% Označme $h$ jako průměr největšího elementu.
+% Množinu všech elementů (triangulace oblasti $\Omega$) budeme značit $\mathcal T_h$.
+% 
+% Je-li slabá formulace zavedena v prostoru $V=H^1_0(\Omega)$, pak prostor $V_h$ můžeme definovat jako množinu
+% \[ V_h:=\{v_h\in C(\overline\Omega);~\forall E\in\mathcal T_h:~ v_h\mbox{ je lineární na }E,~v_h=0\mbox{ na }\partial\Omega\} \]
+% všech spojitých po částech lineárních funkcí na $\overline\Omega$.
+% Na jednom trojúhelníku, resp. čtyřstěnu, je lineární funkce jednoznačně určena svými hodnotami ve vrcholech $\{\vc x_i\}_{i=1}^N$ uvnitř oblasti.
+% Hodnoty ve všech těchto vrcholech pak tvoří stupně volnosti funkce z $V_h$.
+% Bázové funkce $\{\varphi_i\}_{i=1}^N$ volíme tak, aby $\varphi_i(\vc x_j)=\delta_{ij}$ (viz Obr. \ref{fig:base_2d_lin}).
+% \begin{figure}[h]
+% \centering
+% \includegraphics{base_2d_lin}
+% \caption{Příklad bázové funkce pro prostor po částech lineárních funkcí na 2D oblasti.}
+% \label{fig:base_2d_lin}
+% \end{figure}
 
 
 % \section{Značení}
