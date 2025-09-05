@@ -88,15 +88,302 @@
 % jejich součin řád $2(k-1)$ pro přesné vyhodnocení integrálů je tedy potřeba použít $k$-bodovou Gaussovu kvadraturu. Pro 2d a 3d prvky je situace komplikovanější,
 % nicméně vhodné kvadratury existují pro všechny základní typy elementů.
 
+
+
 \section{Interpolační vlastnosti konečných prvků}
-Podle Johnson \cite{Johnson}, kapitola 4, bez důkazů.
-\begin{itemize}
- \item Interpolační vlastnosti lineárních prvků ve 2D.
- \item Interpolační vlastnosti prvků vyšších řádů.
- \item Aplikace interpolačních odhadů v Ceově lemmatu.
- \item Regularita přesného slabého řešení (Kdy je možno použít prvky vyšších řádů?)
- \item Adaptivní metody, základní principy.
-\end{itemize}
+{\it Podle Johnson \cite{Johnson}, kapitola 4, bez důkazů.}
+
+Ceovo lemma charakterizuje chybu numerického řešení pomocí 
+aproximačních vlastností prostoru přibližných řešení $V_h$. 
+Pro chybu přibližného řešení 
+$u_h \in V_h \subset\subset V \subset\subset H^1(\Omega)$:
+máme odhad:
+$$
+\|u - u_h\|_{H^1(\Omega)} 
+\le C\inf_{v\in V_h}\|u-v\|_{H^1(\Omega)} 
+\le C \|u - \pi u\|_{H^1(\Omega)}.
+$$
+Zde $\pi u$ značí projekci funkce $u$ z $V$ na konečně 
+rozměrný aproximativní podprostor $V_h$. Konkrétně pro 
+$P^1$ konečné prvky jsou koeficienty bázových funkcí dány 
+hodnotami $u$ v uzlech:
+$$
+ \pi u(\vc x) = \sum_i=1^N u(\vc N_i) \phi_i(\vc x)
+$$
+
+Chyba aproximace již nezávisí na řešeném problému,
+ale pouze na aproximované funkci, tedy samotném řešení. 
+Cílem kapitoly je charakterizovat tuto aprocximační chybu.
+
+
+\subsection{Seminormy $H^p$}
+Koncept Hilbertových prostorů $H^1(\Omega)$ s normou 
+zahrnující první derivace můžeme zobecnit na více derivací. 
+Složitější parciální derivace podle více proměnných budeme 
+zapisovat pomocí vektoru $\alpha = (i,j,k)$ 
+počtu derivací v jednotlivých směrech
+$$
+  D^\alpha u = \prtl_x^i \prtl_y^j \prtl_z^k u. 
+$$
+Velikost vektoru $|\alpha| = i + j + k$ nám pomůže definovat
+normu obecného prostoru $H^p(\Omega)$:
+$$
+\norm{u}_{H^p(\Omega)} = \sum_{|\alpha| \le p} 
+\int_\Omega |D^\alpha u(x)|^2 \d x.
+$$
+To zahrnuje i vektor $\alpha=(0,0,0)$ odpovídající prosté 
+$L^2$ normě, kterou můžeme také zapsat jako $H^0$:
+$$
+  \norm{u}_{H^0(\Omega)} = 
+  \int_\Omega |D^{(0,0,0)} u(x)|^2 \d x =
+  \int_\Omega |u(x)|^2 \d x.
+$$
+Pokud zahrneme do součtu derivace řádu právě $p$, dostaneme 
+takzavanou seminormu:
+$$
+|u|_{H^p(\Omega)} = \sum_{|\alpha| = p} 
+\int_\Omega |D^\alpha u(x)|^2 \d x.
+$$
+
+% 
+% \subsection{}
+%  Normu $H^1$ nejprve odhadneme seminormou, 
+% tedy $L^2$ normou prvních derivací. To plyne z Poincarého nerovnosti 
+% a okrajových podmínek stejně jako při důkazu elipticity. Následně normu přes 
+% oblast můžme rozepsat na jednotlivé elementy:
+% $$
+% \|u - \pi_h[u]\|^2_{H^1(\Omega)} \le |u - w_h|^2_{H^1(\Omega)} 
+% \le \sum_{K\in \mathcal{T}} \sum_{|\alpha| = 1} \Big[
+% \int_K |D^\alpha u - D^\alpha w_h|^2 \Big]
+% $$
+% V posledním členu používáme zápis pro různé parciální derivace stejného řádu. 
+% Obecně va 3D můžeme funkci $u$ derivovat podle tří různých proměnných, 
+% pro složitější derivace použijeme notaci:
+% $$
+% \prtl_x^i \prtl_y^j \prtl_z^k u = D^\alpha u,
+% $$
+% kde $\alpha=(i,j,k)$ je vektor počtu derivací v jednotlivých směrech. 
+% Tomuto vektoru říkáme multiindex, což je obecně vektor indexů. Pro multiindex 
+% defunujeme jeho absolutní hodnotu jako součet indexů: 
+% $|\alpha| = i+j+k$
+% Např.
+% $$
+%   \prtl_x^2\prtl_z u = D^{(2, 0, 1)}
+% $$
+% a velikost $|(2, 0, 1)| = 3$. Tedy jde celkově o derivaci třetího řádu.
+% 
+
+\subsection{Interpolační odhady v 1D}
+Odvození odhadů aproximační chyby je pro vyšší dimenze dosti komplikované, 
+pro představení základních ideí si proto ukážeme odvození jednoduchého 
+odhadu pouze pro 1D případ. Kvadrát normy si rozepíšeme na jednotlivé 
+elementy:
+
+$$
+\|u - \pi_u]\|^2_{H^1(\Omega)} = 
+\sum_{K\in \mathcal{T}}  \|u - \pi u\|^2_{H^1(K)}
+$$
+
+
+Pro jednoduchost značení uvažujeme obecný element posunutí do počátku 
+$x_i = 0$, $x_{i+1}=h$ s příslušně posunutými funkcemi. 
+Kvadrát chyby na elementu pak zahrnuje $L^2$ normu chyby a $L^2$ 
+normu její derivace:
+\def\intK{\int_{0}^{h}}
+\begin{equation}
+\label{eq:h1_approx_err}
+\|u - \pi u\|^2_{H^1(K)} = \intK |u - \pi u|^2 \d x 
++ \intK |(u - \pi u)'|^2 \d x
+\end{equation}
+Absolutní hodnoty $e(x) = |u-\pi u|(x)$ uvnitř druhých mocnin nejsou  pro skalární řešení nutné, 
+ale byly by nutné pro řešení s komplexními nebo vektorovými hodnotami.
+
+\subsubsection{$L^2$ norma}
+Jelikož je chyba $e(x)$ nulová v krajních bodech intervalu, je hodnota chyby v prvním 
+integrálu v \eqref{eq:h1_approx_err} určena hodnootu derivace a můžeme ji 
+odhadnout pomocí druhého integrálu. Jelikož $e(0) = 0$, můžeme
+napsat $e^2(x)$ jako integrál z derivace (základní věta kalkulu):
+\begin{equation}
+    \label{eq:tylor_0}
+    \intK e^2(x) \d x 
+    = \intK e(0) + \int_{0}^x (e^2(t))' \d t \d x
+    =\intK \int_{0}^x 2e(t) e'(t)\d t  \d x
+    \le h \intK 2|e(t) e'(t)|\d t 
+\end{equation}
+
+Pro poslední nerovnost jsme nejprve aplikovali absolutní hodnotu a následně prodloužili integraci 
+z $(0,x)$ na $(0,h)$. Dále použijeme AG nerovnost:
+\begin{equation}
+  \label{eq:ag_ineq}
+  2ab \le a^2+b^2,
+\end{equation}
+která plyne z $0\le(a-b)^2$. Dosazením $a= e(t)/\sqrt{2h}$ a $b = \sqrt{2h}e'(t)$ 
+dostaneme:
+$$
+h \intK 2|e(t) e'(t)|\d t 
+\le h\frac{1}{2h}\int_0^h |e(t)|^2\d t + h(2h)\int_0^h |e'(t)|^2\d t
+= \frac12\int_0^h |e(t)|^2\d t + 2h^2\int_0^h |e'(t)|^2\d t
+$$
+Nyní už jen odečteme první integrál od obou stran a vynásobíme dvěma:
+$$
+\int_0^h e^2(x) \d x \le 4h^2 \int_0^h |e'(x)|^2 \d x 
+$$
+
+
+
+% f'(a) + \int_a^b f'' = f'(b) 
+\subsubsection{$H^1$ seminorma}
+Dále se pustíme do odhadu $H^1$ seminormy, tedy druhého integrálu v \eqref{eq:h1_approx_err}.
+Celý postup je založen na stejných ingrediencích jako pro $L^2$, ale v rafinovanější 
+podobě. Opakovaným použitím základní věty kalkulu odvodíme approximaci Taylorovým 
+polynomem s integrálním tvarem zbytku. Po dosazení tento zbytek odpovídá 
+odhadované chybě. 
+
+\begin{theorem}[Taylor 2. řádu]
+Pro funkci $u:\Real -> \Real$, která má integrovatelnou druhou derivaci na intervalu 
+$I$ 
+($u''\in L^1(I)$ platí pro $a,b \in I$:
+
+$$
+u(b) = u(a) + (b-a)u'(a) + \int_a^b u''(s) (b-s) \d s.
+$$
+\end{theorem}
+\begin{proof}
+Začneme základní větou kalkulu:
+$$
+u(b) = u(a) + \int_a^b u'(t) \d t
+$$
+%
+Aplikováním stejného vztahu pro $u'(t)$ máme:
+$$
+u'(t) = u'(a) +\int_a^t u''(s) \d s
+$$
+Dosazením do prvního vztahu a změnou zápisu oblasti dvojitého integrálu
+získáme aproximaci Taylorovým polynomem druhého řádu:
+\begin{align*}
+u(b) &= u(a) + \int_a^b u'(a) \d t + \int_a^b \int_a^t u''(s) \d s \d t\\
+     &= u(a) + (b-a)u'(a) + \int_a^b \int_s^b u''(s) \d t \d s\\
+     &= u(a) + (b-a)u'(a) + \int_a^b u''(s) (b-s) \d s.
+\end{align*}
+Druhá rovnost je trochu záludná, na levé i pravé straně je 
+dvojitý integrál přes všechny dvojice $(s, t)$ splňující $a\le s\le  t \le b$.
+Tyto dvojice tvoří troúhleník, přes který integrujeme buďto přes horizontální 
+úsečky $s\in(a, t)$ (levá strana) nebo přes vertikální úsečky $t\in (s, b)$ 
+(pravá strana).
+\end{proof}
+
+Taylora použijeme pro $b=h$, $a=x$:
+$$
+u(h) = u(x) + (h-x)u'(x) + \int_x^{h} u''(s) (h-s) \d s
+$$
+a pro $b=0$, $a=x$:
+$$
+u(0) = u(x) + (0-x)u'(x) + \int_x^{0} u''(s) (0-s) \d s
+$$
+%
+Odečtením a vydělíme $h$ dostaneme derivaci $P^1$ approximace:
+$$
+(\pi u)' = \frac{u(h) - u(0)}{h} =  u'(x) + \frac{1}{h}I_1(x) - \frac{1}{h}I_2(x)
+$$
+a zapíšeme chybu mezi derivací přesného a přibližného řešení:
+$$
+|(u-\pi u)'(x)| = \frac{1}{h}\Big|I_1(x) - I_2(x)\Big|
+$$
+%
+Nyní umocníme a integrujeme:
+$$
+\int_{0}^{h} |(u-\pi u)'|^2 \d x
+= \int_{0}^{h} |(I_1(x) - I_2(x))|^2\d x
+\le \frac{1}{h}\int_{0}^{h} |I_1(x)|^2 + |I_2(x)|^2 \d x
+$$
+Kde jsme použili trojúhelníkovou nerovnost: $|a+b|^2 \le |a|^2 + |b|^2$.
+%
+Dále oba integrály odhadneme:
+$$
+|I_1| \le \int_x^h |u''(s)| |h-s| \d s \le h \int_0^h |u''(s)| \d s
+$$
+a
+$$
+|I_2| \le \int_0^x |u''(s)| |0-s| \d s \le h \int_0^h |u''(s)| \d s.
+$$
+Po dosazení dostaneme odhad:
+\begin{equation}
+\label{eq:error_est}
+\int_{0}^{h} |(u-\pi u)'|^2 \d x
+\le 2\int_{0}^{h} \Big|\int_0^h|u''(s)|\d s\Big|^2\d x
+\le h \left|\int_0^h|u''(s)|\d s\right|^2
+\end{equation}
+Pro dokončení potřebujeme Cauchy-Schwartzovu nerovnost, 
+která dostane mocninu dovnitř integrálu. V jednoduché podobě ji znadno odvodíme z 
+AG nerovnosti $xy\le \frac12(x^2+y^2)$. 
+Dosadíme $x=f(s)$ $y=f(t)$ a integrujeme přes $s$ a $t$:
+$$
+\left(\int_a^b f(s)\d s\right)^2 = \int_a^b\int_a^b f(s)f(t)\d s\d t 
+\le \frac12\int_a^b\int_a^bf^2(s) +  f^2(t)\d s \d t
+=  (b-a)\int_a^b f^2(s) \d s
+$$
+Aplikací na pravou stranu \eqref{eq:error_est} získáme finální odhad:
+$$
+\int_{0}^{h} |(u-\pi u)'|^2 \d x
+\le h^2 \int_0^h|u''(s)|^2\d s
+$$
+
+\subsection{Aproximační odhady obecné}
+V předchozí sekci jsme odhadli chybu aproximace pro lineární konečné prvky v
+1D. Aplikací podobných postupů lze odvodit odhady pro obecný řád prvků $P^p$ 
+a dimenzi $d$. Pro 
+$$
+  \|u-\pi u\|_{H^1(K)}\le h^p|u|_{H^{r+2}}(K)
+$$
+$$
+  \|u-\pi u\|_{L^2(K)}\le h^{p+1}|u|_{H^{r+2}}(K)
+$$
+
+% 
+% \subsection{Regulární síť}
+% 
+% Nechť $\mathcal{T}_h$ je triangulace, rozdělení oblasti $\Omega$ na konečné prvky, např.  
+% trojúhleníky (2D) nebo tetrahedrony (3D). Pro prvek $K \in \mathcal{T}_h$ označíme:
+% \begin{align*}
+% &h_K \text{ délku nejdelší hrany elementu $K$}\\
+% &\rho_K \text{ poloměr vepsané kružnice/koule elementu $K$}\\
+% &h = max_{K\in \mathcal{T}_h} h_K
+% \end{align*}
+% Pro jednoduchost uvažujeme přibližně stejné hodnoty $h_K$ napříč elementy. 
+% Pokud bychom při pevné velikosti $h_K$ měli elementy s velmi malým $\rho_K$, velmi 'tenké' trojúhelníky
+% s vrcholy skoro na jedné přímce, příslušné bázové funkce si jsou stále více blízké a lokální matice
+% se blíží singulární matici. Uvažujme proto takzavnou regulární síť, kde existuje konstanta $\beta$:
+% $$
+% \frac{\rho_K}{h_K} \ge \beta.
+% $$
+% 
+% \subsection{Interpolační odhady ve 2D a 3D}
+% Prvně uvažujme $P^1$ konečné prvky, $V=H^1(\Omega)$, $V_h=\{v\in V: v|K \in P^1(K)\}$.
+% Projekci z $V$ na $V_h$ oznažíme $\pi$. Pak platí
+% \begin{theorem}
+% $$
+% \|v-\pi v\|_{L_2(K)} \le C h^2_K \|v\|_{H^2(K)}
+% $$
+% a
+% $$
+% \|v-\pi v\|_{H^1(K)} \le C h^2_K \|v\|_{H^2(K)}
+% $$
+% 
+% \end{theorem}
+% 
+% 
+% 
+% 
+% Obecně platí následující odhady:
+% 
+% 
+% \begin{itemize}
+%  \item Interpolační vlastnosti lineárních prvků ve 2D.
+%  \item Interpolační vlastnosti prvků vyšších řádů.
+%  \item Aplikace interpolačních odhadů v Ceově lemmatu.
+%  \item Regularita přesného slabého řešení (Kdy je možno použít prvky vyšších řádů?)
+%  \item Adaptivní metody, základní principy.
+% \end{itemize}
 
 % 
 
