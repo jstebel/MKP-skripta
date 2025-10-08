@@ -869,34 +869,38 @@ Jsou tedy splněny předpoklady Lax-Milgramovy věty a úloha má právě jedno 
 
 
 
-\section{Galerkinova metoda}
+\section{Abstraktní odhad chyby}
 
 Metoda konečných prvků pro řešení variační úlohy typu \eqref{eq:variational_problem} se nazývá Galerkinova metoda.
 Její myšlenkou je nahradit prostor funkcí $V$ vhodným podprostorem $V_h$ konečné dimenze s vhodnou bází (typicky se jedná o podprostory funkcí po částech polynomiálních).
 Výslednou úlohu je pak možné převést na soustavu lineárních rovnic.
 Řešení variační úlohy na podprostoru $V_h$ je aproximací slabého řešení a jeho odchylku lze kvantifikovat v závislosti na volbě podprostoru.
 
-\subsection{Aproximace abstraktní variační úlohy}
 
-Uvažujme nejprve abstraktní úlohu \eqref{eq:variational_problem} a nechť $V_h$ je podprostor $V$ s konečnou dimenzí $N:=\dim V_h$.
-Místo úlohy \eqref{eq:variational_problem} budeme řešit tzv. Galerkinovu úlohu:
-\begin{equation}\label{eq:galerkin}
-\mbox{Najdi }u_h\in V_h:~\forall v_h\in V_h~a(u_h,v_h)=l(v_h).
-\end{equation}
-Řešení $u_h$ této úlohy se nazývá Galerkinova aproximace prvku $u$.
-Nechť $\varphi_1,...,\varphi_N$ je báze $V_h$.
-Pak lze prvek $u_h$ zapsat ve tvaru
-\[ u_h=\sum_{j=1}^N\xi_j\varphi_j,~\vc\xi=(\xi_1,...,\xi_N)^\top\in\R^N. \]
-Jelikož i každá testovací funkce $v_h$ je lineární kombinací bázových funkcí $\{\varphi_i\}_{i=1}^N$, v Galerkinově úloze postačí za testovací funkce brát pouze tyto bázové funkce:
-\[ \eqref{eq:galerkin} \Leftrightarrow \forall i=1,...,N:~ a(u_h,\varphi_i)=\sum_{j=1}^N\xi_j a(\varphi_j,\varphi_i) = l(\varphi_i). \]
-Vzniklá soustava $N$ rovnic je lineární a neznámými jsou koeficienty $\xi_1,...,\xi_N$.
-Můžeme ji přepsat do maticového tvaru:
-\[ \tn A\vc\xi := \begin{pmatrix}a(\varphi_1,\varphi_1) & ... & a(\varphi_N,\varphi_1)\\&...&\\a(\varphi_1,\varphi_N) & ... & a(\varphi_N,\varphi_N)\end{pmatrix}\begin{pmatrix}\xi_1\\\vdots\\\xi_N\end{pmatrix} = \begin{pmatrix}l(\varphi_1)\\\vdots\\l(\varphi_N)\end{pmatrix} =: \vc b, \]
-% kde
-% \[ \tn A = \begin{pmatrix}a(\varphi_1,\varphi_1) & ... & a(\varphi_N,\varphi_1)\\&...&\\a(\varphi_1,\varphi_N) & ... & a(\varphi_N,\varphi_N)\end{pmatrix}, \]
-kde prvek $a_{ij}$ matice $\tn A$ je roven $a(\varphi_j,\varphi_i)$ a prvek $b_i$ vektoru $\vc b$ je roven $l(\varphi_i)$, $i,j=1,...,N$.
 
-Lze snadno ověřit, že z vlastností formy $a$ vyplývají obdobné vlastnosti matice $\tn A$: Např. je-li $a$ symetrická, pak také $\tn A$ je symetrická; je-li $a$ eliptická, pak $\tn A$ je pozitivně definitní, a tedy regulární, a soustava $\tn A\vc\xi=\vc b$ má právě jedno řešení.
+% JB: následující je již v sekci 4.1; TODO: sloučit výklad
+
+% \subsection{Aproximace abstraktní variační úlohy}
+% 
+% Uvažujme nejprve abstraktní úlohu \eqref{eq:variational_problem} a nechť $V_h$ je podprostor $V$ s konečnou dimenzí $N:=\dim V_h$.
+% Místo úlohy \eqref{eq:variational_problem} budeme řešit tzv. Galerkinovu úlohu:
+% \begin{equation}\label{eq:galerkin}
+% \mbox{Najdi }u_h\in V_h:~\forall v_h\in V_h~a(u_h,v_h)=l(v_h).
+% \end{equation}
+% Řešení $u_h$ této úlohy se nazývá Galerkinova aproximace prvku $u$.
+% Nechť $\varphi_1,...,\varphi_N$ je báze $V_h$.
+% Pak lze prvek $u_h$ zapsat ve tvaru
+% \[ u_h=\sum_{j=1}^N\xi_j\varphi_j,~\vc\xi=(\xi_1,...,\xi_N)^\top\in\R^N. \]
+% Jelikož i každá testovací funkce $v_h$ je lineární kombinací bázových funkcí $\{\varphi_i\}_{i=1}^N$, v Galerkinově úloze postačí za testovací funkce brát pouze tyto bázové funkce:
+% \[ \eqref{eq:galerkin} \Leftrightarrow \forall i=1,...,N:~ a(u_h,\varphi_i)=\sum_{j=1}^N\xi_j a(\varphi_j,\varphi_i) = l(\varphi_i). \]
+% Vzniklá soustava $N$ rovnic je lineární a neznámými jsou koeficienty $\xi_1,...,\xi_N$.
+% Můžeme ji přepsat do maticového tvaru:
+% \[ \tn A\vc\xi := \begin{pmatrix}a(\varphi_1,\varphi_1) & ... & a(\varphi_N,\varphi_1)\\&...&\\a(\varphi_1,\varphi_N) & ... & a(\varphi_N,\varphi_N)\end{pmatrix}\begin{pmatrix}\xi_1\\\vdots\\\xi_N\end{pmatrix} = \begin{pmatrix}l(\varphi_1)\\\vdots\\l(\varphi_N)\end{pmatrix} =: \vc b, \]
+% % kde
+% % \[ \tn A = \begin{pmatrix}a(\varphi_1,\varphi_1) & ... & a(\varphi_N,\varphi_1)\\&...&\\a(\varphi_1,\varphi_N) & ... & a(\varphi_N,\varphi_N)\end{pmatrix}, \]
+% kde prvek $a_{ij}$ matice $\tn A$ je roven $a(\varphi_j,\varphi_i)$ a prvek $b_i$ vektoru $\vc b$ je roven $l(\varphi_i)$, $i,j=1,...,N$.
+% 
+% Lze snadno ověřit, že z vlastností formy $a$ vyplývají obdobné vlastnosti matice $\tn A$: Např. je-li $a$ symetrická, pak také $\tn A$ je symetrická; je-li $a$ eliptická, pak $\tn A$ je pozitivně definitní, a tedy regulární, a soustava $\tn A\vc\xi=\vc b$ má právě jedno řešení.
 
 
 \subsection{Abstraktní odhad chyby}
