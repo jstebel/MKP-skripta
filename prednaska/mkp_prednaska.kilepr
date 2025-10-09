@@ -18,31 +18,31 @@ src_extensions=.tex .ltx .latex .dtx .ins
 MakeIndex=
 QuickBuild=
 
-[item:01_jb_1d_okrajova_uloha_slabe_reseni.tex]
+[item:00_matematicke_pojmy.tex]
+archive=true
+encoding=
+highlight=
+mode=
+
+[item:01_uvod_klasifikace_PDR.tex]
 archive=true
 encoding=UTF-8
 highlight=LaTeX
 mode=LaTeX
 
-[item:01_jb_opakovani.tex]
+[item:02_mkp_1D.tex]
 archive=true
 encoding=UTF-8
 highlight=LaTeX
 mode=LaTeX
 
-[item:02_jb_veta_o_transportu.tex]
+[item:03_slabe_reseni_2D.tex]
 archive=true
 encoding=UTF-8
 highlight=LaTeX
 mode=LaTeX
 
-[item:03_jb_fyzikalni_priklady_klasifikace.tex]
-archive=true
-encoding=UTF-8
-highlight=LaTeX
-mode=LaTeX
-
-[item:04_jb_slabe_reseni.tex]
+[item:04_mkp_2D.tex]
 archive=true
 encoding=UTF-8
 highlight=LaTeX
@@ -54,25 +54,37 @@ encoding=UTF-8
 highlight=LaTeX
 mode=LaTeX
 
+[item:05_js_fa.tex.backup]
+archive=true
+encoding=
+highlight=
+mode=
+
 [item:06_jb_konecne_prvky.tex]
 archive=true
 encoding=UTF-8
 highlight=LaTeX
 mode=LaTeX
 
-[item:mkp_prednaska.tex]
-archive=true
-encoding=UTF-8
-highlight=LaTeX
-mode=LaTeX
-
-[item:mkp_prednasky.kilepr]
+[item:06_jb_konecne_prvky.tex.backup]
 archive=true
 encoding=
 highlight=
 mode=
 
-[item:uvod_klasifikace_PDR.tex]
+[item:13_js_iteracni_metody.tex]
+archive=true
+encoding=
+highlight=
+mode=
+
+[item:99_jb_veta_o_transportu.tex]
+archive=true
+encoding=UTF-8
+highlight=LaTeX
+mode=LaTeX
+
+[item:mkp_prednaska.tex]
 archive=true
 encoding=UTF-8
 highlight=LaTeX

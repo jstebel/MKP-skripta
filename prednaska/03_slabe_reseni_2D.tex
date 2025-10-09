@@ -1,0 +1,635 @@
+\section{Slabá formulace pro eliptické úlohy}
+
+\subsection{Slabé řešení rovnice}
+\subsubsection{Intuitivní motivace}
+\begin{itemize}
+ \item Veličina jako pole je abstrakce, měření veličiny (např. teploty $T$) v prostoru odpovídá průměrování 
+       přes okolí měřeného bodu $\vc y$ s váhovou (testovací funkcí) $v$ ve tvaru ``kopečku'' 
+       na okolí bodu $\vc y$:
+       \[
+       T_{\vc y} = \int T(\vc x) v(\vc x - \vc y) \d \vc x
+       \]
+ \item Zákony zachování jsou formulovány jako bilance nějaké veličiny přes {\bf libovolnou} oblast 
+       $\Omega$. Pokud použijeme charakteristickou funkci oblasti, $v(\vc x) = 1$ 
+       právě když $\vc x \in \Omega$ jinak $v(\vc x) = 0$, můžeme zachování hmoty, 
+       \emph{rovnici kontinuity} zapsat:
+       
+       \[
+          \frac{\d}{\d t} \int T v \d x = \int \frac{\d}{\d t} T v 
+          + T \frac{\d}{\d \vc x}v \frac{\d}{\d t} \vc x = \int \prtl_t T v + T \grad v \cdot \vc V,
+       \]
+       kde $\vc V$ je rychlost proudění. Pokud bychom použili ``zhlazenou'' charakteristickou funkcí 
+       davají uvedené derivace smysl. 
+       
+ \item Rovnice bychom tedy měli spíše uvažovat v podobné ``integrální'' formulaci, 
+       kde nemusíme mít k definovány bodové hodnoty veličiny $T$ a jejích derivací. 
+       Intergální = slabá formulace umožní matematicky správně pracovat s nehladkými řešeními. 
+\end{itemize}
+
+
+
+\subsubsection{Další motivační úvahy}
+Uvažujme transportní rovnici na nekonečné oblasti $\Omega = \Real$ (pro $x$):
+\begin{equation}
+    \label{eq:point_transport_1d}
+    \prtl_t u(t,x) + v\prtl_x u(t,x) =0 
+\end{equation}
+kde $v$ je konstantní rychlost. Řešením je posunutá počáteční podmínka $u_0(x)$:
+\[
+    u(t,x) = u_0(x-vt)
+\]
+pro libovolnou diferencovatelnou funkci $u_0$ máme:
+\[
+    \prtl_t u + v\prtl_x u=u_0'(x-vt)(-v) + vu_0'(x-vt)=0
+\]
+
+Zdá se logické, že by toto ``posouvání řešení'' mělo platit pro libovolnou počáteční podmínku 
+$u_0$, ale rovnice je formulována tak, že to platí jen pokud je $u_0$ diferencovatelná. 
+Nešlo by s tou formulací něco udělat?
+
+Zkusme se vrátit k tomu jak jsme transportní rovnici odvodili. Pomocí Raynoldsovy věty jsme dostali:
+\[
+    \int_{\Omega_t} \prtl_t u + \div(v u) \d x= \int_{\Omega_t} \prtl_t u + v\prtl_x u \d x= 0
+\]
+pro libovolnou oblast $\Omega_t$. A bodovou rovnici \eqref{eq:point_transport_1d} 
+jsme dostali za předpokladu, že vnitřek integrálu je spojitý, 
+tedy $u$ je spojitě diferencovatelná v prostoru i čase. 
+Tedy požadavek na diferencovatelnost je ve skutečnosti umělý a i bez něj platí:
+\[
+    \int_\Real \phi(\prtl_t u + \prtl_x(vu)) \d x = 0
+\]
+pro libovolnou hladkou funkci $\phi$ s kompaktním nosičem. 
+Nosič funkce je množina, kde je funkce nenulová:
+\[
+    \supp \phi = \{ x,\ \phi(x) > 0\}
+\]
+a v našem případě jsou kompaktní všechny omezené a uzavřené intervaly. 
+Jde tedy o to, že $\phi$ musí být \emph{směrem k nekonečnu} nulová.
+
+Nyní však nevíme co je $\prtl_t u$ pokud je $u_0$ nespojitá, 
+např. $u_0(x)=\sgn(x)$. Abychom se tohoto problému zbavili použijeme Greenovu větu 
+(zde vlastně jen integraci per partes):
+
+\[
+    \int_\Real \int_\Real \phi(t,x)\big(\prtl_t u + \prtl_x(vu)\big) \d x \d t= 
+    \int_\Real \int_\Real -\prtl_t \phi u - \prtl_x \phi vu \d x \d t = 0
+\]
+pro libovolnou hladkou funkci $\phi(t,x)$ s kompaktním nosičem na $\Real \times \Real$.
+Tato rovnice již skutečně platí pro libovolnou integrovatelnou počáteční podmínku $u_0$.
+
+
+\subsubsection{Klasická formulace eliptické úlohy}
+\label{sec:weak_sol_elliptic_eq}
+Budeme řešit rovnici
+\begin{align}
+   \div(\vc q) =f + \sigma_f(u_f - u) \quad\text{na }\Omega \\
+   \vc q = -\tn K\grad u
+    \label{eq:elliptic}
+\end{align}
+Rovnice popisuje ustálené rozložení teploty, dále značené $u(\vc x)$, v tělese $\Omega$. 
+Pro jednoduchost zde uvažujeme pouze vedení tepla bez konvekce, kde teplený tok $\vc q$ je dán 
+anisotropní teplnou vodivostí popsanou tensorem $\tn K$. 
+
+Na pravé straně je hustota objemových zdrojů 
+tepla $f$ (např. produkce tepla v čipu) a kontaktní zdroj tepla. 
+Kontaktní zdroj modeluje například přenos tepla z tělesa na chladič v podobě kovového plátu.
+Nedokonalý přenos tepla při dotyku chladiče je popsán koeficientem přestupu tepla $\sigma_f\ge 0$ 
+z tělesa na plát, který je udržován na teplotě prostředí $u_f$ (velmi zjednodušující).
+
+
+Eliptickou rovnici na omezené oblasti $\Omega$ je třeba doplnit okrajovými podmínkami 
+{\bf na celé hranici} $\prtl \Omega$. Základní tři typy podmínek jsou:
+
+{\bf Dirichletova okrajová podmínka.} 
+\[
+    u(\vc x) = u_d(\vc x)\text{ na }\Gamma_d
+\]
+předepisuje teplotu $u_d$ na části hranice $\Gamma_d$. Pevná teplota na hranici modeluje situaci, kdy se těleso $\Omega$ dokonale vodivě dotýká termostatu - 
+tělesa z velkou teplenou kapacitou.
+
+{\bf Neumannova okrajová podmínka.}
+\[
+    \vc q \cdot \vc n = (-\tn K \grad u) \cdot \vc n = q_n\text{ na }\Gamma_n.
+\]
+Člen vlevo se nazývá normálový teplený tok, který je předepsán jako $q_n$. V teorii se obvykle uvažuje jako kladný tok ve směru ven z oblasti (vnější normála), 
+nicmáně z důvodu konzistence s objemovými zdroji se v praxi používá raději opačná konvence. Fyzikálně relevantní je případ kdy je hranice pevná 
+$\vc v = 0$ a teplený tok je dán např. výkonem topidla na hranici. 
+
+{\bf Robinova (Newtonova) okrajová podmínka.}
+\[
+     \vc q \cdot \vc n = (-\tn K \grad u)  \cdot \vc n = \sigma_r(u - u_r)\text{ na }\Gamma_r. 
+\]
+Opět je releventní především případ $\vc v =0$, kdy podmínka modeluje realistický přenost tepla s koeficientem $\sigma_r\ge 0$ z tělesa o teplotě $u_r$.
+Zde je opět $\vc n$ vnější normála, tedy vlevo je tok ven z oblasti, který je kladný pokud je $u > u_r$ což souhlasí se znaménkem na pravé straně.
+
+Mimo tyto základní podmínky se v reálných úlohách objevují i nejrůznější další podmínky. 
+Například kombinace Neumannovy a Robinovy okrajové podmínky:
+\[
+    -\tn K \grad u \cdot \vc n = \sigma_r(u - u_r) + q_n
+\]
+
+Dále předpokládáme, že množiny $\Gamma_d$, $\Gamma_n$, a $\Gamma_r$ jsou navzájem diskjunktní (nemají průnik) a jejich sjednocení (respektive sjednocení jejich uzávěrů)
+je hranice $\prtl \Omega$.
+
+
+\subsubsection{Slabá formulace eliptické úlohy}
+\label{sec:weak_form_elliptic_eq}
+
+V této kapitole odvodíme slabou formulaci rovnice vedení tepla, 
+spolu s aplikací klasických okrajových podmínek.
+
+Prvně přenásobíme rovnici \eqref{eq:elliptic} libovolnou hladkou testovací funkcí 
+$v(\vc x) \in C^\infty(\ol\Omega)$ (hladá až do hranice) a integrujeme přes $\Omega$:
+\[
+    \int_\Omega v\Big(-\div(\tn K\grad u\Big) \d \vc x = \int_\Omega v \Big(f + \sigma_f(u_f - u)\Big) \d \vc x.
+\]
+Dále v na levé straně použijeme Greenovu větu k přehození divergence na testovací funkci:
+\begin{equation}
+    \label{eq:after_green}
+    \int_\Omega \grad v \cdot (\tn K\grad u) \d \vc x + \int_{\prtl \Omega} -v(\tn K\grad u)\cdot \vc n \d s 
+    = \int_\Omega v \Big(f + \sigma_f(u_f - u)\Big) \d \vc x.
+\end{equation}
+Než přistoupíme k aplikaci okrajových podmínek, zamysleme se jaké vlastnosti musí mít funkce $u$, 
+aby tato rovnice vůbec měla smysl. Pokud budeme předpokládat, že 
+všechny ostatní parametry jsou hladké, musí mít funkce $u$ alespoň integrovatelné derivace 
+($\prtl_{x_i} u \in L_1(\Omega)$). Každopádně funkce $u$ nemůže být libovolná, 
+ale patří do nějakého vektorového prostoru funkcí $H^1(\Omega)$, který si přesně zavedeme až později,
+ale již víme, že jeho funkce mají integrovatelnou derivaci.
+
+Pro začátek předpokládejme pouze \emph{homogenní} Dirichletovu okrajovou podmínku $u_d =0$. 
+Pak je řešení $u$ ve skutečnosti z podprostoru:
+\[
+    V_0 = \{ u\in H^1(\Omega), u(\vc x) = 0\text{ na } \Gamma_d \}
+\]
+Jelikož už známe hodnotu řešení na hranici $\Gamma_d$ nepotřebujeme řešení určit rovnicí 
+\eqref{eq:after_green} a testovací funkce proto může být na této části hranice také nulová, t.j. 
+testovací funkce $v$ bude z prostoru:
+\[
+     \mathcal D_0 = \{\phi \in C^\infty(\ol\Omega),\ v(\vc x) = 0\text{ na } \Gamma_d\}.
+\]
+
+Nyní rozdělíme hraniční integrál na integrály přes části hranice odpovídající 
+jednotlivým typům okrajových podmínek:
+Na $\Gamma_d$ je $v=0$ příslušná člen je tedy nulový:
+\[
+    \int_{\Gamma_d} -v(\tn K\grad u)\cdot \vc n \d s = 0
+\]
+
+Na $\Gamma_n$ je tok roven $q_n$, máme tedy:
+\[
+    \int_{\Gamma_n} -v(\tn K\grad u)\cdot \vc n \d s = \int_{\Gamma_n} v q_n \d s.
+\]
+
+Podobně známe tok na $\Gamma_r$:
+\[
+    \int_{\Gamma_r} -v(\tn K\grad u)\cdot \vc n \d s = \int_{\Gamma_n} v \sigma_r(u - u_r) \d s.
+\]
+
+Dostáváme tak slabou formulaci rovnice \eqref{eq:elliptic}. Slabým řešením bude každá funkce $u$ z prostoru $V_0$, 
+která splňuje
+\begin{align}
+    \label{eq:weak_homo_dirich}
+    A(u, v) &:= \int_\Omega (\tn K\grad u) \cdot \grad v   +   \sigma_f u v \d \vc x 
+              + \int_{\Gamma_r} \sigma_r u v \d s \\
+              &=  \int_\Omega \Big(f + \sigma_f u_f)\Big)v \d \vc x + \int_{\Gamma_r} \sigma_r u_r v \d s 
+              + \int_{\Gamma_n} -q_n v \d s =: l(v)
+\end{align}
+pro všechna $v \in \mathcal D$. Levá strana rovnice závisí lineárně na testovací funkci $v$ i na řešení $u$ 
+a souhrně ji tak můžeme označit lineární funkcí dvou proměnných $A(u, v)$, které proto nazýváme bi-lineární forma.
+``bi'' protože je lineární v obou proměnných, ``forma'' má na vstupu funkce $u$ a $v$, ale výstupem je reálné číslo.
+Podobně pravá strana rovnice je lineárně závislá pouze na $v$, je to tedy lineární forma $l(v)$.
+
+Nyní uvažujme případ s obecnou Dirichletovou okrajovou podmínkou $u_d\ne 0$. 
+Budeme předpokládat, že $u_d$ lze prodloužit dovnitř oblasti $\Omega$. Tedy, že existuje 
+funkce $\tilde u_d$ z prostoru $H^1(\Omega)$, která se shoduje s okrajovou podmínkou na hranici,
+ $\tilde u_d = u_d$ na $\Gamma_d$, a je libovolná uvnitř oblasti (tam je omezená pouze prostorem, tedy má jistou malou hladkost). 
+ 
+ 
+Pak řešení s obecnou Dirichletovou podmínkou
+rozložíme $u = \tilde u_d + u_0$. Kompletní řešení $u$ je na hranici nenulové, ale $u_0$ je na hranici nulové
+protože $u=\tilde u_d$ na hranici. Proto je $u_0$ z prostoru $V_0$. Funkce $u_0$ představuje neznámou 
+část řešení, kterou dostaneme řešením problému:
+\[
+    A(u_0, v) = l(v) - A(\tilde u_d, v) = \tilde l(v)
+\]
+Zjednodušeně, rozšířenou okrajovou podmínku dosadíme do bilineární formy a tím z ní uděláme pouze 
+lineární formu a přesuneme na pravou stranu. Změna Dirichletovy podmínky tak mění pouze pravou stranu 
+rovnice podobně jako ostatní okrajové podmínky.
+
+{\bf Souvislost s kvantovou mechanikou.} Bilineární a lineární formy se používají i v kvantové mechanice 
+a značí se pomocí bra-ket notace. Slabou formulaci bychom v této notaci zapsali:
+\[
+    \langle u | A | v \rangle = \langle l | v \rangle
+\]
+Bilineární formu můžeme chápat jako operátor $A$, který z řešení $u$ vyrobí lineární formu (bra) $\langle u| A$ a
+ta se vynásobí skalárním součinem s testovací funkcí (ket) $|v\rangle$.
+
+
+\subsection{Odvození klasické formulace ze slabé}
+Doposud jsme odvodili, že ze silné formulace plyne splnění slabé formulace, ale není zřejmé, že jsme 
+tímto postupem napřišli o nějakou informaci, tedy zda je ze slabé formulace plyne silná pokud 
+z nějakého důvodu bude slabé řešení hladší, konkrétně se spojitými druhými derivacemi: $u\in C^2(\Omega)$.
+
+V principu všechny výchozí rovnice musíme dostat aplikováním vhodných testovacích funkcí. 
+Nejprve odvodíme rovnici uvnitř $\Omega$. Ve slabé formulaci  \eqref{eq:weak_homo_dirich} 
+budeme testovat funkcí $v$ s nosičem uvnitř $\Omega$, t.j. $v$ je nulová na hranici. 
+Hraniční intergrály jsou tedy nulové a použitím Greenovy věty, zpětně dostaneme:
+\begin{equation}
+    \label{eq:green_interior}
+    \int_\Omega -\div (\tn K\grad u) v \d \vc x = \int_\Omega \Big(f + \sigma_f (u_f - u)\Big)v \d \vc x.
+\end{equation}
+Odtud plyne splnění bodové rovnice \eqref{eq:elliptic} v každém bodě uvnitř $\Omega$.
+
+Dále potřebujeme odvodit splnění okrajových podmínek. Dirichletova podmínka je splněna přímo volbou prostoru, 
+jelikož $u=\tilde u_d + u_0$ a $u_0$ je nulová na $\Gamma_d$.
+
+Pro odvození Neumannovy a Robinovy okrajové podmínky uvažujeme libovolnou hladkou
+ funkci $v$ s nosičem na hranici $\Gamma_{nr} =\Gamma_n \cup \Gamma_r$. 
+Funkce je nulová uvnitř $\Omega$.
+Dále tuto funkci hladce prodloužíme dovnitř  $\Omega$ (jako jsme to uvažovali pro Dirichletovu podmínku),
+ale tak aby měla nosič pouze do vzdálenosti $\eps$ od hranice. Výslednou funkci  $v_\epsilon \in \mathcal D_0$
+použijeme jako testovací v \eqref{eq:weak_homo_dirich} a aplikujeme Greenovu větu:
+\[
+    \int_\Omega X(u)v_\epsilon \d \vc x + \int_{\Gamma_{nr}} (\tn K\grad u-\vc v u)\cdot \vc n v_\epsilon \d s    
+              =  \int_{\Gamma_r} \sigma_r (u_r -u) v_\epsilon \d s + \int_{\Gamma_n} -q v_\epsilon \d s 
+\]
+kde první člen obsahuje všechny členy z předchozí rovnice \eqref{eq:green_interior}. 
+Nyní provedeme limitu $\epsilon \to 0$. V této limitě se první intergál 
+bude blížit nule, jelikož $v_\epsilon$ je nenulová na množině velikosti $\epsilon \times \abs{\Gamma_nr}$, 
+což konverguje k nule. Naproti tomu ve zbylých 
+hraničních integrálech je $v_\epsilon = v$, což na $\epsilon$ nezávisí, tedy dostaneme:
+\[
+    \int_{\Gamma_{nr}} -(\tn K\grad u)\cdot \vc n v \d s  
+              =  \int_{\Gamma_r} \sigma_r (u -u_r) v \d s + \int_{\Gamma_n} q v \d s 
+\]
+a odtud obě okrajové podmínky.
+
+
+% JB TODO: pokud přidáme přednášku pro nestacionární úlohy, tak uvést rovnici s advekcí
+% a zmínit problematiku podmínek závislých na rychlosti.
+% \subsubsection{Advekčně difúzní případ}
+% Například pokud na části hranice vtéká do oblasti voda o rychlosti $\vc V$ o dané teplotě $U$, 
+% půjde o Neumannovu podmínku s $\vc v\ne 0$ a $q_n=U\vc v \cdot \vc n$. Pro výtok z oblasti však potřebujeme podmínku $q_n=u\vc v \cdot \vc n$, což lze považovat za Robinovu podmínku s $u_r=0$ 
+% a $\sigma_r=\vc v \cdot\vc n$. Ovšem rychlost $\vc v$ nemusí být na hranici dopředu známa, může být výsledkem řešení nějaké rovnice proudění, proto 
+% je obvykle tuto podmínku chýpat jako zvláštní typ.
+
+
+% \section{MKP pro eliptické úlohy}
+% V předchozí kapitole jsme avedli koncept slabého řešení. Slabá formulace rovnic lépe odpovídá 
+% fyzikální podstatě zákanů zachování, ze kterých řada parciálních diferenciálních rovnic (PDR) vychází a
+% zejména umožňuje dokázat existenci slabého řešení pro širokou řadu lineárních rovnic, jak ukážeme později. 
+% Existence řešení však neznamená, že bychom toto řešení dokázali zapsat. Naopak pro většinu parciálních 
+% diferenciálních rovnic neumíme zapsat jejich řešení pomocí běžných funkcí (tzv. řešení v uzavřeném tvaru).
+% Proto se požívají různé metody přibližného řešení, kdy najdeme funkci, která rovnici nesplňuje přesně, 
+% ale zato ji umíme nalézt, vyhodnotit, zobrazit.
+% 
+% Pro jednoduchost budeme aproximativní řešení v této kapitole demonstrovat na jednodušší rovnici:
+% 
+% \begin{equation}
+%  -\div\big(\tn K \grad u\big) = f\quad \text{v }\Omega
+% \end{equation}
+% s Robinovou okrajovou podmínkou:
+% \[
+%    (-\tn K \grad u) \cdot \vc n = \sigma_R (u - u_R) \quad \text{na }\prtl\Omega
+% \]
+% 
+% Slabá formulace hledá řešení v prostoru $V = H^1(\Omega)$ tedy jistý prostor funkcí se slabou 
+% první derivací. Řešení musí splňovat rovnici:
+% \begin{align}
+%     \label{eq:weak_poisson}
+%     A(u, v) &:= \int_\Omega (\tn K\grad u) \cdot \grad v \d x +\int_{\prtl\Omega} \sigma u v\d s\\
+%             & = \int_\Omega fv\d x + \int_{\prtl\Omega} \sigma u_R v \d s =: l(v)
+% \end{align}
+% pro všechny testovací funkce $ v\in V$.
+% 
+% 
+% \section{Galerkinova metoda}
+% (Viz. Johnson \cite{Johnson}, kapitola 2)
+% 
+% Metoda konečných prvků, kterou si podrobněji představíme v další kapitole, je speciálním případem
+% obecnější Galerkinovy approximační metody. Základní myšlenkou je ponechat ve slabé formulaci stejnou 
+% bilineární formu $A(u,v)$ a stejnou lineární formu $l(v)$, ale nahradit nekonečně dimenzionální prostor
+% řešení $V$  podprostorem $V_n \subset \subset V$ s konečnou dimenzí $\dim V_n = n$. Velmi podobně jako salbé 
+% řešení je definováno přibližné řešení $u_n \in V_n$, které splňuje rovnici
+% \begin{equation}
+%    \label{eq:weak_galerkin} 
+%    A(u_n, v) = l(v) \text{pro všechny funkce }v\in V_n.
+% \end{equation}
+% 
+% 
+% Lineární prostor $V_n$ má konečnou bázi, tedy exisuje $n$ lineárně nezávislých funkcí 
+% $\phi_j(\vc x) \in V_n$, $j=1,\dots, n$.
+% a každý prvek prostoru 
+% pak lze napsat jako jejich lineární kombinaci:
+% \[
+%     w(\vc x) = \sum_{j=1}^n u_j \phi_j(\vc x).
+% \]
+% Koeficienty $w_i$ jednoznačně určují funkci $w$ a opačně pro každou funkci $w\in V_n$ existuje jednoznačný 
+% vektor koeficientů $(w_1, \dots, w_n)$. Z toho plyne, že stejně můžeme zapsat i přibližné řešení
+% a pro jeho určení stačí určit vektor $n$ koeficientů. K tomu nám však stačí $n$ lineárně nezávislých 
+% testovacích funkcí daných bází. 
+% Řešíme tedy soustavu $n$ rovnic o $n$ neznámých:
+% 
+% \[
+%    A(\sum_{j=1}^n u_j \phi_j(\vc x), \phi_i(\vc x)) = l(\vc phi_i(x)), \quad \text{pri }i=1, \dots, n
+% \]
+% a protože je forma $A$ bilineární můžeme součet a koeficienty přesunout ven a získáme:
+% \[
+%     \sum_{i=1}^n A(\phi_j, \phi_i) u_i = l(\phi_i), \quad \text{pri }i=1, \dots, n.
+% \]
+% Nalevo dostáváme prvky matice $A_{j,i} = A(\phi_j, \phi_i)$ a napravo prvky vektoru $b_i = l(\phi_i)$.
+% Řešení slabé formulace na konečně rozměrném podprostoru, tedy rovnice \eqref{eq:weak_galerkin} je tedy 
+% ekvivalentní řešení lineární soustavy rovnic:
+% \[
+%  \tn A \vc u = \vc b.
+% \]
+% 
+% V případě naší konkrétní rovnice \eqref{eq:weak_poisson} můžeme bilineární formu a lineární funkcionál explicitně vyjádřit. Bilineární forma $A(u,v)$ je dána jako:
+% 
+% \[
+% A(u,v) = \int_\Omega (\tn K \nabla u) \cdot \nabla v \, \mathrm{d}x + \int_{\partial \Omega} \sigma u v \, \mathrm{d}s.
+% \]
+% 
+% Lineární funkcionál $l(v)$ je pak:
+% 
+% \[
+% l(v) = \int_\Omega f v \, \mathrm{d}x + \int_{\partial \Omega} \sigma u_R v \, \mathrm{d}s.
+% \]
+% 
+% Galerkinova metoda spočívá v tom, že hledáme aproximaci $u_n \in V_n$, která splňuje:
+% 
+% \[
+% \int_\Omega (\tn K \nabla u_n) \cdot \nabla v \, \mathrm{d}x + \int_{\partial \Omega} \sigma u_n v \, \mathrm{d}s = \int_\Omega f v \, \mathrm{d}x + \int_{\partial \Omega} \sigma u_R v \, \mathrm{d}s \quad \text{pro všechna } v \in V_n.
+% \]
+% 
+% Tato soustava je pak základem pro sestavení konečněprvkové aproximace řešení naší úlohy.
+% 
+% 
+% 
+% 
+% \subsection{Výpočetní síť}
+% Oblast $\Omega \subset \Real^2$ předpokládáme polygonální 
+% (hranice tvořena rovnými úseky). Výpočetní síť je rozdělení oblasti trojúhelníky {\it elementy} $T_e$ 
+% tak, aby dva trojúhelníky sousedili buďto celou společnou hranou nebo společným vrcholem. 
+% Vrcholy trojúhelníků nazýváme {\it uzly} sítě $N_j$, $j=1, \dots, n$.
+% 
+% Ve 2d je možné pracovat také s rozdělením na čtyřúhelníky, nebo kombinaci trojúhelníků a čtyřúhelníků.
+% 
+% Ve 3d se používá dělení na tetrahedrohy (čtyřstěny), deformované krychle, ale též se používají prvky 
+% s různými kombinacemi trojúhelníkových a čtyřúhelníkových stěn, např. trojboké hranoly nebo pyramidy.
+% \subsection{Konečné prvky prvního řádu}
+% V metodě konečných prvků volíme specifický podprostor $V_n$ a specifické bázové funkce v Galerkinově 
+% metodě.
+% 
+% Chat todo: 
+% - popsat prostor lineárních bázových funkcí: spojité, po částech  lineární P^1 na elementech
+% - ortogonalita bázových funkcí vůči uzlům sítě
+% 
+% \subsubsection{Assemblace lineárního problému}
+% Integrály vystupující ve vyhodnocení prvků matice  $\tn A$ a vektoru $\vc b$ v Galerkinově aproximaci
+% si rozdělíme na integrály přes jednotlivé elementy.
+% 
+% Chat todo:
+% - matematicky zapsat pro rovnici 'eq:weak_poisson'
+% - vysvětlit koncept lokálních matic $\tn A_e$ a vektorů pravé strany $\vc b_e$
+% - pro demonstraci zapsat část finální matice s barevně vyznačenými příspěvky od dvou sousedících lokálních matice
+% 
+% \subsubsection{Referenční element}
+% Pro vyhodnocení lokálních matice  $A$ a vektoru $b$ potřebujeme umět definované bázové funkce 
+% vyhodnotit. Vyhodnocovat integrály přes jednotlivé elementy přímo je však nepraktické, proto 
+% každý element $T_e$ zobrazíme pomocí {\it affinní transformace} na {\it referenční element},
+% na kterém definujeme bázové funkce a jejich gradienty.
+% 
+% Chat todo: 
+% - vysvětlit affinní transformaci, značit referenční souřadnice a funkce  se stříškou, e.g. $\hat x$ 
+% - definovat vrcholy referenčního elementu (trojůhelník)
+% - definovat na něm bázové funkce konrétním vzorcem pro souřadnice $\hat x_1$, $\hat x_2$
+% 
+% 
+% \subsubsection{Substituce forem}
+% Převod integrací na referenční element.
+% \subsubsection{Numerická integrace}
+% 
+% 
+% 
+% 
+% 
+% 
+% 
+% 
+% 
+% \section{MKP pro eliptické úlohy}
+% V předchozí kapitole jsme uvedli koncept slabého řešení. Slabá formulace rovnic lépe odpovídá 
+% fyzikální podstatě zákonů zachování, ze kterých řada parciálních diferenciálních rovnic (PDR) vychází a
+% zejména umožňuje dokázat existenci slabého řešení pro širokou řadu lineárních rovnic, jak ukážeme později. 
+% Existence řešení však neznamená, že bychom toto řešení dokázali zapsat. Naopak pro většinu parciálních 
+% diferenciálních rovnic neumíme zapsat jejich řešení pomocí běžných funkcí (tzv. řešení v uzavřeném tvaru).
+% Proto se používají různé metody přibližného řešení, kdy najdeme funkci, která rovnici nesplňuje přesně, 
+% ale zato ji umíme nalézt, vyhodnotit, zobrazit.
+% 
+% Pro jednoduchost budeme aproximativní řešení v této kapitole demonstrovat na jednodušší rovnici:
+% 
+% \begin{equation}
+%  -\div\big(\tn K \grad u\big) = f\quad \text{v }\Omega
+% \end{equation}
+% s Robinovou okrajovou podmínkou:
+% \[
+%    (-\tn K \grad u) \cdot \vc n = \sigma_R (u - u_R) \quad \text{na }\prtl\Omega
+% \]
+% 
+% Slabá formulace hledá řešení v prostoru $V = H^1(\Omega)$, tedy jistý prostor funkcí se slabou 
+% první derivací. Řešení musí splňovat rovnici:
+% \begin{align}
+%     \label{eq:weak_poisson}
+%     A(u, v) &:= \int_\Omega (\tn K\grad u) \cdot \grad v \, \mathrm{d}x +\int_{\prtl\Omega} \sigma u v\, \mathrm{d}s\\
+%             & = \int_\Omega f v\, \mathrm{d}x + \int_{\prtl\Omega} \sigma u_R v\, \mathrm{d}s =: l(v)
+% \end{align}
+% pro všechny testovací funkce $ v\in V$.
+% 
+% V případě naší konkrétní rovnice \eqref{eq:weak_poisson} můžeme bilineární formu a lineární funkcionál explicitně vyjádřit. Bilineární forma $A(u,v)$ je dána jako:
+% 
+% \[
+% A(u,v) = \int_\Omega (\tn K \nabla u) \cdot \nabla v \, \mathrm{d}x + \int_{\partial \Omega} \sigma u v \, \mathrm{d}s.
+% \]
+% 
+% Lineární funkcionál $l(v)$ je pak:
+% 
+% \[
+% l(v) = \int_\Omega f v \, \mathrm{d}x + \int_{\partial \Omega} \sigma u_R v \, \mathrm{d}s.
+% \]
+% 
+% Galerkinova metoda spočívá v tom, že hledáme aproximaci $u_n \in V_n$, která splňuje:
+% 
+% \[
+% \int_\Omega (\tn K \nabla u_n) \cdot \nabla v \, \mathrm{d}x + \int_{\partial \Omega} \sigma u_n v \, \mathrm{d}s = \int_\Omega f v \, \mathrm{d}x + \int_{\partial \Omega} \sigma u_R v \, \mathrm{d}s \quad \text{pro všechna } v \in V_n.
+% \]
+% 
+% Tato soustava je pak základem pro sestavení konečněprvkové aproximace řešení naší úlohy.
+% 
+% 
+% \section{Galerkinova metoda}
+% (Viz. Johnson \cite{Johnson}, kapitola 2)
+% 
+% Metoda konečných prvků, kterou si podrobněji představíme v další kapitole, je speciálním případem
+% obecnější Galerkinovy aproximační metody. Základní myšlenkou je ponechat ve slabé formulaci stejnou 
+% bilineární formu $A(u,v)$ a stejnou lineární formu $l(v)$, ale nahradit nekonečně dimenzionální prostor
+% řešení $V$ podprostorem $V_n \subset V$ s konečnou dimenzí $\dim V_n = n$. Velmi podobně jako slabé 
+% řešení je definováno přibližné řešení $u_n \in V_n$, které splňuje rovnici
+% \begin{equation}
+%    \label{eq:weak_galerkin} 
+%    A(u_n, v) = l(v) \quad \text{pro všechny funkce }v\in V_n.
+% \end{equation}
+% 
+% 
+% Lineární prostor $V_n$ má konečnou bázi, tedy existuje $n$ lineárně nezávislých funkcí 
+% $\phi_j(\vc x) \in V_n$, $j=1,\dots, n$,
+% a každý prvek prostoru 
+% pak lze napsat jako jejich lineární kombinaci:
+% \[
+%     w(\vc x) = \sum_{j=1}^n w_j \phi_j(\vc x).
+% \]
+% Koeficienty $w_j$ jednoznačně určují funkci $w$ a opačně pro každou funkci $w\in V_n$ existuje jednoznačný 
+% vektor koeficientů $(w_1, \dots, w_n)$. Z toho plyne, že stejně můžeme zapsat i přibližné řešení
+% a pro jeho určení stačí určit vektor $n$ koeficientů. K tomu nám však stačí $n$ lineárně nezávislých 
+% testovacích funkcí daných bází. 
+% Řešíme tedy soustavu $n$ rovnic o $n$ neznámých:
+% 
+% \[
+%    A\left(\sum_{j=1}^n u_j \phi_j(\vc x), \phi_i(\vc x)\right) = l(\phi_i), \quad \text{pro }i=1, \dots, n.
+% \]
+% A protože je forma $A$ bilineární, můžeme součet a koeficienty přesunout ven a získáme:
+% \[
+%     \sum_{j=1}^n u_j A(\phi_j, \phi_i) = l(\phi_i), \quad \text{pro }i=1, \dots, n.
+% \]
+% Nalevo dostáváme prvky matice $A_{i,j} = A(\phi_j, \phi_i)$ a napravo prvky vektoru $b_i = l(\phi_i)$.
+% Řešení slabé formulace na konečně rozměrném podprostoru, tedy rovnice \eqref{eq:weak_galerkin}, je tedy 
+% ekvivalentní řešení lineární soustavy rovnic:
+% \[
+%  \tn A \vc u = \vc b.
+% \]
+% 
+% V případě naší konkrétní rovnice \eqref{eq:weak_poisson} můžeme bilineární formu a lineární funkcionál explicitně vyjádřit. Bilineární forma $A(u,v)$ je dána jako:
+% 
+% \[
+% A(u,v) = \int_\Omega (\tn K \nabla u) \cdot \nabla v \, \mathrm{d}x + \int_{\partial \Omega} \sigma u v \, \mathrm{d}s.
+% \]
+% 
+% Lineární funkcionál $l(v)$ je pak:
+% 
+% \[
+% l(v) = \int_\Omega f v \, \mathrm{d}x + \int_{\partial \Omega} \sigma u_R v \, \mathrm{d}s.
+% \]
+% 
+% Galerkinova metoda spočívá v tom, že hledáme aproximaci $u_n \in V_n$, která splňuje:
+% 
+% \[
+% \int_\Omega (\tn K \nabla u_n) \cdot \nabla v \, \mathrm{d}x + \int_{\partial \Omega} \sigma u_n v \, \mathrm{d}s = \int_\Omega f v \, \mathrm{d}x + \int_{\partial \Omega} \sigma u_R v \, \mathrm{d}s \quad \text{pro všechna } v \in V_n.
+% \]
+% 
+% Tato soustava je pak základem pro sestavení konečněprvkové aproximace řešení naší úlohy.
+% 
+% \subsection{Výpočetní síť}
+% Oblast $\Omega \subset \Real^2$ předpokládáme polygonální 
+% (hranice tvořena rovnými úseky). Výpočetní síť je rozdělení oblasti trojúhelníky {\it elementy} $T_e$ 
+% tak, aby dva trojúhelníky sousedili buďto celou společnou hranou nebo společným vrcholem. 
+% Vrcholy trojúhelníků nazýváme {\it uzly} sítě $N_j$, $j=1, \dots, n$.
+% 
+% Ve 2D je možné pracovat také s rozdělením na čtyřúhelníky, nebo kombinací trojúhelníků a čtyřúhelníků.
+% 
+% Ve 3D se používá dělení na tetraedry (čtyřstěny), deformované krychle, ale též se používají prvky 
+% s různými kombinacemi trojúhelníkových a čtyřúhelníkových stěn, např. trojboké hranoly nebo pyramidy.
+% 
+% \subsection{Konečné prvky prvního řádu}
+% V metodě konečných prvků volíme specifický podprostor $V_n$ a specifické bázové funkce v Galerkinově 
+% metodě.
+% 
+% Volíme jako aproximační prostor $V_n$ prostor funkcí, které jsou spojité na celé oblasti $\Omega$ a na každém elementu $T_e$ jsou polynomy prvního stupně, tedy lineární funkce. Tento prostor se označuje jako prostor po částech lineárních funkcí $P^1$.
+% 
+% Bázové funkce $\phi_j$ jsou definovány tak, že pro každý uzel $N_j$ platí:
+% 
+% \[
+% \phi_j(N_i) = \delta_{ij},
+% \]
+% 
+% kde $\delta_{ij}$ je Kroneckerovo delta. To znamená, že bázová funkce $\phi_j$ nabývá hodnoty 1 v uzlu $N_j$ a hodnoty 0 ve všech ostatních uzlech. Díky této vlastnosti jsou bázové funkce ortogonální vůči uzlům sítě, což umožňuje snadné sestavení a řešení soustavy rovnic.
+% 
+% Na každém trojúhelníkovém elementu jsou bázové funkce $\phi_j$ lineární funkce definované na vrcholech elementu, přičemž jejich hodnota je určena výše uvedenou podmínkou.
+% 
+% \subsubsection{Assemblace lineárního problému}
+% Integrály vystupující ve vyhodnocení prvků matice  $\tn A$ a vektoru $\vc b$ v Galerkinově aproximaci
+% si rozdělíme na integrály přes jednotlivé elementy.
+% 
+% Pro rovnici \eqref{eq:weak_poisson} rozdělíme integrály přes celou oblast $\Omega$ na součet integrálů přes jednotlivé elementy $T_e$:
+% 
+% \[
+% A(u, v) = \sum_{e} \left( \int_{T_e} (\tn K \nabla u) \cdot \nabla v \, \mathrm{d}x \right) + \sum_{e} \left( \int_{\partial T_e \cap \partial \Omega} \sigma u v \, \mathrm{d}s \right).
+% \]
+% 
+% Analogicky rozdělíme lineární funkcionál:
+% 
+% \[
+% l(v) = \sum_{e} \left( \int_{T_e} f v \, \mathrm{d}x \right) + \sum_{e} \left( \int_{\partial T_e \cap \partial \Omega} \sigma u_R v \, \mathrm{d}s \right).
+% \]
+% 
+% Koncept lokálních matic $\tn A_e$ a vektorů pravé strany $\vc b_e$ spočívá v tom, že pro každý element $T_e$ vypočítáme matici $\tn A_e$ s prvky:
+% 
+% \[
+% A_e^{ij} = \int_{T_e} (\tn K \nabla \phi_j) \cdot \nabla \phi_i \, \mathrm{d}x + \int_{\partial T_e \cap \partial \Omega} \sigma \phi_j \phi_i \, \mathrm{d}s,
+% \]
+% 
+% a vektor $\vc b_e$ s prvky:
+% 
+% \[
+% b_e^i = \int_{T_e} f \phi_i \, \mathrm{d}x + \int_{\partial T_e \cap \partial \Omega} \sigma u_R \phi_i \, \mathrm{d}s.
+% \]
+% 
+% Tyto lokální matice a vektory poté sestavíme do globální matice $\tn A$ a vektoru $\vc b$ podle toho, jak jsou bázové funkce $\phi_i$ a $\phi_j$ přiřazeny k uzlům.
+% 
+% Pro demonstraci si představme dva sousedící elementy $T_1$ a $T_2$, které sdílejí společnou hranu. Jejich lokální matice $\tn A_1$ a $\tn A_2$ přispívají k celkové globální matici $\tn A$ tak, že prvky odpovídající společným uzlům se sčítají.
+% 
+% Například pro uzly $i$ a $j$ sdílené oběma elementy bude prvek globální matice:
+% 
+% \[
+% A^{ij} = A_1^{ij} + A_2^{ij}.
+% \]
+% 
+% Tímto způsobem získáme konečnou soustavu rovnic, kde globální matice $\tn A$ je součtem všech lokálních příspěvků z jednotlivých elementů.
+% 
+% \subsubsection{Referenční element}
+% Pro vyhodnocení lokálních matic $\tn A_e$ a vektorů $\vc b_e$ potřebujeme umět definované bázové funkce 
+% vyhodnotit. Vyhodnocovat integrály přes jednotlivé elementy přímo je však nepraktické, proto 
+% každý element $T_e$ zobrazíme pomocí {\it afinní transformace} na {\it referenční element},
+% na kterém definujeme bázové funkce a jejich gradienty.
+% 
+% Afinní transformace je lineární zobrazení, které mapuje referenční element $\hat{T}$ na libovolný skutečný element $T_e$ v síti. Označíme-li souřadnice v referenčním elementu symbolem $\hat{x} = (\hat{x}_1, \hat{x}_2)$ a souřadnice ve skutečném elementu $x = (x_1, x_2)$, pak afinní transformace má tvar:
+% 
+% \[
+% x = \tn F_e(\hat{x}) = \tn J_e \hat{x} + \vc b_e,
+% \]
+% 
+% kde $\tn J_e$ je Jacobiho matice transformace (konstanta na každém elementu) a $\vc b_e$ je vektor posunu.
+% 
+% Referenční trojúhelník $\hat{T}$ definujeme jako trojúhelník s vrcholy:
+% 
+% \[
+% \hat{N}_1 = (0, 0), \quad \hat{N}_2 = (1, 0), \quad \hat{N}_3 = (0, 1).
+% \]
+% 
+% Na referenčním elementu definujeme bázové funkce $\hat{\phi}_i(\hat{x})$ pro $i = 1, 2, 3$ následovně:
+% 
+% \[
+% \hat{\phi}_1(\hat{x}) = 1 - \hat{x}_1 - \hat{x}_2,
+% \]
+% \[
+% \hat{\phi}_2(\hat{x}) = \hat{x}_1,
+% \]
+% \[
+% \hat{\phi}_3(\hat{x}) = \hat{x}_2.
+% \]
+% 
+% Tyto funkce jsou lineární na referenčním trojúhelníku a splňují podmínku $\hat{\phi}_i(\hat{N}_j) = \delta_{ij}$. Pomocí afinní transformace můžeme tyto bázové funkce převést na skutečný element $T_e$.
+% 
+% \subsubsection{Substituce forem}
+% Převod integrací na referenční element.
+% 
+% \subsubsection{Numerická integrace}

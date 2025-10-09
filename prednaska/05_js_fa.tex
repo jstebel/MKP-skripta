@@ -81,10 +81,9 @@ Snadno lze spočítat:
 \[ \norm{u}_\infty = \max_{x\in[0,1/1000]}|10\sin(1000\pi x)| = 10. \]
 \end{ex}
 
-Norma $\norm{\ }_\infty$ se zdá být v jistém smyslu přirozenější, neboť měří maximální odchylku hodnot dvou spojitých funkcí.
-Přesto existují důvody, proč je vhodné používat normu $\norm{\ }_2$.
-Předně, $\norm{\ }_2$ byla zavedena pomocí skalárního součinu. Skalární součin hraje v některých úlohách důležitou roli.
-Lze ukázat, že na množině spojitých funkcí nelze zavést skalární součin s rozumnými vlastnostmi, který by indukoval normu $\norm{\cdot}_\infty$.
+Norma $\norm{\ }_\infty$ stanoví rozdíl dvou funkcí jako největší odchylku jejich hodnot.
+Naopak norma $\norm{\ }_2$ měří plochu mezi grafy druhých mocnin těchto funkcí.
+Přestože význam $\norm{\ }_2$ se může jevit méně intuitivní, má tato norma své opodstatnění. První vlastností je, že byla zavedena pomocí skalárního součinu (totéž nelze říci o $\norm{\cdot}_\infty$). Skalární součin hraje v úlohách spojených s MKP důležitou roli. 
 Dalším důvodem je, že v mnoha aplikacích nevystačíme se spojitými funkcemi. Není snadné rozšířit normu $\norm{\ }_\infty$ na obecnější třídu funkcí, zatímco rozšíření normy $\norm{\ }_2$ je velmi jednoduché a vede přirozeně k vytvoření tzv. prostoru $L^2$.
 
 
@@ -133,9 +132,16 @@ Nechť $V$ je normovaný lineární prostor. Řekneme, že posloupnost $\{u_n\}_
 % 
 Pro limitu v normovaném lineárním prostoru platí obdobná tvrzení jako pro limitu v $\R^n$ známá ze základních kurzů matematiky.
 Např. každá posloupnost má nejvýše jednu limitu.
-Pokud posloupnost spojitých funkcí $\{u_n\}$ konverguje k $u$ v normě $\norm{\ }_2$ nebo $\norm{\ }_\infty$, pak prvek $u$ se skoro všude shoduje s bodovou limitou, tj.
-\[ (\lim_{n\to\infty} u_n)(x) = \lim_{n\to\infty} (u_n(x)). \]
-Pro zjišťování konvergence posloupnosti funkcí je tedy vhodné nejprve zjistit, zda existuje bodová limita.
+
+Důležitou otázkou je, jak lze nalézt limitu posloupnosti (tj. prvek $u=\lim_{n\to\infty} u_n$).
+Při vyšetřování konvergence posloupnosti \emph{funkcí} je vhodné nejprve zjistit, zda existuje tzv. \emph{bodová limita}.
+Bodová limita je definována jako funkce $U$ splňující:
+\[ \forall x: ~U(x) = \lim_{n\to\infty}u_n(x). \]
+Všimněme si, že hodnota $U(x)$ je určena jako limita hodnot $u_n(x)$, tedy jedná se o klasickou limitu číselné posloupnosti.
+Platí, že pokud posloupnost spojitých funkcí $\{u_n\}$ definovaných na omezené oblasti konverguje k nějaké funkci $u$ v normě $\norm{\ }_2$ nebo $\norm{\ }_\infty$, pak prvek $u$ se skoro všude shoduje s bodovou limitou $U$, tj.
+\[ u(x) = (\lim_{n\to\infty} u_n)(x) = \lim_{n\to\infty} (u_n(x)) = U(x). \]
+Teprve poté, co najdeme bodovou limitu, je možné ověřit, zda se jedná také o limitu v normě.
+
 
 \begin{ex}
 \label{ex:conv_l2_linf}
@@ -156,40 +162,40 @@ Dále platí
 z čehož plyne, že v prostoru $C([0,1])$ s normou $\norm{\ }_\infty$ není nulová funkce limitou posloupnosti $\{u_n\}$ (ve skutečnosti posloupnost není v tomto prostoru konvergentní).
 \end{ex}
 % 
-Uvedený příklad poukazuje na to, že existence limity v metrickém prostoru závisí na tom, jakou uvažujeme metriku.
-% Obecně tedy ta samá posloupnost může být v jedné metrice konvergentní a v jiné ne.
-\begin{df}
-Nechť $\norm{\ }_A$ a $\norm{\ }_B$ jsou normy na prostoru $V$.
-Jestliže existují konstanty $\alpha,\beta>0$ takové, že pro každé $u\in V$ platí
-\[ \alpha\norm{u}_A \le \norm{u}_B \le \beta\norm{u}_A, \]
-pak říkáme, že $\norm{\ }_A$ a $\norm{\ }_B$ jsou na $V$ \emph{ekvivalentní}.
-\end{df}
-% 
-Jsou-li normy $\norm{\ }_A$ a $\norm{\ }_B$ ekvivalentní, pak platí
-\[ u_n\to u \mbox{ ve }(V,\norm{\ }_A) \quad \Leftrightarrow \quad u_n\to u \mbox{ ve }(V,\norm{\ }_B). \]
-% Ekvivalentní normy také generují stejné otevřené a uzavřené množiny.
-Příklad \ref{ex:conv_l2_linf} ukazuje, že normy $\norm{\ }_2$ a $\norm{\ }_\infty$ nejsou na prostoru $C(\overline\Omega)$ ekvivalentní.
+Uvedený příklad poukazuje na to, že existence limity v normovaném lineárním prostoru závisí na tom, jakou používáme normu.
+
+% \begin{df}
+% Nechť $\norm{\ }_A$ a $\norm{\ }_B$ jsou normy na prostoru $V$.
+% Jestliže existují konstanty $\alpha,\beta>0$ takové, že pro každé $u\in V$ platí
+% \[ \alpha\norm{u}_A \le \norm{u}_B \le \beta\norm{u}_A, \]
+% pak říkáme, že $\norm{\ }_A$ a $\norm{\ }_B$ jsou na $V$ \emph{ekvivalentní}.
+% \end{df}
+% % 
+% Jsou-li normy $\norm{\ }_A$ a $\norm{\ }_B$ ekvivalentní, pak platí
+% \[ u_n\to u \mbox{ ve }(V,\norm{\ }_A) \quad \Leftrightarrow \quad u_n\to u \mbox{ ve }(V,\norm{\ }_B). \]
+% % Ekvivalentní normy také generují stejné otevřené a uzavřené množiny.
+% Příklad \ref{ex:conv_l2_linf} ukazuje, že normy $\norm{\ }_2$ a $\norm{\ }_\infty$ nejsou na prostoru $C(\overline\Omega)$ ekvivalentní.
 
 
 \subsubsection{Úplnost}
 % 
-Skutečnost, že daná posloupnost v metrickém prostoru je konvergentní, závisí nejen na zvolené metrice, ale také na prostoru samotném.
+Skutečnost, že daná posloupnost v normovaném lineárním prostoru je konvergentní, závisí nejen na zvolené normě, ale také na prostoru samotném.
 Existují například posloupnosti racionálních čísel, které mají za limitu iracionální číslo, tzn., že jsou konvergentní v prostoru $\R$, ale nejsou konvergentní v $\Q$.
 Množina $\Q$ tedy v jistém smyslu není úplná.
 
-Pojem úplnost souvisí s cauchyovskými posloupnostmi.
+Pojem úplnost souvisí s tzv. cauchyovskými posloupnostmi.
 % 
 \begin{df}
 Posloupnost $\{u_n\}$ v normovaném lineárním prostoru $V$ se nazývá \mbox{cauchyovská}, jestliže
 \[ \forall\varepsilon>0~\exists N\in\N~\forall m,n\in\N:~m,n>N\Rightarrow \norm{u_m-u_n}<\varepsilon. \]
 \end{df}
 % 
-% Vzdálenost prvků cauchyovské posloupnosti tedy může být libovolně malá, jsou-li indexy těchto prvků dostatečně velké.
-Cauchyovská posloupnost obecně nemusí mít limitu. Avšak každá konvergentní posloupnost je nutně cauchyovská.
+Nepřesně řečeno, vzdálenost prvků cauchyovské posloupnosti s rostoucími indexy klesá a může být libovolně malá.
+Cauchyovská posloupnost obecně nemusí mít limitu, není-li prostor dostatečně \uv{bohatý}. Avšak každá konvergentní posloupnost je nutně cauchyovská.
 % 
 \begin{df}
 Normovaný lineární prostor $V$ se nazývá \emph{úplný} (nebo také \emph{Banachův prostor}), jestliže každá cauchyovská posloupnost má v tomto prostoru limitu.
-Úplný prostor se skalárním součinem se nazývá \emph{Hilbertův prostor}.
+Úplný prostor se skalárním součinem se pak nazývá \emph{Hilbertův prostor}.
 \end{df}
 % 
 \begin{ex}
@@ -214,41 +220,41 @@ Prostor $C(\overline\Omega)$ s normou $\norm{\ }_\infty$ je úplný, s normou $\
 
 
 
-\subsubsection{Množiny v normovaném lineárním prostoru}
+% \subsubsection{Množiny v normovaném lineárním prostoru}
+% % 
+% Podobně jako u euklidovské vzdálenosti v $\R^n$, lze definovat pojmy jako koule, okolí nebo otevřená množina pomocí normy.
+% \begin{df}
+% Nechť $X$ je normovaný lineární prostor s normou $\norm{\ }$.
+% \begin{itemize}
+% \item \emph{Koule} se středem $x\in X$ a poloměrem $r>0$ je množina
+% \[ B_r(x) := \{y\in X;~\norm{x-y}<r\}. \]
+% \item Množina $M$ se nazývá \emph{otevřená}, pokud pro každý bod $x\in M$ existuje koule se středem $x$, která leží v $M$.
+% \item Množina se nazývá \emph{uzavřená}, pokud její doplněk v $X$ je otevřený.
+% \end{itemize}
+% \end{df}
 % 
-Podobně jako u euklidovské vzdálenosti v $\R^n$, lze definovat pojmy jako koule, okolí nebo otevřená množina pomocí normy.
-\begin{df}
-Nechť $X$ je normovaný lineární prostor s normou $\norm{\ }$.
-\begin{itemize}
-\item \emph{Koule} se středem $x\in X$ a poloměrem $r>0$ je množina
-\[ B_r(x) := \{y\in X;~\norm{x-y}<r\}. \]
-\item Množina $M$ se nazývá \emph{otevřená}, pokud pro každý bod $x\in M$ existuje koule se středem $x$, která leží v $M$.
-\item Množina se nazývá \emph{uzavřená}, pokud její doplněk v $X$ je otevřený.
-\end{itemize}
-\end{df}
-
-\begin{ex}
-Koule v prostoru $\R^2$ se středem v počátku souřadné soustavy má tvar
-\begin{itemize}
-\item[a)] čtverce, jehož vrcholy leží na souřadných osách a těžiště v počátku, uvažujeme-li normu $\norm{\ }_1$;
-\item[b)] kruhu se středem v počátku, uvažujeme-li euklidovskou normu $\norm{\ }_2$;
-\item[c)] čtverce, jehož strany jsou rovnoběžné se souřadnými osami a těžiště leží v počátku, uvažujeme-li maximovou normu $\norm{\ }_\infty$.
-\end{itemize}
-\end{ex}
-
-\begin{df}
-Nechť $X$ je normovaný lineární prostor, $x\in X$ a $M\subset M$.
-\begin{itemize}
-\item Bod $x$ je \emph{vnitřním bodem množiny} $M$, pokud existuje poloměr $r>0$ takový, že $B_r(x)\subset M$.
-Množinu všech vnitřních bodů $M$ budeme značit $\Int M$.
-\item Bod $x$ je \emph{hraničním bodem množiny} $M$, pokud každá koule se středem v $x$ obsahuje alespoň jeden bod z $M$ a alespoň jeden bod z $X\setminus M$.
-Množina všech hraničních bodů $M$ se nazývá \emph{hranice} $M$ a značí se $\partial M$.
-\item Uzávěr množiny $M$ je množina $\overline M:=M\cup\partial M$.
-\end{itemize}
-\end{df}
-
-Mezi právě definovanými množinami platí mnoho vztahů. Např.:
-\[ \Int M\subset M \subset \overline M, \quad \Int M\cap \partial M = \emptyset, \]
+% \begin{ex}
+% Koule v prostoru $\R^2$ se středem v počátku souřadné soustavy má tvar
+% \begin{itemize}
+% \item[a)] čtverce, jehož vrcholy leží na souřadných osách a těžiště v počátku, uvažujeme-li normu $\norm{\ }_1$;
+% \item[b)] kruhu se středem v počátku, uvažujeme-li euklidovskou normu $\norm{\ }_2$;
+% \item[c)] čtverce, jehož strany jsou rovnoběžné se souřadnými osami a těžiště leží v počátku, uvažujeme-li maximovou normu $\norm{\ }_\infty$.
+% \end{itemize}
+% \end{ex}
+% 
+% \begin{df}
+% Nechť $X$ je normovaný lineární prostor, $x\in X$ a $M\subset M$.
+% \begin{itemize}
+% \item Bod $x$ je \emph{vnitřním bodem množiny} $M$, pokud existuje poloměr $r>0$ takový, že $B_r(x)\subset M$.
+% Množinu všech vnitřních bodů $M$ budeme značit $\Int M$.
+% \item Bod $x$ je \emph{hraničním bodem množiny} $M$, pokud každá koule se středem v $x$ obsahuje alespoň jeden bod z $M$ a alespoň jeden bod z $X\setminus M$.
+% Množina všech hraničních bodů $M$ se nazývá \emph{hranice} $M$ a značí se $\partial M$.
+% \item Uzávěr množiny $M$ je množina $\overline M:=M\cup\partial M$.
+% \end{itemize}
+% \end{df}
+% 
+% Mezi právě definovanými množinami platí mnoho vztahů. Např.:
+% \[ \Int M\subset M \subset \overline M, \quad \Int M\cap \partial M = \emptyset, \]
 
 
 % \subsubsection{Maticové normy}
@@ -284,23 +290,20 @@ Mezi právě definovanými množinami platí mnoho vztahů. Např.:
 \subsection{Prostory integrovatelných funkcí}
 
 V následující části zavedeme prostor funkcí, který obsahuje spojité funkce a zároveň je úplný vzhledem k normě $\norm{\ }_2$, generované skalárním součinem $(\ ,\ )$.
+Místo spojitosti bude uvažována \emph{integrovatelnost} funkcí, čímž je míněno, že funkce má konečný integrál.
 
 \begin{df}
 \label{df:Lp}
 Prostorem $L^2(\Omega)$ rozumíme množinu funkcí
-\[ L^2(\Omega):=\left\{u:\Omega\to\R;~\left|\int_\Omega u(x)~dx\right|<\infty,~\norm{u}_2<\infty \right\}. \]
+\[ L^2(\Omega):=\left\{u:\Omega\to\R;~u \mbox{ a } |u|^2 \mbox{ jsou integrovatelné} \right\}. \]
 Spolu s normou $\norm{\ }_2$ tvoří $L^2(\Omega)$ normovaný lineární prostor.
-% Norma v prostoru $L^p(\Omega)$ je definována výrazem
-% \[ \norm{u}_{p,\Omega}:=\left(\int_\Omega|u(x)|^p~dx\right)^{1/p}. \]
 \end{df}
 
-% Pokud je zřejmé, na jaké oblasti uvažujeme normu, pak budeme zkráceně psát $\norm{u}_p$.
-Z definice plyne, že každá spojitá funkce v $\overline\Omega$ patří do prostorů $L^2(\Omega)$.
-Do těchto prostorů ovšem patří i mnoho dalších funkcí, které mohou být nespojité nebo neomezené.
-
+Z definice plyne, že každá spojitá funkce v $\overline\Omega$ patří do prostoru $L^2(\Omega)$.
+Do tohoto prostoru ovšem patří i mnoho dalších funkcí, které mohou být nespojité nebo neomezené.
 Poznamenejme, že pro správnost některých tvrzení je třeba uvažovat integrály v Definici \ref{df:Lp} v tzv. Lebesgueově smyslu.
-Požadavek na integrovatelnost funkce $u$ je splněn pro většinu "kulturních" funkcí (např. pro spojité funkce).
-Existují však tzv. neměřitelné funkce, jejichž druhá mocnina je integrovatelná, zatímco funkce samotná ne.
+% Požadavek na integrovatelnost funkce $u$ je splněn pro většinu \uv{kulturních} funkcí (např. pro spojité funkce).
+% Existují však i nepěkné funkce, jejichž druhá mocnina je integrovatelná, zatímco funkce samotná ne.
 
 
 \begin{ex}
@@ -350,15 +353,15 @@ Dvě funkce $u,v$ ekvivalentní v prostoru $L^2(\Omega)$ jsou charakterizovány 
 % \end{veta}
 
 \begin{veta}
-Prostor $L^2(\Omega)$ s normou $\norm{\ }_2$ je Banachův prostor.
+Prostor $L^2(\Omega)$ s normou $\norm{\ }_2$ je nejmenší úplný normovaný lineární prostor obsahující všechny spojité funkce na $\overline\Omega$.
 \end{veta}
 
-Tak jako $L^2(\Omega)$ je nejmenší úplný prostor s normou $\norm{\ }_2$ obsahující $C(\overline\Omega)$, lze zavést také prostor
+Obdobně lze zavést také prostor
 \[ L^\infty(\Omega):=\left\{u:\Omega\to\R;~\left|\int_\Omega u(x)~dx\right|<\infty, ~\exists C>0:~|u(x)|\le C \mbox{ skoro všude v }\Omega\right\}. \]
 Norma na tomto prostoru je
 \[ \norm{u}_\infty := \inf\left\{C>0;~|u(x)|\le C \mbox{ skoro všude v }\Omega\right\}. \]
-Pro spojité funkce tato definice splývá s původní definicí $\norm{\ }_\infty$.
-Také $L^\infty(\Omega)$ je Banachův prostor.
+Pro spojité funkce tento vztah splývá s původní definicí $\norm{\ }_\infty$, tedy lze místo infima použít minimum a slova \uv{skoro všude} vypustit.
+Také $L^\infty(\Omega)$ je úplný prostor.
 \begin{ex}
 Poněkud specifickým případem je tzv. Dirichletova funkce
 \[ D(x) = \begin{cases}1;&x\in\Q,\\0;&x\notin\Q.\end{cases} \]
@@ -366,16 +369,20 @@ Protože množina $\Q$ racionálních čísel je spočetná, $D$ je skoro všude
 \[ \norm{D}_\infty = 0,\quad \int_{-\infty}^\infty D(x)~dx=0. \]
 \end{ex}
 
-Na omezené oblasti $\Omega$ platí následující vztah mezi limitami.
-\begin{veta}
-Nechť $\Omega$ je omezená oblast v $\R^d$, $d\in\{1,2,3\}$, a $\{u_n\}$ je posloupnost funkcí definovaných v $\Omega$.
-Pak platí:
-\begin{itemize}
-\item[(i)] Jestliže $u_n\to u$ v $L^\infty(\Omega)$, pak $u_n\to u$ také v $L^2(\Omega)$.
-\item[(ii)] Jestliže $u_n\to u$ v $L^2(\Omega)$, pak $u_n(x)\to u(x)$ pro skoro všechna $x\in\Omega$.
-\end{itemize}
-\end{veta}
+% Na omezené oblasti $\Omega$ platí následující vztah mezi limitami.
+% \begin{veta}
+% Nechť $\Omega$ je omezená oblast v $\R^d$, $d\in\{1,2,3\}$, a $\{u_n\}$ je posloupnost funkcí definovaných v $\Omega$.
+% Pak platí:
+% \begin{itemize}
+% \item[(i)] Jestliže $u_n\to u$ v $L^\infty(\Omega)$, pak $u_n\to u$ také v $L^2(\Omega)$.
+% \item[(ii)] Jestliže $u_n\to u$ v $L^2(\Omega)$, pak $u_n(x)\to u(x)$ pro skoro všechna $x\in\Omega$.
+% \end{itemize}
+% \end{veta}
 
+Pojmy norma, skalární součin a prostor $L^2(\Omega)$ lze přímočaře zobecnit pro vektorové funkce.
+Pro $\vc u,\vc v:\Omega\to\R^d$ definujeme
+\[ \norm{\vc u}_2 := \left(\sum_{i=1}^d\norm{u_i}_2^2\right)^{1/2},\quad (\vc u,\vc v):=\sum_{i=1}^d(u_i,v_i). \]
+Prostor $L^2$ pro vektorové funkce budeme značit $L^2(\Omega;\R^d)$.
 
 
 
@@ -417,11 +424,10 @@ Uvažujme funkci $u(x) = \sgn x$. Pro $v\in C^1([-1,1])$, $v(-1)=v(1)=0$ platí:
 \end{multline*}
 kde $\delta_0$ se nazývá Diracova $\delta$-funkce (ve skutečnosti to není funkce, ale tzv. \emph{distribuce}). V jistém smyslu tedy platí $(\sgn x)'=2\delta_0(x)$, nicméně $\delta_0\notin L^2(\Omega)$.
 \end{ex}
-Ne každá funkce z $L^2(\Omega)$ má zobecněnou derivaci v $L^2(\Omega)$.
 
-Pro vektorové funkce $\vc u,\vc v:\Omega\to\R^d$ definujeme
-\[ \norm{\vc u}_2 := \left(\sum_{i=1}^d\norm{u_i}_2^2\right)^{1/2},\quad (\vc u,\vc v):=\sum_{i=1}^d(u_i,v_i). \]
-Prostor $L^2$ pro vektorové funkce budeme značit $L^2(\Omega;\R^d)$.
+Ne každá funkce z $L^2(\Omega)$ má zobecněnou derivaci v $L^2(\Omega)$.
+Proto zavedeme další prostor funkcí s integrovatelnými derivacemi.
+
 \begin{df}
 Prostor $H^1(\Omega)$ je množina
 \[ H^1(\Omega):=\left\{u\in L^2(\Omega);~\nabla u\in L^2(\Omega;\R^d)\right\}. \]
@@ -431,12 +437,12 @@ a skalární součin
 \[ ((u,v)):=(u,v) + (\nabla u,\nabla v). \]
 \end{df}
 \begin{veta}
-$H^1(\Omega)$ je Banachův prostor.
+Prostor $H^1(\Omega)$ s normou $\norm{\cdot}_{1,2}$ je úplný.
 \end{veta}
 
 % priklady nespojitych funkci v H1 (2d, 3d)
 \begin{ex}
-Na oblasti $\Omega=B_1(0)\setminus\{(x,0);~x\in(-1,0)\}$ uvažujme funkci
+Na oblasti $\Omega=\{(x,y);~x^2+y^2=1\}\setminus\{(x,0);~x\in(-1,0)\}$ uvažujme funkci
 \[ u(x,y)=\sqrt{r}\sin\frac\theta2,~r=\sqrt{x^2+y^2},~\theta=\arctg\frac xy. \]
 Ukážeme, že $u\in H^1(\Omega)$:
 \[ \int_\Omega u^2 = \int_{-\pi/2}^{3/2\pi}\int_0^1r^2\sin^2\left(\frac\theta2\right) r~dr~d\theta=\frac\pi4, \]
@@ -452,7 +458,7 @@ Pro tuto funkci $u$ nelze jednoznačně definovat hodnoty na hranici $\partial\O
 \end{ex}
 
 Aby bylo možné pro funkce z $H^1(\Omega)$ definovat jejich \emph{stopu}, tj. hodnotu na hranici, omezíme se v dalším na oblasti s \emph{Lipschitzovskou hranicí}.
-Řekneme, že oblast $\Omega$ má Lipschitzovskou hranici, jestliže ji lze lokálně popsat jako spojitou funkci s omezenými derivacemi.
+Řekneme, že hranice oblasti $\Omega$ je Lipschitzovská, jestliže ji lze lokálně popsat jako graf spojité funkce s omezenými derivacemi.
 % Na prostoru $H^1(\Omega)$ lze definovat hodnoty na hranici prostřednictvím operátoru stop.
 Pro funkci $u\in C(\overline\Omega)$ definujeme zobrazení $\tr:u\mapsto u_{|\partial\Omega}$, kde $u_{|\partial\Omega}$ je tzv. stopa funkce $u$ (hodnota na hranici).
 Na hranici oblasti $\Omega$, resp. na její části, lze zavést prostor $L^2(\partial\Omega)$ s obdobnými vlastnostmi jako $L^2(\Omega)$.
@@ -467,9 +473,9 @@ kde konstanta $C>0$ závisí pouze na $\Omega$.
 \end{veta}
 
 Poznamenejme, že ne každá funkce z $L^2(\partial\Omega)$ je stopou funkce z $H^1(\Omega)$.
-Nyní můžeme zavést prostory funkcí s nulovou stopou:
+Nyní zavedeme prostory funkcí s nulovou stopou, které hrají důležitou roli u slabých formulací s Dirichletovou podmínkou:
 \begin{df}
-Je-li $\Gamma$ relativně otevřená část hranice $\partial\Omega$, pak definujeme
+Pro netriviální část $\Gamma$ hranice oblasti $\Omega$ definujeme
 \[ H^1_\Gamma(\Omega) := \{ u\in H^1(\Omega);~\tr u_{|\Gamma}=0 \}. \]
 Speciálně pro $\Gamma=\partial\Omega$ značíme tento prostor jako $H^1_0(\Omega)$, tj.
 \[ H^1_0(\Omega) := \{ u\in H^1(\Omega);~\tr u=0 \mbox{ na }\partial\Omega\}. \]
@@ -481,7 +487,7 @@ Speciálně pro $\Gamma=\partial\Omega$ značíme tento prostor jako $H^1_0(\Ome
 Nechť $\Omega$ má Lipschitzovskou hranici a $\Gamma$ je relativně otevřená část $\partial\Omega$.
 Pak existuje konstanta $C=C(\Omega,\Gamma)>0$ taková, že pro každé $u\in H^1(\Omega)$ platí nerovnost
 \begin{equation} \label{eq:friedrichs_H1gamma}
-\norm{u}_{1,2} \le C(\norm{\nabla u}_2 + \norm{u}_{2,\Gamma}).
+\norm{u}_{1,2} \le C(\norm{\nabla u}_2^2 + \norm{u}_{2,\Gamma}^2)^{1/2}.
 \end{equation}
 Speciálně pro $u\in H^1_0(\Omega)$ platí:
 \begin{equation} \label{eq:friedrichs_H10}
@@ -498,11 +504,11 @@ Speciálně pro $u\in H^1_0(\Omega)$ platí:
 
 \section{Abstraktní teorie slabých řešení}
 
-V této kapitole se budeme zabývat otázkou, jak správně zavést slabou formulaci tak, aby úloha byla jednoznačně řešitelná.
+V této kapitole zavedeme jednotný koncept pro různé druhy slabých formulací, budeme se zabývat otázkou řešitelnosti a aproximace těchto úloh.
 
 \subsection{Abstraktní variační úloha}
 
-Nechť $V$ je Hilbertův prostor se skalárním součinem $(\ ,\ )$ a normou $\norm{\ }$, $a$ a $l$ je bilineární, resp. lineární forma na $V$.
+Nechť $V$ je úplný normovaný lineární prostor s normou $\norm{\ }$, $a$ a $l$ je bilineární, resp. lineární forma na $V$.
 Úlohu
 \begin{equation}
 \label{eq:variational_problem}
@@ -518,7 +524,7 @@ budeme nazývat \emph{abstraktní variační úloha}.
 % \[ \forall v\in V:~a(v,v)\ge \alpha\norm{v}^2. \]
 
 \begin{veta}[Lax-Milgram]\label{th:lax-milgram}
-Nechť $V$ je Hilbertův prostor, $a$ je bilineární forma na $V$, pro niž existují konstanty $\alpha,\beta>0$ takové, že
+Nechť $V$ je úplný normovaný lineární prostor se skalárním součinem, $a$ je bilineární forma na $V$, pro niž existují konstanty $\alpha,\beta>0$ takové, že
 \begin{itemize}
 \item[(i)] $a$ je omezená, tj.
 \[ \forall v,w\in V:~a(v,w)\le \beta\norm{v}\norm{w}, \]
@@ -552,17 +558,17 @@ Hledáme funkci $u:\overline\Omega\to\R$, která splňuje:
 Protože je předepsána Dirichletova podmínka na $\partial\Omega$, prostor, ve kterém budeme hledat slabé řešení, je $V:=H^1_0(\Omega)$.
 Jelikož ale hodnota $u$ na hranici je dána funkcí $u_d$, pak obecně $u\notin H^1_0(\Omega)$.
 Předpokládejme proto, že $u_d$ lze rozšířit na celou oblast $\Omega$ tak, aby $u_d\in H^1(\Omega)$.
-Pak $u-u_d\in H^1_0(\Omega)$.
-Řešení budeme hledat ve tvaru $u=z+u_d\in H^1(\Omega)$, kde $z\in H^1_0(\Omega)$, a
+Pak $u$ bude splňovat Dirichletovu podmínku právě tehdy, když $u-u_d\in H^1_0(\Omega)$.
+Řešení budeme hledat ve tvaru $u=z+u_d\in H^1(\Omega)$, kde $z\in H^1_0(\Omega)$ splňuje
 \[ 
-    \forall v\in H^1_0(\Omega):\ a(z,v)=l(v), 
+    \forall v\in H^1_0(\Omega):\ a(z,v)=l(v).
 \]
-kde
+Formy $a$ a $l$ jsou dány vztahy:
 \begin{equation}\label{eq:def_a_nonhom_dir}
-    a(z,v) := (\grad z, \grad v)_{L^2(\Omega)},
+    a(z,v) := (\grad z, \grad v),
 \end{equation}
 \begin{equation}\label{eq:def_l_nonhom_dir}
-    l(v) := (f,v)_{L^2(\Omega)} - (\nabla u_d,\nabla v)_{L^2(\Omega)}.
+    l(v) := (f,v) - (\nabla u_d,\nabla v).
 \end{equation}
 % Ukážeme, že formy $a$ a $l$ mají konečnou hodnotu pro každé $u,\varphi\in H^1(\Omega)$.
 \begin{veta}
@@ -587,272 +593,317 @@ kde
 \begin{proof}
     Je-li $v\in H^1_0(\Omega)$, pak
     \[ 
-        a(v,v) = (\nabla v,\nabla v)_{L^2(\Omega)} 
+        a(v,v) = (\nabla v,\nabla v) 
                = \norm{\nabla v}_2^2 \ge \frac1{C^2}\norm{v}_{1,2}^2. 
     \]
 \end{proof}
 
+Jsou tedy splněny předpoklady Lax-Milgramovy věty a úloha má právě jedno slabé řešení.
 
 
 
+\subsubsection{Neumannova podmínka}
 
-
-\subsubsection{Anizotropní difúze}
-Uvažujme úlohu vedení tepla ve čtvercové desce, která je z jedné strany zahřívána infračervenými lampami 
-tepelným tokem $f$ a z druhé strany předehřívána ocelovou matricí s tepelnou vodivostí $\sigma$, která je dále 
-vyhřívána soustavou kanálků s vodou o teplotě $u_f$. Na dvou stranách čtverce je tepelná izolace, na druhých dvou stranách je 
-kostantní teplota $u=0$ (toto je nereálné, ale je to jen příklad). Deska je kompozitní materiál složený z polymerové pryskyřice 
-(vodivost 1W/mK) a uhlíkových vláken (vodivost 1000W/mK) s preferovaným směrem, tepelná vodivost desky je proto anisotropní.
-
-Formulujme nyní úlohu abstraktněji.
-
-Mějme oblast $\Omega\subset\R^d$ (například čtverec $d=2$) s hranicí 
-$\partial\Omega=\overline\Gamma_d\cup\overline\Gamma_n$, tedy s Dirichletovskou a Neumannovskou částí hranice.
-Na této oblasti hledáme teplotu $u:\overline\Omega\to\R$, která je řešením stacionární rovnice vední tepla:
-\begin{align}
-    -\div(\tn K\grad u) &= f + \sigma(u_f - u) &&\text{v }\Omega,\\
-    u&=0 && \text{na }\Gamma_d,\\
-    -\tn K \grad u \cdot \vc n &= q &&\text{na }\Gamma_n.
-\end{align} 
-Zde $\tn K:\Omega\to\R^{d\times d}$ je maticová funkce pro tenzor tepelné vodivosti
-a $f$, $\sigma$, $u_f$ jsou skalární funkce na $\Omega$  a $q$ skalární funkce na $\Gamma_n$.
-
-Aby byla splněna Dirichletova podmínka na $\Gamma_d$ a formy $a$, $l$ měly konečnou hodnotu, 
-budeme hledat slabé řešení v prostoru 
-\[
-    V:=H^1_{\Gamma_d}(\Omega) = \{ \phi \in H^1(\Omega),\ \phi = 0\text{ na }\Gamma_d\} 
-\]
-Nyní převedeme úlohu vedení tepla na abstraktní variační úlohu:
-\[ 
-    \mbox{Najdi }u\in H^1_{\Gamma_d}(\Omega):~\forall v\in H^1_{\Gamma_d}(\Omega):~a(u,v)=l(v), 
-\]
-kde formy $a(\cdot, \cdot)$ a $l(\cdot)$ mají tvar:
-\begin{equation}\label{eq:def_a_diffusion}
-    a(u,v) := (\tn K\grad u, \grad v)_{L^2(\Omega)} + (\sigma u, v)_{L^2(\Omega)},
-\end{equation}
-\begin{equation}\label{eq:def_l_diffusion}
-    l(v) := (f + \sigma u_f,v)_{L^2(\Omega)} - ( q, v)_{L^2(\Gamma_n)}.
-\end{equation}
-Pro použití Lax-Milgramova lemmatu potřebujeme ověřit omezenost forem $a$ a $l$. To ovšem platí 
-za nějakých předpokladů na další parametry úlohy. Konkrétně dokážeme následujícíc větu.
-\begin{veta}
-    Nechť $\tn K\in L^\infty(\Omega;~\R^{d\times d})$ a $\sigma\in L^\infty(\Omega)$. 
-    Pak existuje konstanta $\beta:=\beta(\norm{\tn K}_\infty,\norm{\sigma}_\infty)$ taková, že
-    \[ 
-        \forall u,v\in H^1(\Omega):~a(u,v) \le \beta \norm{u}_{1,2}\norm{v}_{1,2}, 
-    \]
-    kde bilineární forma $a$ je definována v \eqref{eq:def_a_diffusion}.
-    Je-li navíc $f,u_f\in L^2(\Omega)$ a $q\in L^2(\Gamma_n)$, pak existuje 
-    $\gamma:=\gamma(\norm{f}_2,\norm{\sigma}_\infty,\norm{u_f}_2,\norm{q}_{2,\Gamma_n})$ takové, že
-    \[ 
-        \forall v\in H^1(\Omega):~l(v) \le \gamma\norm{v}_{1,2}, 
-    \]
-    kde lineární forma $l$ je definována v \eqref{eq:def_l_diffusion}.
-\end{veta}
-\begin{proof}
-    Nejprve odhadneme postupně všechny výrazy v $a$.
-    S využitím Cauchyovy-Schwarzovy nerovnosti a faktu, že $\norm{w_i}_2\le\norm{\vc w}_2$ dostaneme:
-    \begin{align*}    
-        &&(\tn K\nabla v,\nabla w)
-            & = \sum_{i,j=1}^d\int_\Omega k_{ij}(x)\partial_{x_j}v(x)\partial_{x_i}w(x)~dx\\
-        &(\text{$ab\le |a||b|$})\qquad&
-            &\le \sum_{i,j=1}^d\int_\Omega |k_{ij}||\partial_{x_j}v||\partial_{x_i}w|~dx\\
-        &(\text{předpoklad o $\tn K$)})\qquad&
-            &\le \norm{\tn K}_\infty \sum_{i,j=1}^d ( |\partial_{x_j}v|, |\partial_{x_i}w| )_{L^2(\Omega)}\\
-        &(\text{Cauchy-Schwarzova nerovnost})\qquad&
-            &\le \norm{\tn K}_\infty\left(\sum_{j=1}^d\norm{\partial_{x_j}v}_2\right)\left(\sum_{i=1}^d\norm{\partial_{x_i}w}_2\right)\\
-        &(\text{$\norm{v_i} \le \norm{\vc v}$})\qquad&
-            &\le \norm{\tn K}_\infty \big( d\norm{\nabla v}_2\big) \big( d\norm{\nabla w}_2\big)\\
-        &(\text{definice $\norm{\cdot}_{H^1(\Omega)}$})\qquad&
-            &\le d^2\norm{\tn K}_\infty\norm{v}_{H^1(\Omega)} \norm{w}_{H^1(\Omega)},
-    \end{align*}
-    
-    
-    Obdobně lze odhadnout
-    \[ 
-        (\sigma v,w)
-        \le \norm{\sigma}_\infty(|v|,|w|)
-        \le \norm{\sigma}_\infty\norm{v}_2\norm{w}_2
-        \le \norm{\sigma}_\infty\norm{v}_{1,2}\norm{w}_{1,2}. 
-    \]
-    V souhrnu jsme dokázali, že
-    \[ 
-        a(v,w) \le \left(d\norm{\tn K}_\infty+\norm{\sigma}_\infty\right)\norm{v}_{1,2}\norm{w}_{1,2} =: \beta \norm{v}_{1,2}\norm{w}_{1,2}. 
-    \]
-    Nyní odhadneme výrazy ve formě $l$:
-    \[ 
-        (f,v) \le \norm{f}_2\norm{v}_2 \le \norm{f}_2\norm{v}_{1,2}, 
-    \]
-    \[ 
-        (\sigma u_f,v) \le \norm{\sigma}_\infty\norm{u_f}_2\norm{v}_2 \le \norm{\sigma}_\infty\norm{u_f}_2\norm{v}_{1,2}, 
-    \]
-    \[ 
-        (q,v)_{\Gamma_n} \le \norm{q}_{2,\Gamma_n}\norm{v}_{2,\Gamma_n}
-        \le \norm{q}_{2,\Gamma_n}\norm{v}_{2,\partial\Omega}
-        \le C\norm{q}_{2,\Gamma_n}\norm{v}_{1,2}, 
-    \]
-    kde $C$ je konstanta z věty o stopách.
-    Platí tedy
-    \[ 
-        l(v) \le \left(\norm{f}_2+\norm{\sigma}_\infty\norm{u_f}_2+C\norm{q}_{2,\Gamma_n}\right)\norm{v}_{1,2} =:\gamma\norm{v}_{1,2}. 
-    \]
-\end{proof}
-
-
-\begin{veta}
-Nechť jsou splněny následující předpoklady:
-\begin{itemize}
-\item[(i)] $\tn K$ je stejnoměrně pozitivně definitní na $\Omega$, tj.
-\[ \exists \underline k>0~\forall \vc x\in\Omega~\forall\vc q\in\R^d:~\tn K(\vc x)\vc q\cdot\vc q\ge\underline k\norm{\vc q}^2; \]
-\item[(ii)] $\sigma$ je nezáporná funkce, tj.
-\[ \forall\vc x\in\Omega:~\sigma(\vc x)\ge 0. \]
-\end{itemize}
-Pak bilineární forma $a$ je eliptická na $H^1_{\Gamma_d}(\Omega)$ s konstantou $\alpha=\underline k/{C^2}$, kde $C=C(\Omega,\Gamma_d)>0$ je konstanta z \eqref{eq:friedrichs_H1gamma}.
-\end{veta}
-\begin{proof}
-\[ a(v,v) = (\tn K\nabla v,\nabla v) + (\sigma v,v)
-\ge \underline k\norm{\nabla v}_2^2 + \norm{\sqrt{\sigma}v}_2^2 \ge \underline k\norm{\nabla v}_2^2. \] 
-Díky Friedrichsově nerovnosti platí:
-\[ a(v,v) \ge \underline k\norm{\nabla v}_2^2 \ge \frac{\underline k}{C^2}\norm{v}_{1,2}^2. \]
-\end{proof}
-
-
-
-\subsubsection{Advekce-difúze}
-
-Je dána oblast $\Omega\subset\R^d$ s hranicí $\partial\Omega=\overline\Gamma_n\cup\overline\Gamma_r$, vektorové pole $\vc q:\Omega\to\R^d$ a skalární funkce $\sigma_r$, $u_r$ na $\Gamma_r$.
 Hledáme funkci $u:\overline\Omega\to\R$, která splňuje:
-\[ \begin{aligned}
--\Delta u + \div(\vc q u) &= 0 &&\text{v }\Omega,\\
--\grad u \cdot \vc n &= 0 &&\text{na }\Gamma_n,\\
-(-\grad u + \vc q u) \cdot \vc n &= \sigma_r(u - u_r) &&\text{na }\Gamma_r.
-\end{aligned} \]
-Slabá formulace:
-\[ \mbox{Najdi }u\in V:=H^1(\Omega) \mbox{ takové, že }\forall v\in H^1(\Omega):~a(u,v)=l(v), \]
+\[ 
+\begin{aligned}
+    -\Delta u &= f &&\text{v }\Omega,\\
+    \nabla u\cdot\vc n&=0 && \text{na }\partial\Omega.
+\end{aligned} 
+\]
+Protože je předepsána Neumannova podmínka na $\partial\Omega$, slabé řešení budeme hledat v prostoru $V:=H^1(\Omega)$.
+Slabé řešení $u\in V$ bude splňovat
+\[ 
+    \forall v\in V:\ a(u,v)=l(v),
+\]
 kde
-\begin{equation}\label{eq:def_a_ad}
-a(u,v) := (\grad u-\vc q u, \grad v) + (\vc q\cdot\vc n u,v)_{\Gamma_n} + (\sigma_r u, v)_{\Gamma_r},
+\begin{equation}\label{eq:def_a_neu}
+    a(u,v) := (\grad u, \grad v),
 \end{equation}
-\begin{equation}\label{eq:def_l_ad}
-l(v) := (\sigma_r u_r, v)_{\Gamma_r}.
+\begin{equation}\label{eq:def_l_neu}
+    l(v) := (f,v).
 \end{equation}
+Obdobně jako u úlohy s Dirichletovou podmínkou lze ukázat, že formy $a$ a $l$ jsou omezené na prostoru $V$.
+Avšak $a$ není na $V$ eliptická! To lze ukázat protipříkladem, zvolíme-li např. $v(x)=1$.
+Tato funkce patří do $V$, má nenulovou normu $\norm{v}_{1,2} = |\Omega|^{1/2}$ a platí:
+\[ a(v,v) = 0. \]
+Proto podmínka elipticity nemůže být splněna s žádnou konstantou $\alpha>0$.
+
+Platí také, že úloha s Neumannovou podmínkou na celé hranici nemá jednoznačné řešení --- pokud k nějakému řešení přičteme libovolnou konstantní funkci, získáme další řešení.
+
+Pro jednoznačné určení řešení je třeba k úloze přidat dodatečnou podmínku, např. na střední hodnotu:
+\[ \int_\Omega u = 0. \]
+Pak bude prostorem pro variační úlohu množina $V_0:=\{v\in H^1(\Omega);~\int_\Omega v=0\}$.
+
+\begin{veta}
+    Bilineární forma $a$ je eliptická na $V_0$.
+\end{veta}
+Jsou tedy splněny předpoklady Lax-Milgramovy věty a úloha má právě jedno slabé řešení.
+
+
+
+
+
+% \subsubsection{Anizotropní difúze}
+% Uvažujme úlohu vedení tepla ve čtvercové desce, která je z jedné strany zahřívána infračervenými lampami 
+% tepelným tokem $f$ a z druhé strany předehřívána ocelovou matricí s tepelnou vodivostí $\sigma$, která je dále 
+% vyhřívána soustavou kanálků s vodou o teplotě $u_f$. Na dvou stranách čtverce je tepelná izolace, na druhých dvou stranách je 
+% kostantní teplota $u=0$ (toto je nereálné, ale je to jen příklad). Deska je kompozitní materiál složený z polymerové pryskyřice 
+% (vodivost 1W/mK) a uhlíkových vláken (vodivost 1000W/mK) s preferovaným směrem, tepelná vodivost desky je proto anisotropní.
 % 
-\begin{veta}
-Nechť $\vc q\in L^\infty(\Omega;\R^d)$, $\vc q\cdot\vc n\in L^\infty(\Gamma_n)$ a $\sigma_r\in L^\infty(\Gamma_r)$. 
-Pak existuje konstanta 
-\[
-    \beta:=\beta(\norm{\vc q}_\infty,\norm{\vc q\cdot\vc n}_{\infty,\Gamma_n},\norm{\sigma_r}_{\infty,\Gamma_r})
-\]
-taková, že
-\[ 
-    \forall v,w\in H^1(\Omega):~a(v,w) \le \beta \norm{v}_{1,2}\norm{w}_{1,2}, 
-\]
-kde bilineární forma $a$ je definována v \eqref{eq:def_a_ad}.
-Je-li navíc $u_r\in L^2(\Gamma_r)$, pak existuje $\gamma:=\gamma(\norm{\sigma_r}_{\infty,\Gamma_r},\norm{u_r}_{2,\Gamma_r})$ takové, že
-\[ 
-    \forall v\in H^1(\Omega):~l(v) \le \gamma\norm{v}_{1,2}, 
-\]
-kde lineární forma $l$ je definována v \eqref{eq:def_l_ad}.
-\end{veta}
-\begin{proof}
-Nejprve odhadneme postupně všechny výrazy v $a$.
-S využitím Cauchyovy-Schwarzovy nerovnosti a faktu, že $\norm{\partial_{x_i} w}_2\le\norm{\nabla w}_2$ dostaneme:
-\begin{align*}
-(\nabla v,\nabla w) \le \norm{v}_{1,2}\norm{w}_{1,2},
-\end{align*}
-\begin{align*}
-(\vc q v,\nabla w)
-&\le \sum_{i=1}^d(|q_i||v|,|\partial_{x_i}w|)
-\le \norm{\vc q}_\infty\sum_{i=1}^d(|v|,|\partial_{x_i}w|)\\
-&\le \norm{\vc q}_\infty\norm{v}_2\sum_{i=1}^d\norm{\partial_{x_i}w}_2
-\le d\norm{\vc q}_\infty\norm{v}_2\norm{\nabla w}_2\\
-&\le d\norm{\vc q}_\infty\norm{v}_{1,2}\norm{w}_{1,2},
-\end{align*}
-Pro odhad hraničních členů použijeme navíc větu o stopách:
-\[ (\vc q\cdot\vc n v,w)_{\Gamma_n} \le \norm{\vc q\cdot\vc n}_{\infty,\Gamma_n}\norm{v}_{2,\Gamma_n}\norm{w}_{2,\Gamma_n}
-\le C_1^2\norm{\vc q\cdot\vc n}_{\infty,\Gamma_n}\norm{v}_{1,2}\norm{w}_{1,2}, \]
-\begin{align*}
-(\sigma_r v,w)_{\Gamma_r}
-&\le \norm{\sigma_r}_{\infty,\Gamma_r}(|v|,|w|)_{\Gamma_r}
-\le \norm{\sigma_r}_{\infty,\Gamma_r}\norm{v}_{2,\Gamma_r}\norm{w}_{2,\Gamma_r}\\
-&\le \norm{\sigma_r}_{\infty,\Gamma_r}\norm{v}_{2,\partial\Omega}\norm{w}_{2,\partial\Omega}
-\le C_2^2\norm{\sigma_r}_{\infty,\Gamma_r}\norm{v}_{1,2}\norm{w}_{1,2}.
-\end{align*}
-Zde $C_1=C(\Omega,\Gamma_n)$ a $C_2=C(\Omega,\Gamma_r)$ jsou konstanty z Věty \ref{th:trace}.
-V souhrnu jsme dokázali, že
-\[ a(v,w) \le \left(1+d\norm{\vc q}_\infty+C_1^2\norm{\vc q\cdot\vc n}_{\infty,\Gamma_n}+C_2^2\norm{\sigma_r}_{\infty,\Gamma_r}\right)\norm{v}_{1,2}\norm{w}_{1,2} =: \beta \norm{v}_{1,2}\norm{w}_{1,2}. \]
-Nyní odhadneme formu $l$:
-\begin{align*}
-l(v)=(\sigma_r u_r,v)_{\Gamma_r} & \le \norm{\sigma_r}_{\infty,\Gamma_r}\norm{u_r}_{2,\Gamma_r}\norm{v}_{2,\Gamma_r}\\
-&\le \norm{\sigma_r}_{\infty,\Gamma_r}\norm{u_r}_{2,\Gamma_r}\norm{v}_{2,\partial\Omega}\\
-&\le C_2\norm{\sigma_r}_{\infty,\Gamma_r}\norm{u_r}_{2,\Gamma_r}\norm{v}_{1,2} =:\gamma\norm{v}_{1,2}.
-\end{align*}
-\end{proof}
+% Formulujme nyní úlohu abstraktněji.
+% 
+% Mějme oblast $\Omega\subset\R^d$ (například čtverec $d=2$) s hranicí 
+% $\partial\Omega=\overline\Gamma_d\cup\overline\Gamma_n$, tedy s Dirichletovskou a Neumannovskou částí hranice.
+% Na této oblasti hledáme teplotu $u:\overline\Omega\to\R$, která je řešením stacionární rovnice vední tepla:
+% \begin{align}
+%     -\div(\tn K\grad u) &= f + \sigma(u_f - u) &&\text{v }\Omega,\\
+%     u&=0 && \text{na }\Gamma_d,\\
+%     -\tn K \grad u \cdot \vc n &= q &&\text{na }\Gamma_n.
+% \end{align} 
+% Zde $\tn K:\Omega\to\R^{d\times d}$ je maticová funkce pro tenzor tepelné vodivosti
+% a $f$, $\sigma$, $u_f$ jsou skalární funkce na $\Omega$  a $q$ skalární funkce na $\Gamma_n$.
+% 
+% Aby byla splněna Dirichletova podmínka na $\Gamma_d$ a formy $a$, $l$ měly konečnou hodnotu, 
+% budeme hledat slabé řešení v prostoru 
+% \[
+%     V:=H^1_{\Gamma_d}(\Omega) = \{ \phi \in H^1(\Omega),\ \phi = 0\text{ na }\Gamma_d\} 
+% \]
+% Nyní převedeme úlohu vedení tepla na abstraktní variační úlohu:
+% \[ 
+%     \mbox{Najdi }u\in H^1_{\Gamma_d}(\Omega):~\forall v\in H^1_{\Gamma_d}(\Omega):~a(u,v)=l(v), 
+% \]
+% kde formy $a(\cdot, \cdot)$ a $l(\cdot)$ mají tvar:
+% \begin{equation}\label{eq:def_a_diffusion}
+%     a(u,v) := (\tn K\grad u, \grad v)_{L^2(\Omega)} + (\sigma u, v)_{L^2(\Omega)},
+% \end{equation}
+% \begin{equation}\label{eq:def_l_diffusion}
+%     l(v) := (f + \sigma u_f,v)_{L^2(\Omega)} - ( q, v)_{L^2(\Gamma_n)}.
+% \end{equation}
+% Pro použití Lax-Milgramova lemmatu potřebujeme ověřit omezenost forem $a$ a $l$. To ovšem platí 
+% za nějakých předpokladů na další parametry úlohy. Konkrétně dokážeme následujícíc větu.
+% \begin{veta}
+%     Nechť $\tn K\in L^\infty(\Omega;~\R^{d\times d})$ a $\sigma\in L^\infty(\Omega)$. 
+%     Pak existuje konstanta $\beta:=\beta(\norm{\tn K}_\infty,\norm{\sigma}_\infty)$ taková, že
+%     \[ 
+%         \forall u,v\in H^1(\Omega):~a(u,v) \le \beta \norm{u}_{1,2}\norm{v}_{1,2}, 
+%     \]
+%     kde bilineární forma $a$ je definována v \eqref{eq:def_a_diffusion}.
+%     Je-li navíc $f,u_f\in L^2(\Omega)$ a $q\in L^2(\Gamma_n)$, pak existuje 
+%     $\gamma:=\gamma(\norm{f}_2,\norm{\sigma}_\infty,\norm{u_f}_2,\norm{q}_{2,\Gamma_n})$ takové, že
+%     \[ 
+%         \forall v\in H^1(\Omega):~l(v) \le \gamma\norm{v}_{1,2}, 
+%     \]
+%     kde lineární forma $l$ je definována v \eqref{eq:def_l_diffusion}.
+% \end{veta}
+% \begin{proof}
+%     Nejprve odhadneme postupně všechny výrazy v $a$.
+%     S využitím Cauchyovy-Schwarzovy nerovnosti a faktu, že $\norm{w_i}_2\le\norm{\vc w}_2$ dostaneme:
+%     \begin{align*}    
+%         &&(\tn K\nabla v,\nabla w)
+%             & = \sum_{i,j=1}^d\int_\Omega k_{ij}(x)\partial_{x_j}v(x)\partial_{x_i}w(x)~dx\\
+%         &(\text{$ab\le |a||b|$})\qquad&
+%             &\le \sum_{i,j=1}^d\int_\Omega |k_{ij}||\partial_{x_j}v||\partial_{x_i}w|~dx\\
+%         &(\text{předpoklad o $\tn K$)})\qquad&
+%             &\le \norm{\tn K}_\infty \sum_{i,j=1}^d ( |\partial_{x_j}v|, |\partial_{x_i}w| )_{L^2(\Omega)}\\
+%         &(\text{Cauchy-Schwarzova nerovnost})\qquad&
+%             &\le \norm{\tn K}_\infty\left(\sum_{j=1}^d\norm{\partial_{x_j}v}_2\right)\left(\sum_{i=1}^d\norm{\partial_{x_i}w}_2\right)\\
+%         &(\text{$\norm{v_i} \le \norm{\vc v}$})\qquad&
+%             &\le \norm{\tn K}_\infty \big( d\norm{\nabla v}_2\big) \big( d\norm{\nabla w}_2\big)\\
+%         &(\text{definice $\norm{\cdot}_{H^1(\Omega)}$})\qquad&
+%             &\le d^2\norm{\tn K}_\infty\norm{v}_{H^1(\Omega)} \norm{w}_{H^1(\Omega)},
+%     \end{align*}
+%     
+%     
+%     Obdobně lze odhadnout
+%     \[ 
+%         (\sigma v,w)
+%         \le \norm{\sigma}_\infty(|v|,|w|)
+%         \le \norm{\sigma}_\infty\norm{v}_2\norm{w}_2
+%         \le \norm{\sigma}_\infty\norm{v}_{1,2}\norm{w}_{1,2}. 
+%     \]
+%     V souhrnu jsme dokázali, že
+%     \[ 
+%         a(v,w) \le \left(d\norm{\tn K}_\infty+\norm{\sigma}_\infty\right)\norm{v}_{1,2}\norm{w}_{1,2} =: \beta \norm{v}_{1,2}\norm{w}_{1,2}. 
+%     \]
+%     Nyní odhadneme výrazy ve formě $l$:
+%     \[ 
+%         (f,v) \le \norm{f}_2\norm{v}_2 \le \norm{f}_2\norm{v}_{1,2}, 
+%     \]
+%     \[ 
+%         (\sigma u_f,v) \le \norm{\sigma}_\infty\norm{u_f}_2\norm{v}_2 \le \norm{\sigma}_\infty\norm{u_f}_2\norm{v}_{1,2}, 
+%     \]
+%     \[ 
+%         (q,v)_{\Gamma_n} \le \norm{q}_{2,\Gamma_n}\norm{v}_{2,\Gamma_n}
+%         \le \norm{q}_{2,\Gamma_n}\norm{v}_{2,\partial\Omega}
+%         \le C\norm{q}_{2,\Gamma_n}\norm{v}_{1,2}, 
+%     \]
+%     kde $C$ je konstanta z věty o stopách.
+%     Platí tedy
+%     \[ 
+%         l(v) \le \left(\norm{f}_2+\norm{\sigma}_\infty\norm{u_f}_2+C\norm{q}_{2,\Gamma_n}\right)\norm{v}_{1,2} =:\gamma\norm{v}_{1,2}. 
+%     \]
+% \end{proof}
+% 
+% 
+% \begin{veta}
+% Nechť jsou splněny následující předpoklady:
+% \begin{itemize}
+% \item[(i)] $\tn K$ je stejnoměrně pozitivně definitní na $\Omega$, tj.
+% \[ \exists \underline k>0~\forall \vc x\in\Omega~\forall\vc q\in\R^d:~\tn K(\vc x)\vc q\cdot\vc q\ge\underline k\norm{\vc q}^2; \]
+% \item[(ii)] $\sigma$ je nezáporná funkce, tj.
+% \[ \forall\vc x\in\Omega:~\sigma(\vc x)\ge 0. \]
+% \end{itemize}
+% Pak bilineární forma $a$ je eliptická na $H^1_{\Gamma_d}(\Omega)$ s konstantou $\alpha=\underline k/{C^2}$, kde $C=C(\Omega,\Gamma_d)>0$ je konstanta z \eqref{eq:friedrichs_H1gamma}.
+% \end{veta}
+% \begin{proof}
+% \[ a(v,v) = (\tn K\nabla v,\nabla v) + (\sigma v,v)
+% \ge \underline k\norm{\nabla v}_2^2 + \norm{\sqrt{\sigma}v}_2^2 \ge \underline k\norm{\nabla v}_2^2. \] 
+% Díky Friedrichsově nerovnosti platí:
+% \[ a(v,v) \ge \underline k\norm{\nabla v}_2^2 \ge \frac{\underline k}{C^2}\norm{v}_{1,2}^2. \]
+% \end{proof}
+% 
+% 
+% 
+% \subsubsection{Advekce-difúze}
+% 
+% Je dána oblast $\Omega\subset\R^d$ s hranicí $\partial\Omega=\overline\Gamma_n\cup\overline\Gamma_r$, vektorové pole $\vc q:\Omega\to\R^d$ a skalární funkce $\sigma_r$, $u_r$ na $\Gamma_r$.
+% Hledáme funkci $u:\overline\Omega\to\R$, která splňuje:
+% \[ \begin{aligned}
+% -\Delta u + \div(\vc q u) &= 0 &&\text{v }\Omega,\\
+% -\grad u \cdot \vc n &= 0 &&\text{na }\Gamma_n,\\
+% (-\grad u + \vc q u) \cdot \vc n &= \sigma_r(u - u_r) &&\text{na }\Gamma_r.
+% \end{aligned} \]
+% Slabá formulace:
+% \[ \mbox{Najdi }u\in V:=H^1(\Omega) \mbox{ takové, že }\forall v\in H^1(\Omega):~a(u,v)=l(v), \]
+% kde
+% \begin{equation}\label{eq:def_a_ad}
+% a(u,v) := (\grad u-\vc q u, \grad v) + (\vc q\cdot\vc n u,v)_{\Gamma_n} + (\sigma_r u, v)_{\Gamma_r},
+% \end{equation}
+% \begin{equation}\label{eq:def_l_ad}
+% l(v) := (\sigma_r u_r, v)_{\Gamma_r}.
+% \end{equation}
+% % 
+% \begin{veta}
+% Nechť $\vc q\in L^\infty(\Omega;\R^d)$, $\vc q\cdot\vc n\in L^\infty(\Gamma_n)$ a $\sigma_r\in L^\infty(\Gamma_r)$. 
+% Pak existuje konstanta 
+% \[
+%     \beta:=\beta(\norm{\vc q}_\infty,\norm{\vc q\cdot\vc n}_{\infty,\Gamma_n},\norm{\sigma_r}_{\infty,\Gamma_r})
+% \]
+% taková, že
+% \[ 
+%     \forall v,w\in H^1(\Omega):~a(v,w) \le \beta \norm{v}_{1,2}\norm{w}_{1,2}, 
+% \]
+% kde bilineární forma $a$ je definována v \eqref{eq:def_a_ad}.
+% Je-li navíc $u_r\in L^2(\Gamma_r)$, pak existuje $\gamma:=\gamma(\norm{\sigma_r}_{\infty,\Gamma_r},\norm{u_r}_{2,\Gamma_r})$ takové, že
+% \[ 
+%     \forall v\in H^1(\Omega):~l(v) \le \gamma\norm{v}_{1,2}, 
+% \]
+% kde lineární forma $l$ je definována v \eqref{eq:def_l_ad}.
+% \end{veta}
+% \begin{proof}
+% Nejprve odhadneme postupně všechny výrazy v $a$.
+% S využitím Cauchyovy-Schwarzovy nerovnosti a faktu, že $\norm{\partial_{x_i} w}_2\le\norm{\nabla w}_2$ dostaneme:
+% \begin{align*}
+% (\nabla v,\nabla w) \le \norm{v}_{1,2}\norm{w}_{1,2},
+% \end{align*}
+% \begin{align*}
+% (\vc q v,\nabla w)
+% &\le \sum_{i=1}^d(|q_i||v|,|\partial_{x_i}w|)
+% \le \norm{\vc q}_\infty\sum_{i=1}^d(|v|,|\partial_{x_i}w|)\\
+% &\le \norm{\vc q}_\infty\norm{v}_2\sum_{i=1}^d\norm{\partial_{x_i}w}_2
+% \le d\norm{\vc q}_\infty\norm{v}_2\norm{\nabla w}_2\\
+% &\le d\norm{\vc q}_\infty\norm{v}_{1,2}\norm{w}_{1,2},
+% \end{align*}
+% Pro odhad hraničních členů použijeme navíc větu o stopách:
+% \[ (\vc q\cdot\vc n v,w)_{\Gamma_n} \le \norm{\vc q\cdot\vc n}_{\infty,\Gamma_n}\norm{v}_{2,\Gamma_n}\norm{w}_{2,\Gamma_n}
+% \le C_1^2\norm{\vc q\cdot\vc n}_{\infty,\Gamma_n}\norm{v}_{1,2}\norm{w}_{1,2}, \]
+% \begin{align*}
+% (\sigma_r v,w)_{\Gamma_r}
+% &\le \norm{\sigma_r}_{\infty,\Gamma_r}(|v|,|w|)_{\Gamma_r}
+% \le \norm{\sigma_r}_{\infty,\Gamma_r}\norm{v}_{2,\Gamma_r}\norm{w}_{2,\Gamma_r}\\
+% &\le \norm{\sigma_r}_{\infty,\Gamma_r}\norm{v}_{2,\partial\Omega}\norm{w}_{2,\partial\Omega}
+% \le C_2^2\norm{\sigma_r}_{\infty,\Gamma_r}\norm{v}_{1,2}\norm{w}_{1,2}.
+% \end{align*}
+% Zde $C_1=C(\Omega,\Gamma_n)$ a $C_2=C(\Omega,\Gamma_r)$ jsou konstanty z Věty \ref{th:trace}.
+% V souhrnu jsme dokázali, že
+% \[ a(v,w) \le \left(1+d\norm{\vc q}_\infty+C_1^2\norm{\vc q\cdot\vc n}_{\infty,\Gamma_n}+C_2^2\norm{\sigma_r}_{\infty,\Gamma_r}\right)\norm{v}_{1,2}\norm{w}_{1,2} =: \beta \norm{v}_{1,2}\norm{w}_{1,2}. \]
+% Nyní odhadneme formu $l$:
+% \begin{align*}
+% l(v)=(\sigma_r u_r,v)_{\Gamma_r} & \le \norm{\sigma_r}_{\infty,\Gamma_r}\norm{u_r}_{2,\Gamma_r}\norm{v}_{2,\Gamma_r}\\
+% &\le \norm{\sigma_r}_{\infty,\Gamma_r}\norm{u_r}_{2,\Gamma_r}\norm{v}_{2,\partial\Omega}\\
+% &\le C_2\norm{\sigma_r}_{\infty,\Gamma_r}\norm{u_r}_{2,\Gamma_r}\norm{v}_{1,2} =:\gamma\norm{v}_{1,2}.
+% \end{align*}
+% \end{proof}
+% 
+% 
+% \begin{veta}
+% Nechť jsou splněny následující předpoklady:
+% \begin{itemize}
+% \item[(i)] $\vc q$ má nulovou divergenci, $\vc q\cdot\vc n\ge 0$ na $\Gamma_n$ a $\vc q\cdot\vc n\le 0$ na $\Gamma_r$;
+% \item[(ii)] existuje konstanta $\underline\sigma_r>0$ taková, že
+% \[ \forall\vc x\in\Gamma_r:~\sigma_r(\vc x)\ge\underline\sigma_r\ge 0. \]
+% \end{itemize}
+% Pak bilineární forma $a$ je eliptická na $H^1(\Omega)$ s konstantou $\alpha=\min\{1,\underline\sigma_r\}/(2C^2)$, kde $C>0$ je konstanta z Věty \ref{th:friedrichs}.
+% \end{veta}
+% \begin{proof}
+% Jelikož $\div\vc q=0$ a $\vc q\cdot\vc n\le 0$ na $\Gamma_r$, platí:
+% \[ -(\vc q v,\nabla v) = -(\vc q,\nabla\frac{v^2}2) = -\frac12(\vc q\cdot\vc n v,v)_{\partial\Omega} +(\div\vc q,\frac{v^2}2) \ge -\frac12(\vc q\cdot\vc n v,v)_{\Gamma_n}, \]
+% a proto také
+% \begin{align*}
+% a(v,v) & = \norm{\nabla v}_2^2 - (\vc q v,\nabla v) + (\vc q\cdot\vc n v,v)_{\Gamma_n} + (\sigma_r v,v)_{\Gamma_r}\\
+% &\ge \norm{\nabla v}_2^2 + \frac12 (\vc q\cdot\vc n v,v)_{\Gamma_n} + (\sigma_r v,v)_{\Gamma_r}\\
+% &\ge \norm{\nabla v}_2^2 + \underline\sigma_r\norm{v}_{2,\Gamma_r}^2\\
+% &\ge \min\{1,\underline\sigma_r\}(\norm{\nabla v}_2^2 + \norm{v}_{2,\Gamma_r}^2).
+% \end{align*}
+% Z nerovnosti $A^2+B^2\ge \frac12(A+B)^2$ vyplývá, že
+% \[ a(v,v) \ge \frac12\min\{1,\underline\sigma_r\}(\norm{\nabla v}_2 + \norm{v}_{2,\Gamma_r})^2. \]
+% Díky Friedrichsově nerovnosti máme
+% \[ a(v,v) \ge \frac{\min\{1,\underline\sigma_r\}}{2C^2}\norm{ v}_{1,2}^2. \]
+% \end{proof}
 
 
-\begin{veta}
-Nechť jsou splněny následující předpoklady:
-\begin{itemize}
-\item[(i)] $\vc q$ má nulovou divergenci, $\vc q\cdot\vc n\ge 0$ na $\Gamma_n$ a $\vc q\cdot\vc n\le 0$ na $\Gamma_r$;
-\item[(ii)] existuje konstanta $\underline\sigma_r>0$ taková, že
-\[ \forall\vc x\in\Gamma_r:~\sigma_r(\vc x)\ge\underline\sigma_r\ge 0. \]
-\end{itemize}
-Pak bilineární forma $a$ je eliptická na $H^1(\Omega)$ s konstantou $\alpha=\min\{1,\underline\sigma_r\}/(2C^2)$, kde $C>0$ je konstanta z Věty \ref{th:friedrichs}.
-\end{veta}
-\begin{proof}
-Jelikož $\div\vc q=0$ a $\vc q\cdot\vc n\le 0$ na $\Gamma_r$, platí:
-\[ -(\vc q v,\nabla v) = -(\vc q,\nabla\frac{v^2}2) = -\frac12(\vc q\cdot\vc n v,v)_{\partial\Omega} +(\div\vc q,\frac{v^2}2) \ge -\frac12(\vc q\cdot\vc n v,v)_{\Gamma_n}, \]
-a proto také
-\begin{align*}
-a(v,v) & = \norm{\nabla v}_2^2 - (\vc q v,\nabla v) + (\vc q\cdot\vc n v,v)_{\Gamma_n} + (\sigma_r v,v)_{\Gamma_r}\\
-&\ge \norm{\nabla v}_2^2 + \frac12 (\vc q\cdot\vc n v,v)_{\Gamma_n} + (\sigma_r v,v)_{\Gamma_r}\\
-&\ge \norm{\nabla v}_2^2 + \underline\sigma_r\norm{v}_{2,\Gamma_r}^2\\
-&\ge \min\{1,\underline\sigma_r\}(\norm{\nabla v}_2^2 + \norm{v}_{2,\Gamma_r}^2).
-\end{align*}
-Z nerovnosti $A^2+B^2\ge \frac12(A+B)^2$ vyplývá, že
-\[ a(v,v) \ge \frac12\min\{1,\underline\sigma_r\}(\norm{\nabla v}_2 + \norm{v}_{2,\Gamma_r})^2. \]
-Díky Friedrichsově nerovnosti máme
-\[ a(v,v) \ge \frac{\min\{1,\underline\sigma_r\}}{2C^2}\norm{ v}_{1,2}^2. \]
-\end{proof}
 
 
 
 
 
 
-
-
-\section{Galerkinova metoda}
-(Viz. Johnson \cite{Johnson}, kapitola 2)
+\section{Abstraktní odhad chyby}
 
 Metoda konečných prvků pro řešení variační úlohy typu \eqref{eq:variational_problem} se nazývá Galerkinova metoda.
-Její myšlenkou je nahradit prostor funkcí $V$ vhodným podprostorem $V_h$ konečné dimenze tak, aby bylo možné jednoduše zavést vhodnou bázi.
-Typicky se jedná o podprostory funkcí po částech polynomiálních.
-Metoda konečných prvků generuje báze které jsou téměř ortogonální, což výrazně zjednodušuje řešení vzniklé soustavy lineárních rovnic.
-Řešení variační úlohy na podprostoru $V_h$ pak je aproximací slabého řešení a jeho odchylku lze kvantifikovat v závislosti na volbě podprostoru.
+Její myšlenkou je nahradit prostor funkcí $V$ vhodným podprostorem $V_h$ konečné dimenze s vhodnou bází (typicky se jedná o podprostory funkcí po částech polynomiálních).
+Výslednou úlohu je pak možné převést na soustavu lineárních rovnic.
+Řešení variační úlohy na podprostoru $V_h$ je aproximací slabého řešení a jeho odchylku lze kvantifikovat v závislosti na volbě podprostoru.
 
-\subsection{Abstraktní úloha}
 
-Uvažujme nejprve abstraktní úlohu \eqref{eq:variational_problem} a nechť $V_h$ je podprostor $V$ s konečnou dimenzí $N:=\dim V_h$.
-Místo úlohy \eqref{eq:variational_problem} budeme řešit tzv. Galerkinovu úlohu:
-\begin{equation}\label{eq:galerkin}
-\mbox{Najdi }u_h\in V_h:~\forall v_h\in V_h~a(u_h,v_h)=l(v_h).
-\end{equation}
-Řešení $u_h$ této úlohy se nazývá Galerkinova aproximace prvku $u$.
-Nechť $\varphi_1,...,\varphi_N$ je báze $V_h$.
-Pak lze prvek $u_h$ zapsat ve tvaru
-\[ u_h=\sum_{j=1}^N\xi_j\varphi_j,~\vc\xi=(\xi_1,...,\xi_N)^\top\in\R^N. \]
-Jelikož i každá testovací funkce $v_h$ je lineární kombinací bázových funkcí $\{\varphi_i\}_{i=1}^N$, v Galerkinově úloze postačí za testovací funkce brát pouze tyto bázové funkce:
-\[ \eqref{eq:galerkin} \Leftrightarrow \forall i=1,...,N:~ a(u_h,\varphi_i)=\sum_{j=1}^N\xi_j a(\varphi_j,\varphi_i) = l(\varphi_i). \]
-Vzniklá soustava $N$ rovnic je lineární a neznámými jsou koeficienty $\xi_1,...,\xi_N$.
-Můžeme ji přepsat do maticového tvaru:
-\[ \tn A\vc\xi := \begin{pmatrix}a(\varphi_1,\varphi_1) & ... & a(\varphi_N,\varphi_1)\\&...&\\a(\varphi_1,\varphi_N) & ... & a(\varphi_N,\varphi_N)\end{pmatrix}\begin{pmatrix}\xi_1\\\vdots\\\xi_N\end{pmatrix} = \begin{pmatrix}l(\varphi_1)\\\vdots\\l(\varphi_N)\end{pmatrix} =: \vc b, \]
-% kde
-% \[ \tn A = \begin{pmatrix}a(\varphi_1,\varphi_1) & ... & a(\varphi_N,\varphi_1)\\&...&\\a(\varphi_1,\varphi_N) & ... & a(\varphi_N,\varphi_N)\end{pmatrix}, \]
-kde prvek $a_{ij}$ matice $\tn A$ je roven $a(\varphi_j,\varphi_i)$ a prvek $b_i$ vektoru $\vc b$ je roven $l(\varphi_i)$, $i,j=1,...,N$.
 
-Lze snadno ověřit, že z vlastností formy $a$ vyplývají obdobné vlastnosti matice $\tn A$: Např. je-li $a$ symetrická, pak také $\tn A$ je symetrická; je-li $a$ eliptická, pak $\tn A$ je pozitivně definitní, a tedy regulární, a soustava $\tn A\vc\xi=\vc b$ má právě jedno řešení.
+% JB: následující je již v sekci 4.1; TODO: sloučit výklad
 
+% \subsection{Aproximace abstraktní variační úlohy}
+% 
+% Uvažujme nejprve abstraktní úlohu \eqref{eq:variational_problem} a nechť $V_h$ je podprostor $V$ s konečnou dimenzí $N:=\dim V_h$.
+% Místo úlohy \eqref{eq:variational_problem} budeme řešit tzv. Galerkinovu úlohu:
+% \begin{equation}\label{eq:galerkin}
+% \mbox{Najdi }u_h\in V_h:~\forall v_h\in V_h~a(u_h,v_h)=l(v_h).
+% \end{equation}
+% Řešení $u_h$ této úlohy se nazývá Galerkinova aproximace prvku $u$.
+% Nechť $\varphi_1,...,\varphi_N$ je báze $V_h$.
+% Pak lze prvek $u_h$ zapsat ve tvaru
+% \[ u_h=\sum_{j=1}^N\xi_j\varphi_j,~\vc\xi=(\xi_1,...,\xi_N)^\top\in\R^N. \]
+% Jelikož i každá testovací funkce $v_h$ je lineární kombinací bázových funkcí $\{\varphi_i\}_{i=1}^N$, v Galerkinově úloze postačí za testovací funkce brát pouze tyto bázové funkce:
+% \[ \eqref{eq:galerkin} \Leftrightarrow \forall i=1,...,N:~ a(u_h,\varphi_i)=\sum_{j=1}^N\xi_j a(\varphi_j,\varphi_i) = l(\varphi_i). \]
+% Vzniklá soustava $N$ rovnic je lineární a neznámými jsou koeficienty $\xi_1,...,\xi_N$.
+% Můžeme ji přepsat do maticového tvaru:
+% \[ \tn A\vc\xi := \begin{pmatrix}a(\varphi_1,\varphi_1) & ... & a(\varphi_N,\varphi_1)\\&...&\\a(\varphi_1,\varphi_N) & ... & a(\varphi_N,\varphi_N)\end{pmatrix}\begin{pmatrix}\xi_1\\\vdots\\\xi_N\end{pmatrix} = \begin{pmatrix}l(\varphi_1)\\\vdots\\l(\varphi_N)\end{pmatrix} =: \vc b, \]
+% % kde
+% % \[ \tn A = \begin{pmatrix}a(\varphi_1,\varphi_1) & ... & a(\varphi_N,\varphi_1)\\&...&\\a(\varphi_1,\varphi_N) & ... & a(\varphi_N,\varphi_N)\end{pmatrix}, \]
+% kde prvek $a_{ij}$ matice $\tn A$ je roven $a(\varphi_j,\varphi_i)$ a prvek $b_i$ vektoru $\vc b$ je roven $l(\varphi_i)$, $i,j=1,...,N$.
+% 
+% Lze snadno ověřit, že z vlastností formy $a$ vyplývají obdobné vlastnosti matice $\tn A$: Např. je-li $a$ symetrická, pak také $\tn A$ je symetrická; je-li $a$ eliptická, pak $\tn A$ je pozitivně definitní, a tedy regulární, a soustava $\tn A\vc\xi=\vc b$ má právě jedno řešení.
+
+
+\subsection{Abstraktní odhad chyby}
 Důležitá otázka je, zda $u_h$ je dostatečně přesná aproximace $u$.
 Obecně platí následující věta:
 \begin{veta}[Céovo lemma]\label{th:cea}
@@ -882,82 +933,82 @@ Vydělením celé nerovnice výrazem $\alpha\norm{u-u_h}$ dostaneme
 Protože $v_h$ je libovolný prvek z $V_h$, je tak \eqref{eq:cea} dokázáno.
 \end{proof}
 
-
-\subsection{Příklad lineárních prvků v 1D}
-
-Uvažujme okrajovou úlohu
-\[ -u''=f \mbox{ v }(0,1),\quad u(0)=u(1)=0, \]
-jejíž slabá formulace zní:
-\[ \mbox{Najdi }u\in H^1_0(0,1) \mbox{ tak, aby }\forall v\in H^1_0(0,1):~a(u,v):=(u',v')=(f,v)=:l(v). \]
-Jako podprostor $V_h$ zvolíme množinu lineárních lomených funkcí na intervalu $[0,1]$.
-Rozdělme interval $[0,1]$ pomocí bodů $x_0=0<x_1<x_2<...<x_{N+1}=1$ na intervaly $E_j:=(x_{j-1},x_j)$ o délce $h_j:=x_j-x_{j-1}$.
-Normu tohoto dělení zavedeme jako $h:=\max_{j=1,...,N+1} h_j$.
-Definujeme
-\[ V_h:=\{v_h\in C([0,1]);~\forall j=1,...,N:~v_h \mbox{ je lineární na }E_j,~v_h(0)=v_h(1)=0 \}. \]
-Jelikož funkce z $V_h$ jsou spojité a nulové v bodech $0$ a $1$, je automaticky $V_h$ podprostorem $H^1_0(0,1)$.
-Každou funkci $v_h$ z $V_h$ jednoznačně určují její hodnoty v dělících bodech $\{x_j\}_{j=1}^N$.
-Dimenze podprostoru tedy je $\dim V_h=N$.
-Pro metodu konečných prvků je klíčová volba báze.
-Zvolíme bázové funkce podprostoru $V_h$ pomocí vztahů $\varphi_i(x_j):=\delta_{ij}$.
-Každá bázová funkce je tedy nenulová v právě jednom dělícím bodě (viz Obr. \ref{fig:base_1d_lin}).
-\begin{figure}[h]
-\centering
-\includegraphics{base_1d_lin}
-\caption{Bázové funkce pro prostor po částech lineárních funkcí.}
-\label{fig:base_1d_lin}
-\end{figure}
-Prvky matice $\tn A\in\R^{N\times N}$ a vektoru $\vc b\in\R^{N}$ mají tvar
-\[ a_{ij}=\int_0^1\varphi_j'(x)\varphi_i(x), \]
-\[ b_i = \int_0^1 f(x)\varphi_i(x)\d x. \]
-Je zřejmé, že $a_{ij}$ je nulové, pokud se indexy $i$ a $j$ liší více než o 1, neboť v takovém případě je v každém bodě intervalu $(0,1)$ alespoň jedna z funkcí $\varphi_i$, $\varphi_j$ nulová. Matice $\tn A$ proto bude třídiagonální, a tedy řídká.
-Platí:
-\begin{align*}
-a_{jj} &= \int_{x_{j-1}}^{x_j}\varphi_j'(x)^2\d x + \int_{x_j}^{x_{j+1}}\varphi_j'(x)^2\d x
-= \int_{x_{j-1}}^{x_j}\frac1{h_{j-1}^2}\d x + \int_{x_j}^{x_{j+1}}\frac1{h_j^2}\d x\\
-&= \frac1{h_{j-1}} + \frac1{h_j},~j=1,...,N,\\\\
-a_{j,j-1} &= a_{j-1,j} = \int_{x_{j-1}}^{x_j}\varphi_{j-1}'(x)\varphi_j'(x)\d x\\
-&= \int_{x_{j-1}}^{x_j}\frac{(-1)}{h_{j-1}^2} \d x = -\frac1{h_{j-1}}, j=2,...,N.
-\end{align*}
-V případě ekvidistantního dělení ($h=h_j$ $\forall j=1,...,N$) máme
-\[ \tn A = \frac{1}{h}\begin{pmatrix}2 & -1 & \\-1 & 2 & -1\\\ddots&\ddots&\ddots\\&-1 & 2 & -1\\&& -1 & 2\end{pmatrix}. \]
-Protože bilineární forma $(a,u,v)$ je symetrická a eliptická, je také $\tn A$ symetrická a pozitivně definitní.
-Soustava $\tn A\vc\xi=\vc b$ má řešení pro každý vektor $\vc b$ a řešením Galerkinovy úlohy je funkce $u_h(x):=\sum_{i=1}^N\xi_i\varphi_i(x)$.
-Hodnoty $\xi_i$ jsou zároveň hodnotami funkce $u_h$ v bodech $x_i$.
-
-Podobně jako ve Větě \ref{th:cea} lze ukázat, že platí odhad chyby
-\begin{equation}\label{eq:error_est_laplace_dir}
-\forall v_h\in V_h:~\norm{u'-u_h'}_2 \le \norm{u'-v_h'}_2,
-\end{equation}
-takže $u_h$ je zároveň nejlepší aproximace slabého řešení $u$ v prostoru po částech lineárních funkcí.
-Zvolme nyní vhodnou funkci $v_h$, abychom odhad chyby \eqref{eq:error_est_laplace_dir} vyjádřili kvantitativně.
-Položíme $v_h:=\tilde u_h$, kde $\tilde u_h$ je interpolanta $u$ (po částech lineární funkce taková, že $\tilde u_h(x_i)=u(x_i)$, $i=0,...,N+1$).
-Pak z teorie Lagrangeovy interpolace víme, že platí
-\[ |u'(x)-\tilde u_h'(x)|\le h\max_{y\in[0,1]}|u''(y)| ~\forall x\in[0,1]. \]
-Je-li funkce $u$ třídy $C^2([0,1])$, pak dostáváme odhad
-\[ \norm{u'-u_h'}_2 \le \norm{u'-\tilde u_h'}_2 \le h\max_{y\in[0,1]}|u''(y)|, \]
-který říká, že chyba Galerkinovy aproximace měřená jako $L^2$ norma rozdílu derivací je řádu $O(h)$.
-
-
-\subsection{Lineární prvky ve vyšší dimenzi}
-
-Pro oblasti v $\R^2$ a $\R^3$ se Galerkinova metoda liší v konstrukci podprostoru $V_h$.
-Předpokládejme, že oblast $\Omega$ je polygonální, resp. polyhedrální.
-Rozdělme $\Omega$ na nepřekrývající se trojúhelníky, resp. čtyřstěny (tzv. elementy).
-Označme $h$ jako průměr největšího elementu.
-Množinu všech elementů (triangulace oblasti $\Omega$) budeme značit $\mathcal T_h$.
-
-Je-li slabá formulace zavedena v prostoru $V=H^1_0(\Omega)$, pak prostor $V_h$ můžeme definovat jako množinu
-\[ V_h:=\{v_h\in C(\overline\Omega);~\forall E\in\mathcal T_h:~ v_h\mbox{ je lineární na }E,~v_h=0\mbox{ na }\partial\Omega\} \]
-všech spojitých po částech lineárních funkcí na $\overline\Omega$.
-Na jednom trojúhelníku, resp. čtyřstěnu, je lineární funkce jednoznačně určena svými hodnotami ve vrcholech $\{\vc x_i\}_{i=1}^N$ uvnitř oblasti.
-Hodnoty ve všech těchto vrcholech pak tvoří stupně volnosti funkce z $V_h$.
-Bázové funkce $\{\varphi_i\}_{i=1}^N$ volíme tak, aby $\varphi_i(\vc x_j)=\delta_{ij}$ (viz Obr. \ref{fig:base_2d_lin}).
-\begin{figure}[h]
-\centering
-\includegraphics{base_2d_lin}
-\caption{Příklad bázové funkce pro prostor po částech lineárních funkcí na 2D oblasti.}
-\label{fig:base_2d_lin}
-\end{figure}
+% 
+% \subsection{Příklad lineárních prvků v 1D}
+% 
+% Uvažujme okrajovou úlohu
+% \[ -u''=f \mbox{ v }(0,1),\quad u(0)=u(1)=0, \]
+% jejíž slabá formulace zní:
+% \[ \mbox{Najdi }u\in H^1_0(0,1) \mbox{ tak, aby }\forall v\in H^1_0(0,1):~a(u,v):=(u',v')=(f,v)=:l(v). \]
+% Jako podprostor $V_h$ zvolíme množinu lineárních lomených funkcí na intervalu $[0,1]$.
+% Rozdělme interval $[0,1]$ pomocí bodů $x_0=0<x_1<x_2<...<x_{N+1}=1$ na intervaly $E_j:=(x_{j-1},x_j)$ o délce $h_j:=x_j-x_{j-1}$.
+% Normu tohoto dělení zavedeme jako $h:=\max_{j=1,...,N+1} h_j$.
+% Definujeme
+% \[ V_h:=\{v_h\in C([0,1]);~\forall j=1,...,N:~v_h \mbox{ je lineární na }E_j,~v_h(0)=v_h(1)=0 \}. \]
+% Jelikož funkce z $V_h$ jsou spojité a nulové v bodech $0$ a $1$, je automaticky $V_h$ podprostorem $H^1_0(0,1)$.
+% Každou funkci $v_h$ z $V_h$ jednoznačně určují její hodnoty v dělících bodech $\{x_j\}_{j=1}^N$.
+% Dimenze podprostoru tedy je $\dim V_h=N$.
+% Pro metodu konečných prvků je klíčová volba báze.
+% Zvolíme bázové funkce podprostoru $V_h$ pomocí vztahů $\varphi_i(x_j):=\delta_{ij}$.
+% Každá bázová funkce je tedy nenulová v právě jednom dělícím bodě (viz Obr. \ref{fig:base_1d_lin}).
+% \begin{figure}[h]
+% \centering
+% \includegraphics{base_1d_lin}
+% \caption{Bázové funkce pro prostor po částech lineárních funkcí.}
+% \label{fig:base_1d_lin}
+% \end{figure}
+% Prvky matice $\tn A\in\R^{N\times N}$ a vektoru $\vc b\in\R^{N}$ mají tvar
+% \[ a_{ij}=\int_0^1\varphi_j'(x)\varphi_i(x), \]
+% \[ b_i = \int_0^1 f(x)\varphi_i(x)\d x. \]
+% Je zřejmé, že $a_{ij}$ je nulové, pokud se indexy $i$ a $j$ liší více než o 1, neboť v takovém případě je v každém bodě intervalu $(0,1)$ alespoň jedna z funkcí $\varphi_i$, $\varphi_j$ nulová. Matice $\tn A$ proto bude třídiagonální, a tedy řídká.
+% Platí:
+% \begin{align*}
+% a_{jj} &= \int_{x_{j-1}}^{x_j}\varphi_j'(x)^2\d x + \int_{x_j}^{x_{j+1}}\varphi_j'(x)^2\d x
+% = \int_{x_{j-1}}^{x_j}\frac1{h_{j-1}^2}\d x + \int_{x_j}^{x_{j+1}}\frac1{h_j^2}\d x\\
+% &= \frac1{h_{j-1}} + \frac1{h_j},~j=1,...,N,\\\\
+% a_{j,j-1} &= a_{j-1,j} = \int_{x_{j-1}}^{x_j}\varphi_{j-1}'(x)\varphi_j'(x)\d x\\
+% &= \int_{x_{j-1}}^{x_j}\frac{(-1)}{h_{j-1}^2} \d x = -\frac1{h_{j-1}}, j=2,...,N.
+% \end{align*}
+% V případě ekvidistantního dělení ($h=h_j$ $\forall j=1,...,N$) máme
+% \[ \tn A = \frac{1}{h}\begin{pmatrix}2 & -1 & \\-1 & 2 & -1\\\ddots&\ddots&\ddots\\&-1 & 2 & -1\\&& -1 & 2\end{pmatrix}. \]
+% Protože bilineární forma $(a,u,v)$ je symetrická a eliptická, je také $\tn A$ symetrická a pozitivně definitní.
+% Soustava $\tn A\vc\xi=\vc b$ má řešení pro každý vektor $\vc b$ a řešením Galerkinovy úlohy je funkce $u_h(x):=\sum_{i=1}^N\xi_i\varphi_i(x)$.
+% Hodnoty $\xi_i$ jsou zároveň hodnotami funkce $u_h$ v bodech $x_i$.
+% 
+% Podobně jako ve Větě \ref{th:cea} lze ukázat, že platí odhad chyby
+% \begin{equation}\label{eq:error_est_laplace_dir}
+% \forall v_h\in V_h:~\norm{u'-u_h'}_2 \le \norm{u'-v_h'}_2,
+% \end{equation}
+% takže $u_h$ je zároveň nejlepší aproximace slabého řešení $u$ v prostoru po částech lineárních funkcí.
+% Zvolme nyní vhodnou funkci $v_h$, abychom odhad chyby \eqref{eq:error_est_laplace_dir} vyjádřili kvantitativně.
+% Položíme $v_h:=\tilde u_h$, kde $\tilde u_h$ je interpolanta $u$ (po částech lineární funkce taková, že $\tilde u_h(x_i)=u(x_i)$, $i=0,...,N+1$).
+% Pak z teorie Lagrangeovy interpolace víme, že platí
+% \[ |u'(x)-\tilde u_h'(x)|\le h\max_{y\in[0,1]}|u''(y)| ~\forall x\in[0,1]. \]
+% Je-li funkce $u$ třídy $C^2([0,1])$, pak dostáváme odhad
+% \[ \norm{u'-u_h'}_2 \le \norm{u'-\tilde u_h'}_2 \le h\max_{y\in[0,1]}|u''(y)|, \]
+% který říká, že chyba Galerkinovy aproximace měřená jako $L^2$ norma rozdílu derivací je řádu $O(h)$.
+% 
+% 
+% \subsection{Lineární prvky ve vyšší dimenzi}
+% 
+% Pro oblasti v $\R^2$ a $\R^3$ se Galerkinova metoda liší v konstrukci podprostoru $V_h$.
+% Předpokládejme, že oblast $\Omega$ je polygonální, resp. polyhedrální.
+% Rozdělme $\Omega$ na nepřekrývající se trojúhelníky, resp. čtyřstěny (tzv. elementy).
+% Označme $h$ jako průměr největšího elementu.
+% Množinu všech elementů (triangulace oblasti $\Omega$) budeme značit $\mathcal T_h$.
+% 
+% Je-li slabá formulace zavedena v prostoru $V=H^1_0(\Omega)$, pak prostor $V_h$ můžeme definovat jako množinu
+% \[ V_h:=\{v_h\in C(\overline\Omega);~\forall E\in\mathcal T_h:~ v_h\mbox{ je lineární na }E,~v_h=0\mbox{ na }\partial\Omega\} \]
+% všech spojitých po částech lineárních funkcí na $\overline\Omega$.
+% Na jednom trojúhelníku, resp. čtyřstěnu, je lineární funkce jednoznačně určena svými hodnotami ve vrcholech $\{\vc x_i\}_{i=1}^N$ uvnitř oblasti.
+% Hodnoty ve všech těchto vrcholech pak tvoří stupně volnosti funkce z $V_h$.
+% Bázové funkce $\{\varphi_i\}_{i=1}^N$ volíme tak, aby $\varphi_i(\vc x_j)=\delta_{ij}$ (viz Obr. \ref{fig:base_2d_lin}).
+% \begin{figure}[h]
+% \centering
+% \includegraphics{base_2d_lin}
+% \caption{Příklad bázové funkce pro prostor po částech lineárních funkcí na 2D oblasti.}
+% \label{fig:base_2d_lin}
+% \end{figure}
 
 
 % \section{Značení}
