@@ -297,7 +297,7 @@
 \paragraph{Rozložení tepla v tělese.}
 Příkladem úlohy popsané pomocí \emph{obyčejné diferenciální rovnice} (ODR) je rozložení teploty v tyči,
 která je nějakým způsobem zahřívána. V~tomto případě nebudeme uvažovat tloušťku
-tyče (předpokládáme, že teplota v příčném směru je konstantní) a počítáme tedy pouze v~1D souřadném systému. Jediná souřadnice je
+tyče (předpokládáme, že teplota v příčném směru je konstantní), a počítáme tedy pouze v~1D souřadném systému. Jediná souřadnice je
 $x\in[0,L]$ a interval $[0,L]$ představuje tyč o délce $L$. Teplotu v~různých částech tyče můžeme popsat funkcí
 $u(x)$. Rovnice vedení tepla má tvar
 \eq{\label{eq:heat_1d} -(k(x)u'(x))' = 0 \mbox{ pro }x\in(0,L), }
@@ -393,7 +393,7 @@ První člen je nahrazen díky volbě testovací funkce $v$ a druhý díky Neuma
 \item Výsledná slabá formulace zní: Hledáme funkci $u\in V$, kde
 \[ V=\{v:[0,L]\to\Real;~v \mbox{ je po částech diferencovatelná},~v(L)=0\}, \]
 která splňuje
-\eq{\label{eq:weak_poisson}
+\eq{\label{eq:weak_poisson_1d}
   \forall v\in V:\quad \int_0^L k(x)u'(x)v'(x) \d x = \int_0^L f(x)v(x) \d x - gv(0).
 }
 \end{enumerate}
@@ -402,7 +402,7 @@ která splňuje
 Všimněme si dvou vlastností slabého řešení:
 \begin{itemize}
   \item $u''$ nemusí existovat,
-  \item $u'$ nemusí být spojitá, stačí existence integrálu na levé straně \eqref{eq:weak_poisson}.
+  \item $u'$ nemusí být spojitá, stačí existence integrálu na levé straně \eqref{eq:weak_poisson_1d}.
 \end{itemize}
 
 
@@ -410,30 +410,30 @@ Všimněme si dvou vlastností slabého řešení:
 \subsection{Galerkinova aproximace}
 Nyní zvolíme konečně rozměrný vektorový podprostor $V_h\subset V$.
 V tomto prostoru definujeme bázi $\{\varphi_j(x)\}_{j=1}^N$.
-Tedy pro každou funkci $v_h\in V_h$ existuje právě jeden vektor $v_h^j,\, j=1\ldots N$,
+Tedy pro každou funkci $v_h\in V_h$ existuje právě jeden vektor $\vc v_h=(v_{h,1},...,v_{h,N})$
 takový že 
 \[
-  v_h(x) = \sum\limits_{j=1}^N v_h^j \varphi_j.
+  v_h(x) = \sum\limits_{j=1}^N v_{h,j} \varphi_j(x).
 \]
 % 
 Uvažujme nyní aproximativní řešení $u_h\in V_h$ ve tvaru
 \[
-  u_h(x) = \sum\limits_{j=1}^N ´\xi^j \varphi_j.
+  u_h(x) = \sum\limits_{j=1}^N ´u_j \varphi_j.
 \]
 % 
-Hledáme tedy $\vc\xi$ (vektor  koeficientů lineární kombinace), splňující \eqref{eq:weak_poisson} s testovacími funkcemi $v_h=\varphi_i$, $i=1,...,N$:
+Hledáme tedy $\vc u$ (vektor  koeficientů lineární kombinace), splňující \eqref{eq:weak_poisson_1d} s testovacími funkcemi $v_h=\varphi_i$, $i=1,...,N$:
 \eq{
-  \int_0^L k(x) \left( \sum\limits_{j=1}^N \xi^j \varphi_j(x) \right)' \varphi_i'(x) \d x
+  \int_0^L k(x) \left( \sum\limits_{j=1}^N u_j \varphi_j(x) \right)' \varphi_i'(x) \d x
     = \int_0^L f(x) \varphi_i(x) \d x - g\varphi(0)\qquad \forall i=1\ldots N \label{eqn:discrete_weak_form}
 }
 % 
 Označíme-li
 \[ a_{ij} := \int_0^L k(x) \varphi'_j(x) \varphi_i'(x) \d x, \]
 \[ b_i := \int_0^L f(x) \varphi_i(x) \d x, \]
-pak \eqref{eqn:discrete_weak_form} lze zapsat jako soustavu lineárních rovnic pro neznámý vektor $\vc\xi$:
+pak \eqref{eqn:discrete_weak_form} lze zapsat jako soustavu lineárních rovnic pro neznámý vektor $\vc u$:
 
 \begin{equation}
-  \mat A \vc\xi = \vc b\label{eqn:linear_system}
+  \mat A \vc u = \vc b. \label{eqn:linear_system}
 \end{equation}
 
 Uveďme si nyní dvě zásadní vlastnosti matice $\mat A$, a to symetrii
@@ -466,8 +466,8 @@ Zvolíme bázové funkce $\{\varphi_j\}_{j=1}^N$ podprostoru $V_h$ pomocí vztah
 \begin{equation*}
       \varphi_i(x_j) = 
         \begin{cases}
-          1 \quad \textrm{pro } i=j\\
-          0 \quad \textrm{pro } i\neq j\\
+          1 \quad \textrm{pro } i=j,\\
+          0 \quad \textrm{pro } i\neq j.\\
         \end{cases}
 \end{equation*}
 Každá bázová funkce je tedy nenulová v právě jednom uzlovém bodě (viz Obr. \ref{fig:base_1d_lin}). Všimněme si zde také, že na konci s Neumannovou okrajovou podmínkou existuje na intervalu $E_1$ funkce $\varphi_1$. Naopak na konci s Dirichletovou okrajovou podmínkou na intervalu $E_N$ existuje již pouze funkce $\varphi_N$. Prostory $V$ a $V_h$ a jejich báze závisí na konkrétních okrajových podmínkách.
