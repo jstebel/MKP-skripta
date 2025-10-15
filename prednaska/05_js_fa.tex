@@ -1,7 +1,7 @@
 \section{Úvod do funkcionální analýzy}
 
-
-V této kapitole se budeme zabývat prostory funkcí, v nichž je vhodné hledat slabé řešení.
+Ve slabé formulaci různých úloh se vyskytují lineární a bilineární formy a prostory funkcí, v nichž hledáme řešení.
+V této kapitole se budeme zabývat základními vlastnostmi prostorů, v nichž je vhodné hledat slabé řešení.
 Teorie těchto abstraktních prostorů je poměrně obsáhlá, pro zájemce o hlubší poznatky odkazujeme na knihu \cite{rektorys1974variacni}.
 % pojmy jako norma a limita v abstraktních budeme studovat některé vlastnosti pojmů jako metrika, norma nebo skalární součin.
 
@@ -9,11 +9,12 @@ Teorie těchto abstraktních prostorů je poměrně obsáhlá, pro zájemce o hl
 \subsection{Normované lineární prostory}
 
 Pojmy skalární součin a norma lze zavést na různých množinách, např. na množině matic nebo reálných funkcí.
+V následujících definicích tyto pojmy zobecníme a zavedeme pro libovolný vektorový prostor.
 \begin{df}
 Nechť $V$ je vektorový prostor.
 \begin{itemize}
-\item[(i)] Řekneme, že zobrazení $l:V\to\Real$ je \emph{lineární forma} na $V$, pokud pro každé $u,v\in V$ a~$\alpha,\beta\in\Real$ platí:
-\[ l(\alpha u+\beta v) = \alpha l(u) + \beta l(v). \]
+\item[(i)] Řekneme, že zobrazení $b:V\to\Real$ je \emph{lineární forma} na $V$, pokud pro každé $u,v\in V$ a~$\alpha,\beta\in\Real$ platí:
+\[ b(\alpha u+\beta v) = \alpha b(u) + \beta b(v). \]
 \item[(ii)] Zobrazení $a:V\times V\to\Real$ nazveme \emph{bilineární formou}, pokud $a$ je lineární v obou proměnných, tj.
 \[ a(u,\alpha v+\beta w) = \alpha a(u,v) + \beta a(u,w), \qquad
  a(\alpha u+\beta v,w) = \alpha a(u,v) + \beta a(v,w) \]
@@ -28,7 +29,7 @@ pro každé $u,v,w\in V$ a $\alpha,\beta\in\Real$.
 \end{df}
 Pro indukovanou normu platí \emph{Cauchyova-Schwarzova nerovnost}:
 \[ \forall v,w\in V: ~|a(v,w)| \le \norm{v}_a\norm{w}_a. \]
-Norma obecně nemusí být indukovaná skalárním součinem, musí však splňovat následující vlastnosti.
+Na vektorovém prostoru může existovat více norem. Norma obecně nemusí být indukovaná skalárním součinem, musí však splňovat následující vlastnosti.
 \begin{df}
 Funkce $\norm{\cdot}:V\to\R$ se nazývá \emph{norma} na vektorovém prostoru $V$, pokud pro každé $u,v\in V$ a $\alpha\in\R$ platí:
 \begin{itemize}
@@ -294,7 +295,7 @@ Místo spojitosti bude uvažována \emph{integrovatelnost} funkcí, čímž je m
 
 \begin{df}
 \label{df:Lp}
-Prostorem $L^2(\Omega)$ rozumíme množinu funkcí
+Prostorem $L^2(\Omega)$ rozumíme množinu funkcí integrovatelných s první a druhou mocninou:
 \[ L^2(\Omega):=\left\{u:\Omega\to\R;~u \mbox{ a } |u|^2 \mbox{ jsou integrovatelné} \right\}. \]
 Spolu s normou $\norm{\ }_2$ tvoří $L^2(\Omega)$ normovaný lineární prostor.
 \end{df}
@@ -508,11 +509,11 @@ V této kapitole zavedeme jednotný koncept pro různé druhy slabých formulac�
 
 \subsection{Abstraktní variační úloha}
 
-Nechť $V$ je úplný normovaný lineární prostor s normou $\norm{\ }$, $a$ a $l$ je bilineární, resp. lineární forma na $V$.
+Nechť $V$ je úplný normovaný lineární prostor s normou $\norm{\ }$, $a$ a $b$ je bilineární, resp. lineární forma na $V$.
 Úlohu
 \begin{equation}
 \label{eq:variational_problem}
-\text{Najdi }u\in V \text{ takové, že }\forall v\in V:~a(u,v)=l(v),
+\text{Najdi }u\in V \text{ takové, že }\forall v\in V:~a(u,v)=b(v),
 \end{equation}
 budeme nazývat \emph{abstraktní variační úloha}.
 
@@ -531,10 +532,10 @@ Nechť $V$ je úplný normovaný lineární prostor se skalárním součinem, $a
 \item[(ii)] $a$ je eliptická na $V$, tj.
 \[ \forall v\in V:~\alpha\norm{v}^2\le a(v,v), \]
 \end{itemize}
-a nechť $l$ je omezená lineární forma na $V$, tj.
+a nechť $b$ je omezená lineární forma na $V$, tj.
 \begin{itemize}
 \item[(iii)] existuje konstanta $\gamma>0$ taková, že 
-\[ \forall v\in V:~l(v)\le \gamma\norm{v}. \]
+\[ \forall v\in V:~b(v)\le \gamma\norm{v}. \]
 \end{itemize}
 Pak existuje právě jedno řešení $u\in V$ variační úlohy \eqref{eq:variational_problem}.
 Navíc platí odhad:
@@ -561,27 +562,27 @@ Předpokládejme proto, že $u_d$ lze rozšířit na celou oblast $\Omega$ tak, 
 Pak $u$ bude splňovat Dirichletovu podmínku právě tehdy, když $u-u_d\in H^1_0(\Omega)$.
 Řešení budeme hledat ve tvaru $u=z+u_d\in H^1(\Omega)$, kde $z\in H^1_0(\Omega)$ splňuje
 \[ 
-    \forall v\in H^1_0(\Omega):\ a(z,v)=l(v).
+    \forall v\in H^1_0(\Omega):\ a(z,v)=b(v).
 \]
-Formy $a$ a $l$ jsou dány vztahy:
+Formy $a$ a $b$ jsou dány vztahy:
 \begin{equation}\label{eq:def_a_nonhom_dir}
     a(z,v) := (\grad z, \grad v),
 \end{equation}
 \begin{equation}\label{eq:def_l_nonhom_dir}
-    l(v) := (f,v) - (\nabla u_d,\nabla v).
+    b(v) := (f,v) - (\nabla u_d,\nabla v).
 \end{equation}
 % Ukážeme, že formy $a$ a $l$ mají konečnou hodnotu pro každé $u,\varphi\in H^1(\Omega)$.
 \begin{veta}
     Pro bilineární formu $a$ definovanou v \eqref{eq:def_a_nonhom_dir} platí:
     \[ \forall v,w\in H^1(\Omega):~a(v,w) \le \norm{v}_{1,2}\norm{w}_{1,2}. \]
     Je-li navíc $f\in L^2(\Omega)$, pak existuje $\gamma:=\norm{f}_2+\norm{\nabla u_d}_2$ takové, že
-    \[ \forall v\in H^1(\Omega):~l(v) \le \gamma\norm{v}_{1,2}, \]
-    kde lineární forma $l$ je definována v \eqref{eq:def_l_nonhom_dir}.
+    \[ \forall v\in H^1(\Omega):~b(v) \le \gamma\norm{v}_{1,2}, \]
+    kde lineární forma $b$ je definována v \eqref{eq:def_l_nonhom_dir}.
 \end{veta}
 \begin{proof}
     Omezenost $a$ plyne přímo z Cauchyovy-Schwarzovy nerovnosti a faktu, že $\norm{\nabla v}_2\le\norm{v}_{1,2}$.
     Dále
-    \[ l(v)\le \norm{f}_2\norm{v}_2 + \norm{\nabla u_d}_2\norm{\nabla v}_2
+    \[ b(v)\le \norm{f}_2\norm{v}_2 + \norm{\nabla u_d}_2\norm{\nabla v}_2
     \le (\norm{f}_2+\norm{\nabla u_d}_2)\norm{v}_{1,2}. \]
 \end{proof}
 
@@ -614,16 +615,16 @@ Hledáme funkci $u:\overline\Omega\to\R$, která splňuje:
 Protože je předepsána Neumannova podmínka na $\partial\Omega$, slabé řešení budeme hledat v prostoru $V:=H^1(\Omega)$.
 Slabé řešení $u\in V$ bude splňovat
 \[ 
-    \forall v\in V:\ a(u,v)=l(v),
+    \forall v\in V:\ a(u,v)=b(v),
 \]
 kde
 \begin{equation}\label{eq:def_a_neu}
     a(u,v) := (\grad u, \grad v),
 \end{equation}
 \begin{equation}\label{eq:def_l_neu}
-    l(v) := (f,v).
+    b(v) := (f,v).
 \end{equation}
-Obdobně jako u úlohy s Dirichletovou podmínkou lze ukázat, že formy $a$ a $l$ jsou omezené na prostoru $V$.
+Obdobně jako u úlohy s Dirichletovou podmínkou lze ukázat, že formy $a$ a $b$ jsou omezené na prostoru $V$.
 Avšak $a$ není na $V$ eliptická! To lze ukázat protipříkladem, zvolíme-li např. $v(x)=1$.
 Tato funkce patří do $V$, má nenulovou normu $\norm{v}_{1,2} = |\Omega|^{1/2}$ a platí:
 \[ a(v,v) = 0. \]
@@ -879,28 +880,29 @@ Výslednou úlohu je pak možné převést na soustavu lineárních rovnic.
 
 
 % JB: následující je již v sekci 4.1; TODO: sloučit výklad
+% JS: Je to podobne, ale neni to totez. V kap. 4 se resi konkretni problem, zde je abstraktni - pro jakoukoliv bilinearni a linearni formu.
 
-% \subsection{Aproximace abstraktní variační úlohy}
-% 
-% Uvažujme nejprve abstraktní úlohu \eqref{eq:variational_problem} a nechť $V_h$ je podprostor $V$ s konečnou dimenzí $N:=\dim V_h$.
-% Místo úlohy \eqref{eq:variational_problem} budeme řešit tzv. Galerkinovu úlohu:
-% \begin{equation}\label{eq:galerkin}
-% \mbox{Najdi }u_h\in V_h:~\forall v_h\in V_h~a(u_h,v_h)=l(v_h).
-% \end{equation}
-% Řešení $u_h$ této úlohy se nazývá Galerkinova aproximace prvku $u$.
-% Nechť $\varphi_1,...,\varphi_N$ je báze $V_h$.
-% Pak lze prvek $u_h$ zapsat ve tvaru
-% \[ u_h=\sum_{j=1}^N\xi_j\varphi_j,~\vc\xi=(\xi_1,...,\xi_N)^\top\in\R^N. \]
-% Jelikož i každá testovací funkce $v_h$ je lineární kombinací bázových funkcí $\{\varphi_i\}_{i=1}^N$, v Galerkinově úloze postačí za testovací funkce brát pouze tyto bázové funkce:
-% \[ \eqref{eq:galerkin} \Leftrightarrow \forall i=1,...,N:~ a(u_h,\varphi_i)=\sum_{j=1}^N\xi_j a(\varphi_j,\varphi_i) = l(\varphi_i). \]
-% Vzniklá soustava $N$ rovnic je lineární a neznámými jsou koeficienty $\xi_1,...,\xi_N$.
-% Můžeme ji přepsat do maticového tvaru:
-% \[ \tn A\vc\xi := \begin{pmatrix}a(\varphi_1,\varphi_1) & ... & a(\varphi_N,\varphi_1)\\&...&\\a(\varphi_1,\varphi_N) & ... & a(\varphi_N,\varphi_N)\end{pmatrix}\begin{pmatrix}\xi_1\\\vdots\\\xi_N\end{pmatrix} = \begin{pmatrix}l(\varphi_1)\\\vdots\\l(\varphi_N)\end{pmatrix} =: \vc b, \]
-% % kde
-% % \[ \tn A = \begin{pmatrix}a(\varphi_1,\varphi_1) & ... & a(\varphi_N,\varphi_1)\\&...&\\a(\varphi_1,\varphi_N) & ... & a(\varphi_N,\varphi_N)\end{pmatrix}, \]
-% kde prvek $a_{ij}$ matice $\tn A$ je roven $a(\varphi_j,\varphi_i)$ a prvek $b_i$ vektoru $\vc b$ je roven $l(\varphi_i)$, $i,j=1,...,N$.
-% 
-% Lze snadno ověřit, že z vlastností formy $a$ vyplývají obdobné vlastnosti matice $\tn A$: Např. je-li $a$ symetrická, pak také $\tn A$ je symetrická; je-li $a$ eliptická, pak $\tn A$ je pozitivně definitní, a tedy regulární, a soustava $\tn A\vc\xi=\vc b$ má právě jedno řešení.
+\subsection{Aproximace abstraktní variační úlohy}
+
+Uvažujme nejprve abstraktní úlohu \eqref{eq:variational_problem} a nechť $V_h$ je podprostor $V$ s konečnou dimenzí $N:=\dim V_h$.
+Místo úlohy \eqref{eq:variational_problem} budeme řešit tzv. Galerkinovu úlohu:
+\begin{equation}\label{eq:galerkin}
+\mbox{Najdi }u_h\in V_h:~\forall v_h\in V_h~a(u_h,v_h)=b(v_h).
+\end{equation}
+Řešení $u_h$ této úlohy se nazývá Galerkinova aproximace prvku $u$.
+Nechť $\varphi_1,...,\varphi_N$ je báze $V_h$.
+Pak lze prvek $u_h$ zapsat ve tvaru
+\[ u_h=\sum_{j=1}^N u_j\varphi_j,~\vc u=(u_1,...,u_N)^\top\in\R^N. \]
+Jelikož i každá testovací funkce $v_h$ je lineární kombinací bázových funkcí $\{\varphi_i\}_{i=1}^N$, v Galerkinově úloze postačí za testovací funkce brát pouze tyto bázové funkce:
+\[ \eqref{eq:galerkin} \Leftrightarrow \forall i=1,...,N:~ a(u_h,\varphi_i)=\sum_{j=1}^N\xi_j a(\varphi_j,\varphi_i) = l(\varphi_i). \]
+Vzniklá soustava $N$ rovnic je lineární a neznámými jsou koeficienty $u_1,...,u_N$.
+Můžeme ji přepsat do maticového tvaru:
+\[ \tn A\vc u := \begin{pmatrix}a(\varphi_1,\varphi_1) & ... & a(\varphi_N,\varphi_1)\\&...&\\a(\varphi_1,\varphi_N) & ... & a(\varphi_N,\varphi_N)\end{pmatrix}\begin{pmatrix}u_1\\\vdots\\ u_N\end{pmatrix} = \begin{pmatrix}b(\varphi_1)\\\vdots\\b(\varphi_N)\end{pmatrix} =: \vc b, \]
+% kde
+% \[ \tn A = \begin{pmatrix}a(\varphi_1,\varphi_1) & ... & a(\varphi_N,\varphi_1)\\&...&\\a(\varphi_1,\varphi_N) & ... & a(\varphi_N,\varphi_N)\end{pmatrix}, \]
+kde prvek $a_{ij}$ matice $\tn A$ je roven $a(\varphi_j,\varphi_i)$ a prvek $b_i$ vektoru $\vc b$ je roven $b(\varphi_i)$, $i,j=1,...,N$.
+
+Lze snadno ověřit, že z vlastností formy $a$ vyplývají obdobné vlastnosti matice $\tn A$: Např. je-li $a$ symetrická, pak také $\tn A$ je symetrická; je-li $a$ eliptická, pak $\tn A$ je pozitivně definitní, a tedy regulární, a soustava $\tn A\vc u=\vc b$ má právě jedno řešení.
 
 
 \subsection{Abstraktní odhad chyby}
@@ -920,7 +922,7 @@ Obecně platí $\alpha<\beta$ a $u_h$ je alespoň kvalitativně stejně dobré j
 Pro konkrétní typy podprostorů $V_h$ lze z \eqref{eq:cea} odvodit přesnější odhad chyby, když za $v_h$ dosadíme vhodnou funkci (např. Lagrangeovu interpolantu funkce $u$).
 
 \begin{proof}[Důkaz Věty \ref{th:cea}]
-Nechť $w_h\in V_h$. Protože $V_h$ je podprostor $V$, je také $w_h\in V$ a platí $a(u,w_h) = l(w_h)$ a $a(u_h,w_h)=l(w_h)$.
+Nechť $w_h\in V_h$. Protože $V_h$ je podprostor $V$, je také $w_h\in V$ a platí $a(u,w_h) = b(w_h)$ a $a(u_h,w_h)=b(w_h)$.
 Odečtením těchto rovností dostaneme vztah označovaný jako tzv. Galerkinova ortogonalita:
 \begin{equation}\label{eq:galerkin_ortho}
 \forall w_h\in V_h:~a(u-u_h,w_h)=0.

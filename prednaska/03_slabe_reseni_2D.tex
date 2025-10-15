@@ -82,8 +82,8 @@ Tato rovnice již skutečně platí pro libovolnou integrovatelnou počáteční
 \label{sec:weak_sol_elliptic_eq}
 Budeme řešit rovnici
 \begin{align}
-   \div(\vc q) =f + \sigma_f(u_f - u) \quad\text{na }\Omega \\
-   \vc q = -\tn K\grad u
+   \div(\vc q) =f + \sigma_f(u_f - u) \quad\text{na }\Omega, \\
+   \vc q = -\tn K\grad u.
     \label{eq:elliptic}
 \end{align}
 Rovnice popisuje ustálené rozložení teploty, dále značené $u(\vc x)$, v tělese $\Omega$. 
@@ -104,16 +104,17 @@ Eliptickou rovnici na omezené oblasti $\Omega$ je třeba doplnit okrajovými po
 \[
     u(\vc x) = u_d(\vc x)\text{ na }\Gamma_d
 \]
-předepisuje teplotu $u_d$ na části hranice $\Gamma_d$. Pevná teplota na hranici modeluje situaci, kdy se těleso $\Omega$ dokonale vodivě dotýká termostatu - 
-tělesa z velkou teplenou kapacitou.
+předepisuje teplotu $u_d$ na části hranice $\Gamma_d$. Pevná teplota na hranici modeluje situaci, kdy se těleso $\Omega$ dokonale vodivě dotýká termostatu -- -
+tělesa s velkou teplenou kapacitou.
 
 {\bf Neumannova okrajová podmínka.}
 \[
     \vc q \cdot \vc n = (-\tn K \grad u) \cdot \vc n = q_n\text{ na }\Gamma_n.
 \]
 Člen vlevo se nazývá normálový teplený tok, který je předepsán jako $q_n$. V teorii se obvykle uvažuje jako kladný tok ve směru ven z oblasti (vnější normála), 
-nicmáně z důvodu konzistence s objemovými zdroji se v praxi používá raději opačná konvence. Fyzikálně relevantní je případ kdy je hranice pevná 
-$\vc v = 0$ a teplený tok je dán např. výkonem topidla na hranici. 
+nicméně z důvodu konzistence s objemovými zdroji se v praxi používá raději opačná konvence. Fyzikálně relevantní je případ, kdy je hranice pevná 
+$\vc v = 0$ % ???
+a tepelný tok je dán např. výkonem topidla na hranici. 
 
 {\bf Robinova (Newtonova) okrajová podmínka.}
 \[
@@ -125,7 +126,7 @@ Zde je opět $\vc n$ vnější normála, tedy vlevo je tok ven z oblasti, který
 Mimo tyto základní podmínky se v reálných úlohách objevují i nejrůznější další podmínky. 
 Například kombinace Neumannovy a Robinovy okrajové podmínky:
 \[
-    -\tn K \grad u \cdot \vc n = \sigma_r(u - u_r) + q_n
+    -\tn K \grad u \cdot \vc n = \sigma_r(u - u_r) + q_n.
 \]
 
 Dále předpokládáme, že množiny $\Gamma_d$, $\Gamma_n$, a $\Gamma_r$ jsou navzájem diskjunktní (nemají průnik) a jejich sjednocení (respektive sjednocení jejich uzávěrů)
@@ -139,11 +140,12 @@ V této kapitole odvodíme slabou formulaci rovnice vedení tepla,
 spolu s aplikací klasických okrajových podmínek.
 
 Prvně přenásobíme rovnici \eqref{eq:elliptic} libovolnou hladkou testovací funkcí 
-$v(\vc x) \in C^\infty(\ol\Omega)$ (hladá až do hranice) a integrujeme přes $\Omega$:
+$v(\vc x) \in C^\infty(\ol\Omega)$ (hladká až do hranice) a integrujeme přes $\Omega$:
 \[
     \int_\Omega v\Big(-\div(\tn K\grad u\Big) \d \vc x = \int_\Omega v \Big(f + \sigma_f(u_f - u)\Big) \d \vc x.
 \]
-Dále v na levé straně použijeme Greenovu větu k přehození divergence na testovací funkci:
+Dále na levé straně použijeme Greenovu větu k přehození divergence na testovací funkci.
+Získáme tak rovnici:
 \begin{equation}
     \label{eq:after_green}
     \int_\Omega \grad v \cdot (\tn K\grad u) \d \vc x + \int_{\prtl \Omega} -v(\tn K\grad u)\cdot \vc n \d s 
@@ -159,10 +161,10 @@ ale již víme, že jeho funkce mají integrovatelnou derivaci.
 Pro začátek předpokládejme pouze \emph{homogenní} Dirichletovu okrajovou podmínku $u_d =0$. 
 Pak je řešení $u$ ve skutečnosti z podprostoru:
 \[
-    V_0 = \{ u\in H^1(\Omega), u(\vc x) = 0\text{ na } \Gamma_d \}
+    V_0 = \{ u\in H^1(\Omega), u(\vc x) = 0\text{ na } \Gamma_d \}.
 \]
-Jelikož už známe hodnotu řešení na hranici $\Gamma_d$ nepotřebujeme řešení určit rovnicí 
-\eqref{eq:after_green} a testovací funkce proto může být na této části hranice také nulová, t.j. 
+Jelikož už známe hodnotu řešení na hranici $\Gamma_d$, nepotřebujeme řešení určit rovnicí 
+\eqref{eq:after_green}. Testovací funkce proto může být na této části hranice také nulová, t.j. 
 testovací funkce $v$ bude z prostoru:
 \[
      \mathcal D_0 = \{\phi \in C^\infty(\ol\Omega),\ v(\vc x) = 0\text{ na } \Gamma_d\}.
@@ -170,34 +172,31 @@ testovací funkce $v$ bude z prostoru:
 
 Nyní rozdělíme hraniční integrál na integrály přes části hranice odpovídající 
 jednotlivým typům okrajových podmínek:
-Na $\Gamma_d$ je $v=0$ příslušná člen je tedy nulový:
+Na $\Gamma_d$ je $v=0$, příslušný člen je tedy nulový:
 \[
-    \int_{\Gamma_d} -v(\tn K\grad u)\cdot \vc n \d s = 0
+    \int_{\Gamma_d} -v(\tn K\grad u)\cdot \vc n \d s = 0.
 \]
-
 Na $\Gamma_n$ je tok roven $q_n$, máme tedy:
 \[
     \int_{\Gamma_n} -v(\tn K\grad u)\cdot \vc n \d s = \int_{\Gamma_n} v q_n \d s.
 \]
-
 Podobně známe tok na $\Gamma_r$:
 \[
     \int_{\Gamma_r} -v(\tn K\grad u)\cdot \vc n \d s = \int_{\Gamma_n} v \sigma_r(u - u_r) \d s.
 \]
-
 Dostáváme tak slabou formulaci rovnice \eqref{eq:elliptic}. Slabým řešením bude každá funkce $u$ z prostoru $V_0$, 
 která splňuje
 \begin{align}
     \label{eq:weak_homo_dirich}
-    A(u, v) &:= \int_\Omega (\tn K\grad u) \cdot \grad v   +   \sigma_f u v \d \vc x 
+    a(u, v) &:= \int_\Omega (\tn K\grad u) \cdot \grad v   +   \sigma_f u v \d \vc x 
               + \int_{\Gamma_r} \sigma_r u v \d s \\
               &=  \int_\Omega \Big(f + \sigma_f u_f)\Big)v \d \vc x + \int_{\Gamma_r} \sigma_r u_r v \d s 
-              + \int_{\Gamma_n} -q_n v \d s =: l(v)
+              + \int_{\Gamma_n} -q_n v \d s =: b(v)
 \end{align}
 pro všechna $v \in \mathcal D$. Levá strana rovnice závisí lineárně na testovací funkci $v$ i na řešení $u$ 
-a souhrně ji tak můžeme označit lineární funkcí dvou proměnných $A(u, v)$, které proto nazýváme bi-lineární forma.
-``bi'' protože je lineární v obou proměnných, ``forma'' má na vstupu funkce $u$ a $v$, ale výstupem je reálné číslo.
-Podobně pravá strana rovnice je lineárně závislá pouze na $v$, je to tedy lineární forma $l(v)$.
+a souhrně ji tak můžeme označit jako lineární funkci dvou proměnných $a(u, v)$ (takovou funkci proto nazýváme bilineární forma ---
+``bi'' protože je lineární v obou proměnných, ``forma'' má na vstupu funkce $u$ a $v$, ale výstupem je reálné číslo).
+Podobně pravá strana rovnice je lineárně závislá pouze na $v$, je to tedy lineární forma $b(v)$.
 
 Nyní uvažujme případ s obecnou Dirichletovou okrajovou podmínkou $u_d\ne 0$. 
 Budeme předpokládat, že $u_d$ lze prodloužit dovnitř oblasti $\Omega$. Tedy, že existuje 
@@ -206,34 +205,34 @@ funkce $\tilde u_d$ z prostoru $H^1(\Omega)$, která se shoduje s okrajovou podm
  
  
 Pak řešení s obecnou Dirichletovou podmínkou
-rozložíme $u = \tilde u_d + u_0$. Kompletní řešení $u$ je na hranici nenulové, ale $u_0$ je na hranici nulové
+rozložíme $u = \tilde u_d + u_0$. Kompletní řešení $u$ je na hranici nenulové, ale $u_0$ je na hranici nulové,
 protože $u=\tilde u_d$ na hranici. Proto je $u_0$ z prostoru $V_0$. Funkce $u_0$ představuje neznámou 
 část řešení, kterou dostaneme řešením problému:
 \[
-    A(u_0, v) = l(v) - A(\tilde u_d, v) = \tilde l(v)
+    a(u_0, v) = b(v) - a(\tilde u_d, v) = \tilde b(v).
 \]
 Zjednodušeně, rozšířenou okrajovou podmínku dosadíme do bilineární formy a tím z ní uděláme pouze 
-lineární formu a přesuneme na pravou stranu. Změna Dirichletovy podmínky tak mění pouze pravou stranu 
+lineární formu, kterou přesuneme na pravou stranu. Změna Dirichletovy podmínky tak mění pouze pravou stranu 
 rovnice podobně jako ostatní okrajové podmínky.
 
 {\bf Souvislost s kvantovou mechanikou.} Bilineární a lineární formy se používají i v kvantové mechanice 
 a značí se pomocí bra-ket notace. Slabou formulaci bychom v této notaci zapsali:
 \[
-    \langle u | A | v \rangle = \langle l | v \rangle
+    \langle u | A | v \rangle = \langle l | v \rangle.
 \]
 Bilineární formu můžeme chápat jako operátor $A$, který z řešení $u$ vyrobí lineární formu (bra) $\langle u| A$ a
 ta se vynásobí skalárním součinem s testovací funkcí (ket) $|v\rangle$.
 
 
 \subsection{Odvození klasické formulace ze slabé}
-Doposud jsme odvodili, že ze silné formulace plyne splnění slabé formulace, ale není zřejmé, že jsme 
-tímto postupem napřišli o nějakou informaci, tedy zda je ze slabé formulace plyne silná pokud 
+Doposud jsme odvodili, že z klasické formulace plyne splnění slabé formulace, ale není zřejmé, že jsme 
+tímto postupem nepřišli o nějakou informaci. Tedy zda ze slabé formulace plyne klasická, pokud 
 z nějakého důvodu bude slabé řešení hladší, konkrétně se spojitými druhými derivacemi: $u\in C^2(\Omega)$.
 
 V principu všechny výchozí rovnice musíme dostat aplikováním vhodných testovacích funkcí. 
 Nejprve odvodíme rovnici uvnitř $\Omega$. Ve slabé formulaci  \eqref{eq:weak_homo_dirich} 
 budeme testovat funkcí $v$ s nosičem uvnitř $\Omega$, t.j. $v$ je nulová na hranici. 
-Hraniční intergrály jsou tedy nulové a použitím Greenovy věty, zpětně dostaneme:
+Hraniční intergrály jsou tedy nulové a použitím Greenovy věty zpětně dostaneme:
 \begin{equation}
     \label{eq:green_interior}
     \int_\Omega -\div (\tn K\grad u) v \d \vc x = \int_\Omega \Big(f + \sigma_f (u_f - u)\Big)v \d \vc x.
@@ -251,7 +250,7 @@ ale tak aby měla nosič pouze do vzdálenosti $\eps$ od hranice. Výslednou fun
 použijeme jako testovací v \eqref{eq:weak_homo_dirich} a aplikujeme Greenovu větu:
 \[
     \int_\Omega X(u)v_\epsilon \d \vc x + \int_{\Gamma_{nr}} (\tn K\grad u-\vc v u)\cdot \vc n v_\epsilon \d s    
-              =  \int_{\Gamma_r} \sigma_r (u_r -u) v_\epsilon \d s + \int_{\Gamma_n} -q v_\epsilon \d s 
+              =  \int_{\Gamma_r} \sigma_r (u_r -u) v_\epsilon \d s + \int_{\Gamma_n} -q v_\epsilon \d s,
 \]
 kde první člen obsahuje všechny členy z předchozí rovnice \eqref{eq:green_interior}. 
 Nyní provedeme limitu $\epsilon \to 0$. V této limitě se první intergál 

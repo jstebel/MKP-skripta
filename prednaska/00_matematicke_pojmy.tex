@@ -1,81 +1,82 @@
-\section{Úvod -- základní pojmy}
-TODO: Zjednodušit, naopak přidat vektorový počet
+\appendix
+\section{Základy lineární algebry}
 
-Pokrýt témata:
+% Co je pokryto:
+% Vektorový prostor, lineární zobrazení, matice, inverzní matice, hodnost, soustava lin. rovnic, vlastní čísla a vektory. 
 
-Vektorový prostor, lineární zobrazení, matice, inverzní matice, hodnost, soustava lin. rovnic, vlastní čísla a vektory. 
-Diferenciální operátory: gradient, divergence, rotace. 
-Skalární a vektorové funkce více proměnných. 
-Derivace složených funkcí. Vektorový prostor funkcí.
-
-
-
-\subsection{Relace a zobrazení}
-
-\begin{df} {\bf Binární relace}, nebo také jen relace, mezi množinami $A$ a $B$ je libovolná podmnožina kartézského součinu $A\times B$.
-\end{df}
-Je-li $R$ relace mezi $A$ a $B$, pak skutečnost, že $(a,b)\in R$ zapisujeme také výrazem $aRb$.
-Např. mezi množinami $A=\{\mbox{Adam, Sókratés, Karel IV.}\}$ a $B=\{\mbox{Eva, Xantippa, Marie Terezie}\}$ lze zavést relaci partnerství $P=\{\mbox{(Adam,Eva), (Sókratés,Xantippa)}\}$.
-Jiným příkladem relace je uspořádání na množině $\R$, reprezentované symbolem $\le$, nebo rovnost prvků v $\R$.
-
-\paragraph{Symetrická relace} je taková relace $R$ na množině $A$ (tedy $R\subset A\times A$), která splňuje
-$$ (a,b)\in R\Leftrightarrow(b,a)\in R. $$
-Příkladem symetrické relace je rovnost mezi reálnými čísly.
-
-\paragraph{Tranzitivní relace} $R$ na množině $A$ splňuje
-$$ (a,b)\in R \& (b,c)\in R\Rightarrow (a,c)\in R. $$
-Relace $<$ na množině $\R$ je tranzitivní.
-
-\paragraph{Reflexivní relace} je taková relace $R$ na množině $A$, pro kterou platí:
-$$ \forall a\in A:~(a,a)\in R. $$
-Relace $=$, $\le$ jsou reflexivní, $<$ není reflexivní.
+% Co zbývá pokrýt:
+% Diferenciální operátory: gradient, divergence, rotace. 
+% Skalární a vektorové funkce více proměnných. 
+% Derivace složených funkcí. Vektorový prostor funkcí.
 
 
-\paragraph{Zobrazení} $f$ množiny $A$ do množiny $B$ je relace $f\subset A\times B$, která splňuje:
-$$ \forall a\in A~\exists!b\in B:~(a,b)\in f. $$
-Píšeme také $f:A\to B$, $f:a\mapsto b$, $f(a)=b$.
 
-\paragraph{Obraz množiny} $A'$ při zobrazení $f:A\to B$ je množina
-$$ f(A'):=\{f(a);~a\in A'\}. $$
-
-\paragraph{Prosté zobrazení} má vlastnost
-$$ f(a_1)=f(a_2) \Rightarrow a_1=a_2. $$
-
-\paragraph{Inverzní zobrazení} k prostému zobrazení $f:A\to B$ je zobrazení $f^{-1}:f(A)\to A$ definované předpisem
-$$ f^{-1}(b)=a \Leftrightarrow f(a)=b. $$
-
-\paragraph{Surjektivní zobrazení} splňuje
-$$ f(A)=B. $$
-Někdy také říkáme, že $f$ zobrazuje $A$ \emph{na} $B$.
-
-\paragraph{Isomorfní zobrazení,} nebo jen isomorfismus, je zobrazení, které je zároveň prosté a surjektivní.
-Existuje-li mezi $A$ a $B$ isomorfismus, říkáme, že $A$ a $B$ jsou isomorfní.
-
-Pomocí isomorfismů můžeme zavést tyto kategorie množin:
-Řekneme, že množina je konečná, pokud je isomorfní s množinou $\{1,\ldots,n\}$ pro nějaké číslo $n\in\N$.
-Spočetná množina je isomorfní s nějakou (ne nutně konečnou) podmnožinou $\N$.
-Množina, která není konečná, se nazývá nekonečná.
-Množina, která není spočetná, se nazývá nespočetná.
-
-Např. $\N$, $\Z$, $\Q$ jsou spočetné, $\R$ je nespočetná.
-
-\paragraph{Složené zobrazení.} Je-li $f:A\to B$ a $g:B\to C$, pak $g\circ f:A\to C$ je zobrazení složené z $f$ a $g$, které je definováno vztahem
-$$ g\circ f(a) = g(f(a)). $$
+% \subsection{Relace a zobrazení}
+% 
+% \begin{df} {\bf Binární relace}, nebo také jen relace, mezi množinami $A$ a $B$ je libovolná podmnožina kartézského součinu $A\times B$.
+% \end{df}
+% Je-li $R$ relace mezi $A$ a $B$, pak skutečnost, že $(a,b)\in R$ zapisujeme také výrazem $aRb$.
+% Např. mezi množinami $A=\{\mbox{Adam, Sókratés, Karel IV.}\}$ a $B=\{\mbox{Eva, Xantippa, Marie Terezie}\}$ lze zavést relaci partnerství $P=\{\mbox{(Adam,Eva), (Sókratés,Xantippa)}\}$.
+% Jiným příkladem relace je uspořádání na množině $\R$, reprezentované symbolem $\le$, nebo rovnost prvků v $\R$.
+% 
+% \paragraph{Symetrická relace} je taková relace $R$ na množině $A$ (tedy $R\subset A\times A$), která splňuje
+% $$ (a,b)\in R\Leftrightarrow(b,a)\in R. $$
+% Příkladem symetrické relace je rovnost mezi reálnými čísly.
+% 
+% \paragraph{Tranzitivní relace} $R$ na množině $A$ splňuje
+% $$ (a,b)\in R \& (b,c)\in R\Rightarrow (a,c)\in R. $$
+% Relace $<$ na množině $\R$ je tranzitivní.
+% 
+% \paragraph{Reflexivní relace} je taková relace $R$ na množině $A$, pro kterou platí:
+% $$ \forall a\in A:~(a,a)\in R. $$
+% Relace $=$, $\le$ jsou reflexivní, $<$ není reflexivní.
+% 
+% 
+% \paragraph{Zobrazení} $f$ množiny $A$ do množiny $B$ je relace $f\subset A\times B$, která splňuje:
+% $$ \forall a\in A~\exists!b\in B:~(a,b)\in f. $$
+% Píšeme také $f:A\to B$, $f:a\mapsto b$, $f(a)=b$.
+% 
+% \paragraph{Obraz množiny} $A'$ při zobrazení $f:A\to B$ je množina
+% $$ f(A'):=\{f(a);~a\in A'\}. $$
+% 
+% \paragraph{Prosté zobrazení} má vlastnost
+% $$ f(a_1)=f(a_2) \Rightarrow a_1=a_2. $$
+% 
+% \paragraph{Inverzní zobrazení} k prostému zobrazení $f:A\to B$ je zobrazení $f^{-1}:f(A)\to A$ definované předpisem
+% $$ f^{-1}(b)=a \Leftrightarrow f(a)=b. $$
+% 
+% \paragraph{Surjektivní zobrazení} splňuje
+% $$ f(A)=B. $$
+% Někdy také říkáme, že $f$ zobrazuje $A$ \emph{na} $B$.
+% 
+% \paragraph{Isomorfní zobrazení,} nebo jen isomorfismus, je zobrazení, které je zároveň prosté a surjektivní.
+% Existuje-li mezi $A$ a $B$ isomorfismus, říkáme, že $A$ a $B$ jsou isomorfní.
+% 
+% Pomocí isomorfismů můžeme zavést tyto kategorie množin:
+% Řekneme, že množina je konečná, pokud je isomorfní s množinou $\{1,\ldots,n\}$ pro nějaké číslo $n\in\N$.
+% Spočetná množina je isomorfní s nějakou (ne nutně konečnou) podmnožinou $\N$.
+% Množina, která není konečná, se nazývá nekonečná.
+% Množina, která není spočetná, se nazývá nespočetná.
+% 
+% Např. $\N$, $\Z$, $\Q$ jsou spočetné, $\R$ je nespočetná.
+% 
+% \paragraph{Složené zobrazení.} Je-li $f:A\to B$ a $g:B\to C$, pak $g\circ f:A\to C$ je zobrazení složené z $f$ a $g$, které je definováno vztahem
+% $$ g\circ f(a) = g(f(a)). $$
 
 
 \subsection{Vektorové prostory}
 
 \begin{df}
 \label{df:vekt_prostor}
-Neprázdná množina $V$, na které je definováno sčítání $+:V\times V\to V$ a násobení reálným číslem $\cdot:\R\times V\to V$, se nazývá {\bf reálný vektorový prostor} (nebo také lineární prostor), jestliže pro každé $\xx, \yy, \zz\in V$ a každé $\alpha,\beta\in\R$ platí:
+Neprázdná množina $V$, na které je definováno sčítání $+:V\times V\to V$ a násobení reálným číslem $\cdot:\R\times V\to V$, se nazývá {\bf reálný vektorový prostor} (nebo také lineární prostor), jestliže pro každé $\vec x, \yy, \zz\in V$ a každé $\alpha,\beta\in\R$ platí:
 \begin{enumerate}
-\item $\forall\xx,\yy\in V:~\xx+\yy=\yy+\xx$ \hspace{\stretch{1}}{\footnotesize(komutativita sčítání)}
-\item $\forall\xx,\yy,\zz\in V:~(\xx+\yy)+\zz=\xx+(\yy+\zz)$ \hspace{\stretch{1}}{\footnotesize(asociativita sčítání)}
-\item $\forall\alpha,\beta\in\R~\forall\xx\in V:~\alpha\cdot(\beta\cdot\xx)=(\alpha\beta)\cdot\xx$ \hspace{\stretch{1}}{\footnotesize(asociativita násobení)}
-\item $\forall\alpha\in\R~\forall\xx,\yy\in V:~\alpha\cdot(\xx+\yy)=\alpha\cdot\xx+\alpha\cdot\yy$ \hspace{\stretch{1}}{\footnotesize(distributivita sčítání prvků z $V$)}
-\item $\forall\alpha,\beta\in\R~\forall\xx\in V:~(\alpha+\beta)\cdot\xx=\alpha\cdot\xx+\beta\cdot\xx$ \hspace{\stretch{1}}{\footnotesize(distributivita sčítání čísel)}
-\item $\forall\xx\in\R:~1\cdot\xx=\xx$ \hspace{\stretch{1}}{\footnotesize(vlastnost reálného čísla $1$)}
-\item $\exists\0\in V ~\forall\xx\in V:~0\cdot\xx=\0$ \hspace{\stretch{1}}{\footnotesize(existence nulového prvku)}
+\item $\forall\vec x,\yy\in V:~\vec x+\yy=\yy+\vec x$ \hspace{\stretch{1}}{\footnotesize(komutativita sčítání)}
+\item $\forall\vec x,\yy,\zz\in V:~(\vec x+\yy)+\zz=\vec x+(\yy+\zz)$ \hspace{\stretch{1}}{\footnotesize(asociativita sčítání)}
+\item $\forall\alpha,\beta\in\R~\forall\vec x\in V:~\alpha\cdot(\beta\cdot\vec x)=(\alpha\beta)\cdot\vec x$ \hspace{\stretch{1}}{\footnotesize(asociativita násobení)}
+\item $\forall\alpha\in\R~\forall\vec x,\yy\in V:~\alpha\cdot(\vec x+\yy)=\alpha\cdot\vec x+\alpha\cdot\yy$ \hspace{\stretch{1}}{\footnotesize(distributivita sčítání prvků z $V$)}
+\item $\forall\alpha,\beta\in\R~\forall\vec x\in V:~(\alpha+\beta)\cdot\vec x=\alpha\cdot\vec x+\beta\cdot\vec x$ \hspace{\stretch{1}}{\footnotesize(distributivita sčítání čísel)}
+\item $\forall\vec x\in\R:~1\cdot\vec x=\vec x$ \hspace{\stretch{1}}{\footnotesize(vlastnost reálného čísla $1$)}
+\item $\exists\0\in V ~\forall\vec x\in V:~0\cdot\vec x=\0$ \hspace{\stretch{1}}{\footnotesize(existence nulového prvku)}
 \end{enumerate}
 \end{df}
 
@@ -85,9 +86,9 @@ Prvek $\0$ nazýváme {\bf nulový prvek} nebo {\bf nulový vektor}.
 % 
 Z axiómů uvedených v definici vektorového prostoru lze odvodit, že pro nulový prvek $\0\in V$ platí:
 \begin{itemize}
-\item $\forall\xx\in V$: $\xx+\0=\xx$,
+\item $\forall\vec x\in V$: $\vec x+\0=\vec x$,
 \item $\forall\alpha\in\R$: $\alpha\cdot\0=\0$,
-\item $\forall\xx\in V~\forall\alpha\in\R,\alpha\neq 0$: $\alpha\cdot\xx=\0\Rightarrow\xx=\0$.
+\item $\forall\vec x\in V~\forall\alpha\in\R,\alpha\neq 0$: $\alpha\cdot\vec x=\0\Rightarrow\vec x=\0$.
 \end{itemize}
 % 
 % 
@@ -111,8 +112,8 @@ Následující tvrzení tuto proceduru usnadňuje.
 Nechť $V$ je vektorový prostor a $\emptyset\neq W\subset V$.
 Pak $W$ je podprostorem $V$ právě tehdy, když platí
 \begin{itemize}
-\item[(i)] pro každé $\xx,\yy\in W$ je $\xx+\yy\in W$,
-\item[(ii)] pro každé $\xx\in W$ a $\alpha\in\R$ je $\alpha\xx\in W$.
+\item[(i)] pro každé $\vec x,\yy\in W$ je $\vec x+\yy\in W$,
+\item[(ii)] pro každé $\vec x\in W$ a $\alpha\in\R$ je $\alpha\vec x\in W$.
 \end{itemize}
 \end{veta}
 
@@ -122,24 +123,24 @@ Příklad: Jsou-li $A=\{(\alpha,0);~\alpha\in R\}$ a $B=\{(0,\beta);~\beta\in\R\
 Naproti tomu $A\cup B=\{(\alpha,\beta);~\alpha=0\mbox{ nebo }\beta=0\}$ není vektorový prostor, neboť např. $(1,0)+(0,1)=(1,1)\notin A\cup B$.
 
 \begin{df}
-Nechť $\xx_1,\xx_2,\ldots,\xx_n$ jsou prvky vektorového prostoru $V$ a $\alpha_1,\alpha_2,\ldots,\alpha_n$ jsou reálná čísla.
+Nechť $\vec x_1,\vec x_2,\ldots,\vec x_n$ jsou prvky vektorového prostoru $V$ a $\alpha_1,\alpha_2,\ldots,\alpha_n$ jsou reálná čísla.
 Vektor
-$$ \alpha_1\xx_1+\alpha_2\xx_2+\ldots+\alpha_n\xx_n $$
-se nazývá {\bf lineární kombinací} vektorů $\xx_1,\xx_2,\ldots,\xx_n$.
+$$ \alpha_1\vec x_1+\alpha_2\vec x_2+\ldots+\alpha_n\vec x_n $$
+se nazývá {\bf lineární kombinací} vektorů $\vec x_1,\vec x_2,\ldots,\vec x_n$.
 Číslům $\alpha_1,\alpha_2,\ldots,\alpha_n$ říkáme {\bf koeficienty} lineární kombinace.
 \end{df}
 
 \begin{df}
-{\bf Triviální} lineární kombinace vektorů $\xx_1,\xx_2,\ldots,\xx_n$ je taková lineární kombinace, která má všechny koeficienty nulové.
+{\bf Triviální} lineární kombinace vektorů $\vec x_1,\vec x_2,\ldots,\vec x_n$ je taková lineární kombinace, která má všechny koeficienty nulové.
 {\bf Netriviální} lineární kombinace je taková, že alespoň jeden její koeficient je nenulový.
 \end{df}
 
 Poznámka: Triviální lineární kombinace je vždy rovna nulovému vektoru.
 
 \begin{df}
-Konečnou množinu vektorů $\{\xx_1,\ldots,\xx_n\}$ nazýváme {\bf lineárně závislou}, pokud existuje netriviální lineární kombinace těchto vektorů, která je rovna nulovému vektoru. Stručně říkáme, že vektory $\xx_1,\ldots,\xx_n$ jsou lineárně závislé.
+Konečnou množinu vektorů $\{\vec x_1,\ldots,\vec x_n\}$ nazýváme {\bf lineárně závislou}, pokud existuje netriviální lineární kombinace těchto vektorů, která je rovna nulovému vektoru. Stručně říkáme, že vektory $\vec x_1,\ldots,\vec x_n$ jsou lineárně závislé.
 
-Množina vektorů $\{\xx_1,\ldots,\xx_n\}$ se nazývá {\bf lineárně nezávislá}, pokud není lineárně závislá.
+Množina vektorů $\{\vec x_1,\ldots,\vec x_n\}$ se nazývá {\bf lineárně nezávislá}, pokud není lineárně závislá.
 \end{df}
 
 Pro 2 a více vektorů platí, že jsou lineárně závislé, právě když jeden z vektorů je roven lineární kombinaci ostatních.
@@ -155,11 +156,11 @@ Množina vektorů $M$ se nazývá {\bf lineárně nezávislá}, pokud není line
 Příkladem lineárně nezávislé množiny v $\mathcal P$ je množina $\{1,x,x^2,x^3,x^4,\ldots\}$.
 
 \begin{df}
-{\bf Lineární obal} konečné množiny $\{\xx_1,\ldots,\xx_n\}$ je množina všech lineárních kombinací těchto vektorů.
+{\bf Lineární obal} konečné množiny $\{\vec x_1,\ldots,\vec x_n\}$ je množina všech lineárních kombinací těchto vektorů.
 Lineární obal nekonečné množiny $M$ je sjednocení lineárních obalů všech konečných podmnožin množiny $M$.
 \end{df}
 
-Lineární obal množiny $\{\xx_1,\ldots,\xx_n\}$ značíme $\lo{\xx_1,\ldots,\xx_n}$.
+Lineární obal množiny $\{\vec x_1,\ldots,\vec x_n\}$ značíme $\lo{\vec x_1,\ldots,\vec x_n}$.
 Lineární obal množiny $M$ značíme $\lo{M}$.
 % 
 % \begin{veta}
@@ -200,22 +201,22 @@ Jsou-li $B_1$ a $B_2$ dvě báze vektorového prostoru $V$, pak jsou obě nekone
 \end{veta}
 
 % \begin{veta}
-% Nechť $\xx_1,\ldots,\xx_n$ jsou prvky vektorového prostoru $V$, z nichž alespoň jeden je nenulový.
-% Pak z nich lze vybrat prvky $\xx_{s_1}, \xx_{s_2},\ldots,\xx_{s_k}$, kde $1\le s_1<s_2<\ldots<s_k\le n$, takové, že
+% Nechť $\vec x_1,\ldots,\vec x_n$ jsou prvky vektorového prostoru $V$, z nichž alespoň jeden je nenulový.
+% Pak z nich lze vybrat prvky $\vec x_{s_1}, \vec x_{s_2},\ldots,\vec x_{s_k}$, kde $1\le s_1<s_2<\ldots<s_k\le n$, takové, že
 % \begin{itemize}
-% \item[(i)] $\xx_{s_1},\ldots,\xx_{s_k}$ jsou lineárně nezávislé,
-% \item[(ii)] $\lo{\xx_{s_1},\ldots,\xx_{s_k}}=\lo{\xx_1,\ldots,\xx_n}$.
+% \item[(i)] $\vec x_{s_1},\ldots,\vec x_{s_k}$ jsou lineárně nezávislé,
+% \item[(ii)] $\lo{\vec x_{s_1},\ldots,\vec x_{s_k}}=\lo{\vec x_1,\ldots,\vec x_n}$.
 % \end{itemize}
 % \end{veta}
 
 \begin{veta}
-Nechť vektory $\xx_1,\ldots,\xx_n$ tvoří bázi vektorového prostoru $V$.
-Je-li $\xx\in V$ libovolný vektor, pak existuje právě jedna uspořádaná $n$-tice čísel $(c_1,\ldots,c_n)$ taková, že
-$$ \xx = c_1\xx_1+\ldots+c_n\xx_n. $$
+Nechť vektory $\vec x_1,\ldots,\vec x_n$ tvoří bázi vektorového prostoru $V$.
+Je-li $\vec x\in V$ libovolný vektor, pak existuje právě jedna uspořádaná $n$-tice čísel $(c_1,\ldots,c_n)$ taková, že
+$$ \vec x = c_1\vec x_1+\ldots+c_n\vec x_n. $$
 \end{veta}
 
 \begin{df}
-Čísla $c_1,\ldots,c_n$ z předchozí věty se nazývají {\bf souřadnice} vektoru $\xx$ v bázi $\xx_1,\ldots,\xx_n$.
+Čísla $c_1,\ldots,c_n$ z předchozí věty se nazývají {\bf souřadnice} vektoru $\vec x$ v bázi $\vec x_1,\ldots,\vec x_n$.
 \end{df}
 
 \begin{df}
@@ -233,7 +234,7 @@ Je-li $V$ vektorový prostor a $M$ je podprostor $V$, pak $\dim M \le\dim V$.
 % \end{veta}
 
 \begin{veta}
-Nechť $V$ je vektorový prostor, jehož dimenze je $\dim V=n$ a $M=\{\xx_1,\ldots,\xx_m\}$.
+Nechť $V$ je vektorový prostor, jehož dimenze je $\dim V=n$ a $M=\{\vec x_1,\ldots,\vec x_m\}$.
 Pak platí:
 \begin{enumerate}
 \item Je-li $M$ lineárně nezávislá, pak $m\le n$.
@@ -247,23 +248,23 @@ Pak platí:
 \subsection{Lineární zobrazení, matice}
 
 \begin{df}
-Zobrazení $f$ vektorového prostoru $V$ do vektorového prostoru $W$ se nazývá {\bf lineární}, jestliže pro každé $\alpha\in\R$ a $\xx,\yy\in V$ platí:
-$$ f(\alpha\xx+\yy)=\alpha f(\xx) + f(\yy). $$
+Zobrazení $f$ vektorového prostoru $V$ do vektorového prostoru $W$ se nazývá {\bf lineární}, jestliže pro každé $\alpha\in\R$ a $\vec x,\yy\in V$ platí:
+$$ f(\alpha\vec x+\yy)=\alpha f(\vec x) + f(\yy). $$
 {\bf Jádrem} tohoto zobrazení rozumíme množinu
-$$ \ker f:=\{\xx\in V;~f(\xx)=\0\}. $$
+$$ \ker f:=\{\vec x\in V;~f(\vec x)=\0\}. $$
 {\bf Obraz} $f$ je množina
 $$ \range f :=f(V). $$
 \end{df}
 Lineární zobrazení $f$ je prosté právě tehdy, když $\ker f=\{\0\}$.
 \begin{veta}
-Jsou-li vektory $\xx_1,\ldots,\xx_k$ lineárně závislé, pak jsou lineárně závislé také vektory $f(\xx_1),\ldots,f(\xx_k)$.
+Jsou-li vektory $\vec x_1,\ldots,\vec x_k$ lineárně závislé, pak jsou lineárně závislé také vektory $f(\vec x_1),\ldots,f(\vec x_k)$.
 Pokud je navíc $f$ prosté, pak platí i obrácené tvrzení, tedy
-$$ \xx_1,\ldots,\xx_k \mbox{ jsou lineárně závislé }\Leftrightarrow f(\xx_1),\ldots,f(\xx_k)\mbox{ jsou lineárně závislé}. $$
+$$ \vec x_1,\ldots,\vec x_k \mbox{ jsou lineárně závislé }\Leftrightarrow f(\vec x_1),\ldots,f(\vec x_k)\mbox{ jsou lineárně závislé}. $$
 \end{veta}
 
 
 \begin{df}
-{\bf (Reálná) matice} typu $(m,n)$ je symbol
+{\bf (Reálná) matice} řádu $m \times n$ je symbol
 $$ \A=\begin{pmatrix}a_{1,1} & a_{1,2} & \ldots & a_{1,n}\\a_{2,1} & a_{2,2} & \ldots & a_{2,n}\\&&\vdots&\\a_{m,1} & a_{m,2} & \ldots & a_{m,n}\end{pmatrix} = (a_{ij})_{i=1,\ldots,m}^{j=1,\ldots,n}, $$
 kde pro $i=1,\ldots,m$ a $j=1,\ldots,n$ jsou $a_{ij}$ reálná čísla (nazývají se {\bf prvky} matice $\A$).
 % 
@@ -271,7 +272,7 @@ kde pro $i=1,\ldots,m$ a $j=1,\ldots,n$ jsou $a_{ij}$ reálná čísla (nazývaj
 % 
 % Pro $j=1,\ldots,n$ nazýváme $m$-tici čísel $\begin{pmatrix}a_{1,j}\\a_{2,j}\\\vdots\\a_{m,j}\end{pmatrix}$ $j$-tým {\bf sloupcem} matice $\A$.
 \end{df}
-Množinu všech matic typu $(m,n)$ budeme značit $\R^{m\times n}$.
+Množinu všech matic řádu $m\times n$ budeme značit $\R^{m\times n}$.
 Definujeme-li sčítání matic a násobení matic reálným číslem po složkách, pak množina $\R^{m\times n}$ je vektorový prostor.
 
 \begin{df}
@@ -367,43 +368,43 @@ Je-li ovšem reálná matice symetrická, pak jsou všechna její vlastní čís
 
 \subsection{Soustava lineárních rovnic}
 
-V dalším ztotožníme vektory z $\R^n$ s maticemi typu $(n,1)$, tj. $\vec a\in\R^n$ znamená totéž jako $\vec a\in\R^{n\times 1}$.
+V dalším ztotožníme vektory z $\R^n$ s maticemi typu $(n,1)$, tj. $\vc a\in\R^n$ znamená totéž jako $\vc a\in\R^{n\times 1}$.
 
 \begin{df}
-Nechť $\A\in\R^{m\times n}$, $\xx=\begin{pmatrix}x_1\\\vdots\\x_n\end{pmatrix}\in\R^{n}$ a $\vec b=\begin{pmatrix}b_1\\\vdots\\b_m\end{pmatrix}\in\R^{m}$.
+Nechť $\A\in\R^{m\times n}$, $\xx=\begin{pmatrix}x_1\\\vdots\\x_n\end{pmatrix}\in\R^{n}$ a $\vc b=\begin{pmatrix}b_1\\\vdots\\b_m\end{pmatrix}\in\R^{m}$.
 Pak maticovou rovnost
-$$ \A\xx=\vec b $$
+$$ \A\xx=\vc b $$
 nazýváme {\bf soustavou $m$ lineárních rovnic o $n$ neznámých}.
-Matici $\A$ nazýváme {\bf maticí soustavy} a vektor $\vec b$ nazýváme {\bf vektorem pravých stran}.
-Připíšeme-li k matici soustavy do dalšího sloupce vektor $\vec b$ (pro přehlednost oddělený svislou čarou), dostáváme matici $(\A|\vec b)\in\R^{m\times(n+1)}$, kterou nazýváme {\bf rozšířenou maticí soustavy}.
+Matici $\A$ nazýváme {\bf maticí soustavy} a vektor $\vc b$ nazýváme {\bf vektorem pravých stran}.
+Připíšeme-li k matici soustavy do dalšího sloupce vektor $\vc b$ (pro přehlednost oddělený svislou čarou), dostáváme matici $(\A|\vc b)\in\R^{m\times(n+1)}$, kterou nazýváme {\bf rozšířenou maticí soustavy}.
 \end{df}
 
   
 \begin{df}
-{\bf Řešením} soustavy $\A\xx=\vec b$ je takový vektor $\vec a=(\alpha_1,\ldots,\alpha_n)\in\R^n$, pro který platí: Dosadíme-li hodnoty $\alpha_i$ za symboly $x_i$, pak je splněna požadovaná maticová rovnost, tj.
+{\bf Řešením} soustavy $\A\xx=\vc b$ je takový vektor $\vc a=(\alpha_1,\ldots,\alpha_n)\in\R^n$, pro který platí: Dosadíme-li hodnoty $\alpha_i$ za symboly $x_i$, pak je splněna požadovaná maticová rovnost, tj.
 $$ \A \begin{pmatrix}\alpha_1\\\vdots\\\alpha_n\end{pmatrix}=\begin{pmatrix}b_1\\\vdots\\b_m\end{pmatrix}. $$
-{\bf Řešit soustavu} $\A\xx=\vec b$ znamená nalézt všechna její řešení, tj. nalézt podmnožinu $\R^n$ všech řešení této soustavy.
+{\bf Řešit soustavu} $\A\xx=\vc b$ znamená nalézt všechna její řešení, tj. nalézt podmnožinu $\R^n$ všech řešení této soustavy.
 \end{df}
 
 \begin{veta}[Frobeniova]
-Soustava $\A\xx=\vec b$ má řešení právě tehdy, když
-$$ \rank{\A}=\rank{\A|\vec b}, $$
+Soustava $\A\xx=\vc b$ má řešení právě tehdy, když
+$$ \rank{\A}=\rank{\A|\vc b}, $$
 tj. když hodnost matice soustavy se rovná hodnosti rozšířené matice soustavy.
 \end{veta}
 
   
 \begin{df}
-Nechť $\A\xx=\vec b$ je soustava $m$ lineárních rovnic o $n$ neznámých a $\mat C\xx=\vec d$ je soustava $k$ lineárních rovnic o stejném počtu $n$ neznámých.
+Nechť $\A\xx=\vc b$ je soustava $m$ lineárních rovnic o $n$ neznámých a $\mat C\xx=\vc d$ je soustava $k$ lineárních rovnic o stejném počtu $n$ neznámých.
 Říkáme, že tyto soustavy jsou {\bf ekvivalentní}, pokud obě soustavy mají stejné množiny řešení.
 \end{df}
 
 \begin{veta}
-Ke každé soustavě $\A\xx=\vec b$ lze nalézt ekvivalentní soustavu $\mat C\xx=\vec d$, jejíž matice $\mat C$ je horní trojúhelníková.
+Ke každé soustavě $\A\xx=\vc b$ lze nalézt ekvivalentní soustavu $\mat C\xx=\vc d$, jejíž matice $\mat C$ je horní trojúhelníková.
 \end{veta}
   
 \begin{df}
-Existuje-li v matici $\vec b$ aspoň jeden prvek nenulový, říkáme, že soustava $\A\xx=\vec b$ je {\bf nehomogenní}.
-Jsou-li všechny prvky v matici $\vec b$ nulové, nazýváme soustavu rovnic {\bf homogenní} a zapisujeme ji takto:
+Existuje-li v matici $\vc b$ aspoň jeden prvek nenulový, říkáme, že soustava $\A\xx=\vc b$ je {\bf nehomogenní}.
+Jsou-li všechny prvky v matici $\vc b$ nulové, nazýváme soustavu rovnic {\bf homogenní} a zapisujeme ji takto:
 $$ \A\xx=\0. $$
 \end{df}
 
@@ -422,24 +423,24 @@ Vektory $\uu_1,\ldots,\uu_k$ tvoří jednu z možných bází vektorového prost
 Důsledek: Je-li $M_0$ vektorový prostor všech řešení homogenní soustavy lineárních rovnic $\A\xx=\0$ s $n$ neznámými, pak $\dim M_0=n-\rank\A$.
   
 \begin{df}
-Libovolné řešení $\vec v\in\R^n$ nehomogenní soustavy lineárních rovnic $\A\xx=\bb$ o $n$ neznámých se nazývá {\bf partikulární řešení} této soustavy.
+Libovolné řešení $\vc v\in\R^n$ nehomogenní soustavy lineárních rovnic $\A\xx=\bb$ o $n$ neznámých se nazývá {\bf partikulární řešení} této soustavy.
 
 Pokud zaměníme matici $\bb$ za nulovou matici stejného typu, dostáváme homogenní soustavu $\A\xx=\0$, kterou nazýváme {\bf přidruženou homogenní soustavou} k soustavě $\A\xx=\bb$.
 \end{df}
   
 \begin{veta}
 \begin{enumerate}
-\item Nechť $\vec v$ je partikulární řešení nehomogenní soustavy $\A\xx=\bb$ a $\uu$ je libovolné řešení přidružené homogenní soustavy $\A\xx=\0$.
-Pak $\vec v+\uu$ je také řešením soustavy $\A\xx=\bb$.
-\item Nechť $\vec v$ a $\vec w$ jsou dvě partikulární řešení nehomogenní soustavy $\A\xx=\bb$.
-Pak $\vec v-\vec w$ je řešením přidružené homogenní soustavy $\A\xx=\0$.
+\item Nechť $\vc v$ je partikulární řešení nehomogenní soustavy $\A\xx=\bb$ a $\uu$ je libovolné řešení přidružené homogenní soustavy $\A\xx=\0$.
+Pak $\vc v+\uu$ je také řešením soustavy $\A\xx=\bb$.
+\item Nechť $\vc v$ a $\vc w$ jsou dvě partikulární řešení nehomogenní soustavy $\A\xx=\bb$.
+Pak $\vc v-\vc w$ je řešením přidružené homogenní soustavy $\A\xx=\0$.
 \end{enumerate}
 \end{veta}
   
 \begin{veta}
-Nechť $\vec v$ je partikulární řešení soustavy $\A\xx=\bb$ a $M_0$ je vektorový prostor všech řešení přidružené homogenní soustavy $\A\xx=\0$.
+Nechť $\vc v$ je partikulární řešení soustavy $\A\xx=\bb$ a $M_0$ je vektorový prostor všech řešení přidružené homogenní soustavy $\A\xx=\0$.
 Pak pro množinu $M$ všech řešení soustavy $\A\xx=\bb$ platí:
-$$ M=\{\vec v+\uu;~\uu\in M_0\}. $$
+$$ M=\{\vc v+\uu;~\uu\in M_0\}. $$
 \end{veta}
   
 \begin{veta}[Cramerovo pravidlo]
@@ -448,3 +449,10 @@ Pak pro $i$-tou složku řešení soustavy $\A\xx=\bb$ platí:
 $$ \alpha_i = \frac{\det\B_i}{\det\A}, $$
 kde matice $\B_i$ je shodná s $\A$ až na $i$-tý sloupec, který je zaměněn za sloupec pravých stran.
 \end{veta}
+
+
+\section{Diferenciální počet funkce více proměnných}
+
+% Skalární a vektorové funkce více proměnných. 
+% Diferenciální operátory: gradient, divergence, rotace. 
+% Derivace složených funkcí. Vektorový prostor funkcí.
