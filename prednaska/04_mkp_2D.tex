@@ -208,11 +208,15 @@ Na referenčním elementu definujeme bázové funkce $\hat{\phi}_i(\hat{x})$ pro
 Tyto funkce jsou lineární na referenčním trojúhelníku 
 a splňují podmínku $\hat{\phi}_i(\hat{\vc N}_j) = \delta_{ij}$. 
 Jelikož jsou bázové funkce lineární, jsou jejich gradienty konstantní:
-\begin{align*}
+\begin{subequations}
+\label{eq:ref_base_gradients}
+\begin{align}
+%\label{eq:ref_base_gradients1}
 \nabla_{\hat{x}} \hat{\phi}_1 &= \begin{pmatrix} -1 \\ -1 \end{pmatrix}, \\
 \nabla_{\hat{x}} \hat{\phi}_2 &= \begin{pmatrix} 1 \\ 0 \end{pmatrix}, \\
 \nabla_{\hat{x}} \hat{\phi}_3 &= \begin{pmatrix} 0 \\ 1 \end{pmatrix}.
-\end{align*}
+\end{align}
+\end{subequations}
 
 \subsection{Afinní transformace na referenční element}
 Afinní transformace je lineární zobrazení, které mapuje referenční element $\hat{T}$ na 
@@ -222,9 +226,10 @@ vrcholy $T$, které si označíme $\vc N_i$, $\vc N_j$, $\vc N_k$.
 Označíme-li souřadnice v referenčním elementu symbolem 
 $\hat{\xx} = (\hat{x}_1, \hat{x}_2)$ a souřadnice ve skutečném elementu $x = (x_1, x_2)$, 
 pak afinní transformace má tvar:
-\[
+\begin{equation}
+\label{eq:affine}
 \xx = \vc F_T(\hat{\xx}) = \tn J_T \hat{\xx} + \vc j_T,
-\]
+\end{equation}
 kde $\tn J_T$ je {\it Jacobiho matice} transformace a $\vc j_T$ je vektor posunutí.
 Jacobiho matice a posunutí nyní určíme z podmínek mapování uzlů:
 % \[
@@ -271,18 +276,20 @@ $\vc x\in X$, pak platí:
 \[
 \int_{X} f(\vc x) \d \vc x = \int_{\hat{X}} 
 f(\vc F(\hat{\vc x})) 
-\big|\frac{\d \vc x}{\d \hat{\vc x}}\big| \d\hat{\vc x}.
+\big|\frac{\d F}{\d \hat{\vc x}}\big| \d\hat{\vc x}.
 \]
 Po substituci se nám v integrálu objevil navíc tzv. {\it Jakobián}, 
-tj.  absolutní hodnota determinantu Jacobiho matice. 
-Tato věta nám umožňuje převést integrály přes obecné elementy 
-na integrály přes referenční element, 
-což značně usnadňuje jejich vyhodnocení.
+tj.  absolutní hodnota determinantu derivace zobrazení $\bf F$.
+Speciálně $\vc F = \vc F_T$ je afinní (lineární + konstanta) zobrazení, 
+derivaci snadno spočteme z jeho definice
+\eqref{eq:affine}:
+\[
+ \frac{\d \vc F_T}{\d\hat{\vc x}} = \tn J_T 
+\]
 
-\subsection{Aplikace afinní transformace}
-V případě afinního zobrazení $F_T$ je Jakobiho matice i příslušný Jakobián
-konstantní na každém elementu. Pro integrál přes element $T$ pak 
-substitucí dostaneme konkrétnější tvar:
+Věta o substituci nám tak umožňuje převést integrály přes jednotlivé elementy 
+na integrály přes referenční element, což značně usnadňuje jejich vyhodnocení.
+Pro integrál přes element $T$ pak substitucí dostaneme konkrétnější tvar:
 \[
 \int_{T} f(\vc x) \d \vc x = \int_{\hat{T}} 
 f(\vc F_T(\hat{\vc x})) 
@@ -296,75 +303,35 @@ f(\vc F_T(\hat{\vc x}))
 |\tn J_T \hat{\vc n}| \d\hat{\vc s}. 
 \]
 
-Afinní transformace $\vc F_T$ zobrazuje referenční element 
-$\hat{T}$ na skutečný element $T$ a 
-umožňuje nám vyjádřit bázové funkce a jejich gradienty 
-ve skutečných souřadnicích:
-\[
-\phi_i(\vc x) = \hat{\phi}_i(\hat{\vc x}).
-\]
-Gradient bázových funkcí ve skutečných souřadnicích získáme 
-pomocí transformace gradientů (viz kap. \ref{sec:trans_grad} níže):
-\[
-\nabla_x \phi_i(\vc x) = \tn J_T^{-\top} 
-\nabla_{\hat{\vc x}} \hat{\phi}_i(\hat{\vc x}).
-\]
-Transformace gradientů je klíčová pro správné vyhodnocení 
-členů obsahujících derivace v lokální matici. 
-Gradient bázové funkce ve skutečných souřadnicích získáme:
-\[
-\nabla_{\vc x} \phi_i(\vc x) 
-= \nabla_{\vc x} \hat\phi_i(\hat{\vc x}) 
-=  \frac{\prtl \hat{\vc x}}{\prtl \vc x} \nabla_{\hat{\vc x}} \hat{\phi}_i(\hat{\vc x})
-= \tn J^{-\top}_T \nabla_{\hat{\vc x}} \hat{\phi}_i(\hat{\vc x}).
-\]
-Tento vztah vyplývá z řetězového pravidla pro derivace 
-a vlastností afinní transformace. 
-Inverzní transponovaná Jacobiho matice $\tn J_T^{-\top}$ 
-zajišťuje správné měřítko a orientaci gradientů při transformaci 
-z referenčních na skutečné souřadnice.
+
 
 \subsection{Transformace gradientů}\label{sec:trans_grad}
-
-
-Transformace gradientů je klíčová pro správné vyhodnocení členů obsahujících derivace v lokální matici. Chceme vyjádřit gradient bázové funkce ve skutečných souřadnicích \(\nabla_{\vc x} \phi_i(\vc x)\) pomocí gradientu v referenčních souřadnicích \(\nabla_{\hat{\vc x}} \hat{\phi}_i(\hat{\vc x})\).
+Poslední ingediencí pro vyhodnocení integrálů na referenčním elementu je 
+výpočet gradientů bázových funkcí. Z jejich definice totiž přímo dostaneme pouze 
+gradienty \eqref{eq:ref_base_gradients} podle referenčních souřadnic $\hat{\vc x}$,
+my však potřebujeme gradienty podle absolutních souřadnic $\vc x$.
 
 Víme, že \(\phi_i(\vc x) = \hat{\phi}_i(\hat{\vc x})\), 
-kde \(\hat{\vc x}\) závisí na \(\vc x\) 
-skrze inverzní afinní transformaci 
-\(\hat{\vc x} = \tn J_T^{-1} (\vc x - \vc j_T)\). 
-Použijeme řetězové pravidlo pro parciální derivace:
+kde $\vc x$ závisí na $\hat{\vc x}$ skrze inverzní afinní transformaci $\vc F$.
+Derivujme tedy $\hat\phi_(\hat{\vc x})$ pomocí řetízkového pravidla 
+pro derivování složených funkcí více proměnných:
 \begin{equation}
 \label{eq:chain}
 \frac{\partial \hat{\phi}_k(\hat{\vc x})}{\partial \hat{x}_j} 
 =\frac{\partial \phi_k(x_1(\hat{\vc x}), x_2(\hat{\vc x}))}{\partial \hat{x}_j} 
 = \frac{\partial \phi_k}{\prtl x_1}\frac{\prtl x_1}{\partial \hat{x}_j}
-+ \frac{\partial \phi_k}{\prtl x_2}\frac{\prtl x_2}{\partial \hat{x}_j}.
++ \frac{\partial \phi_k}{\prtl x_2}\frac{\prtl x_2}{\partial \hat{x}_j}
+= \prtl_{\hat{x}_j} \vc F^\top \cdot \grad_{\vc x} \phi_k(\vc x) 
 \end{equation}
-Protože afinní transformace je lineární, platí:
+V posledním členu je $\vc F$ (a tedy i jeho derivace) sloupcový vektor, proto musíme provést jeho 
+transpozici, pro koretní zápis skalárního součinu. Aplikací pro $j=1, 2$ dostaneme
+stejný výpočet ve vektorové formě:
 \[
-\vc x = \tn J_T \hat{\vc x} + \vc j_T .
+ \grad_{\hat{\vc x}} \hat\phi_k = \grad \vc F^\top \grad_{\vc x} \phi_k 
+ = \tn J_T^\top \grad_{\vc x} \phi_k
 \]
-Derivováním podle $\hat{\vc x}$ dostaneme:
-\begin{equation}
-    \label{eq:jac_mat}
-    \frac{\prtl x_i}{\prtl \hat{x}_j} = J_{T, ij}.
-\end{equation}
-Matice $\tn J_T = \grad_{\hat{\vc x}} \vc x$
-má tedy $x_i$ v řádcích a $\frac{\prtl}{\prtl \hat{x}_j}$ ve sloupcích.
-Dosadíme do \eqref{eq:chain} a pozorujeme, že na pravé straně máme násobení 
-matice a vektoru. Vektorový zápis \eqref{eq:chain} pak je:
-\[
-    (\grad_{\hat{\vc x}} \hat\phi_k)^\top =  (\grad_{\vc x} \phi_k)^\top
-        \begin{pmatrix}
-        \frac{\prtl x_1}{\prtl \hat x_1} & \frac{\prtl x_2}{\prtl \hat x_1} \\
-        \frac{\prtl x_1}{\prtl \hat x_2} & \frac{\prtl x_2}{\prtl \hat x_2} \\
-        \end{pmatrix}
-     = (\grad_{\vc x} \phi_k)^\top \tn J_T,
-\]
-přičemž gradienty jsou zde řádkové vektory, a proto Jacobiho matici násobíme zleva.
-Pro gradienty jako sloupcové vektory vzorec transponujeme a násobíme inverzní maticí, 
-abychom dostali vzorec pro gradienty bázových funkcí vůči reálným souřadnicím $\vc x$:
+Násobením inverzní transponovenou Jacobiho maticí pak dostaneme
+gradienty bázových funkcí vůči reálným souřadnicím $\vc x$:
 \[
     \grad_{\vc x} \phi_k = \tn J_T^{-\top} \grad_{\hat{\vc x}} \hat\phi_k.
 \]
@@ -372,25 +339,34 @@ abychom dostali vzorec pro gradienty bázových funkcí vůči reálným souřad
 
 \subsection{Vyhodnocení lokální matice a pravé strany}
 
-Použijeme-li výše uvedené vztahy, můžeme vyjádřit prvky lokální matice $\tn A_T$ a vektoru $\vc b_T$ jako integrály přes referenční element:
+Použijeme-li výše uvedené vztahy, můžeme vyjádřit prvky lokální matice 
+$\tn A_T$ a vektoru $\vc b_T$ na elementu $T$ 
+jako integrály přes referenční element $\hat T$:
 
-\[
+\begin{equation}
 A_{T,ij} = \int_{\hat{T}} \left( \tn K \tn J_T^{-\top} \nabla_{\hat{\vc x}} \hat{\phi}_j(\hat{\vc x}) \right) 
-         \cdot \left( \tn J_T^{-\top} \nabla_{\hat{\vc x}} \hat{\phi}_i(\hat{\vc x}) \right) |\det \tn J_T| 
+         \cdot \left( \tn J_T^{-\top} \nabla_{\hat{\vc x}} \hat{\phi}_i(\hat{\vc x}) \right) |\tn J_T| 
          \d\hat{\vc x} 
-+ \int_{\partial \hat{T} \cap \partial \hat{\Omega}} 
++ \int_{\partial \hat{T} \cap \partial \hat{\Omega}}
 \sigma \hat{\phi}_j(\hat{\vc x}) \hat{\phi}_i(\hat{\vc x}) |\tn J_T \hat{\vc n}|
 \, \d\hat{s},
-\]
+\label{eq:a_h_2D}
+\end{equation}
 
-\[
-b_{T,i} = \int_{\hat{T}} f(\tn F_T(\hat{\vc x})) \hat{\phi}_i(\hat{\vc x}) 
-|\det \tn J_T| \d\hat{\vc x} + 
+\begin{equation}
+b_{T,i} = \int_{\hat{T}} f \hat{\phi}_i(\hat{\vc x}) 
+|\tn J_T| \d\hat{\vc x} + 
 \int_{\partial \hat{T} \cap \partial \hat{\Omega}} 
-\sigma u_R(\tn F_T(\hat{\vc x})) \hat{\phi}_i(\hat{\vc x}) |\tn J_T \hat{\vc n}| \d\hat{s}.
-\]
-Zde $|\tn J_T \hat{\vc n}|$ představuje měřítko délky při transformaci stran.
+\sigma_R u_R \hat{\phi}_i(\hat{\vc x}) |\tn J_T \hat{\vc n}| \d\hat{s}.
+\end{equation}
 
+Zde $|\tn J_T \hat{\vc n}|$ představuje měřítko délky při transformaci stran.
+Zadané parametry $\tn K$, $\sigma$, $\sigma_R$, $u_R$ jsou obecně funkce 
+proměnné absolutních souřadnic $\vc x$ ovšem často uvažované 
+jako konstanty na jednotlivých elementech. V tom případě už můžeme vyhodnotit 
+první integrál jelikož i gradienty i Jakobián jsou konstantní pro daný element $T$.
+Pro ostatní integrály a obecné $\tn K$ však potřebujeme vhodnou 
+aproximaci integrálů.
 
 
 % \subsubsection{Praktické vyhodnocení integrálů}
@@ -442,22 +418,50 @@ Zde $|\tn J_T \hat{\vc n}|$ představuje měřítko délky při transformaci str
 % kde $\vc D_i(\vc q) = \tn P_K^{-1}(\vc q) \grad \hat \phi_i(\vc q)$.
 
 \subsection{Numerická integrace}
-Pro vyhodnocení integálů je výhodné použít numerickou integraci (kvadraturu). Pro polynomiální bázové funkce lze zvolit takovou kvadraturu, že jsou 
-příslušné integrály spočteny přesně. Pokud jsou pod integrálem i jiné funkce, například vlivem koeficientů v rovnici nebo kvůli 
-transformaci na referenční element, poskytuje numerická kvadratura obvykle dobrou aproximaci. Konkrétní kvadratura na referenčním prvku $\hat T$ je dána
+
+Definice Reimanova integrálu je založena na approximaci funkce pomocí po částech konstantní funkce na nějakém dělení integrované oblasti.
+Konkrétně na obrázku \ref{fig:quad} vlevo je hodně hrubé dělení referenčního elementu a integrál bychom mohli 
+approximovat součet:
+\[
+  \int_{\hat T} f(\vc x) \d x \approx f(\vc x_1) |T_1| + f(\vc x_2)|T_2| + f(\vc x_3)|T_3| = \sum_{i=1}^3 f(\vc x_i)w_i.
+\]
+Obecně můžeme integrál approximovat pomocí kvadratury, která je dána
 \begin{enumerate}
- \item množinou kvadraturních bodů $Q=\{\vc q \in \hat T\}$,
- \item množinou jim příslušejících vah $w_{\vc q}$.
+ \item množinou kvadraturních bodů $Q=\{\vc q_i \in \hat T | i=1,\dots, n\}$,
+ \item množinou jim příslušejících vah $w_q$.
 \end{enumerate}
 Integrál z funkce $f(\hat{\vc x})$ je pak aproximován pomocí sumy:
 \[
     \int_{\hat T} f(\hat{\vc x}) \d \hat{\vc x} \approx \sum_{\vc q\in Q} f(\hat{\vc q}) w_{\vc q}.
 \]
 
-Pro integraci na reálném intervalu $T\subset \Real$ lze použít {\it Gaussovu kvadraturu},  která má optimální řád chyby. Při použití $n$ kvadraturních bodů integruje
-kvadratura přesně polynomy do řádu $2n-1$. Pro vyhodnocení bilineární formy pro Laplaceovu rovnici a při použití prvků s polynomy řádu $k$ mají derivace řád $k-1$ a 
-jejich součin řád $2(k-1)$. Pro přesné vyhodnocení integrálů je tedy potřeba použít $k$-bodovou Gaussovu kvadraturu. U 2D a 3D prvků je situace komplikovanější,
-nicméně vhodné kvadratury existují pro všechny základní typy elementů.
+Riemannova definice používá limitu pro přes libovolné dělení, proto na přesnosti pro hrubá dělení nezáleží.
+Pro dosažení dobré aproximace s minimem bodů bychom chtěli najít takové body $\vc q_i$ a jejich váhy $w_i$,
+aby chyba vůči přesnému integrálu byla co nejmenší. Toho nelze dosáhnout pro obecnou funkci, ale lze toho dosáhnout 
+pro pěkné hladké funkce, jako například pro polynomy. Konkrétně pro každé liché $p$ existuje tzv. Gaussova 
+kvadratura, která integruje přesně polynomy až do řádu $p$ včetně. Na obrázku 
+\ref{fig:quad} vpravo jsou pozice bodů pro $p=3$, Gausovy kvadratury pro $p=1, 3, 5$ jsou na obr. \ref{fig:gauss}
+
+\begin{figure}
+ \begin{center}
+ \includegraphics[width=\textwidth]{img/quadrature.pdf}
+ \caption{Riemannova integrace (vlevo) jako motivace pro Gaussovu kvadraturu (vpravo).}
+ \label{fig:quad}
+ \end{center}
+ \end{figure}
+
+ \begin{figure}
+ \begin{center}
+ \includegraphics[width=\textwidth]{img/gauss_135.pdf}
+ \caption{Gaussova kvadratura pro polynomy do řádu $p=1,2,3$.}
+ \label{fig:gauss}
+ \end{center}
+ \end{figure}
+
+Jaký řád kvadratury tedy potřebujeme pro integrály v bilineární formě \eqref{eq:a_h_2D}? Pokud je $\tn K$ a $\sigma$ 
+konstantní na elementu, pak v prvním integrálu máme polynom řádu $0$ a stačí kvadratura $p=1$. Ve druhém integrálu je součin
+lineárních bázových funkcí což je polynom řádu $2$ a kvadratura musí být alespoň $p=3$. Pro nekonstantní koeficienty a
+konečné prvky / bázové funkce vyššího řádu může být potřeba použít kvadratury vyšších řádů. 
 
 
 
@@ -465,225 +469,18 @@ nicméně vhodné kvadratury existují pro všechny základní typy elementů.
 
 
 
+\section{Praktické aspekty MKP}
+\begin{itemize}
+ \item Vyhodnocení forem založené na bázových funkcích tabulovaných v kvadraturních bodech (FENICS, DEAL.II).
+ \item Assemblace globální matice a pravé strany z lokálních příspěvků.
+ \item Obecná formulace konečného prvku, unisolventnost.
+ \item Prvky 3D a prvky vyšších řádů.
+\end{itemize}
 
-
-% \section{MKP pro eliptické úlohy}
-% V předchozí kapitole jsme uvedli koncept slabého řešení. Slabá formulace rovnic lépe odpovídá 
-% fyzikální podstatě zákonů zachování, ze kterých řada parciálních diferenciálních rovnic (PDR) vychází a
-% zejména umožňuje dokázat existenci slabého řešení pro širokou řadu lineárních rovnic, jak ukážeme později. 
-% Existence řešení však neznamená, že bychom toto řešení dokázali zapsat. Naopak pro většinu parciálních 
-% diferenciálních rovnic neumíme zapsat jejich řešení pomocí běžných funkcí (tzv. řešení v uzavřeném tvaru).
-% Proto se používají různé metody přibližného řešení, kdy najdeme funkci, která rovnici nesplňuje přesně, 
-% ale zato ji umíme nalézt, vyhodnotit, zobrazit.
-% 
-% Pro jednoduchost budeme aproximativní řešení v této kapitole demonstrovat na jednodušší rovnici:
-% 
-% \begin{equation}
-%  -\div\big(\tn K \grad u\big) = f\quad \text{v }\Omega
-% \end{equation}
-% s Robinovou okrajovou podmínkou:
-% \[
-%    (-\tn K \grad u) \cdot \vc n = \sigma_R (u - u_R) \quad \text{na }\prtl\Omega
-% \]
-% 
-% Slabá formulace hledá řešení v prostoru $V = H^1(\Omega)$, tedy jistý prostor funkcí se slabou 
-% první derivací. Řešení musí splňovat rovnici:
-% \begin{align}
-%     \label{eq:weak_poisson}
-%     A(u, v) &:= \int_\Omega (\tn K\grad u) \cdot \grad v \, \mathrm{d}x +\int_{\prtl\Omega} \sigma u v\, \mathrm{d}s\\
-%             & = \int_\Omega f v\, \mathrm{d}x + \int_{\prtl\Omega} \sigma u_R v\, \mathrm{d}s =: l(v)
-% \end{align}
-% pro všechny testovací funkce $ v\in V$.
-% 
-% V případě naší konkrétní rovnice \eqref{eq:weak_poisson} můžeme bilineární formu a lineární funkcionál explicitně vyjádřit. Bilineární forma $A(u,v)$ je dána jako:
-% 
-% \[
-% A(u,v) = \int_\Omega (\tn K \nabla u) \cdot \nabla v \, \mathrm{d}x + \int_{\partial \Omega} \sigma u v \, \mathrm{d}s.
-% \]
-% 
-% Lineární funkcionál $l(v)$ je pak:
-% 
-% \[
-% l(v) = \int_\Omega f v \, \mathrm{d}x + \int_{\partial \Omega} \sigma u_R v \, \mathrm{d}s.
-% \]
-% 
-% Galerkinova metoda spočívá v tom, že hledáme aproximaci $u_n \in V_n$, která splňuje:
-% 
-% \[
-% \int_\Omega (\tn K \nabla u_n) \cdot \nabla v \, \mathrm{d}x + \int_{\partial \Omega} \sigma u_n v \, \mathrm{d}s = \int_\Omega f v \, \mathrm{d}x + \int_{\partial \Omega} \sigma u_R v \, \mathrm{d}s \quad \text{pro všechna } v \in V_n.
-% \]
-% 
-% Tato soustava je pak základem pro sestavení konečněprvkové aproximace řešení naší úlohy.
-% 
-% 
-% \section{Galerkinova metoda}
-% (Viz. Johnson \cite{Johnson}, kapitola 2)
-% 
-% Metoda konečných prvků, kterou si podrobněji představíme v další kapitole, je speciálním případem
-% obecnější Galerkinovy aproximační metody. Základní myšlenkou je ponechat ve slabé formulaci stejnou 
-% bilineární formu $A(u,v)$ a stejnou lineární formu $l(v)$, ale nahradit nekonečně dimenzionální prostor
-% řešení $V$ podprostorem $V_n \subset V$ s konečnou dimenzí $\dim V_n = n$. Velmi podobně jako slabé 
-% řešení je definováno přibližné řešení $u_n \in V_n$, které splňuje rovnici
-% \begin{equation}
-%    \label{eq:weak_galerkin} 
-%    A(u_n, v) = l(v) \quad \text{pro všechny funkce }v\in V_n.
-% \end{equation}
-% 
-% 
-% Lineární prostor $V_n$ má konečnou bázi, tedy existuje $n$ lineárně nezávislých funkcí 
-% $\phi_j(\vc x) \in V_n$, $j=1,\dots, n$,
-% a každý prvek prostoru 
-% pak lze napsat jako jejich lineární kombinaci:
-% \[
-%     w(\vc x) = \sum_{j=1}^n w_j \phi_j(\vc x).
-% \]
-% Koeficienty $w_j$ jednoznačně určují funkci $w$ a opačně pro každou funkci $w\in V_n$ existuje jednoznačný 
-% vektor koeficientů $(w_1, \dots, w_n)$. Z toho plyne, že stejně můžeme zapsat i přibližné řešení
-% a pro jeho určení stačí určit vektor $n$ koeficientů. K tomu nám však stačí $n$ lineárně nezávislých 
-% testovacích funkcí daných bází. 
-% Řešíme tedy soustavu $n$ rovnic o $n$ neznámých:
-% 
-% \[
-%    A\left(\sum_{j=1}^n u_j \phi_j(\vc x), \phi_i(\vc x)\right) = l(\phi_i), \quad \text{pro }i=1, \dots, n.
-% \]
-% A protože je forma $A$ bilineární, můžeme součet a koeficienty přesunout ven a získáme:
-% \[
-%     \sum_{j=1}^n u_j A(\phi_j, \phi_i) = l(\phi_i), \quad \text{pro }i=1, \dots, n.
-% \]
-% Nalevo dostáváme prvky matice $A_{i,j} = A(\phi_j, \phi_i)$ a napravo prvky vektoru $b_i = l(\phi_i)$.
-% Řešení slabé formulace na konečně rozměrném podprostoru, tedy rovnice \eqref{eq:weak_galerkin}, je tedy 
-% ekvivalentní řešení lineární soustavy rovnic:
-% \[
-%  \tn A \vc u = \vc b.
-% \]
-% 
-% V případě naší konkrétní rovnice \eqref{eq:weak_poisson} můžeme bilineární formu a lineární funkcionál explicitně vyjádřit. Bilineární forma $A(u,v)$ je dána jako:
-% 
-% \[
-% A(u,v) = \int_\Omega (\tn K \nabla u) \cdot \nabla v \, \mathrm{d}x + \int_{\partial \Omega} \sigma u v \, \mathrm{d}s.
-% \]
-% 
-% Lineární funkcionál $l(v)$ je pak:
-% 
-% \[
-% l(v) = \int_\Omega f v \, \mathrm{d}x + \int_{\partial \Omega} \sigma u_R v \, \mathrm{d}s.
-% \]
-% 
-% Galerkinova metoda spočívá v tom, že hledáme aproximaci $u_n \in V_n$, která splňuje:
-% 
-% \[
-% \int_\Omega (\tn K \nabla u_n) \cdot \nabla v \, \mathrm{d}x + \int_{\partial \Omega} \sigma u_n v \, \mathrm{d}s = \int_\Omega f v \, \mathrm{d}x + \int_{\partial \Omega} \sigma u_R v \, \mathrm{d}s \quad \text{pro všechna } v \in V_n.
-% \]
-% 
-% Tato soustava je pak základem pro sestavení konečněprvkové aproximace řešení naší úlohy.
-% 
-% \subsection{Výpočetní síť}
-% Oblast $\Omega \subset \Real^2$ předpokládáme polygonální 
-% (hranice tvořena rovnými úseky). Výpočetní síť je rozdělení oblasti trojúhelníky {\it elementy} $T_e$ 
-% tak, aby dva trojúhelníky sousedili buďto celou společnou hranou nebo společným vrcholem. 
-% Vrcholy trojúhelníků nazýváme {\it uzly} sítě $N_j$, $j=1, \dots, n$.
-% 
-% Ve 2D je možné pracovat také s rozdělením na čtyřúhelníky, nebo kombinací trojúhelníků a čtyřúhelníků.
-% 
-% Ve 3D se používá dělení na tetraedry (čtyřstěny), deformované krychle, ale též se používají prvky 
-% s různými kombinacemi trojúhelníkových a čtyřúhelníkových stěn, např. trojboké hranoly nebo pyramidy.
-% 
-% \subsection{Konečné prvky prvního řádu}
-% V metodě konečných prvků volíme specifický podprostor $V_n$ a specifické bázové funkce v Galerkinově 
-% metodě.
-% 
-% Volíme jako aproximační prostor $V_n$ prostor funkcí, které jsou spojité na celé oblasti $\Omega$
-% a na každém elementu $T_e$ jsou polynomy prvního stupně, tedy lineární funkce. 
-% Tento prostor se označuje jako prostor po částech lineárních funkcí $P^1$.
-% 
-% Bázové funkce $\phi_j$ jsou definovány tak, že pro každý uzel $N_j$ platí:
-% 
-% \[
-% \phi_j(N_i) = \delta_{ij},
-% \]
-% 
-% kde $\delta_{ij}$ je Kroneckerovo delta. To znamená, že bázová funkce $\phi_j$ nabývá hodnoty 
-% 1 v uzlu $N_j$ a hodnoty 0 ve všech ostatních uzlech. Díky této vlastnosti jsou bázové funkce 
-% ortogonální vůči uzlům sítě, což umožňuje snadné sestavení a řešení soustavy rovnic.
-% 
-% Na každém trojúhelníkovém elementu jsou bázové funkce $\phi_j$ lineární funkce definované na 
-% vrcholech elementu, přičemž jejich hodnota je určena výše uvedenou podmínkou.
-% 
-% \subsubsection{Assemblace lineárního problému}
-% Integrály vystupující ve vyhodnocení prvků matice  $\tn A$ a vektoru $\vc b$ v Galerkinově aproximaci
-% si rozdělíme na integrály přes jednotlivé elementy.
-% 
-% Pro rovnici \eqref{eq:weak_poisson} rozdělíme integrály přes celou oblast $\Omega$ na součet integrálů přes jednotlivé elementy $T_e$:
-% 
-% \[
-% A(u, v) = \sum_{e} \left( \int_{T_e} (\tn K \nabla u) \cdot \nabla v \, \mathrm{d}x \right) + \sum_{e} \left( \int_{\partial T_e \cap \partial \Omega} \sigma u v \, \mathrm{d}s \right).
-% \]
-% 
-% Analogicky rozdělíme lineární funkcionál:
-% 
-% \[
-% l(v) = \sum_{e} \left( \int_{T_e} f v \, \mathrm{d}x \right) + \sum_{e} \left( \int_{\partial T_e \cap \partial \Omega} \sigma u_R v \, \mathrm{d}s \right).
-% \]
-% 
-% Koncept lokálních matic $\tn A_e$ a vektorů pravé strany $\vc b_e$ spočívá v tom, že pro každý element $T_e$ vypočítáme matici $\tn A_e$ s prvky:
-% 
-% \[
-% A_e^{ij} = \int_{T_e} (\tn K \nabla \phi_j) \cdot \nabla \phi_i \, \mathrm{d}x + \int_{\partial T_e \cap \partial \Omega} \sigma \phi_j \phi_i \, \mathrm{d}s,
-% \]
-% 
-% a vektor $\vc b_e$ s prvky:
-% 
-% \[
-% b_e^i = \int_{T_e} f \phi_i \, \mathrm{d}x + \int_{\partial T_e \cap \partial \Omega} \sigma u_R \phi_i \, \mathrm{d}s.
-% \]
-% 
-% Tyto lokální matice a vektory poté sestavíme do globální matice $\tn A$ a vektoru $\vc b$ podle toho, jak jsou bázové funkce $\phi_i$ a $\phi_j$ přiřazeny k uzlům.
-% 
-% Pro demonstraci si představme dva sousedící elementy $T_1$ a $T_2$, které sdílejí společnou hranu. Jejich lokální matice $\tn A_1$ a $\tn A_2$ přispívají k celkové globální matici $\tn A$ tak, že prvky odpovídající společným uzlům se sčítají.
-% 
-% Například pro uzly $i$ a $j$ sdílené oběma elementy bude prvek globální matice:
-% 
-% \[
-% A^{ij} = A_1^{ij} + A_2^{ij}.
-% \]
-% 
-% Tímto způsobem získáme konečnou soustavu rovnic, kde globální matice $\tn A$ je součtem všech lokálních příspěvků z jednotlivých elementů.
-% 
-% \subsubsection{Referenční element}
-% Pro vyhodnocení lokálních matic $\tn A_e$ a vektorů $\vc b_e$ potřebujeme umět definované bázové funkce 
-% vyhodnotit. Vyhodnocovat integrály přes jednotlivé elementy přímo je však nepraktické, proto 
-% každý element $T_e$ zobrazíme pomocí {\it afinní transformace} na {\it referenční element},
-% na kterém definujeme bázové funkce a jejich gradienty.
-% 
-% Afinní transformace je lineární zobrazení, které mapuje referenční element $\hat{T}$ na libovolný skutečný element $T_e$ v síti. Označíme-li souřadnice v referenčním elementu symbolem $\hat{x} = (\hat{x}_1, \hat{x}_2)$ a souřadnice ve skutečném elementu $x = (x_1, x_2)$, pak afinní transformace má tvar:
-% 
-% \[
-% x = \tn F_e(\hat{x}) = \tn J_e \hat{x} + \vc b_e,
-% \]
-% 
-% kde $\tn J_e$ je Jacobiho matice transformace (konstanta na každém elementu) a $\vc b_e$ je vektor posunu.
-% 
-% Referenční trojúhelník $\hat{T}$ definujeme jako trojúhelník s vrcholy:
-% 
-% \[
-% \hat{N}_1 = (0, 0), \quad \hat{N}_2 = (1, 0), \quad \hat{N}_3 = (0, 1).
-% \]
-% 
-% Na referenčním elementu definujeme bázové funkce $\hat{\phi}_i(\hat{x})$ pro $i = 1, 2, 3$ následovně:
-% 
-% \[
-% \hat{\phi}_1(\hat{x}) = 1 - \hat{x}_1 - \hat{x}_2,
-% \]
-% \[
-% \hat{\phi}_2(\hat{x}) = \hat{x}_1,
-% \]
-% \[
-% \hat{\phi}_3(\hat{x}) = \hat{x}_2.
-% \]
-% 
-% Tyto funkce jsou lineární na referenčním trojúhelníku a splňují podmínku $\hat{\phi}_i(\hat{N}_j) = \delta_{ij}$. Pomocí afinní transformace můžeme tyto bázové funkce převést na skutečný element $T_e$.
-% 
-% \subsubsection{Substituce forem}
-% Převod integrací na referenční element.
-% 
-% \subsubsection{Numerická integrace}
+Rozšiřující témata.
+\begin{itemize}
+ \item Integrály přes hranici.
+ \item Příklady dalších rovnic.
+ \item Evoluční a nelineární rovnice ...
+ \item (ne - součást přednášky o aproximativních vlastnostech) Předpoklady na triangulaci, adaptivita.  
+\end{itemize}
