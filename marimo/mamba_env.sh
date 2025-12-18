@@ -62,12 +62,13 @@ env_yaml="$SCRIPTPATH/conda-requirements.yml"
 env_name=$(grep '^name:' "$env_yaml" | awk '{print $2}')
 
 # Use mamba to remove, create, or update the environment
-if [ "--force" == "$1" ]; then
+if [ "$1" == "create" ]; then
     mamba env remove -n $env_name
     mamba env create -y --file "$env_yaml" 
-    shift
-else
+    exit 0
+elif [ "$1" == "update" ]; then
     mamba env update -y --file "$env_yaml"
+    exit 0
 fi
 
 # Activate the newly created/updated environment
