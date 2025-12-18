@@ -1,4 +1,4 @@
-name: jupy-env
+name: marimo-env
 channels:
     - conda-forge
 dependencies:
@@ -15,6 +15,7 @@ dependencies:
     - numpy
     - scipy
     - pyvista[all, trame]
+    - trimesh
     #- mpich
     - mpi4py
     - petsc
