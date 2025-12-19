@@ -448,7 +448,7 @@ def _(fem, fem_petsc, ufl):
 
 @app.cell
 def _(PETSc, fem, fem_petsc, np, project_to_space, ufl):
-    def cell_residual_indicator(domain, kappa, f_rhs, uh):
+    def cell_residual_indicator(domain, kappa, f_rhs, uh, facet_scale=1.0):
         """
         Compute a per-cell indicator eta_T using a residual-style estimator:
 
@@ -477,19 +477,23 @@ def _(PETSc, fem, fem_petsc, np, project_to_space, ufl):
         # where the solution is under-resolved.
         n = ufl.FacetNormal(domain)
         jump_flux = ufl.jump(kappa * ufl.grad(uh), n)
-        facet_term = ufl.avg(h) * (jump_flux**2) * ufl.avg(w) * ufl.dS
+        facet_term = facet_scale * ufl.avg(h) * (jump_flux**2) * ufl.avg(w) * ufl.dS
 
         # Assemble: ∫_T h^2 r^2 w dx  +  ∫_F h [[∇u·n]]^2 avg(w) dS
-        form = fem.form((h**2) * (r**2) * w * ufl.dx + facet_term)
+        cell_form = fem.form((h**2) * (r**2) * w * ufl.dx)
+        facet_form = fem.form(facet_term)
 
-        vec = fem_petsc.assemble_vector(form)
-        vec.ghostUpdate(addv=PETSc.InsertMode.ADD, mode=PETSc.ScatterMode.REVERSE)
+        vec_cell = fem_petsc.assemble_vector(cell_form)
+        vec_cell.ghostUpdate(addv=PETSc.InsertMode.ADD, mode=PETSc.ScatterMode.REVERSE)
+        vec_facet = fem_petsc.assemble_vector(facet_form)
+        vec_facet.ghostUpdate(addv=PETSc.InsertMode.ADD, mode=PETSc.ScatterMode.REVERSE)
 
-        eta_sq = vec.array.copy()
+        eta_cell_sq = np.maximum(vec_cell.array.copy(), 0.0)
+        eta_facet_sq = np.maximum(vec_facet.array.copy(), 0.0)
+        eta_sq = eta_cell_sq + eta_facet_sq
         # Ensure non-negative numerical noise doesn't break sqrt
-        eta_sq = np.maximum(eta_sq, 0.0)
         eta = np.sqrt(eta_sq)
-        return eta
+        return eta, eta_cell_sq, eta_facet_sq
     return (cell_residual_indicator,)
 
 
@@ -697,24 +701,34 @@ def _(
     refine_marked,
     solve_poisson,
 ):
-    def amr_solve(domain, nsteps=4, fraction=0.2):
+    def amr_solve(domain, nsteps=4, fraction=0.2, facet_scale=1.0):
         history = []
         current = domain
         for k in range(nsteps):
             V, kappa_expr, kappa, f_rhs, uh = solve_poisson(current)
-            eta = cell_residual_indicator(current, kappa, f_rhs, uh)
+            eta, eta_cell_sq, eta_facet_sq = cell_residual_indicator(
+                current, kappa, f_rhs, uh, facet_scale=facet_scale
+            )
             num_cells_local = current.topology.index_map(current.topology.dim).size_local
             num_cells = comm.allreduce(num_cells_local, op=MPI.SUM)
             eta_sum = comm.allreduce(float(np.sum(eta)), op=MPI.SUM)
+            eta_cell_sum = comm.allreduce(float(np.sum(eta_cell_sq)), op=MPI.SUM)
+            eta_facet_sum = comm.allreduce(float(np.sum(eta_facet_sq)), op=MPI.SUM)
 
             history.append(
                 dict(
                     iter=k,
                     num_cells=num_cells,
                     eta_sum=eta_sum,
+                    eta_sq_sum=eta_cell_sum + eta_facet_sum,
+                    eta_cell_sq_sum=eta_cell_sum,
+                    eta_facet_sq_sum=eta_facet_sum,
+                    facet_scale=facet_scale,
                     domain=current,
                     uh=uh,
                     eta=eta,
+                    eta_cell_sq=eta_cell_sq,
+                    eta_facet_sq=eta_facet_sq,
                     kappa=kappa,
                     kappa_expr=kappa_expr,
                 )
@@ -731,15 +745,23 @@ def _(
 def _(mo):
     nsteps = mo.ui.slider(1, 6, value=4, label="AMR steps")
     fraction = mo.ui.slider(0.05, 0.5, value=0.2, step=0.05, label="Mark fraction")
+    facet_scale = mo.ui.slider(
+        0.25, 1.0, value=1.0, step=0.25, label="Facet prefactor (h * jump^2 term)"
+    )
 
-    return fraction, nsteps
+    controls = mo.hstack([nsteps, fraction, facet_scale])
+    controls
+    return fraction, facet_scale, nsteps
 
 
 @app.cell
-def _(amr_solve, domain0, fraction, mo, nsteps):
-    history = amr_solve(domain0, nsteps=int(nsteps.value), fraction=float(fraction.value))
-    controls = mo.hstack([nsteps, fraction])
-    controls
+def _(amr_solve, domain0, facet_scale, fraction, mo, nsteps):
+    history = amr_solve(
+        domain0,
+        nsteps=int(nsteps.value),
+        fraction=float(fraction.value),
+        facet_scale=float(facet_scale.value),
+    )
     return (history,)
 
 
@@ -752,6 +774,9 @@ def _(history, mo, plt, rank):
     iters = [h["iter"] for h in history]
     ncells = [h["num_cells"] for h in history]
     eta_sum = [h["eta_sum"] for h in history]
+    eta_sq = [h.get("eta_sq_sum", float("nan")) for h in history]
+    eta_cell_sq = [h.get("eta_cell_sq_sum", float("nan")) for h in history]
+    eta_facet_sq = [h.get("eta_facet_sq_sum", float("nan")) for h in history]
 
     fig, ax = plt.subplots()
     ax.plot(iters, ncells, marker="o")
@@ -764,20 +789,63 @@ def _(history, mo, plt, rank):
     ax2.plot(iters, eta_sum, marker="o")
     ax2.set_xlabel("AMR iteration")
     ax2.set_ylabel(r"$\sum_T \eta_T$")
-    ax2.set_title("Indicator sum (rough error proxy)")
+    ax2.set_title("Indicator sum (L1; grows with cell count)")
+    ax2.grid(True, which="both", linestyle="--", linewidth=0.5, alpha=0.6)
     fig2.tight_layout()
-    return fig, fig2
+
+    fig3, ax3 = plt.subplots()
+    ax3.plot(iters, np.sqrt(eta_sq), marker="o", label=r"$\| \eta \|_{L^2}$")
+    ax3.plot(iters, np.sqrt(eta_cell_sq), marker="o", label=r"$\| \eta_{\mathrm{cell}} \|_{L^2}$")
+    ax3.plot(iters, np.sqrt(eta_facet_sq), marker="o", label=r"$\| \eta_{\mathrm{facet}} \|_{L^2}$")
+    ax3.set_xlabel("AMR iteration")
+    ax3.set_ylabel(r"$\sqrt{\sum_T \eta_T^2}$")
+    ax3.set_title("Indicator L2 totals (preferred diagnostic)")
+    ax3.grid(True, which="both", linestyle="--", linewidth=0.5, alpha=0.6)
+    ax3.legend()
+    fig3.tight_layout()
+
+    return fig, fig2, fig3
 
 
 @app.cell
-def _(fig, fig2, mo):
+def _(fig, fig2, fig3, mo):
     def _render():
         mo.md("### Diagnostics")
-        return mo.vstack([fig, fig2])
+        return mo.vstack([fig, fig2, fig3])
 
     _view = _render()
     _view
     return (_view,)
+
+
+@app.cell
+def _(history, mo, np, rank):
+    if rank != 0:
+        raise SystemExit
+
+    rows = []
+    for h in history:
+        rows.append(
+            dict(
+                iter=h["iter"],
+                num_cells=h["num_cells"],
+                eta_sum=float(h["eta_sum"]),
+                eta_sq_sum=float(h.get("eta_sq_sum", np.nan)),
+                eta_cell_sq_sum=float(h.get("eta_cell_sq_sum", np.nan)),
+                eta_facet_sq_sum=float(h.get("eta_facet_sq_sum", np.nan)),
+                facet_scale=float(h.get("facet_scale", np.nan)),
+            )
+        )
+
+    mo.md(
+        "### Estimator components\n\n"
+        "- Prefer the L2 totals: sqrt(sum eta^2), and the split into cell vs. facet shown above.\n"
+        "- L1 sum (∑ eta) typically grows with cell count; use it only for rough trends.\n"
+        "- If the facet term dominates, lower the facet prefactor slider (0.5 or 0.25 are common choices).\n"
+        "- For P1, Δu_h=0 inside cells; the cell term should decay ~ h² when f is localized."
+    )
+    mo.dataframe(rows)
+    return
 
 
 @app.cell
