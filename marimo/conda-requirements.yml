@@ -1,4 +1,4 @@
-name: marimo-env
+name: jupy-env
 channels:
     - conda-forge
 dependencies:

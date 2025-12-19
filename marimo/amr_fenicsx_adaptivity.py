@@ -482,7 +482,7 @@ def _(fem, fem_petsc, ufl):
 
 @app.cell
 def _(PETSc, fem, fem_petsc, np, project_to_space, ufl):
-    def cell_residual_indicator(domain, kappa, f_rhs, uh):
+    def cell_residual_indicator(domain, kappa, f_rhs, uh, facet_scale=1.0):
         """
         Compute a per-cell indicator eta_T using a residual-style estimator:
 
@@ -516,8 +516,6 @@ def _(PETSc, fem, fem_petsc, np, project_to_space, ufl):
         # Assemble: ∫_T h^2 r^2 w dx  +  ∫_F h [[∇u·n]]^2 avg(w) dS
         cell_form = fem.form((h**2) * (r**2) * w * ufl.dx)
         facet_form = fem.form(facet_term)
-        vec = fem_petsc.assemble_vector(form)
-
         vec_cell = fem_petsc.assemble_vector(cell_form)
         vec_cell.ghostUpdate(addv=PETSc.InsertMode.ADD, mode=PETSc.ScatterMode.REVERSE)
         vec_facet = fem_petsc.assemble_vector(facet_form)
@@ -526,7 +524,6 @@ def _(PETSc, fem, fem_petsc, np, project_to_space, ufl):
         eta_cell_sq = np.maximum(vec_cell.array.copy(), 0.0)
         eta_facet_sq = np.maximum(vec_facet.array.copy(), 0.0)
         eta_sq = eta_cell_sq + eta_facet_sq
-        # Ensure non-negative numerical noise doesn't break sqrt
         eta = np.sqrt(eta_sq)
         return eta, eta_cell_sq, eta_facet_sq
     return (cell_residual_indicator,)
