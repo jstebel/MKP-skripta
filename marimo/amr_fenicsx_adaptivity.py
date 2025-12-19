@@ -609,6 +609,12 @@ def _():
 
 @app.cell
 def _():
+    import plotly
+    return (plotly,)
+
+
+@app.cell
+def _():
     import pyvista as pv
     return (pv,)
 
@@ -664,6 +670,7 @@ def _(mtri, plt, triangulation_from_dolfinx):
 
         fig, ax = plt.subplots()
         tpc = ax.tripcolor(tri, uvals, shading="gouraud")
+        ax.triplot(tri, linewidth=0.3, color="k", alpha=0.4)
         fig.colorbar(tpc, ax=ax)
         ax.set_aspect("equal")
         ax.set_title(title)
@@ -800,33 +807,26 @@ def _(history, mo, plt, rank):
     ax.set_title("Mesh growth under AMR")
     fig.tight_layout()
 
-    fig2, ax2 = plt.subplots()
-    ax2.plot(iters, eta_sum, marker="o")
-    ax2.set_xlabel("AMR iteration")
-    ax2.set_ylabel(r"$\sum_T \eta_T$")
-    ax2.set_title("Indicator sum (L1; grows with cell count)")
-    ax2.grid(True, which="both", linestyle="--", linewidth=0.5, alpha=0.6)
-    fig2.tight_layout()
-
     fig3, ax3 = plt.subplots()
     ax3.plot(iters, np.sqrt(eta_sq), marker="o", label=r"$\| \eta \|_{L^2}$")
     ax3.plot(iters, np.sqrt(eta_cell_sq), marker="o", label=r"$\| \eta_{\mathrm{cell}} \|_{L^2}$")
     ax3.plot(iters, np.sqrt(eta_facet_sq), marker="o", label=r"$\| \eta_{\mathrm{facet}} \|_{L^2}$")
     ax3.set_xlabel("AMR iteration")
     ax3.set_ylabel(r"$\sqrt{\sum_T \eta_T^2}$")
-    ax3.set_title("Indicator L2 totals (preferred diagnostic)")
+    ax3.set_title("Indicator L2 totals (preferred diagnostic, log scale)")
+    ax3.set_yscale("log")
     ax3.grid(True, which="both", linestyle="--", linewidth=0.5, alpha=0.6)
     ax3.legend()
     fig3.tight_layout()
 
-    return fig, fig2, fig3
+    return fig, fig3
 
 
 @app.cell
-def _(fig, fig2, fig3, mo):
+def _(fig, fig3, mo):
     def _render():
         mo.md("### Diagnostics")
-        return mo.vstack([fig, fig2, fig3])
+        return mo.vstack([fig, fig3])
 
     _view = _render()
     _view
@@ -900,8 +900,9 @@ def _(
     dplot,
     history,
     mo,
+    mtri,
     np,
-    pv,
+    plotly,
     rank,
     selector,
 ):
@@ -912,14 +913,11 @@ def _(
         i = int(selector.value)
         uh = history[i]["uh"]
 
-        # Build a surface mesh using dof coordinates so point_data aligns with uh.x.array.
         topology, cell_types, geometry = dplot.vtk_mesh(uh.function_space)
         points = np.zeros((geometry.shape[0], 3), dtype=float)
         points[:, :2] = geometry[:, :2]
         points[:, 2] = 10.0 * uh.x.array.real
 
-        # VTK encodes each cell as: [num_nodes, n0, n1, n2]; drop the leading
-        # count to get triangle indices, then orient them so normals point +z.
         num_nodes = int(topology[0])
         topo = topology.reshape(-1, num_nodes + 1)
         faces_tri = topo[:, 1:].astype(np.int64)
@@ -930,73 +928,52 @@ def _(
         faces_oriented = faces_tri.copy()
         faces_oriented[flip] = faces_oriented[flip][:, [0, 2, 1]]
 
-        # Build a PyVista surface and embed it via exported HTML (off-screen).
-        pv.OFF_SCREEN = True
-        pl = pv.Plotter(off_screen=True)
+        # Interpolate to a regular grid for a smoother surface.
+        tri = mtri.Triangulation(points[:, 0], points[:, 1], faces_oriented)
+        interp = mtri.LinearTriInterpolator(tri, uh.x.array.real)
+        grid_n = 100
+        gx = np.linspace(points[:, 0].min(), points[:, 0].max(), grid_n)
+        gy = np.linspace(points[:, 1].min(), points[:, 1].max(), grid_n)
+        GX, GY = np.meshgrid(gx, gy)
+        GZ = interp(GX, GY)
+        GZ = np.array(GZ)
+        GZ_scaled = 10.0 * GZ
+        GZ_plot = np.where(np.isnan(GZ_scaled), None, GZ_scaled)
 
-        # PyVista expects faces in VTK-style flattened format: [3, i0, i1, i2, 3, ...]
-        faces_vtk = np.hstack(
-            [np.full((faces_oriented.shape[0], 1), 3, dtype=np.int64), faces_oriented]
-        ).ravel()
-
-        surface = pv.PolyData(points, faces_vtk)
-        surface.point_data["u"] = uh.x.array.real
-        surface = surface.compute_normals(
-            cell_normals=False,
-            auto_orient_normals=True,
-            consistent_normals=True,
-            inplace=False,
+        surface = plotly.graph_objects.Surface(
+            x=GX,
+            y=GY,
+            z=GZ_plot,
+            surfacecolor=np.where(np.isnan(GZ), None, GZ),
+            colorscale="Viridis",
+            showscale=True,
         )
 
-        pl.add_mesh(surface, scalars="u", cmap="viridis", show_edges=False)
-        pl.add_axes()
-        pl.view_isometric()
-        pl.set_background("white")
+        # Also show the coarse mesh as a wireframe for context.
+        wire = plotly.graph_objects.Mesh3d(
+            x=points[:, 0],
+            y=points[:, 1],
+            z=points[:, 2],
+            i=faces_oriented[:, 0],
+            j=faces_oriented[:, 1],
+            k=faces_oriented[:, 2],
+            color="black",
+            opacity=0.15,
+            showscale=False,
+        )
 
-        # Try trame-backed HTML export; if unavailable, fall back to a static PNG.
-        try:
-            from pathlib import Path
-            import base64
-
-            html_path = Path(__file__).resolve().parent / ".cache" / f"pyvista_surface_iter_{i}.html"
-            html_path.parent.mkdir(parents=True, exist_ok=True)
-            pl.export_html(str(html_path))
-            html = html_path.read_text(encoding="utf-8")
-            html_b64 = base64.b64encode(html.encode("utf-8")).decode("ascii")
-            iframe = (
-                f'<iframe src="data:text/html;base64,{html_b64}" '
-                f'style="width: 100%; height: 600px; border: 0;"></iframe>'
-            )
-
-            class _HtmlRepr:
-                def __init__(self, html: str):
-                    self._html = html
-
-                def _repr_html_(self) -> str:
-                    return self._html
-
-            return mo.vstack(
-                [mo.md("### 3D surface view (rotate with mouse, PyVista)"), _HtmlRepr(iframe)]
-            )
-        except Exception as e:
-            img = pl.screenshot(return_img=True)
-            import base64
-
-            import io
-            from PIL import Image
-
-            buf = io.BytesIO()
-            Image.fromarray(img).save(buf, format="PNG")
-            b64 = base64.b64encode(buf.getvalue()).decode("ascii")
-            return mo.vstack(
-                [
-                    mo.md(
-                        "### 3D surface view (static PNG fallback; install `trame-vtk` for interactivity)\n\n"
-                        f"`{type(e).__name__}: {e}`"
-                    ),
-                    mo.md(f'<img src="data:image/png;base64,{b64}" style="width: 100%; max-width: 900px;" />'),
-                ]
-            )
+        fig = plotly.graph_objects.Figure(data=[surface, wire])
+        fig.update_layout(
+            scene=dict(
+                xaxis_title="x",
+                yaxis_title="y",
+                zaxis_title="u_h (scaled)",
+                aspectmode="data",
+            ),
+            margin=dict(l=0, r=0, t=30, b=0),
+            title="3D surface view (rotate with mouse)",
+        )
+        return fig
 
     _pv_view = _render()
     _pv_view
