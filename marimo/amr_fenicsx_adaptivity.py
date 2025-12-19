@@ -246,135 +246,123 @@ def _(mo):
 Start from
 
 \[
-R(v)=(f,v)-(\nabla u_h,\nabla v)=\sum_{T\in\mathcal T_h}\Big[(f,v)_T-(\nabla u_h,\nabla v)_T\Big].
+R(v)=(f,v)-(\nabla u_h,\nabla v)
+=
+\sum_{T\in\mathcal T_h}
+\Big[(f,v)_T-(\nabla u_h,\nabla v)_T\Big].
 \]
 
 Integrate by parts on each element \(T\):
 
 \[
-(\nabla u_h,\nabla v)_T = -(\Delta u_h,v)_T + \langle \nabla u_h\cdot n_T,\ v\rangle_{\partial T}.
+(\nabla u_h,\nabla v)_T
+=
+-(\Delta u_h,v)_T
++
+\langle \nabla u_h\cdot n_T,\ v\rangle_{\partial T}.
 \]
 
-Hence
+Combining these and joining boundary contributionsion from neighboring elements into jump term:
 
 \[
-R(v)=\sum_T (f+\Delta u_h,\ v)_T \;-\; \sum_T \langle \nabla u_h\cdot n_T,\ v\rangle_{\partial T}.
-\]
-
-On interior facets, the boundary terms combine into flux jumps:
-
-\[
-R(v)=\sum_T (R_T,\ v)_T \;-\; \sum_{E\in\mathcal E_h^{\rm int}} \langle J_E,\ v\rangle_E,
+R(v)
+=
+\sum_T (f+\Delta u_h,\ v)_T
+\;-\;
+\sum_T \langle \nabla u_h\cdot n_T,\ v\rangle_{\partial T}
+=
+\sum_T (R_T,\ v)_T
+\;-\;
+\sum_{E\in\mathcal E_h^{\rm int}} \langle J_E,\ v\rangle_E,
 \]
 
 where
 
 \[
-R_T := f+\Delta u_h,\qquad
+R_T := f+\Delta u_h,
+\qquad
 J_E := [\nabla u_h\cdot n]_E.
 \]
 
-**Data oscillation / computable right-hand side.**
-If \(f\) is not represented exactly in the discrete setting, introduce a piecewise
-polynomial approximation \(f_h\) (e.g. \(L^2\)-projection onto \(P_0\) or \(P_k\)).
-Then split
-TODO: I'm not sure, but f_h +Delta u_h should be zero, thats the point to end up with f interpolation error only.
-
-
-\[
-R_T = (f-f_h) + (f_h+\Delta u_h),
-\]
-
-so the element residual separates into
-- a **computable** part \(f_h+\Delta u_h\), and
-- a **data oscillation** part \(f-f_h\).
-
-This is where the later estimator may contain both a residual term and an oscillation term.
 """
     )
     return
+
+@app.cell
+def _(mo):
+    mo.md(
+        r"""
+## 4) Local residual bounds (cellwise viewpoint)
+
+We now estimate the residual **locally on each cell**, without yet invoking the
+energy norm of the error.
+
+Using Galerkin orthogonality \(R(v_h)=0\) for all \(v_h\in V_h\),
+choose an interpolation \(I_h v\in V_h\) and write
+
+\[
+R(v)
+=
+R(v-I_hv).
+\]
+
+Insert the elementwise residual representation:
+
+\[
+R(v-I_hv)
+=
+\sum_T (R_T,\ v-I_hv)_T
+\;-\;
+\sum_{E\in\mathcal E_h^{\rm int}}
+\langle J_E,\ v-I_hv\rangle_E.
+\]
+
+Consider first a **single cell contribution**.
+By Cauchy–Schwarz,
+
+\[
+|(R_T,\ v-I_hv)_T|
+\le
+\|R_T\|_{L^2(T)}\,\|v-I_hv\|_{L^2(T)}
+\lesssim
+h_T\,\|R_T\|_{L^2(T)}\,\|\nabla v\|_{L^2(\omega_T)},
+\]
+
+where we have applied  a standard interpolation estimate:
+
+\[
+\|v-I_hv\|_{L^2(T)}
+\lesssim
+h_T\,\|\nabla v\|_{L^2(\omega_T)}.
+\]
+
+
+A completely analogous argument using trace inequalities yields, for interior facets,
+
+\[
+|\langle J_E,\ v-I_hv\rangle_E|
+\lesssim
+h_E^{1/2}\,\|J_E\|_{L^2(E)}\,\|\nabla v\|_{L^2(\omega_E)}.
+\]
+
+At this stage, everything is local: one cell, one facet, one gradient of \(v\).
+"""
+    )
+    return
+
+
+
+
 
 
 @app.cell
 def _(mo):
     mo.md(
         r"""
-## 4) Dual norm energy estimate up to interpolation bounds (track the \(\|\nabla v\|\) normalization)
-TODO: I need the error estimater on each cell not just the global one, so the $e$ norm must be estimated for 
-on each cell. Refactor this section from this point of view. Also start with R not with e and continue up to interpolation estimates on T
-ano only then put these R estimates into e estimate and let grad v norm cancel out.
+## 5) From local bounds to the cellwise energy error estimator
 
-Energy norm:
-
-\[
-\|e\|_E := \|\nabla e\|_{L^2(\Omega)}.
-\]
-
-Using the residual identity \((\nabla e,\nabla v)=R(v)\) and the dual norm characterization,
-we write the error purely in residual form:
-
-\[
-\boxed{
-\|\nabla e\|_{L^2(\Omega)}
-=
-\sup_{v\in H_0^1(\Omega),\, v\neq 0}
-\frac{R(v)}{\|\nabla v\|_{L^2(\Omega)}}.
-}
-\]
-
-Now use Galerkin orthogonality, $R(v_h) =0$, for any interpolation/projection \(I_h v\in V_h\):
-
-\[
-R(v)=R(v-I_hv) + R(v_h) = R(v-I_hv)=\sum_T (R_T,\ v-I_hv)_T \;-\; \sum_{E\in\mathcal E_h^{\rm int}} \langle J_E,\ v-I_hv\rangle_E.
-\]
-
-hence
-
-\[
-\boxed{
-\|\nabla e\|_{L^2(\Omega)}
-=
-\sup_{v\in H_0^1(\Omega),\, v\neq 0}
-\frac{R(v-I_hv)}{\|\nabla v\|_{L^2(\Omega)}}.
-}
-\]
-
-Expand \(R(v-I_hv)\) using the element/facet residuals from Step 3:
-
-\[
-R(v-I_hv)=
-\]
-
-Bound each term by Cauchy–Schwarz:
-
-\[
-|(R_T,\ v-I_hv)_T|\le \|R_T\|_{L^2(T)}\ \|v-I_hv\|_{L^2(T)},
-\qquad
-|\langle J_E,\ v-I_hv\rangle_E|\le \|J_E\|_{L^2(E)}\ \|v-I_hv\|_{L^2(E)}.
-\]
-
-Finally, use standard approximation/trace estimates (for a suitable \(I_h\)):
-
-\[
-\|v-I_hv\|_{L^2(T)} \lesssim h_T\,\|\nabla v\|_{L^2(\omega_T)},
-\qquad
-\|v-I_hv\|_{L^2(E)} \lesssim h_E^{1/2}\,\|\nabla v\|_{L^2(\omega_E)}.
-\]
-
-At this point, the numerator is bounded by a residual expression times \(\|\nabla v\|\),
-setting up the final cancellation of the normalization \(\|\nabla v\|\) in the supremum.
-"""
-    )
-    return
-
-
-@app.cell
-def _(mo):
-    mo.md(
-        r"""
-## 5) One-cell summary: the residual (energy-norm) estimator
-
-Continuing from Step 4, the interpolation bounds imply
+Sum the local bounds from Step 4 over all elements and facets, and apply
+Cauchy–Schwarz across the mesh:
 
 \[
 |R(v-I_hv)|
@@ -384,45 +372,91 @@ Continuing from Step 4, the interpolation bounds imply
 +
 \sum_{E\in\mathcal E_h^{\rm int}} h_E\|J_E\|_{L^2(E)}^2
 \Bigg)^{1/2}
-\ \|\nabla v\|_{L^2(\Omega)}.
+\,
+\|\nabla v\|_{L^2(\Omega)}.
 \]
 
-Insert into the dual norm representation:
+Now invoke the dual characterization of the energy norm:
 
 \[
-\frac{|R(v-I_hv)|}{\|\nabla v\|_{L^2(\Omega)}}
+\|\nabla e\|_{L^2(\Omega)}
+=
+\sup_{v\in H_0^1(\Omega),\,v\neq 0}
+\frac{R(v)}{\|\nabla v\|_{L^2(\Omega)}}
+=
+\sup_{v\neq 0}
+\frac{R(v-I_hv)}{\|\nabla v\|_{L^2(\Omega)}}.
+\]
+
+Insert the bound above.
+The factor \(\|\nabla v\|\) cancels, yielding
+
+\[
+\|\nabla e\|_{L^2(\Omega)}^2
 \;\lesssim\;
 \Bigg(
 \sum_T h_T^2\|R_T\|_{L^2(T)}^2
 +
 \sum_{E\in\mathcal E_h^{\rm int}} h_E\|J_E\|_{L^2(E)}^2
-\Bigg)^{1/2}.
+\Bigg).
 \]
 
-The factor \(\|\nabla v\|\) cancels, and taking the supremum gives the reliability bound
+This motivates the **cellwise residual indicator**
 
 \[
 \boxed{
-\|\nabla(u-u_h)\|_{L^2(\Omega)}
-\;\lesssim\;
-\eta,
-\qquad
-\eta^2 :=
-\sum_T h_T^2\|R_T\|_{L^2(T)}^2
+\eta_T^2
+:=
+h_T^2\|R_T\|_{L^2(T)}^2
 +
-\sum_{E\in\mathcal E_h^{\rm int}} h_E\|J_E\|_{L^2(E)}^2.
+\frac12
+\sum_{E\subset\partial T\cap\mathcal E_h^{\rm int}}
+h_E\|J_E\|_{L^2(E)}^2.
 }
 \]
 
-If you use a discrete approximation \(f_h\), you may additionally track data oscillation via
+*Side comment (lecturer): The factor \(1/2\) simply splits each interior facet
+between its two neighboring cells — this is what makes marking robust.*
+
+Summing \(\eta_T^2\) over all cells recovers the global estimator and yields
+a reliable bound for the energy norm of the error.
+
+
+
+===
+---
+TODO: postpone 
+### Data oscillation and computability
+
+If the right-hand side \(f\) is not exactly representable in the discrete setting,
+introduce a local polynomial approximation \(f_h\)
+(e.g. the elementwise \(L^2\)-projection).
+
+Add and subtract \(f_h\) inside the element residual:
 
 \[
-R_T=(f_h+\Delta u_h) + (f-f_h),
+R_T
+=
+(f-f_h) + (f_h+\Delta u_h).
 \]
-so \(\eta\) is fully computable while \(\|f-f_h\|\) can be reported separately as oscillation.
+
+*Side comment (lecturer): Note carefully — \(f_h+\Delta u_h\) is **not zero in general**.
+The discrete problem only enforces \((f_h+\Delta u_h,v_h)_T=0\) for test functions
+\(v_h\in V_h\), not pointwise or for arbitrary \(v\).*
+
+Thus the residual splits into
+
+- a **computable discrete residual** \(f_h+\Delta u_h\),
+- a **data oscillation term** \(f-f_h\).
+
+This distinction will matter later, but for now we keep the exact form \(R_T\).
+
+
 """
     )
     return
+
+
 
 @app.cell
 def _(fem, fem_petsc, ufl):
@@ -448,7 +482,7 @@ def _(fem, fem_petsc, ufl):
 
 @app.cell
 def _(PETSc, fem, fem_petsc, np, project_to_space, ufl):
-    def cell_residual_indicator(domain, kappa, f_rhs, uh, facet_scale=1.0):
+    def cell_residual_indicator(domain, kappa, f_rhs, uh):
         """
         Compute a per-cell indicator eta_T using a residual-style estimator:
 
@@ -482,6 +516,7 @@ def _(PETSc, fem, fem_petsc, np, project_to_space, ufl):
         # Assemble: ∫_T h^2 r^2 w dx  +  ∫_F h [[∇u·n]]^2 avg(w) dS
         cell_form = fem.form((h**2) * (r**2) * w * ufl.dx)
         facet_form = fem.form(facet_term)
+        vec = fem_petsc.assemble_vector(form)
 
         vec_cell = fem_petsc.assemble_vector(cell_form)
         vec_cell.ghostUpdate(addv=PETSc.InsertMode.ADD, mode=PETSc.ScatterMode.REVERSE)
@@ -845,7 +880,6 @@ def _(history, mo, np, rank):
         "- For P1, Δu_h=0 inside cells; the cell term should decay ~ h² when f is localized."
     )
     mo.dataframe(rows)
-    return
 
 
 @app.cell
