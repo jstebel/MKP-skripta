@@ -8,7 +8,6 @@
 #   "petsc4py",
 #   "fenics-dolfinx==0.10.0",
 #   "trame-vtk",  # needed for PyVista HTML export
-#   "trimesh",    # fallback inline renderer if trame-vtk is unavailable
 # ]
 # ///
 """
@@ -615,22 +614,6 @@ def _():
 
 
 @app.cell
-def _():
-    import importlib.util
-
-    trame_vtk_available = importlib.util.find_spec("trame_vtk") is not None
-    return (trame_vtk_available,)
-
-
-@app.cell
-def _():
-    import trimesh
-    from trimesh.viewer.notebook import scene_to_notebook
-    from trimesh.visual import color as tm_color
-    return trimesh, scene_to_notebook, tm_color
-
-
-@app.cell
 def _(mtri, plt, triangulation_from_dolfinx):
     def plot_mesh(
         domain,
@@ -876,7 +859,10 @@ def _(history, mo, np, rank):
         "- If the facet term dominates, lower the facet prefactor slider (0.5 or 0.25 are common choices).\n"
         "- For P1, Δu_h=0 inside cells; the cell term should decay ~ h² when f is localized."
     )
-    mo.dataframe(rows)
+    if hasattr(mo, "dataframe"):
+        mo.dataframe(rows)
+    else:
+        mo.ui.table(rows)
 
 
 @app.cell
@@ -917,11 +903,7 @@ def _(
     np,
     pv,
     rank,
-    scene_to_notebook,
     selector,
-    tm_color,
-    trame_vtk_available,
-    trimesh,
 ):
     def _render():
         if rank != 0:
@@ -948,30 +930,35 @@ def _(
         faces_oriented = faces_tri.copy()
         faces_oriented[flip] = faces_oriented[flip][:, [0, 2, 1]]
 
-        if trame_vtk_available:
-            # Build a PyVista surface and embed it via exported HTML (off-screen).
-            pv.OFF_SCREEN = True
-            pl = pv.Plotter(off_screen=True)
+        # Build a PyVista surface and embed it via exported HTML (off-screen).
+        pv.OFF_SCREEN = True
+        pl = pv.Plotter(off_screen=True)
 
-            # PyVista expects faces in VTK-style flattened format: [3, i0, i1, i2, 3, ...]
-            faces_vtk = np.hstack(
-                [np.full((faces_oriented.shape[0], 1), 3, dtype=np.int64), faces_oriented]
-            ).ravel()
+        # PyVista expects faces in VTK-style flattened format: [3, i0, i1, i2, 3, ...]
+        faces_vtk = np.hstack(
+            [np.full((faces_oriented.shape[0], 1), 3, dtype=np.int64), faces_oriented]
+        ).ravel()
 
-            surface = pv.PolyData(points, faces_vtk)
-            surface.point_data["u"] = uh.x.array.real
+        surface = pv.PolyData(points, faces_vtk)
+        surface.point_data["u"] = uh.x.array.real
+        surface = surface.compute_normals(
+            cell_normals=False,
+            auto_orient_normals=True,
+            consistent_normals=True,
+            inplace=False,
+        )
 
-            pl.add_mesh(surface, scalars="u", cmap="viridis", show_edges=False)
-            pl.add_axes()
-            pl.view_isometric()
-            pl.set_background("white")
+        pl.add_mesh(surface, scalars="u", cmap="viridis", show_edges=False)
+        pl.add_axes()
+        pl.view_isometric()
+        pl.set_background("white")
 
+        # Try trame-backed HTML export; if unavailable, fall back to a static PNG.
+        try:
             from pathlib import Path
             import base64
 
-            html_path = (
-                Path(__file__).resolve().parent / ".cache" / f"pyvista_surface_iter_{i}.html"
-            )
+            html_path = Path(__file__).resolve().parent / ".cache" / f"pyvista_surface_iter_{i}.html"
             html_path.parent.mkdir(parents=True, exist_ok=True)
             pl.export_html(str(html_path))
             html = html_path.read_text(encoding="utf-8")
@@ -991,15 +978,25 @@ def _(
             return mo.vstack(
                 [mo.md("### 3D surface view (rotate with mouse, PyVista)"), _HtmlRepr(iframe)]
             )
+        except Exception as e:
+            img = pl.screenshot(return_img=True)
+            import base64
 
-        # Fallback: embed via trimesh notebook viewer if trame-vtk is missing.
-        mesh_tm = trimesh.Trimesh(vertices=points, faces=faces_oriented, process=True)
-        mesh_tm.merge_vertices()
-        colors = tm_color.interpolate(uh.x.array.real, color_map="viridis")
-        mesh_tm.visual.vertex_colors = colors
-        scene = trimesh.Scene(mesh_tm)
-        view = scene_to_notebook(scene, height=600)
-        return mo.vstack([mo.md("### 3D surface view (rotate with mouse, trimesh)"), view])
+            import io
+            from PIL import Image
+
+            buf = io.BytesIO()
+            Image.fromarray(img).save(buf, format="PNG")
+            b64 = base64.b64encode(buf.getvalue()).decode("ascii")
+            return mo.vstack(
+                [
+                    mo.md(
+                        "### 3D surface view (static PNG fallback; install `trame-vtk` for interactivity)\n\n"
+                        f"`{type(e).__name__}: {e}`"
+                    ),
+                    mo.md(f'<img src="data:image/png;base64,{b64}" style="width: 100%; max-width: 900px;" />'),
+                ]
+            )
 
     _pv_view = _render()
     _pv_view
