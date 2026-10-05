@@ -1,0 +1,31 @@
+name: jupy-env
+channels:
+    - conda-forge
+dependencies:
+    - python=3.11
+    - sqlite 
+    - jupyterlab 
+    - jupyterlab-git
+    - jupyter-resource-usage
+    - jupyter-fs
+    #- jupyterlab-css            # there is jupyterlab-css repo, but archived
+    #- jupyterlab-topbar-*      # jupyterlab-top-* is group of extensions not particularly usefull for font problem
+    - ipykernel 
+    - sympy
+    - numpy
+    - scipy
+    - pyvista[all, trame]
+    #- mpich
+    - mpi4py
+    - petsc
+    - petsc4py
+    - fenics-dolfinx=0.10.0 
+    - matplotlib 
+    - plotly
+    - ipympl
+    - pandas
+    - polars
+    - zarr
+    - dask
+    - xarray
+    - marimo
