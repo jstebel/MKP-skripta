@@ -1,0 +1,55 @@
+\documentclass{article}
+\usepackage[czech]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{enumitem}
+
+\renewcommand{\div}{\operatorname{div}}
+\newcommand{\R}{\mathbb R}
+\newcommand{\vc}[1]{\boldsymbol{#1}}
+\def\d{{\rm{d}}}
+
+\begin{document}
+
+\title{Test č. 2 -- F}
+\date{12. 12. 2024}
+\author{}
+\maketitle
+
+
+\noindent
+Určete, zda posloupnosti funkcí
+
+\begin{enumerate}[label=(\alph*)]
+\item
+\begin{align*}
+        f_n(x) = \frac{\cos (nx)}{\sqrt{n}}, \qquad x\in[0,2\pi],
+\end{align*}
+%konverguje ke své bodové limitě v normě $L_2$ a $L_\infty$.
+
+\item
+\begin{align*}
+        g_n(x) = |x|^{\frac{1}{n}}, \qquad x\in[-1,1],
+\end{align*}
+\end{enumerate}
+
+konvergují ke své bodové limitě v normě $L_2$ a $L_\infty$.
+
+\vspace{2cm}
+
+Postup:
+\begin{enumerate}
+\item Načtrněte graf několika prvních funkcí posloupnosti.
+\item Určete bodovou limitu $f$, $g$.
+\item Zapište symbolicky, co znamená, že $f_n$ konverguje k $f$ ve zvolené normě, resp $g_n$ konverguje k $g$.
+\item Ověřte výpočtem.
+\end{enumerate}
+
+
+\vfill
+Pomůcka k integraci:
+\[\cos^2(\theta) = \frac{1 + \cos(2\theta)}{2}\]
+
+% \vfill
+
+\end{document}

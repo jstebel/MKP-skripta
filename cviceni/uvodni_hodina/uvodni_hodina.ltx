@@ -10,7 +10,6 @@
 \documentclass[a4paper]{article}
 % ***************************************** PACKAGES
 \usepackage[utf8]{inputenc}
-\usepackage[czech]{babel}
 
 %\usepackage[active]{srcltx}
 \usepackage{amsmath}
@@ -18,6 +17,8 @@
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{fancyhdr}
+
+\usepackage[table]{xcolor}
 
 \usepackage{graphicx}
 \usepackage{xcolor}
@@ -173,10 +174,10 @@
 \parindent=0pt
 \parskip=0.3cm
 \begin{center}
-{\LARGE\textbf{ MKP - Metoda konečných prvků}}
+{\LARGE\textbf{ MKP -- Metoda konečných prvků}}
 
 \vspace{0.5cm}
-{\Large naposledy upraveno: \today}
+{\small naposledy upraveno: \today}
 \end{center}
 
 % \pagebreak
@@ -187,17 +188,25 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Úvodní hodina a opakování}
-\subsection{Laplaceova/Poissonova rovnice a fyzikální procesy}
+\subsection{Eliptická rovnice a fyzikální procesy}
 \vspace{0.5cm}
 
 Poissonova rovnice
 \begin{align*}
-    \textrm{v 1D:} & &  \varphi''& = f\\
-    \textrm{v 2D, 3D:} & & \textcolor{gray}{\div (\grad \varphi) = }\Delta \varphi& = f
+    \textrm{v 1D:} \qquad -u'' &= f \\
+    \textrm{v 2D, 3D:} \qquad -\Delta u &= f
 \end{align*}
-(nebo Laplaceova pro $f=0$) je eliptická parciální diferenciální rovnice s velmi širokým užitím při popisu fyzikálních procesů. 
+nebo také Laplaceova pro $f=0$.
+
+Eliptická rovnice
+\begin{align*}
+    \textrm{v 1D:} & &  -\left(Ku'\right)' &= f \qquad \textcolor{gray}{= -K u'' \; \text{ pro } K=konst.} \\
+    \textrm{v 2D, 3D:} & & -\div \left( \mat K \grad u\right) &= f  \qquad \textcolor{gray}{= -K \Delta u \; \text{ pro } \mat K= K \mat I, K=konst.}
+    %\textrm{v 2D, 3D:} & & \div ( \mat K \grad \vc u) &= f  \quad \textcolor{gray}{\stackrel{\text{K=konst.}}{=}\, \mat K \Delta \vc u}\\
+\end{align*}
+je eliptická parciální diferenciální rovnice s velmi širokým užitím při popisu fyzikálních procesů. 
 Několik důležitých příkladů je shrnuto v tabulce \ref{tab:processes}.
-Ve všech případech je definována nějaká potenciální veličina (tlak, teplota, napětí, $\ldots$) a od ní odvozené vektorové pole
+V případech, kdy je definována nějaká skalární potenciální veličina (tlak, teplota, elektrický potenciál, koncentrace), lze od ní odvodit vektorové pole
 prostřednictvím záporně vzatého gradientu (např. voda vždy teče z místa s vyšším tlakem do místa nižšího tlaku, teplo se předává od teplejšího tělesa chladnějšímu apod.,
 tedy vždy proti směru gradientu).
 
@@ -205,44 +214,74 @@ tedy vždy proti směru gradientu).
 % \centering\renewcommand\cellalign{lc}
 % \setcellgapes{3pt}\makegapedcells
 % \begin{tabular}{c|c|c|c|c}
-\begin{tabular}{*{5}{>{\centering\arraybackslash}m{0.18\textwidth}<{}}} \toprule
-Vedení tepla & Porézní proudění& Mechanika & Elektrostatika & Difúzní transport \\ [10pt] \hline
-Fourierův zákon & Darcyho zákon & Hookův zákon & Elektrický potenciál & Fickův zákon \\[10pt] %\hline
-$q=-\lambda T'$ & $q=-K p'$ & $\sigma=-E u'$ & $E=-\varphi'$, $D=\eps E$ & $q=-D c'$ \\[10pt] %\hline
-$-(\lambda T')'=f$ & $-(K p')'=f$ & $-(E u')'=f$ & $-(\eps \varphi')'=f$ & $-(D c')'=f$ \\[10pt]
-$q$ - tepelný tok & $q$ - Darcyho rychlost  & $\sigma$ - napětí & $E$ - elektrické pole & $q$ - difúzní tok\\
-\makecell{$\lambda$ - tepelná\\ vodivost} & \makecell{$K$ - hydraulická\\ vodivost}  & \makecell{$E$ - Youngův\\ modul pružnosti} & $\eps$ - permitivita & $D$ - difuzivita\\ %\hline
-$T$ - teplota & $p$ - tlak  & $u$ - posunutí & $\varphi$ - elektrický potenciál & $c$ - koncentrace\\ [10 pt] \hline
-\multicolumn{5}{>{\centering\arraybackslash}m{\textwidth}<{}}{}\\
-\multicolumn{5}{>{\centering\arraybackslash}m{\textwidth}<{}}{ve 2D:}\\ [10 pt]
-$-\div(\grad T)=f$ & $-\div(K \grad p)=f$ & $-\div(E \grad u)=f$ & $-\div(\eps \grad\varphi)=f$ & $-\div(D \grad c)=f$ \\
-\multicolumn{5}{>{\centering\arraybackslash}m{\textwidth}<{}}{}\\
+\renewcommand{\arraystretch}{2.0}
+% \begin{tabular}{*{5}{>{\centering\arraybackslash}m{0.18\textwidth}<{}}}
+\begin{tabular}{
+  >{\columncolor{red!10}\centering\arraybackslash}m{0.18\textwidth}
+  >{\columncolor{blue!10}\centering\arraybackslash}m{0.18\textwidth}
+  >{\columncolor{yellow!10}\centering\arraybackslash}m{0.18\textwidth}
+  >{\columncolor{brown!15}\centering\arraybackslash}m{0.18\textwidth}
+  >{\columncolor{green!10}\centering\arraybackslash}m{0.18\textwidth}}
+\toprule
+Vedení tepla & Porézní proudění & Elektrostatika & Difúzní transport & Mechanika\\ \hline
+\midrule
+Fourierův zákon & Darcyho zákon & Elektrický potenciál & Fickův zákon & Hookův zákon\\
+$q=-\lambda T'$ & $q=-K p'$ & $E=-\varphi'$, $D=\eps E$ & $q=-D c'$ & $\sigma=E u'$\\
+$-(\lambda T')'=f$ & $-(K p')'=f$ & $-(\eps \varphi')'=f$ & $-(D c')'=f$ & $-(E u')'=f$\\
+$q$ -- tepelný tok & $q$ -- Darcyho rychlost & $E$ -- elektrické pole & $q$ -- difúzní tok & $\sigma$ -- napětí\\
+\makecell{$\lambda$ -- tepelná\\ vodivost} & \makecell{$K$ -- hydraulická\\ vodivost}  & $\eps$ -- permitivita & $D$ -- difuzivita & \makecell{$E$ -- Youngův\\ modul pružnosti}\\ %\hline
+$T$ -- teplota & $p$ -- tlak  & $\varphi$ -- elektrický potenciál & $c$ -- koncentrace & $u$ -- posunutí \\ \hline
+\multicolumn{5}{>{\centering\arraybackslash}m{\textwidth}<{}}{ve 2D:}\\
+$-\div(\lambda\grad T)=f$ & $-\div(K \grad p)=f$ & $-\div(\eps \grad\varphi)=f$ & $-\div(D \grad c)=f$ & {\color{gray}*}\\
 \bottomrule
 \end{tabular}
-\caption{Tabulka fyzikálních procesů popsaných Poissonovou rovnicí.}
+\caption{Příklady fyzikálních procesů vedoucích na eliptické rovnice.}
 \label{tab:processes}
 \end{table}
 
 S takovými eliptickými rovnicemi budeme pracovat celý semestr, proto se s nimi dobře seznamte.
 Budeme je řešit metodou konečných prvků, budeme se zabývat jejich řešitelností a prakticky implementovat numerické řešení.
 
-\pagebreak
+{\color{gray}
+V případě mechanického problému je struktura analogická, ale ve více dimenzích je hledanou veličinou vektor posunutí a 
+konstitutivní vztah je složitější.
+\[
+-\div \vc{\sigma} = \vc f,
+\qquad
+\vc{\sigma}
+=
+2\mu\,\vc{\varepsilon}(\vc u)
++
+\lambda\,\div(\vc u)\,\mat I,
+\qquad
+\vc{\varepsilon}(\vc u)
+=
+\frac12\left(\grad\vc u + (\grad\vc u)^T\right).
+\]
+\[-\mu\Delta\vc u-(\lambda+\mu)\grad\div\vc u=\vc f \qquad \text{pro } \mu,\lambda=konst.\]
+}
+
+% \pagebreak
 
 \subsection{Seznámení s Code Critic}
-Zkuste se dále přihlásit do systému \href{http://alva.nti.tul.cz:5000/courses/MKP/2021}{Code Critic} a vyzkoušejte jednoduché testovací úlohy, označené jako \verb'trial_*'. Při případných problémech nám prosím dejte ihned zpětnou vazbu.
+Zkuste se dále přihlásit do systému \href{https://code-critic.nti.tul.cz/}{Code Critic},
+vyberte aktuální kurz MKP a vyzkoušejte jednoduché testovací úlohy, označené jako \verb'trial_*'.
+Při případných problémech nám prosím dejte ihned zpětnou vazbu.
 
-Nakonec se můžete pustit do implementace Gaussovy eliminace s řádkovou pivotací a odevzdat přes \href{http://alva.nti.tul.cz:5000/courses/MKP/2021/cv\_1\_1}{Code Critic} jako úlohu \verb'CV_1'.
+Pak se můžete pustit \verb'cv_1a' pro připomenutí maticového počtu v Matlabu
+a nakonec i do implementace Gaussovy eliminace s řádkovou pivotací \verb'cv_1b'.
 
 \subsection{Úkoly (opakování diferenciálních operátorů):}
 Zopakujte si diferenciální operátory, které se hojně vyskytují v parc. diff. rovnicích.
 Zvykněte si pracovat jak s derivacemi v 1D, tak s gradienty či divergencemi ve 2D a 3D.
 \begin{itemize}
     \item $\Lapl(uv)=?\quad u,v\in C^2(\R)$
-    \item $\vc r=(x,y)$, $r=\abs{\vc r}=\sqrt{x^2+y^2}$, určete: $\grad r$, $\Lapl r$
+    \item $\vc r=(x,y)$, $r=\abs{\vc r}=\sqrt{x^2+y^2}$, určete: $\grad r$, $\Lapl r$ pro $(x,y)\neq (0,0)$
     \item $\vc r=(x,y,z)$, $r=\abs{\vc r}=\sqrt{x^2+y^2+z^2}$, určete: $\rrot \vc r$, $\div(\rrot \vc r)$
+    \item $\vc u=(yz,xz,x^2+y)$, určete: $\rrot\vc u$, $\div(\rrot\vc u)$.
     \item Ukažte, že potenciální pole s potenciálem $\omega$ má nulovou rotaci, tedy že $\rrot (\grad \omega)=0$.
     \item Na kvádru $x\in[0,1],\;y\in[0,3],\;z\in[0,2]$ spočítejte
-        \[ \int_S \vc F\cdot \vc n \d s, \qquad \vc F = (3x+z^{77}, y^2 - \sin x^2z, xz+ye^{x^5}).\]
+        \[ \int_S \vc F\cdot \vc n \d s, \qquad \vc F = (3x+z^{77}, y^2 - \sin (x^2z), xz+ye^{x^5}).\]
 \end{itemize}
 
 \subsection{Úkoly (opakování MATLAB):}

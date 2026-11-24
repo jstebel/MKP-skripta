@@ -1,0 +1,63 @@
+\documentclass{article}
+\usepackage[czech]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+
+\renewcommand{\div}{\operatorname{div}}
+\newcommand{\R}{\mathbb R}
+\newcommand{\vc}[1]{\boldsymbol{#1}}
+\def\d{{\rm{d}}}
+
+\begin{document}
+
+\title{Opravná zápočtová písemka}
+\date{21. 12. 2023}
+\author{}
+\maketitle
+
+
+\noindent
+1) \hspace{0.5cm}
+Napište slabou formulaci ustáleného problému difúze na oblast $\Omega=[a,b]$.\\
+Difuzní tok je dán Fickovým zákonem
+\[
+    q(x) = -D(x)u'(x), \quad D(x)>0 \qquad \textrm{v }\Omega
+\]
+a platí bilanční rovnice
+\[
+    q'(x) = 1-x \qquad \textrm{v }\Omega.
+\]
+\noindent
+V bodě $a$ je difuzní tok skrz membránu dán rozdílem koncentrací: $\sigma(u(a)-u_R)$, kde
+$\sigma>0$ je přechodový koeficient a $u_R$ je stálá koncentrace udržovaná na vnější straně membrány.
+V bodě $b$ je předepsán nulový difuzní tok.
+
+%\vspace{1cm}
+\begin{enumerate}
+\item Zakreslete oblast $\Omega$, zaveďte souřadný systém, vyznačte okrajové podmínky.
+\item Formulujte okrajové podmínky.
+\item Definujte prostor řešení, a prostor testovacích funkcí.
+\item Odvoďte slabou formulaci, aplikujte okrajové podmínky.
+\item Definujte vhodné bilineární a lineární formy a zapište slabou formulaci pomocí nich.
+\end{enumerate}
+
+
+\vspace{1cm}
+
+\noindent
+2) \hspace{0.5cm}
+Určete, zda posloupnost funkcí
+\[
+f_n(x) = \left( \frac{1}{3}x \right)^{2n}-2, \qquad x\in[-3,3],
+\]
+konverguje ke své bodové limitě v normě $L_2$ a $L_\infty$.
+
+% \vspace{2cm}
+
+\begin{enumerate}
+\item Načtrněte graf několika prvních funkcí posloupnosti.
+\item Určete bodovou limitu $f$.
+\item Zapište symbolicky, co znamená, že $f_n$ konverguje k $f$ ve zvolené normě.
+\item Ověřte výpočtem.
+\end{enumerate}
+\end{document}
